@@ -82,7 +82,7 @@ export function FaqSection({
                           isOpen
                             ? accent === "fire"
                               ? "border-fire bg-fire text-white"
-                              : "rotate-45 border-cyan bg-cyan text-white"
+                              : "border-cyan bg-cyan text-white"
                             : "border-navy/30 text-navy group-hover:border-navy",
                         )}
                       >
