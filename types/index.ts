@@ -115,6 +115,8 @@ export interface Project {
   timeline?: string;
   summary: string;
   image: ImageAsset;
+  /** Gallery for the case study. TODO: replace the stock placeholders with approved UMS photography. */
+  gallery: ImageAsset[];
   /** Fields still awaiting company confirmation (rendered as placeholders). */
   pending: string[];
 }
