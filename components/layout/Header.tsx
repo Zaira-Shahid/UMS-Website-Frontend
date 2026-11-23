@@ -22,7 +22,8 @@ const SearchPalette = dynamic(() => import("@/components/search/SearchPalette"),
  * Routes whose first screen is a dark hero, so the header starts transparent
  * with light text. Every other route gets the solid header from the start.
  */
-const TRANSPARENT_ROUTES = ["/"];
+const hasDarkHero = (pathname: string) =>
+  pathname === "/" || pathname === "/services" || pathname.startsWith("/services/");
 
 export function Header() {
   const pathname = usePathname();
@@ -69,7 +70,7 @@ export function Header() {
     hoverTimer.current = setTimeout(() => setOpenMenu(label), delay);
   };
 
-  const transparentRoute = TRANSPARENT_ROUTES.includes(pathname);
+  const transparentRoute = hasDarkHero(pathname);
   const solid = !transparentRoute || scrolled || openMenu !== null || mobileOpen;
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);

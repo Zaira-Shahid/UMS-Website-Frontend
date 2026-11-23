@@ -6,7 +6,7 @@ import { offices } from "@/content/offices";
 import { quoteHref } from "@/content/navigation";
 import { services } from "@/content/services";
 import { site } from "@/content/site";
-import { CTABand } from "./CTABand";
+import { FooterCTA } from "./FooterCTA";
 import { Logo } from "./Logo";
 
 const company = [
@@ -63,7 +63,7 @@ function Column({
 export function Footer() {
   return (
     <>
-      <CTABand />
+      <FooterCTA />
       <footer className="relative isolate overflow-hidden bg-navy-900 text-white">
         <BlueprintGrid variant="dark" />
         <div className="relative mx-auto max-w-7xl px-5 pb-8 pt-16 sm:px-8 lg:pt-20">

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { ArrowRight, BadgeCheck, Building2, ShieldCheck, Target, Users } from "lucide-react";
 import type { ComponentType } from "react";
-import { SiteImage } from "@/components/ui/SiteImage";
+import { ServiceVisual } from "@/components/services/ServiceVisual";
 import { Button } from "@/components/ui/Button";
 import { quoteHref } from "@/content/navigation";
 import { services } from "@/content/services";
@@ -68,10 +68,10 @@ export function ServicesPanel({ onNavigate }: { onNavigate: () => void }) {
               onClick={onNavigate}
               className="group relative block aspect-[4/3] overflow-hidden rounded-ums bg-navy-900"
             >
-              <SiteImage
-                asset={s.image}
+              <ServiceVisual
+                service={s}
                 sizes="(min-width:1280px) 280px, 22vw"
-                className="size-full object-cover opacity-70 transition duration-500 group-hover:scale-105 group-hover:opacity-50"
+                className="opacity-70 transition duration-500 group-hover:scale-105 group-hover:opacity-50"
               />
               <span
                 aria-hidden
