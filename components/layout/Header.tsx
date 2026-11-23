@@ -23,7 +23,11 @@ const SearchPalette = dynamic(() => import("@/components/search/SearchPalette"),
  * with light text. Every other route gets the solid header from the start.
  */
 const hasDarkHero = (pathname: string) =>
-  pathname === "/" || pathname === "/services" || pathname.startsWith("/services/");
+  pathname === "/" ||
+  pathname === "/services" ||
+  pathname.startsWith("/services/") ||
+  pathname === "/projects" ||
+  pathname.startsWith("/projects/");
 
 export function Header() {
   const pathname = usePathname();

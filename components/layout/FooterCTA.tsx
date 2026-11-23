@@ -5,7 +5,9 @@ import { CTABand } from "./CTABand";
 
 /** Routes that render their own, more specific enquiry band. */
 const OWN_CTA = (pathname: string) =>
-  pathname === "/services" || pathname.startsWith("/services/");
+  pathname === "/services" ||
+  pathname.startsWith("/services/") ||
+  pathname.startsWith("/projects/"); // case studies end with "Need similar work?"
 
 /** The shared enquiry band above the footer — skipped where a page brings its own. */
 export function FooterCTA() {
