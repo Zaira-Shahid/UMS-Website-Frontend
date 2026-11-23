@@ -19,6 +19,7 @@ export function RelatedInsights({ service }: { service: Service }) {
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div id="insights-title">
             <SectionHeading
+              accent={service.accent}
               index="05"
               label="Insights"
               title="Related insights"

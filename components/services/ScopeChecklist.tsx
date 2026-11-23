@@ -24,6 +24,7 @@ export function ScopeChecklist({ service }: { service: Service }) {
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div id="scope-title">
             <SectionHeading
+              accent={service.accent}
               index="03"
               label="UMS scope"
               title="What UMS delivers"

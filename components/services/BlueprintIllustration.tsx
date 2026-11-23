@@ -5,6 +5,9 @@ import { cn } from "@/lib/utils";
  * Styled blueprint illustration used where no suitable stock photo exists, so
  * two services never share the same picture. It is a schematic, not a photo of
  * UMS work. Decorative (aria-hidden); fills its container like object-cover.
+ *
+ * All meaningful drawing sits inside x 180–620 of the 800×600 viewBox, so it
+ * survives both wide (4:3, 16:10) and tall (4:5) crops. The grid bleeds to the edges.
  */
 export function BlueprintIllustration({
   name,
@@ -19,6 +22,13 @@ export function BlueprintIllustration({
   const uid = useId().replace(/[^a-zA-Z0-9_-]/g, "");
   const minor = `${uid}-minor`;
   const major = `${uid}-major`;
+
+  const mono = {
+    fontFamily: "ui-monospace, Menlo, monospace",
+    letterSpacing: 2,
+  } as const;
+  const floors = [150, 290, 430];
+
   return (
     <svg
       aria-hidden
@@ -40,81 +50,78 @@ export function BlueprintIllustration({
       <rect width="800" height="600" fill={`url(#${minor})`} />
       <rect width="800" height="600" fill={`url(#${major})`} />
 
-      {/* Floor lines */}
+      {/* Floor lines + labels */}
       <g stroke="#5cc4ee" strokeOpacity="0.35" strokeWidth="1.5" strokeDasharray="2 8">
         <path d="M40 150H760M40 290H760M40 430H760" />
       </g>
-      <g fill="#5cc4ee" fillOpacity="0.7" fontFamily="ui-monospace, Menlo, monospace" fontSize="13" letterSpacing="2">
-        <text x="48" y="140">LEVEL 03</text>
-        <text x="48" y="280">LEVEL 02</text>
-        <text x="48" y="420">LEVEL 01</text>
+      <g fill="#5cc4ee" fillOpacity="0.7" fontSize="12" {...mono}>
+        {floors.map((y, i) => (
+          <text key={y} x="240" y={y - 10}>
+            {`LEVEL 0${3 - i}`}
+          </text>
+        ))}
       </g>
 
       {/* Roof tank */}
       <g stroke="#5cc4ee" strokeWidth="3">
-        <rect x="548" y="38" width="124" height="64" rx="3" fill="#0b2236" />
-        <path d="M548 74c20-8 30 8 50 0s30 8 50 0 14 2 24-2" stroke="#008ccb" />
+        <rect x="495" y="38" width="130" height="64" rx="3" fill="#0b2236" />
+        <path d="M495 74c21-8 32 8 54 0s32 8 54 0 14 2 22-2" stroke="#008ccb" />
       </g>
-      <text x="548" y="28" fill="#5cc4ee" fillOpacity="0.8" fontFamily="ui-monospace, Menlo, monospace" fontSize="13" letterSpacing="2">
+      <text x="495" y="28" fill="#5cc4ee" fillOpacity="0.8" fontSize="12" {...mono}>
         STORAGE TANK
       </text>
 
       {/* Cold-water riser */}
-      <path d="M610 102V520" stroke="#5cc4ee" strokeWidth="9" />
-      <path d="M610 102V520" stroke="#0b2236" strokeWidth="3" />
-      <path className="pipe-flow" d="M610 108V514" stroke="#5cc4ee" strokeWidth="2" />
+      <path d="M560 102V520" stroke="#5cc4ee" strokeWidth="9" />
+      <path d="M560 102V520" stroke="#0b2236" strokeWidth="3" />
+      <path className="pipe-flow" d="M560 108V514" stroke="#5cc4ee" strokeWidth="2" />
 
-      {/* Branches to fixtures, with valves */}
-      {[150, 290, 430].map((y, i) => (
+      {/* Branches to fixtures, each with a gate valve */}
+      {floors.map((y, i) => (
         <g key={y}>
-          <path d={`M610 ${y}H420V${y + 34}`} stroke="#5cc4ee" strokeWidth="6" />
-          <path className="pipe-flow" d={`M604 ${y}H426V${y + 28}`} stroke="#5cc4ee" strokeWidth="1.5" />
-          {/* gate valve */}
-          <path d={`M520 ${y - 11}L540 ${y}L520 ${y + 11}Z M560 ${y - 11}L540 ${y}L560 ${y + 11}Z`} fill="#0b2236" stroke="#008ccb" strokeWidth="2.5" />
-          <path d={`M540 ${y}V${y - 22}M530 ${y - 22}H550`} stroke="#008ccb" strokeWidth="2.5" />
+          <path d={`M560 ${y}H400V${y + 34}`} stroke="#5cc4ee" strokeWidth="6" />
+          <path className="pipe-flow" d={`M554 ${y}H406V${y + 28}`} stroke="#5cc4ee" strokeWidth="1.5" />
+          <path
+            d={`M440 ${y - 11}L460 ${y}L440 ${y + 11}Z M480 ${y - 11}L460 ${y}L480 ${y + 11}Z`}
+            fill="#0b2236"
+            stroke="#008ccb"
+            strokeWidth="2.5"
+          />
+          <path d={`M460 ${y}V${y - 22}M450 ${y - 22}H470`} stroke="#008ccb" strokeWidth="2.5" />
           {/* fixture */}
-          <path d={`M396 ${y + 34}H444M404 ${y + 34}v22h32v-22`} stroke="#5cc4ee" strokeWidth="3" />
-          <text x="368" y={y + 80} fill="#5cc4ee" fillOpacity="0.55" fontFamily="ui-monospace, Menlo, monospace" fontSize="12" letterSpacing="2">
+          <path d={`M376 ${y + 34}H424M384 ${y + 34}v22h32v-22`} stroke="#5cc4ee" strokeWidth="3" />
+          <text x="336" y={y + 80} fill="#5cc4ee" fillOpacity="0.55" fontSize="12" {...mono}>
             {`Ø${25 + i * 5}`}
           </text>
         </g>
       ))}
 
-      {/* Drain stack — sloped runs to a manhole */}
-      <path d="M220 92V500" stroke="#008ccb" strokeWidth="9" />
-      <path d="M220 92V500" stroke="#0b2236" strokeWidth="3" />
-      <path d="M220 500H90" stroke="#008ccb" strokeWidth="9" />
-      <path d="M220 500H90" stroke="#0b2236" strokeWidth="3" />
-      {[210, 350, 490].map((y) => (
-        <path key={y} d={`M396 ${y - 20}H240`} stroke="#008ccb" strokeWidth="5" strokeDasharray="1 0" />
+      {/* Soil / waste stack with sloped branch drains and a manhole */}
+      <path d="M215 92V500" stroke="#008ccb" strokeWidth="9" />
+      <path d="M215 92V500" stroke="#0b2236" strokeWidth="3" />
+      {[190, 330, 470].map((y) => (
+        <path key={y} d={`M376 ${y}H236`} stroke="#008ccb" strokeWidth="5" />
       ))}
-      <circle cx="90" cy="500" r="22" fill="#0b2236" stroke="#008ccb" strokeWidth="3" />
-      <path d="M78 500h24M90 488v24" stroke="#008ccb" strokeWidth="2" />
-      <g fill="#5cc4ee" fillOpacity="0.7" fontFamily="ui-monospace, Menlo, monospace" fontSize="13" letterSpacing="2">
-        <text x="170" y="82">SOIL / WASTE STACK</text>
-        <text x="48" y="548">MANHOLE</text>
+      <circle cx="215" cy="522" r="22" fill="#0b2236" stroke="#008ccb" strokeWidth="3" />
+      <path d="M203 522h24M215 510v24" stroke="#008ccb" strokeWidth="2" />
+      <g fill="#5cc4ee" fillOpacity="0.7" fontSize="12" {...mono}>
+        <text x="236" y="84">SOIL / WASTE STACK</text>
+        <text x="248" y="527">MANHOLE</text>
+        <text x="252" y="452" fillOpacity="0.55">FALL 1:60</text>
       </g>
-      <path d="M312 478l-18 6 6-18" stroke="#5cc4ee" strokeOpacity="0.7" strokeWidth="2" />
-      <text x="262" y="520" fill="#5cc4ee" fillOpacity="0.55" fontFamily="ui-monospace, Menlo, monospace" fontSize="12" letterSpacing="2">
-        FALL 1:60
-      </text>
 
       {/* Booster pump */}
       <g stroke="#5cc4ee" strokeWidth="3">
-        <path d="M610 520H690" />
-        <circle cx="712" cy="520" r="26" fill="#0b2236" />
-        <path d="M700 508l24 12-24 12z" fill="#5cc4ee" fillOpacity="0.5" />
-        <path d="M738 520h24" />
+        <path d="M560 520H470" />
+        <circle cx="444" cy="520" r="26" fill="#0b2236" />
+        <path d="M432 508l24 12-24 12z" fill="#5cc4ee" fillOpacity="0.5" />
+        <path d="M418 520h-24" />
       </g>
-      <text x="640" y="572" fill="#5cc4ee" fillOpacity="0.8" fontFamily="ui-monospace, Menlo, monospace" fontSize="13" letterSpacing="2">
+      <text x="396" y="572" fill="#5cc4ee" fillOpacity="0.8" fontSize="12" {...mono}>
         BOOSTER SET
       </text>
 
-      {/* Title block */}
-      <g stroke="#5cc4ee" strokeOpacity="0.5">
-        <rect x="560" y="470" width="0" height="0" />
-      </g>
-      <text x="760" y="40" textAnchor="end" fill="#5cc4ee" fillOpacity="0.55" fontFamily="ui-monospace, Menlo, monospace" fontSize="12" letterSpacing="3">
+      <text x="400" y="592" textAnchor="middle" fill="#5cc4ee" fillOpacity="0.5" fontSize="11" {...mono}>
         SCHEMATIC — NOT TO SCALE
       </text>
     </svg>

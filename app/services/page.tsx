@@ -80,7 +80,7 @@ export default function ServicesPage() {
                 // Right-hand column drops down, so the grid reads as two offset columns.
                 className={cn(i % 2 === 1 && "md:translate-y-20")}
               >
-                <ServiceOverviewCard service={s} index={i} tall={i % 3 === 0} />
+                <ServiceOverviewCard service={s} index={i} />
               </RevealItem>
             ))}
           </Reveal>

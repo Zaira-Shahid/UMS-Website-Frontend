@@ -13,24 +13,16 @@ import { ServiceVisual } from "./ServiceVisual";
 export function ServiceOverviewCard({
   service,
   index,
-  tall,
 }: {
   service: Service;
   index: number;
-  /** Alternate the image ratio down the page for an editorial rhythm. */
-  tall?: boolean;
 }) {
   const a = accents[service.accent];
   const fire = service.accent === "fire";
   return (
     <article className="group relative">
       <CornerBrackets>
-        <div
-          className={cn(
-            "relative overflow-hidden bg-navy-900",
-            tall ? "aspect-[4/5]" : "aspect-[4/3]",
-          )}
-        >
+        <div className="relative aspect-[4/3] overflow-hidden bg-navy-900">
           <ServiceVisual
             service={service}
             sizes="(min-width:1024px) 40vw, (min-width:640px) 50vw, 100vw"

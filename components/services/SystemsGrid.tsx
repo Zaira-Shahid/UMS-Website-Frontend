@@ -17,6 +17,7 @@ export function SystemsGrid({ service }: { service: Service }) {
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div id="systems-title">
           <SectionHeading
+            accent={service.accent}
             index="01"
             label="Systems"
             title="Systems we deliver"

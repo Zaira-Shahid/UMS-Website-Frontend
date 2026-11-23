@@ -18,6 +18,7 @@ export function ApplicationsList({ service }: { service: Service }) {
         <div className="lg:col-span-4">
           <div id="applications-title" className="lg:sticky lg:top-40">
             <SectionHeading
+              accent={service.accent}
               index="02"
               label="Applications"
               title="Typical applications"
