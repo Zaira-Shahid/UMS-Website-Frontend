@@ -184,6 +184,17 @@ h3 {
   animation-play-state: paused;
 }
 
+/* Blueprint illustration — flowing water in pipes */
+@keyframes ums-pipe-flow {
+  to {
+    stroke-dashoffset: -36;
+  }
+}
+.pipe-flow {
+  stroke-dasharray: 10 8;
+  animation: ums-pipe-flow 1.6s linear infinite;
+}
+
 /* Scroll cue */
 @keyframes ums-scroll-cue {
   0% {
@@ -267,6 +278,7 @@ h3 {
   .animate-hero-progress,
   .animate-marquee,
   .animate-scroll-cue,
+  .pipe-flow,
   .icon-fan,
   .icon-flame,
   .icon-flow,
