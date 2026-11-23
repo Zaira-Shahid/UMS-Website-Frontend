@@ -35,6 +35,10 @@ CGGC Head Office at Eighteen, Jazz Destiny:
 - [ ] UMS role and package, services delivered
 - [ ] Location, sector, status, timeline
 - [ ] Approved photography
+- [ ] Per-project gallery photos (each case study shows 3 stock placeholders, flagged as such)
+- [ ] Challenge / Solution / Outcome write-ups — case-study pages show clearly marked placeholder blocks only
+- [ ] Setting `status`, `sector`, `location` and `services` in `content/projects.ts` is what switches on the library
+      filters, the Completed / Ongoing tabs and the homepage and service-page related projects (all read 0 until then)
 
 ## Services (`content/services.ts`)
 - [ ] Confirm each service's UMS scope (design support / supply / installation / testing / maintenance) — unconfirmed
