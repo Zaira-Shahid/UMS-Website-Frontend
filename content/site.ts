@@ -22,13 +22,19 @@ export const site = {
     instagram: undefined as string | undefined,
   },
   /**
-   * Homepage credential band. Values are NOT confirmed — rendered with a
-   * "to be confirmed" marker until UMS supplies verified figures.
+   * Homepage credential band. TODO: client to confirm — every value here.
+   * Unconfirmed values stay `undefined` and render as "To be confirmed";
+   * values that are set are counted from the site structure, not claims,
+   * and are still flagged until UMS signs them off.
    */
   stats: [
-    { label: "Project entries", value: undefined as number | undefined },
-    { label: "Service disciplines", value: 6 },
-    { label: "Offices", value: 2 },
-    { label: "PEC registration", value: undefined as number | undefined },
+    // TODO: client to confirm
+    { label: "Project entries", value: undefined as number | undefined, suffix: "" },
+    // TODO: client to confirm (matches the six service pages)
+    { label: "Service disciplines", value: 6, suffix: "" },
+    // TODO: client to confirm (Islamabad and Lahore)
+    { label: "Offices", value: 2, suffix: "" },
+    // TODO: client to confirm — PEC registration details
+    { label: "PEC registration", value: undefined as number | undefined, suffix: "" },
   ],
 } as const;

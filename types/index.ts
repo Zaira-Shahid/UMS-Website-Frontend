@@ -26,6 +26,8 @@ export interface ImageAsset {
   alt: string;
   width: number;
   height: number;
+  /** CSS object-position used when the image is cropped with object-cover. */
+  position?: string;
   /** TODO: replace with approved UMS photography */
   isPlaceholder: boolean;
 }

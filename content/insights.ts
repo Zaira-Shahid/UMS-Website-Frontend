@@ -1,5 +1,5 @@
 import type { Insight, InsightCategory } from "@/types";
-import { placeholderImage } from "./images";
+import { photo } from "./images";
 
 export const insightCategories: { slug: InsightCategory; name: string; summary: string }[] = [
   {
@@ -29,7 +29,7 @@ export const insights: Insight[] = [
       "MEP installation overlaps with many trades. A written safety plan, agreed before mobilisation, keeps that overlap under control.",
     services: ["integrated-mep"],
     readingMinutes: 4,
-    image: placeholderImage("Site safety planning"),
+    image: photo("ceilingServices", "center 40%"),
     sections: [
       {
         heading: "Start with the work, not the template",
@@ -59,7 +59,7 @@ export const insights: Insight[] = [
       "A fire protection system is only as credible as its paper trail. Here is what inspection and test records should capture.",
     services: ["fire-fighting"],
     readingMinutes: 4,
-    image: placeholderImage("Fire protection inspection"),
+    image: photo("redPipes"),
     sections: [
       {
         heading: "Why records matter",
@@ -89,7 +89,7 @@ export const insights: Insight[] = [
       "Two common ways to cool a large building, and the questions that help choose between them.",
     services: ["hvac"],
     readingMinutes: 5,
-    image: placeholderImage("VRF outdoor units and chilled-water plant"),
+    image: photo("pumpRoom", "center 30%"),
     sections: [
       {
         heading: "How each system works",
@@ -119,7 +119,7 @@ export const insights: Insight[] = [
       "Most site clashes are cheaper to fix on a drawing. How coordinated shop drawings keep services fitting the building.",
     services: ["integrated-mep"],
     readingMinutes: 4,
-    image: placeholderImage("Coordinated MEP shop drawings"),
+    image: photo("glassTower", "center 55%"),
     sections: [
       {
         heading: "One model, many disciplines",
@@ -149,7 +149,7 @@ export const insights: Insight[] = [
       "A planned maintenance schedule protects comfort, energy use and equipment life.",
     services: ["hvac"],
     readingMinutes: 4,
-    image: placeholderImage("HVAC plant room maintenance"),
+    image: photo("pumpRoom", "center 75%"),
     sections: [
       {
         heading: "Planned versus reactive",
@@ -179,7 +179,7 @@ export const insights: Insight[] = [
       "The handover pack is the building's operating manual. What a complete one contains.",
     services: ["integrated-mep"],
     readingMinutes: 4,
-    image: placeholderImage("MEP handover documentation"),
+    image: photo("glassReflection"),
     sections: [
       {
         heading: "What a handover pack includes",

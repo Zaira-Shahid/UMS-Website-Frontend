@@ -1,5 +1,5 @@
 import type { Service, ServiceSlug } from "@/types";
-import { placeholderImage } from "./images";
+import { photo } from "./images";
 
 /**
  * Service copy is general engineering description — it makes no UMS-specific
@@ -37,7 +37,7 @@ export const services: Service[] = [
       "education-institutional",
       "industrial-warehousing",
     ],
-    image: placeholderImage("Coordinated MEP services in a plant room"),
+    image: photo("ceilingServices", "center 30%"),
     faqs: [
       {
         question: "Why procure MEP services as one integrated package?",
@@ -80,7 +80,7 @@ export const services: Service[] = [
       "education-institutional",
       "industrial-warehousing",
     ],
-    image: placeholderImage("HVAC chiller plant and chilled-water pipework"),
+    image: photo("pumpRoom", "center 30%"),
     faqs: [
       {
         question: "What is the difference between a VRF and a chilled-water system?",
@@ -123,7 +123,7 @@ export const services: Service[] = [
       "hospitality",
       "industrial-warehousing",
     ],
-    image: placeholderImage("Fire fighting pump room and red pipework"),
+    image: photo("redPipes"),
     faqs: [
       {
         question: "Which standards apply to fire protection systems?",
@@ -167,7 +167,7 @@ export const services: Service[] = [
       "hospitality",
       "education-institutional",
     ],
-    image: placeholderImage("Plumbing risers and water supply pipework"),
+    image: photo("pumpRoom", "center 85%"),
     faqs: [
       {
         question: "Does plumbing scope include sewage treatment?",
@@ -203,7 +203,7 @@ export const services: Service[] = [
       "education-institutional",
       "industrial-warehousing",
     ],
-    image: placeholderImage("LT electrical panels and cable containment"),
+    image: photo("breakerPanel"),
     faqs: [
       {
         question: "What does ELV cover?",
@@ -227,7 +227,7 @@ export const services: Service[] = [
       "Testing and handover",
     ],
     applications: ["commercial-retail", "residential-mixed-use", "hospitality"],
-    image: placeholderImage("Water feature plant and circulation equipment"),
+    image: photo("poolFountain"),
     faqs: [
       {
         question: "What is covered under pools and fountains?",

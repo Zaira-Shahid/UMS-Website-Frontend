@@ -1,5 +1,5 @@
 import type { Industry } from "@/types";
-import { placeholderImage } from "./images";
+import { photo } from "./images";
 
 export const industries: Industry[] = [
   {
@@ -8,7 +8,7 @@ export const industries: Industry[] = [
     summary:
       "Hospitals and clinics depend on uninterrupted services: controlled air, reliable water, resilient power and life-safety systems.",
     services: ["integrated-mep", "hvac", "fire-fighting", "plumbing", "electrical-elv"],
-    image: placeholderImage("Hospital building"),
+    image: photo("wavyRoof"),
   },
   {
     slug: "commercial-retail",
@@ -23,7 +23,7 @@ export const industries: Industry[] = [
       "electrical-elv",
       "pools-fountains",
     ],
-    image: placeholderImage("Commercial tower and retail complex"),
+    image: photo("glassTower", "center 30%"),
   },
   {
     slug: "residential-mixed-use",
@@ -31,7 +31,7 @@ export const industries: Industry[] = [
     summary:
       "Apartment towers and mixed-use developments where shared building services serve many occupants.",
     services: ["integrated-mep", "fire-fighting", "plumbing", "pools-fountains"],
-    image: placeholderImage("Residential and mixed-use development"),
+    image: photo("highRise"),
   },
   {
     slug: "hospitality",
@@ -46,7 +46,7 @@ export const industries: Industry[] = [
       "electrical-elv",
       "pools-fountains",
     ],
-    image: placeholderImage("Hotel and resort building"),
+    image: photo("poolFountain"),
   },
   {
     slug: "education-institutional",
@@ -54,7 +54,7 @@ export const industries: Industry[] = [
     summary:
       "Campuses and institutional buildings with large footprints, varied occupancy and long service lives.",
     services: ["integrated-mep", "hvac", "plumbing", "electrical-elv"],
-    image: placeholderImage("Campus and institutional building"),
+    image: photo("facade", "center 40%"),
   },
   {
     slug: "industrial-warehousing",
@@ -62,6 +62,6 @@ export const industries: Industry[] = [
     summary:
       "Industrial facilities and warehouses with large volumes, process loads and strict fire-protection needs.",
     services: ["integrated-mep", "hvac", "fire-fighting", "electrical-elv"],
-    image: placeholderImage("Industrial facility and warehouse"),
+    image: photo("redPipes"),
   },
 ];
