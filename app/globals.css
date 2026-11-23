@@ -43,6 +43,9 @@
   --radius-ums: var(--radius-ums);
 }
 
+/* Base styles live in @layer base so Tailwind utilities (text-white, text-[…])
+   can override them — unlayered CSS would always win over layered utilities. */
+@layer base {
 html {
   scroll-behavior: auto; /* Lenis owns smooth scrolling */
   -webkit-text-size-adjust: 100%;
@@ -92,6 +95,7 @@ h3 {
   font-size: var(--text-h3);
   font-weight: 600;
   line-height: 1.15;
+}
 }
 
 ::selection {
@@ -149,7 +153,130 @@ h3 {
   animation: ums-ken-burns 9s ease-out forwards;
 }
 
+/* Hero progress bar — also the autoplay timer (animationend advances the slide) */
+@keyframes ums-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.animate-hero-progress {
+  transform-origin: left;
+  animation: ums-progress 7s linear forwards;
+}
+
+/* Marquee */
+@keyframes ums-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: ums-marquee 42s linear infinite;
+}
+.marquee:hover .animate-marquee,
+.marquee:focus-within .animate-marquee {
+  animation-play-state: paused;
+}
+
+/* Scroll cue */
+@keyframes ums-scroll-cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+.animate-scroll-cue {
+  animation: ums-scroll-cue 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+/* Custom service icons — animate on card hover / keyboard focus */
+@keyframes ums-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes ums-flicker {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(1.09);
+  }
+}
+@keyframes ums-dash {
+  to {
+    stroke-dashoffset: -16;
+  }
+}
+@keyframes ums-bolt {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+@keyframes ums-wave {
+  to {
+    transform: translateX(-12px);
+  }
+}
+.icon-fan,
+.icon-flame,
+.icon-wave {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.icon-flame {
+  transform-origin: bottom;
+}
+.group:hover .icon-fan,
+.group:focus-visible .icon-fan {
+  animation: ums-spin 1.4s linear infinite;
+}
+.group:hover .icon-flame,
+.group:focus-visible .icon-flame {
+  animation: ums-flicker 0.7s ease-in-out infinite;
+}
+.group:hover .icon-flow,
+.group:focus-visible .icon-flow {
+  animation: ums-dash 0.9s linear infinite;
+}
+.group:hover .icon-bolt,
+.group:focus-visible .icon-bolt {
+  animation: ums-bolt 0.8s steps(2, jump-none) infinite;
+}
+.group:hover .icon-wave,
+.group:focus-visible .icon-wave {
+  animation: ums-wave 1.2s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  /* No zoom, no timer-driven rotation, no marquee, no icon motion. */
+  .animate-ken-burns,
+  .animate-hero-progress,
+  .animate-marquee,
+  .animate-scroll-cue,
+  .icon-fan,
+  .icon-flame,
+  .icon-flow,
+  .icon-bolt,
+  .icon-wave {
+    animation: none !important;
+  }
+  .animate-hero-progress {
+    transform: scaleX(1);
+  }
   *,
   *::before,
   *::after {
