@@ -28,7 +28,7 @@ export function Reveal({
   className?: string;
   delay?: number;
   stagger?: boolean;
-  as?: "div" | "section" | "li" | "article";
+  as?: "div" | "section" | "li" | "article" | "ul" | "ol";
 }) {
   const reduce = useReducedMotion();
   const Tag = motion[as];
@@ -53,15 +53,22 @@ export function Reveal({
 export function RevealItem({
   children,
   className,
+  as = "div",
 }: {
   children: ReactNode;
   className?: string;
+  /** Use "li" when the parent is a list, so the markup stays valid. */
+  as?: "div" | "li";
 }) {
   const reduce = useReducedMotion();
-  if (reduce) return <div className={className}>{children}</div>;
+  const Tag = motion[as];
+  if (reduce) {
+    const Plain = as;
+    return <Plain className={className}>{children}</Plain>;
+  }
   return (
-    <motion.div className={className} variants={item}>
+    <Tag className={className} variants={item}>
       {children}
-    </motion.div>
+    </Tag>
   );
 }
