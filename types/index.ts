@@ -37,9 +37,31 @@ export interface FaqItem {
   answer: string;
 }
 
+/** Keys for the lucide icons used by the systems grid (mapped in components/services/SystemIcon). */
+export type SystemIconKey =
+  | "fan" | "snowflake" | "wind" | "thermometer" | "flame" | "droplets" | "waves" | "zap"
+  | "bell" | "megaphone" | "gauge" | "wrench" | "clipboard" | "package" | "hardhat" | "cable"
+  | "network" | "siren" | "shower" | "filter" | "cloudrain" | "sprout" | "ruler" | "filesearch"
+  | "layers" | "keyround" | "boxes" | "building" | "circuit" | "fuel";
+
 export interface ServiceSystem {
   name: string;
-  description?: string;
+  /** Two-line professional description of what the system is and does. */
+  description: string;
+  icon: SystemIconKey;
+}
+
+export interface ServiceApplication {
+  industry: IndustrySlug;
+  /** One line on why this sector needs the service. */
+  note: string;
+}
+
+export interface ScopeItem {
+  label: string;
+  detail: string;
+  /** false = TODO: client to confirm — rendered as a pending placeholder. */
+  confirmed: boolean;
 }
 
 export interface Service {
@@ -47,13 +69,19 @@ export interface Service {
   name: string;
   /** Hero-slide label, where it differs from `name` (e.g. "Fire Protection"). */
   shortName: string;
+  /** One-line value statement. */
   tagline: string;
+  /** Two or three sentences of introduction. */
   summary: string;
+  /** Unique meta description (≤ 160 chars). */
+  metaDescription: string;
   accent: "cyan" | "fire";
   systems: ServiceSystem[];
-  scope: string[];
-  applications: IndustrySlug[];
+  applications: ServiceApplication[];
+  scope: ScopeItem[];
   image: ImageAsset;
+  /** Draw a blueprint illustration instead of a photo (no suitable stock photo yet). */
+  illustration?: "plumbing";
   faqs: FaqItem[];
 }
 

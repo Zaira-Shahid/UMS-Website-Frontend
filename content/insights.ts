@@ -27,7 +27,7 @@ export const insights: Insight[] = [
     category: "safety-compliance",
     excerpt:
       "MEP installation overlaps with many trades. A written safety plan, agreed before mobilisation, keeps that overlap under control.",
-    services: ["integrated-mep"],
+    services: ["integrated-mep", "hvac", "fire-fighting", "plumbing", "electrical-elv", "pools-fountains"],
     readingMinutes: 4,
     image: photo("ceilingServices", "center 40%"),
     sections: [
@@ -57,7 +57,7 @@ export const insights: Insight[] = [
     category: "safety-compliance",
     excerpt:
       "A fire protection system is only as credible as its paper trail. Here is what inspection and test records should capture.",
-    services: ["fire-fighting"],
+    services: ["fire-fighting", "electrical-elv", "integrated-mep"],
     readingMinutes: 4,
     image: photo("redPipes"),
     sections: [
@@ -117,7 +117,7 @@ export const insights: Insight[] = [
     category: "mep-systems",
     excerpt:
       "Most site clashes are cheaper to fix on a drawing. How coordinated shop drawings keep services fitting the building.",
-    services: ["integrated-mep"],
+    services: ["integrated-mep", "hvac", "fire-fighting", "plumbing", "electrical-elv"],
     readingMinutes: 4,
     image: photo("glassTower", "center 55%"),
     sections: [
@@ -177,7 +177,7 @@ export const insights: Insight[] = [
     category: "maintenance-operations",
     excerpt:
       "The handover pack is the building's operating manual. What a complete one contains.",
-    services: ["integrated-mep"],
+    services: ["integrated-mep", "hvac", "fire-fighting", "plumbing", "electrical-elv", "pools-fountains"],
     readingMinutes: 4,
     image: photo("glassReflection"),
     sections: [
