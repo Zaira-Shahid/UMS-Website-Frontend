@@ -38,6 +38,8 @@ type ButtonBase = VariantProps<typeof buttonStyles> & {
   magnetic?: boolean;
   /** Trailing arrow icon. */
   arrow?: boolean;
+  /** Stretch to the full width of the container. */
+  block?: boolean;
 };
 
 type AsLink = ButtonBase & { href: string } & Omit<ComponentProps<typeof Link>, "href" | "className">;
@@ -49,7 +51,7 @@ type AsButton = ButtonBase & { href?: undefined } & Omit<
 export type ButtonProps = AsLink | AsButton;
 
 export function Button(props: ButtonProps) {
-  const { variant, size, className, magnetic, arrow, children, ...rest } = props;
+  const { variant, size, className, magnetic, arrow, block, children, ...rest } = props;
   const reduce = useReducedMotion();
   const ref = useRef<HTMLSpanElement>(null);
   const x = useSpring(useMotionValue(0), { stiffness: 220, damping: 16, mass: 0.4 });
@@ -78,7 +80,7 @@ export function Button(props: ButtonProps) {
       )}
     </>
   );
-  const classes = cn(buttonStyles({ variant, size }), className);
+  const classes = cn(buttonStyles({ variant, size }), block && "w-full", className);
 
   return (
     <motion.span
@@ -86,7 +88,7 @@ export function Button(props: ButtonProps) {
       style={canMagnet ? { x, y } : undefined}
       onPointerMove={onMove}
       onPointerLeave={onLeave}
-      className="inline-flex"
+      className={block ? "flex w-full" : "inline-flex"}
     >
       {"href" in rest && rest.href !== undefined ? (
         <Link {...(rest as ComponentProps<typeof Link>)} className={classes}>
