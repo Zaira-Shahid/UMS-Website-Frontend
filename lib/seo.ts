@@ -15,3 +15,15 @@ export const organizationRef = {
   name: site.fullName,
   url: site.url,
 } as const;
+
+/** BreadcrumbList structured data. Every item needs a site-relative `path`, including the current page. */
+export const breadcrumbLd = (items: { name: string; path: string }[]) => ({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: items.map((it, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: it.name,
+    item: absoluteUrl(it.path),
+  })),
+});

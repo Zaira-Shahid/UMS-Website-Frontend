@@ -110,6 +110,12 @@ h3 {
   border-radius: 2px;
 }
 
+/* For non-interactive headings that are focused by script (step changes, confirmations) so
+   assistive tech announces them. Unlayered on purpose: it must out-rank the rule above. */
+.focus-quiet:focus-visible {
+  outline: none;
+}
+
 /* Blueprint grid (§3.3) — 24px technical grid */
 .bg-blueprint {
   background-image:
