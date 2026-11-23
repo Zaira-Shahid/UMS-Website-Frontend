@@ -38,7 +38,7 @@ function Block({ title, children }: { title: string; children: React.ReactNode }
 
 export default function UiShowcase() {
   return (
-    <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8">
+    <div className="mx-auto max-w-6xl px-5 pb-16 pt-[calc(var(--header-h)+4rem)] sm:px-8">
       <Eyebrow>Internal · Phase 1</Eyebrow>
       <h1 className="mt-4">UMS UI primitives</h1>
       <p className="mt-4 max-w-2xl text-muted">

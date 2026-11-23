@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Barlow_Semi_Condensed, Inter } from "next/font/google";
+import { Footer } from "@/components/layout/Footer";
+import { Header } from "@/components/layout/Header";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { site } from "@/content/site";
 import "./globals.css";
@@ -41,7 +43,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to main content
         </a>
         <SmoothScroll>
-          <main id="main">{children}</main>
+          <Header />
+          {/* The header is fixed: pages with a full-bleed hero sit under it, other pages offset themselves. */}
+          <main id="main" className="min-h-svh">
+            {children}
+          </main>
+          <Footer />
         </SmoothScroll>
       </body>
     </html>
