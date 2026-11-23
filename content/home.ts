@@ -11,14 +11,48 @@ export interface HeroSlide {
   shortLabel: string;
   accent: "cyan" | "fire";
   image: ImageAsset;
+  /**
+   * CSS object-position per breakpoint, chosen so the main subject (pipework,
+   * plant, panel) stays in frame in portrait (mobile) and landscape (desktop) crops.
+   * Applied from md (768px) upward as "desktop".
+   */
+  objectPosition: { mobile: string; desktop: string };
 }
 
 // TODO: replace with approved UMS photography (all four hero images).
 export const heroSlides: HeroSlide[] = [
-  { service: "integrated-mep", label: "Integrated MEP", shortLabel: "MEP", accent: "cyan", image: photo("glassTower", "center 38%") },
-  { service: "hvac", label: "HVAC", shortLabel: "HVAC", accent: "cyan", image: photo("pumpRoom", "center 32%") },
-  { service: "fire-fighting", label: "Fire Protection", shortLabel: "Fire", accent: "fire", image: photo("redPipes", "center 45%") },
-  { service: "electrical-elv", label: "Electrical & ELV", shortLabel: "Electrical", accent: "cyan", image: photo("breakerPanel", "center 40%") },
+  {
+    service: "integrated-mep",
+    label: "Integrated MEP",
+    shortLabel: "MEP",
+    accent: "cyan",
+    image: photo("glassTower"),
+    objectPosition: { mobile: "50% 40%", desktop: "50% 38%" },
+  },
+  {
+    service: "hvac",
+    label: "HVAC",
+    shortLabel: "HVAC",
+    accent: "cyan",
+    image: photo("pumpRoom"),
+    objectPosition: { mobile: "50% 50%", desktop: "50% 32%" },
+  },
+  {
+    service: "fire-fighting",
+    label: "Fire Protection",
+    shortLabel: "Fire",
+    accent: "fire",
+    image: photo("redPipes"),
+    objectPosition: { mobile: "14% 55%", desktop: "50% 45%" },
+  },
+  {
+    service: "electrical-elv",
+    label: "Electrical & ELV",
+    shortLabel: "Electrical",
+    accent: "cyan",
+    image: photo("breakerPanel"),
+    objectPosition: { mobile: "70% 50%", desktop: "50% 40%" },
+  },
 ];
 
 /** Service shortcut strip overlapping the hero. */

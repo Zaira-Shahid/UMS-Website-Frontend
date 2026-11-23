@@ -91,7 +91,14 @@ export function HeroCarousel() {
                   fill
                   priority={i === 0}
                   sizes="100vw"
-                  className="object-cover"
+                  // Per-breakpoint focal point comes from content (heroSlides[].objectPosition).
+                  style={
+                    {
+                      "--pos-m": s.objectPosition.mobile,
+                      "--pos-d": s.objectPosition.desktop,
+                    } as React.CSSProperties
+                  }
+                  className="object-cover [object-position:var(--pos-m)] md:[object-position:var(--pos-d)]"
                 />
               </div>
             </div>
@@ -254,7 +261,12 @@ export function HeroCarousel() {
             aria-label={`Next slide: ${next.label}`}
           >
             <span className="relative h-12 w-20 overflow-hidden border border-white/30">
-              <SiteImage asset={next.image} fill sizes="80px" className="object-cover transition-transform duration-500 group-hover/next:scale-110" />
+              <SiteImage
+                asset={{ ...next.image, position: next.objectPosition.desktop }}
+                fill
+                sizes="80px"
+                className="object-cover transition-transform duration-500 group-hover/next:scale-110"
+              />
             </span>
             <span className="font-heading text-xs font-semibold uppercase tracking-[0.12em]">
               <span className="block text-white/55">Next</span>
