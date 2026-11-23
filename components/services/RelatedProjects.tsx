@@ -1,23 +1,25 @@
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { Badge } from "@/components/ui/Badge";
 import { BlueprintGrid } from "@/components/ui/BlueprintGrid";
 import { Button } from "@/components/ui/Button";
 import { Reveal, RevealItem } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { projects } from "@/content/projects";
+import { featuredProjects } from "@/lib/projects";
 import { projectsForService } from "@/lib/related";
 import type { Service } from "@/types";
 
 /**
- * Related projects: case-study cards whose CONFIRMED scope includes this
- * service. Until the client confirms which services each project delivered,
- * none match — the section then lists the featured project names without
- * implying any scope (TODO: client to confirm — content/projects.ts).
+ * Related projects: case-study cards whose CONFIRMED scope includes this service.
+ * Until the client confirms which services each project delivered, none match —
+ * the section then falls back to three featured case studies with a note, so it
+ * is never empty and never implies a scope that has not been confirmed
+ * (TODO: client to confirm — services per project in content/projects.ts).
  */
 export function RelatedProjects({ service }: { service: Service }) {
-  const related = projectsForService(service.slug);
+  const matched = projectsForService(service.slug);
+  const isFallback = matched.length === 0;
+  const shown = isFallback ? featuredProjects(3) : matched;
+
   return (
     <section
       id="projects"
@@ -30,10 +32,15 @@ export function RelatedProjects({ service }: { service: Service }) {
           <div id="projects-title">
             <SectionHeading
               tone="light"
+              accent={service.accent}
               index="04"
               label="Projects"
-              title="Related projects"
-              description={`Case studies where ${service.shortName} formed part of the scope.`}
+              title={isFallback ? "Featured projects" : "Related projects"}
+              description={
+                isFallback
+                  ? "A selection of UMS case studies while project scopes are confirmed."
+                  : `Case studies where ${service.shortName} formed part of the scope.`
+              }
             />
           </div>
           <Button href="/projects" variant="outline-light" arrow>
@@ -41,41 +48,24 @@ export function RelatedProjects({ service }: { service: Service }) {
           </Button>
         </div>
 
-        {related.length > 0 ? (
-          <Reveal stagger as="div" className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {related.map((p, i) => (
-              <RevealItem key={p.slug}>
-                <ProjectCard project={p} index={i} sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw" />
-              </RevealItem>
-            ))}
-          </Reveal>
-        ) : (
-          <Reveal className="mt-12 border border-dashed border-white/25 p-6 sm:p-10">
-            {/* TODO: client to confirm which services UMS delivered on each project */}
-            <Badge tone="pending">Scope per project · to be confirmed</Badge>
-            <p className="mt-5 max-w-2xl text-lg text-white/85">
-              Case studies for {service.shortName} will appear here once UMS confirms which
-              services it delivered on each project. Until then, the featured projects are listed
-              without any scope attached.
-            </p>
-            <ul className="mt-6 grid gap-x-8 gap-y-1 sm:grid-cols-2">
-              {projects.map((p) => (
-                <li key={p.slug}>
-                  <Link
-                    href={`/projects/${p.slug}`}
-                    className="group flex items-center justify-between gap-4 border-b border-white/10 py-3 text-white/85 transition-colors hover:text-cyan-300"
-                  >
-                    {p.name}
-                    <ArrowRight
-                      aria-hidden
-                      className="size-4 text-white/40 transition-all group-hover:translate-x-1 group-hover:text-cyan-300"
-                    />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
+        {isFallback && (
+          // TODO: client to confirm which services UMS delivered on each project
+          <p className="mt-8">
+            <Badge tone="pending">Project scopes to be confirmed</Badge>
+          </p>
         )}
+
+        <Reveal stagger as="div" className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {shown.map((p, i) => (
+            <RevealItem key={p.slug}>
+              <ProjectCard
+                project={p}
+                index={i}
+                sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
+              />
+            </RevealItem>
+          ))}
+        </Reveal>
       </div>
     </section>
   );
