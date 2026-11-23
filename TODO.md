@@ -36,6 +36,13 @@ CGGC Head Office at Eighteen, Jazz Destiny:
 - [ ] Location, sector, status, timeline
 - [ ] Approved photography
 
+## Services (`content/services.ts`)
+- [ ] Confirm each service's UMS scope (design support / supply / installation / testing / maintenance) — unconfirmed
+      items render as "to be confirmed" placeholders.
+- [ ] Related projects stay empty until each project's confirmed services are set in `content/projects.ts`.
+- [ ] Review the FAQ answers (general engineering guidance, not UMS commitments) and supply approved service photography
+      (Plumbing currently uses a blueprint illustration).
+
 ## Careers
 - [ ] Open positions (`content/careers.ts` is empty → "No openings right now" message)
 
