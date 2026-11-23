@@ -138,7 +138,7 @@ export function Header() {
                         aria-current={isActive(item.href) ? "page" : undefined}
                         onClick={closeMenus}
                         className={cn(
-                          "group/link relative py-2 font-heading text-[0.9375rem] font-semibold uppercase tracking-[0.08em] transition-colors",
+                          "group/link relative whitespace-nowrap py-2 font-heading text-[0.9375rem] font-semibold uppercase tracking-[0.08em] transition-colors",
                           linkTone,
                         )}
                       >
