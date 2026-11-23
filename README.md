@@ -50,3 +50,13 @@ All company content lives in `content/`. Anything UMS has not confirmed is a pla
 - Every phase ends with build + lint → commits → `phase-N` tag → push → review.
 
 Full rules: `PROJECT_SPEC.md` §13.
+
+## Troubleshooting
+
+- **Plain "Internal Server Error" in dev, or a `Parsing ecmascript source code failed` error pointing into
+  `node_modules`** — the install is corrupted (e.g. an interrupted `npm install` left a truncated file).
+  Delete `node_modules/next` (or all of `node_modules`) and run `npm install` again.
+- **Odd `ENOENT` errors under `.next`, stale pages, or changes not appearing** — the build cache is stale.
+  Stop the dev server, delete the `.next` folder and start again.
+- **Never run two dev servers at once** (or a dev server while building) in the same folder — they fight over
+  `.next`. Check that port 3000 is free before starting, and stop any server when you are done.
