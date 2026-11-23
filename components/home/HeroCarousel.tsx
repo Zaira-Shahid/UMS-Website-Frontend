@@ -191,11 +191,12 @@ export function HeroCarousel() {
 
       {/* Control bar — bottom margin reserves the space the shortcut cards overlap */}
       <div className="relative mx-auto w-full max-w-7xl px-5 pb-28 sm:px-8 md:pb-32">
-        <div className="flex items-end gap-3 border-t border-white/20 pt-4 sm:gap-6">
+        {/* Below 640px the tabs get their own full-width row so short labels never truncate. */}
+        <div className="flex flex-col gap-3 border-t border-white/20 pt-4 sm:flex-row sm:items-end sm:gap-6">
           <div
             role="tablist"
             aria-label="Choose a service slide"
-            className="grid flex-1 grid-cols-4 gap-2 sm:gap-4"
+            className="grid w-full flex-1 grid-cols-4 gap-3 sm:gap-4"
           >
             {heroSlides.map((s, i) => {
               const on = i === active;
@@ -219,9 +220,13 @@ export function HeroCarousel() {
                     on ? "text-white" : "text-white/55 hover:text-white",
                   )}
                 >
-                  <span className="flex items-baseline gap-2 font-heading text-xs font-semibold uppercase tracking-[0.1em] sm:text-[0.8125rem]">
-                    <span className="tabular-nums">{String(i + 1).padStart(2, "0")}</span>
-                    <span className="hidden truncate xl:inline">{s.label}</span>
+                  {/* Short label below 1280px, number + full label above. Never truncated. */}
+                  <span className="flex items-baseline gap-2 whitespace-nowrap font-heading text-[0.6875rem] font-semibold uppercase tracking-[0.06em] sm:text-xs xl:text-[0.8125rem] xl:tracking-[0.1em]">
+                    <span className="hidden tabular-nums xl:inline">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="xl:hidden">{s.shortLabel}</span>
+                    <span className="hidden xl:inline">{s.label}</span>
                   </span>
                   <span className="relative mt-2 block h-0.5 w-full overflow-hidden bg-white/25">
                     {on && (
@@ -258,7 +263,7 @@ export function HeroCarousel() {
           </button>
 
           {/* Controls */}
-          <div className="flex gap-2">
+          <div className="flex gap-2 self-end sm:self-auto">
             <button
               type="button"
               onClick={() => go(active - 1)}

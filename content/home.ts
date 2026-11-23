@@ -7,16 +7,18 @@ export interface HeroSlide {
   service: ServiceSlug;
   /** Hero-slide label ("Fire Protection" is used only here and on shortcuts). */
   label: string;
+  /** Short tab label shown below 1280px, where the full label would not fit. */
+  shortLabel: string;
   accent: "cyan" | "fire";
   image: ImageAsset;
 }
 
 // TODO: replace with approved UMS photography (all four hero images).
 export const heroSlides: HeroSlide[] = [
-  { service: "integrated-mep", label: "Integrated MEP", accent: "cyan", image: photo("glassTower", "center 38%") },
-  { service: "hvac", label: "HVAC", accent: "cyan", image: photo("pumpRoom", "center 32%") },
-  { service: "fire-fighting", label: "Fire Protection", accent: "fire", image: photo("redPipes", "center 45%") },
-  { service: "electrical-elv", label: "Electrical & ELV", accent: "cyan", image: photo("breakerPanel", "center 40%") },
+  { service: "integrated-mep", label: "Integrated MEP", shortLabel: "MEP", accent: "cyan", image: photo("glassTower", "center 38%") },
+  { service: "hvac", label: "HVAC", shortLabel: "HVAC", accent: "cyan", image: photo("pumpRoom", "center 32%") },
+  { service: "fire-fighting", label: "Fire Protection", shortLabel: "Fire", accent: "fire", image: photo("redPipes", "center 45%") },
+  { service: "electrical-elv", label: "Electrical & ELV", shortLabel: "Electrical", accent: "cyan", image: photo("breakerPanel", "center 40%") },
 ];
 
 /** Service shortcut strip overlapping the hero. */
