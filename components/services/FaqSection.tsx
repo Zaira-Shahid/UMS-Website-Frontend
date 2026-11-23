@@ -9,7 +9,7 @@ import type { FaqItem } from "@/types";
 /**
  * FAQ accordion following the WAI-ARIA accordion pattern: each question is a
  * button with aria-expanded/aria-controls; ↑ ↓ Home End move between questions;
- * Enter / Space toggle. Panels animate via grid rows (disabled for reduced motion
+ * Enter / Space toggle. The state icon rotates its glyph, not its box, so it never leaves the column. Panels animate via grid rows (disabled for reduced motion
  * by the global rule). The matching FAQPage JSON-LD is emitted by the page.
  */
 export function FaqSection({
@@ -47,7 +47,7 @@ export function FaqSection({
       <div className="mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-4">
           <div id="faq-title" className="lg:sticky lg:top-40">
-            <SectionHeading index={index} label="FAQ" title={title} description={description} />
+            <SectionHeading accent={accent} index={index} label="FAQ" title={title} description={description} />
           </div>
         </div>
 
@@ -81,12 +81,12 @@ export function FaqSection({
                           "flex size-9 shrink-0 items-center justify-center border transition-all duration-300",
                           isOpen
                             ? accent === "fire"
-                              ? "rotate-45 border-fire bg-fire text-white"
+                              ? "border-fire bg-fire text-white"
                               : "rotate-45 border-cyan bg-cyan text-white"
                             : "border-navy/30 text-navy group-hover:border-navy",
                         )}
                       >
-                        <Plus className="size-4" />
+                        <Plus className={cn("size-4 transition-transform duration-300", isOpen && "rotate-45")} />
                       </span>
                     </button>
                   </h3>
