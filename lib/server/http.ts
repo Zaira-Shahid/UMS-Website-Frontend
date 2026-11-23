@@ -55,10 +55,18 @@ export function guard(req: Request, o: GuardOptions): Response | null {
   return null;
 }
 
+/** Calendar date used in references. UMS operates in Pakistan, so it is the Asia/Karachi day, not the UTC day. */
+const karachiDay = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "Asia/Karachi",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+});
+
 /** Reference like UMS-RFQ-20261124-K7M2 (unambiguous alphabet, unbiased: 32 symbols per byte & 31). */
 export function makeReference(prefix: string, now = new Date()): string {
   const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-  const day = now.toISOString().slice(0, 10).replaceAll("-", "");
+  const day = karachiDay.format(now).replaceAll("-", ""); // en-CA formats as YYYY-MM-DD
   const suffix = [...randomBytes(4)].map((b) => alphabet[b & 31]).join("");
   return `UMS-${prefix}-${day}-${suffix}`;
 }
