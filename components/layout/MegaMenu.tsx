@@ -5,7 +5,8 @@ import { ArrowRight, BadgeCheck, Building2, ShieldCheck, Target, Users } from "l
 import type { ComponentType } from "react";
 import { ServiceVisual } from "@/components/services/ServiceVisual";
 import { Button } from "@/components/ui/Button";
-import { quoteHref } from "@/content/navigation";
+import { usePathname } from "next/navigation";
+import { quoteHrefForPath } from "@/content/navigation";
 import { services } from "@/content/services";
 import type { NavLink } from "@/types";
 import { cn } from "@/lib/utils";
@@ -58,6 +59,7 @@ export function AboutPanel({
 }
 
 export function ServicesPanel({ onNavigate }: { onNavigate: () => void }) {
+  const pathname = usePathname();
   return (
     <div className="mx-auto grid max-w-7xl grid-cols-12 gap-8 px-8 py-8">
       <ul className="col-span-9 grid grid-cols-3 gap-4">
@@ -103,7 +105,7 @@ export function ServicesPanel({ onNavigate }: { onNavigate: () => void }) {
           </p>
           <div className="mt-5">
             <Button
-              href={quoteHref()}
+              href={quoteHrefForPath(pathname)}
               onClick={onNavigate}
               variant="accent"
               size="sm"

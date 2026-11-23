@@ -7,7 +7,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ChevronDown, Menu, Search } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { mainNav, quoteHref } from "@/content/navigation";
+import { mainNav, quoteHrefForPath } from "@/content/navigation";
 import { cn } from "@/lib/utils";
 import { Logo } from "./Logo";
 import { AboutPanel, ServicesPanel } from "./MegaMenu";
@@ -27,7 +27,10 @@ const hasDarkHero = (pathname: string) =>
   pathname === "/services" ||
   pathname.startsWith("/services/") ||
   pathname === "/projects" ||
-  pathname.startsWith("/projects/");
+  pathname.startsWith("/projects/") ||
+  pathname === "/request-a-quote" ||
+  pathname === "/contact" ||
+  pathname === "/careers";
 
 export function Header() {
   const pathname = usePathname();
@@ -214,7 +217,7 @@ export function Header() {
             </button>
             <div className="hidden xl:block">
               <Button
-                href={quoteHref()}
+                href={quoteHrefForPath(pathname)}
                 variant={solid ? "primary" : "accent"}
                 size="md"
                 magnetic
