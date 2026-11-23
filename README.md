@@ -51,6 +51,18 @@ All company content lives in `content/`. Anything UMS has not confirmed is a pla
 
 Full rules: `PROJECT_SPEC.md` §13.
 
+## Forms and email
+
+The quote, contact and careers forms post to `/api/rfq`, `/api/contact` and `/api/careers`. Each route checks the
+request origin, caps the body size, rate-limits per IP (in memory, so per server instance), drops honeypot hits,
+and validates with the same zod schemas the browser uses (`lib/forms/schemas.ts`).
+
+- Email is sent with Resend when `RESEND_API_KEY`, `MAIL_FROM` and the recipient are set (see `.env.example`).
+  Otherwise the message is printed to the server console, so nothing is lost in development.
+- On multi-instance or serverless hosting, replace the in-memory rate limiter in `lib/server/rate-limit.ts`
+  with a shared store.
+- `NEXT_PUBLIC_ENABLE_UPLOADS=true` turns on BOQ/drawing uploads (rebuild required).
+
 ## Troubleshooting
 
 - **Plain "Internal Server Error" in dev, or a `Parsing ecmascript source code failed` error pointing into

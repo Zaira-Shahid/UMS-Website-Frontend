@@ -53,6 +53,18 @@ CGGC Head Office at Eighteen, Jazz Destiny:
 ## Insights
 - [ ] Review the six articles (general engineering guidance, no UMS-specific claims) and confirm publish dates.
 
+## Forms (Phase 6 — built; these make them live)
+- [ ] `RESEND_API_KEY` and a verified `MAIL_FROM` sender. Until both are set, submissions are printed to the server
+      console instead of emailed.
+- [ ] Recipient addresses `RFQ_TO_EMAIL`, `CONTACT_TO_EMAIL`, `CAREERS_TO_EMAIL` (comma-separate to notify several people)
+- [ ] Typical response time for quote requests (the RFQ side panel shows a placeholder)
+- [ ] Decide whether `NEXT_PUBLIC_ENABLE_UPLOADS` should be on (BOQ/drawings: PDF, DWG, ZIP, 3 files, 10 MB each), then rebuild
+- [ ] Confirm the RFQ field choices: Company is optional, and the project stages and sector list are standard options
+- [ ] Privacy notice wording and the Privacy Policy page (forms mention how details are used; the page is Phase 7)
+- [ ] Real office addresses, phones, emails and map links (Contact page and RFQ panel show placeholders)
+- [ ] Open positions in `content/careers.ts` (the careers form currently offers a general application only)
+- [ ] Production hosting: the in-memory rate limiter is per server instance — use a shared store if running several
+
 ## Infrastructure (later phases)
 - [ ] `RESEND_API_KEY`, recipient emails for RFQ / contact / careers (Phase 6)
 - [ ] `AI_API_KEY` (optional, Phase 9)
