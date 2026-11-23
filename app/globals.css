@@ -1,0 +1,288 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   UMS design tokens — "Engineered precision"
+   Source of truth: UMS_MASTER_PROMPT.md §3
+   ------------------------------------------------------------------ */
+:root {
+  --ums-navy: #173f60;
+  --ums-navy-900: #0b2236;
+  --ums-cyan: #008ccb;
+  --ums-cyan-300: #5cc4ee;
+  --ums-white: #ffffff;
+  --ums-offwhite: #f4f8fb;
+  --ums-line: #d9e4ec;
+  --ums-text: #1e2b37;
+  --ums-muted: #5b6b7a;
+  --ums-fire: #d9342b;
+
+  /* Fluid type scale (§3.2) */
+  --text-h1: clamp(3rem, 2.1rem + 4.2vw, 5.5rem);
+  --text-h2: clamp(2.25rem, 1.8rem + 2.2vw, 3.5rem);
+  --text-h3: clamp(1.5rem, 1.3rem + 0.9vw, 2rem);
+  --text-body: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+
+  --radius-ums: 6px;
+  --header-h: 76px;
+}
+
+@theme inline {
+  --color-navy: var(--ums-navy);
+  --color-navy-900: var(--ums-navy-900);
+  --color-cyan: var(--ums-cyan);
+  --color-cyan-300: var(--ums-cyan-300);
+  --color-offwhite: var(--ums-offwhite);
+  --color-line: var(--ums-line);
+  --color-ink: var(--ums-text);
+  --color-muted: var(--ums-muted);
+  --color-fire: var(--ums-fire);
+
+  --font-heading: var(--font-barlow), "Arial Narrow", sans-serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+
+  --radius-ums: var(--radius-ums);
+}
+
+/* Base styles live in @layer base so Tailwind utilities (text-white, text-[…])
+   can override them — unlayered CSS would always win over layered utilities. */
+@layer base {
+html {
+  scroll-behavior: auto; /* Lenis owns smooth scrolling */
+  -webkit-text-size-adjust: 100%;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  background: var(--ums-white);
+  color: var(--ums-text);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+  color: var(--ums-navy);
+  letter-spacing: -0.01em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+h1 {
+  font-size: var(--text-h1);
+  font-weight: 800;
+}
+h2 {
+  font-size: var(--text-h2);
+  font-weight: 700;
+}
+h3 {
+  font-size: var(--text-h3);
+  font-weight: 600;
+  line-height: 1.15;
+}
+}
+
+::selection {
+  background: var(--ums-cyan);
+  color: #fff;
+}
+
+/* Visible focus ring everywhere (WCAG 2.2) */
+:focus-visible {
+  outline: 2px solid var(--ums-cyan);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Blueprint grid (§3.3) — 24px technical grid */
+.bg-blueprint {
+  background-image:
+    linear-gradient(to right, rgb(23 63 96 / 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(23 63 96 / 0.06) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.bg-blueprint-dark {
+  background-image:
+    linear-gradient(to right, rgb(92 196 238 / 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(92 196 238 / 0.07) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  background: var(--ums-navy);
+  color: #fff;
+  border-radius: var(--radius-ums);
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* Ken Burns — used by hero slides (Phase 3) */
+@keyframes ums-ken-burns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+.animate-ken-burns {
+  animation: ums-ken-burns 9s ease-out forwards;
+}
+
+/* Hero progress bar — also the autoplay timer (animationend advances the slide) */
+@keyframes ums-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.animate-hero-progress {
+  transform-origin: left;
+  animation: ums-progress 7s linear forwards;
+}
+
+/* Marquee */
+@keyframes ums-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: ums-marquee 42s linear infinite;
+}
+.marquee:hover .animate-marquee,
+.marquee:focus-within .animate-marquee {
+  animation-play-state: paused;
+}
+
+/* Scroll cue */
+@keyframes ums-scroll-cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+.animate-scroll-cue {
+  animation: ums-scroll-cue 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+/* Custom service icons — animate on card hover / keyboard focus */
+@keyframes ums-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes ums-flicker {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(1.09);
+  }
+}
+@keyframes ums-dash {
+  to {
+    stroke-dashoffset: -16;
+  }
+}
+@keyframes ums-bolt {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+@keyframes ums-wave {
+  to {
+    transform: translateX(-12px);
+  }
+}
+.icon-fan,
+.icon-flame,
+.icon-wave {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.icon-flame {
+  transform-origin: bottom;
+}
+.group:hover .icon-fan,
+.group:focus-visible .icon-fan {
+  animation: ums-spin 1.4s linear infinite;
+}
+.group:hover .icon-flame,
+.group:focus-visible .icon-flame {
+  animation: ums-flicker 0.7s ease-in-out infinite;
+}
+.group:hover .icon-flow,
+.group:focus-visible .icon-flow {
+  animation: ums-dash 0.9s linear infinite;
+}
+.group:hover .icon-bolt,
+.group:focus-visible .icon-bolt {
+  animation: ums-bolt 0.8s steps(2, jump-none) infinite;
+}
+.group:hover .icon-wave,
+.group:focus-visible .icon-wave {
+  animation: ums-wave 1.2s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* No zoom, no timer-driven rotation, no marquee, no icon motion. */
+  .animate-ken-burns,
+  .animate-hero-progress,
+  .animate-marquee,
+  .animate-scroll-cue,
+  .icon-fan,
+  .icon-flame,
+  .icon-flow,
+  .icon-bolt,
+  .icon-wave {
+    animation: none !important;
+  }
+  .animate-hero-progress {
+    transform: scaleX(1);
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

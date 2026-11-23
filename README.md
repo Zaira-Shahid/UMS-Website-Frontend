@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# UMS — Ultimate Mechanical Solutions
 
-## Getting Started
+Corporate website frontend for UMS, a Pakistani MEP contractor (HVAC, fire fighting, electrical & ELV,
+plumbing, integrated MEP, pools & fountains) with offices in Islamabad and Lahore.
 
-First, run the development server:
+`PROJECT_SPEC.md` is the single source of truth for design, routes, content rules and the build phases.
+`TODO.md` lists every item that needs confirmation from UMS.
+
+## Stack
+
+Next.js 15 (App Router) · React 19 · TypeScript (strict) · Tailwind CSS v4 · Motion (Framer Motion) ·
+Lenis · lucide-react · react-hook-form + zod · Fuse.js · ESLint + Prettier
+
+## Setup
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env.local   # fill in values when needed
+npm run dev                  # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Scripts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Script          | Purpose                    |
+| --------------- | -------------------------- |
+| `npm run dev`   | Development server         |
+| `npm run build` | Production build           |
+| `npm run start` | Serve the production build |
+| `npm run lint`  | ESLint                     |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Folder structure
 
-## Learn More
+```
+app/          routes (App Router); app/dev/ui is an internal primitives showcase
+components/   ui/ primitives, layout/ shell (more per section in later phases)
+content/      typed company content — edit here, not in components
+lib/          utilities
+types/        shared TypeScript types
+public/       static assets
+```
 
-To learn more about Next.js, take a look at the following resources:
+All company content lives in `content/`. Anything UMS has not confirmed is a placeholder — see `TODO.md`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Git workflow
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `main` holds stable, reviewed code only. Never commit directly to it.
+- Work happens on `feature/ums-website`; changes reach `main` through a reviewed pull request.
+- Commits follow Conventional Commits: `type(scope): short imperative summary`
+  (types: feat, fix, style, refactor, perf, docs, chore, test).
+- Every phase ends with build + lint → commits → `phase-N` tag → push → review.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Full rules: `PROJECT_SPEC.md` §13.
