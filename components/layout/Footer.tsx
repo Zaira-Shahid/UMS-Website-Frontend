@@ -60,18 +60,10 @@ function Column({ title, links }: { title: string; links: { label: string; href:
 /** Pipe network running behind the footer columns (decorative). */
 function PipeNetwork() {
   return (
-    <svg aria-hidden className="pointer-events-none absolute inset-0 -z-10 h-full w-full opacity-40" preserveAspectRatio="none" viewBox="0 0 1200 600">
+    <svg aria-hidden className="pointer-events-none absolute inset-0 -z-10 h-full w-full opacity-25" preserveAspectRatio="none" viewBox="0 0 1200 600">
       <g fill="none" strokeWidth="2" strokeLinejoin="round">
-        <path d="M0 140 H260 Q300 140 300 180 V420 Q300 460 340 460 H760 Q800 460 800 420 V260 Q800 220 840 220 H1200" stroke="var(--cyan)" strokeOpacity="0.35" />
-        <path d="M0 140 H260 Q300 140 300 180 V420 Q300 460 340 460 H760 Q800 460 800 420 V260 Q800 220 840 220 H1200" stroke="var(--cyan-300)" className="pipe-fluid" strokeOpacity="0.6" />
-        {[
-          [300, 180],
-          [340, 460],
-          [800, 420],
-          [840, 220],
-        ].map(([x, y]) => (
-          <circle key={`${x}-${y}`} cx={x} cy={y} r="5" fill="var(--navy-950)" stroke="var(--cyan-300)" />
-        ))}
+        <path d="M0 140 H260 Q300 140 300 180 V420 Q300 460 340 460 H760 Q800 460 800 420 V260 Q800 220 840 220 H1200" stroke="var(--cyan)" strokeOpacity="0.35" vectorEffect="non-scaling-stroke" />
+        <path d="M0 140 H260 Q300 140 300 180 V420 Q300 460 340 460 H760 Q800 460 800 420 V260 Q800 220 840 220 H1200" stroke="var(--cyan-300)" className="pipe-fluid" strokeOpacity="0.6" vectorEffect="non-scaling-stroke" />
       </g>
     </svg>
   );
