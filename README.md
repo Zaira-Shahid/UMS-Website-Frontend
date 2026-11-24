@@ -3,13 +3,14 @@
 Corporate website frontend for UMS, a Pakistani MEP contractor (HVAC, fire fighting, electrical & ELV,
 plumbing, integrated MEP, pools & fountains) with offices in Islamabad and Lahore.
 
-`PROJECT_SPEC.md` is the single source of truth for design, routes, content rules and the build phases.
-`TODO.md` lists every item that needs confirmation from UMS.
+`PROJECT_SPEC.md` (V2 "Advanced Edition") is the single source of truth for design, routes, content rules and
+the build phases. `TODO.md` is the "Replace before launch" list for the dummy data in `content/dummy.ts`.
 
 ## Stack
 
-Next.js 15 (App Router) · React 19 · TypeScript (strict) · Tailwind CSS v4 · Motion (Framer Motion) ·
-Lenis · lucide-react · react-hook-form + zod · Fuse.js · ESLint + Prettier
+Next.js 15 (App Router) · React 19 · TypeScript (strict) · Tailwind CSS v4 · GSAP + ScrollTrigger · Motion
+(Framer Motion) · Lenis · three + react-three-fiber + drei · flubber · lucide-react · react-hook-form + zod ·
+Fuse.js · ESLint + Prettier
 
 ## Setup
 
@@ -31,23 +32,25 @@ npm run dev                  # http://localhost:3000
 ## Folder structure
 
 ```
-app/          routes (App Router); app/dev/ui is an internal primitives showcase
-components/   ui/ primitives, layout/ shell (more per section in later phases)
+app/          routes (App Router); app/dev/ui and app/dev/shapes are internal showcases
+components/   ui/ primitives, shapes/ Shape Library S1–S16, motion/ cursor, layout/ shell
+lib/motion/   GSAP + ScrollTrigger registration, Lenis store, reduced-motion hooks
 content/      typed company content — edit here, not in components
 lib/          utilities
 types/        shared TypeScript types
 public/       static assets
 ```
 
-All company content lives in `content/`. Anything UMS has not confirmed is a placeholder — see `TODO.md`.
+All company content lives in `content/`. Placeholder facts come from `content/dummy.ts` — see `TODO.md`.
 
 ## Git workflow
 
 - `main` holds stable, reviewed code only. Never commit directly to it.
-- Work happens on `feature/ums-website`; changes reach `main` through a reviewed pull request.
+- V2 work happens on `feature/ums-v2` (branched from `feature/ums-website`); changes reach `main` through a
+  reviewed pull request.
 - Commits follow Conventional Commits: `type(scope): short imperative summary`
   (types: feat, fix, style, refactor, perf, docs, chore, test).
-- Every phase ends with build + lint → commits → `phase-N` tag → push → review.
+- Every phase ends with lint + typecheck + build → commits → `v2-phase-N` tag → push → review.
 
 Full rules: `PROJECT_SPEC.md` §13.
 
