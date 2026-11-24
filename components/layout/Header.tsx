@@ -14,14 +14,9 @@ import { AboutPanel, ServicesPanel } from "./MegaMenu";
 import { MobileNav } from "./MobileNav";
 
 /** Lazy: the palette and its Fuse index load only when first opened. */
-const SearchPalette = dynamic(() => import("@/components/search/SearchPalette"), {
-  ssr: false,
-});
+const SearchPalette = dynamic(() => import("@/components/search/SearchPalette"), { ssr: false });
 
-/**
- * Routes whose first screen is a dark hero, so the header starts transparent
- * with light text. Every other route gets the solid header from the start.
- */
+/** Routes whose first screen is a dark hero: light header text over a transparent bar. */
 const hasDarkHero = (pathname: string) =>
   pathname === "/" ||
   pathname === "/services" ||
@@ -32,23 +27,45 @@ const hasDarkHero = (pathname: string) =>
   pathname === "/contact" ||
   pathname === "/careers";
 
+/**
+ * Site header (spec §7). Transparent over dark heroes, glass (backdrop blur) once scrolled; hides
+ * when scrolling down and returns when scrolling up (or when focus enters it). Mega menus open on
+ * hover with intent delay, on click and from the keyboard; Esc closes them.
+ */
 export function Header() {
   const pathname = usePathname();
   const reduce = useReducedMotion();
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchMounted, setSearchMounted] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const hoverTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const lastY = useRef(0);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    lastY.current = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 40);
+      const dy = y - lastY.current;
+      if (Math.abs(dy) > 6) {
+        setHidden(dy > 0 && y > 240);
+        lastY.current = y;
+      }
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // A new page always starts with the header visible.
+  useEffect(() => {
+    setHidden(false);
+    setOpenMenu(null);
+  }, [pathname]);
 
   const openSearch = useCallback(() => {
     setSearchMounted(true);
@@ -77,8 +94,11 @@ export function Header() {
     hoverTimer.current = setTimeout(() => setOpenMenu(label), delay);
   };
 
-  const transparentRoute = hasDarkHero(pathname);
-  const solid = !transparentRoute || scrolled || openMenu !== null || mobileOpen;
+  const darkRoute = hasDarkHero(pathname);
+  const menuOpen = openMenu !== null;
+  const glass = scrolled || menuOpen || mobileOpen;
+  // Text is light on dark routes (transparent or dark glass) and navy on light routes.
+  const light = darkRoute;
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
 
@@ -91,12 +111,22 @@ export function Header() {
         transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] as const },
       };
 
+  const linkTone = light ? "text-white hover:text-cyan-300" : "text-navy hover:text-cyan";
+
   return (
     <>
       <header
+        onFocusCapture={() => setHidden(false)}
         className={cn(
-          "fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow] duration-300",
-          solid ? "bg-white shadow-[0_1px_0_var(--ums-line)]" : "bg-transparent",
+          "fixed inset-x-0 top-0 z-50 transition-[transform,background-color,box-shadow,backdrop-filter] duration-300",
+          hidden && !menuOpen && !mobileOpen && !searchOpen ? "-translate-y-full" : "translate-y-0",
+          glass
+            ? light
+              ? "border-b border-white/10 bg-navy-950/75 backdrop-blur-xl"
+              : "border-b border-line bg-white/85 backdrop-blur-xl"
+            : light
+              ? "bg-transparent"
+              : "bg-white",
         )}
       >
         <div
@@ -105,16 +135,13 @@ export function Header() {
             scrolled ? "h-16" : "h-[var(--header-h)]",
           )}
         >
-          <Logo tone={solid ? "dark" : "light"} />
+          <Logo tone={light ? "light" : "dark"} />
 
           <nav aria-label="Main" className="hidden xl:block">
             <ul className="flex items-center gap-7">
               {mainNav.map((item) => {
                 const hasMenu = Boolean(item.children);
                 const open = openMenu === item.label;
-                const linkTone = solid
-                  ? "text-navy hover:text-cyan"
-                  : "text-white hover:text-cyan-300";
                 return (
                   <li
                     key={item.label}
@@ -132,9 +159,7 @@ export function Header() {
                         ? (e) => {
                             if (e.key === "Escape" && open) {
                               setOpenMenu(null);
-                              e.currentTarget
-                                .querySelector<HTMLButtonElement>("button[aria-expanded]")
-                                ?.focus();
+                              e.currentTarget.querySelector<HTMLButtonElement>("button[aria-expanded]")?.focus();
                             }
                           }
                         : undefined
@@ -155,9 +180,7 @@ export function Header() {
                           aria-hidden
                           className={cn(
                             "absolute inset-x-0 -bottom-0.5 h-0.5 origin-left bg-cyan transition-transform duration-300",
-                            isActive(item.href)
-                              ? "scale-x-100"
-                              : "scale-x-0 group-hover/link:scale-x-100",
+                            isActive(item.href) ? "scale-x-100" : "scale-x-0 group-hover/link:scale-x-100",
                           )}
                         />
                       </Link>
@@ -173,10 +196,7 @@ export function Header() {
                           }}
                           className={cn("ml-0.5 p-1.5 transition-colors", linkTone)}
                         >
-                          <ChevronDown
-                            aria-hidden
-                            className={cn("size-4 transition-transform", open && "rotate-180")}
-                          />
+                          <ChevronDown aria-hidden className={cn("size-4 transition-transform", open && "rotate-180")} />
                         </button>
                       )}
                     </div>
@@ -186,7 +206,7 @@ export function Header() {
                         <motion.div
                           id={`menu-${item.label}`}
                           {...panelMotion}
-                          className="absolute inset-x-0 top-full border-t border-line bg-white shadow-[0_24px_40px_-24px_rgb(11_34_54/0.35)]"
+                          className="absolute inset-x-0 top-full border-t border-white/10 bg-navy-950/95 text-white shadow-[0_24px_40px_-24px_rgb(0_0_0/0.6)] backdrop-blur-xl"
                         >
                           {item.label === "Services" ? (
                             <ServicesPanel onNavigate={closeMenus} />
@@ -208,20 +228,12 @@ export function Header() {
               onClick={openSearch}
               aria-label="Search (Ctrl+K)"
               aria-keyshortcuts="Control+K Meta+K"
-              className={cn(
-                "flex size-11 items-center justify-center rounded-ums transition-colors",
-                solid ? "text-navy hover:text-cyan" : "text-white hover:text-cyan-300",
-              )}
+              className={cn("flex size-11 items-center justify-center transition-colors", linkTone)}
             >
               <Search className="size-5" aria-hidden />
             </button>
             <div className="hidden xl:block">
-              <Button
-                href={quoteHrefForPath(pathname)}
-                variant={solid ? "primary" : "accent"}
-                size="md"
-                magnetic
-              >
+              <Button href={quoteHrefForPath(pathname)} variant={light ? "accent" : "primary"} size="md" magnetic>
                 Request a Quote
               </Button>
             </div>
@@ -233,10 +245,8 @@ export function Header() {
               aria-expanded={mobileOpen}
               aria-controls="mobile-menu"
               className={cn(
-                "flex size-11 items-center justify-center rounded-ums border transition-colors xl:hidden",
-                solid
-                  ? "border-line text-navy hover:border-navy"
-                  : "border-white/40 text-white hover:border-white",
+                "flex size-11 items-center justify-center border transition-colors xl:hidden",
+                light ? "border-white/40 text-white hover:border-white" : "border-line text-navy hover:border-navy",
               )}
             >
               <Menu className="size-5" aria-hidden />

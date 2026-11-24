@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { ChevronDown, Phone, X } from "lucide-react";
+import { ChevronDown, MessageCircle, Phone, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { BlueprintGrid } from "@/components/ui/BlueprintGrid";
 import { usePathname } from "next/navigation";
 import { mainNav, quoteHrefForPath } from "@/content/navigation";
 import { offices } from "@/content/offices";
+import { site } from "@/content/site";
 import { cn } from "@/lib/utils";
 import { Logo } from "./Logo";
 
@@ -32,7 +33,8 @@ export function MobileNav({
   const reduce = useReducedMotion();
   const panelRef = useRef<HTMLDivElement>(null);
   const [expanded, setExpanded] = useState<string | null>(null);
-  const callable = offices.filter((o) => o.phone);
+  const callable = offices;
+  const waHref = `https://wa.me/${site.whatsapp.replace(/\D/g, "")}`;
 
   useEffect(() => {
     if (!open) return;
@@ -82,7 +84,7 @@ export function MobileNav({
           role="dialog"
           aria-modal="true"
           aria-label="Main menu"
-          className="fixed inset-0 z-[60] flex flex-col overflow-hidden bg-navy-900 text-white xl:hidden"
+          className="bg-grain fixed inset-0 z-[60] flex flex-col overflow-hidden bg-navy-950 text-white xl:hidden"
           initial={{ clipPath: "inset(0 0 100% 0)" }}
           animate={{ clipPath: "inset(0 0 0% 0)" }}
           exit={{ clipPath: "inset(0 0 100% 0)" }}
@@ -109,9 +111,9 @@ export function MobileNav({
                 <motion.li
                   key={item.label}
                   className="border-b border-white/10"
-                  initial={reduce ? false : { opacity: 0, y: 16 }}
+                  initial={reduce ? false : { opacity: 0, y: 28 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={reduce ? { duration: 0 } : { delay: 0.12 + i * 0.04, duration: 0.4 }}
+                  transition={reduce ? { duration: 0 } : { delay: 0.18 + i * 0.06, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 >
                   {item.children ? (
                     <>
@@ -177,19 +179,26 @@ export function MobileNav({
           </nav>
 
           <div className="relative shrink-0 border-t border-white/10 bg-navy-900 p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
-            {callable.length > 0 && (
-              <div className="mb-3 grid grid-cols-2 gap-3">
-                {callable.map((o) => (
-                  <a
-                    key={o.city}
-                    href={`tel:${o.phone!.replace(/\s/g, "")}`}
-                    className="flex min-h-11 items-center justify-center gap-2 rounded-ums border border-white/25 text-sm hover:border-white"
-                  >
-                    <Phone className="size-4" aria-hidden /> {o.city}
-                  </a>
-                ))}
-              </div>
-            )}
+            <div className="mb-3 grid grid-cols-3 gap-2">
+              {callable.map((o) => (
+                <a
+                  key={o.city}
+                  href={`tel:${o.phone.replace(/\s/g, "")}`}
+                  className="flex min-h-11 items-center justify-center gap-2 border border-white/25 text-sm hover:border-white"
+                >
+                  <Phone className="size-4" aria-hidden /> {o.city}
+                </a>
+              ))}
+              <a
+                href={waHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex min-h-11 items-center justify-center gap-2 border border-white/25 text-sm hover:border-white"
+              >
+                <MessageCircle className="size-4" aria-hidden /> WhatsApp
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </div>
             <Button
               href={quoteHrefForPath(pathname)}
               onClick={onClose}

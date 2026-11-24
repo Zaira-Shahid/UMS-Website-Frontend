@@ -2,6 +2,7 @@ import Fuse from "fuse.js";
 import { insights } from "@/content/insights";
 import { projects } from "@/content/projects";
 import { services } from "@/content/services";
+import { disciplineColor } from "@/lib/discipline";
 import type { ImageAsset } from "@/types";
 
 export type SearchGroup = "Services" | "Projects" | "Insights" | "Pages";
@@ -15,6 +16,8 @@ export interface SearchItem {
   href: string;
   keywords?: string[];
   image?: ImageAsset;
+  /** Discipline colour for the result bar (services, and the lead service of projects and articles). */
+  color?: string;
 }
 
 const pages: SearchItem[] = [
@@ -39,6 +42,7 @@ export const searchItems: SearchItem[] = [
     keywords: [s.shortName, ...s.systems.map((x) => x.name)],
     // Illustrated services have no photo to thumbnail (the palette falls back to an icon).
     image: s.illustration ? undefined : s.image,
+    color: disciplineColor[s.slug],
   })),
   ...projects.map<SearchItem>((p) => ({
     id: `pr-${p.slug}`,
@@ -47,6 +51,7 @@ export const searchItems: SearchItem[] = [
     description: `${p.location} · ${p.status === "ongoing" ? "Ongoing" : "Completed"} · ${p.summary}`,
     href: `/projects/${p.slug}`,
     image: p.image,
+    color: p.services[0] ? disciplineColor[p.services[0]] : undefined,
   })),
   ...insights.map<SearchItem>((i) => ({
     id: `i-${i.slug}`,
@@ -55,6 +60,7 @@ export const searchItems: SearchItem[] = [
     description: i.excerpt,
     href: `/insights/${i.slug}`,
     image: i.image,
+    color: i.services[0] ? disciplineColor[i.services[0]] : undefined,
   })),
   ...pages,
 ];

@@ -310,6 +310,23 @@ h3 {
   animation: ums-wave 1.2s linear infinite;
 }
 
+/* Always-on variant of the service icon animations (menu preview) */
+.icon-live .icon-fan {
+  animation: ums-spin 2.4s linear infinite;
+}
+.icon-live .icon-flame {
+  animation: ums-flicker 0.7s ease-in-out infinite;
+}
+.icon-live .icon-flow {
+  animation: ums-dash 0.9s linear infinite;
+}
+.icon-live .icon-bolt {
+  animation: ums-bolt 0.8s steps(2, jump-none) infinite;
+}
+.icon-live .icon-wave {
+  animation: ums-wave 1.2s linear infinite;
+}
+
 /* ------------------------------------------------------------------
    V2 utilities (spec 3.3)
    ------------------------------------------------------------------ */
