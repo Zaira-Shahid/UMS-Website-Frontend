@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Barlow_Semi_Condensed, Inter, JetBrains_Mono } from "next/font/google";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
+import { PRELOADER_GUARD, Preloader } from "@/components/layout/Preloader";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { CustomCursor } from "@/components/motion/CustomCursor";
 import { site } from "@/content/site";
@@ -46,8 +47,16 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${barlow.variable} ${inter.variable} ${jetbrains.variable}`}>
+    <html lang="en" className={`${barlow.variable} ${inter.variable} ${jetbrains.variable}`} suppressHydrationWarning>
+      <head>
+        {/* Hides the preloader before first paint on repeat visits and with reduced motion. */}
+        <script dangerouslySetInnerHTML={{ __html: PRELOADER_GUARD }} />
+        <noscript>
+          <style>{".preloader{display:none!important}"}</style>
+        </noscript>
+      </head>
       <body>
+        <Preloader />
         <a href="#main" className="skip-link">
           Skip to main content
         </a>

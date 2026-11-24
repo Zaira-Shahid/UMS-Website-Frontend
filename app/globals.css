@@ -375,6 +375,11 @@ h3 {
   -webkit-text-stroke: 1.5px var(--stroke, #fff);
 }
 
+/* Preloader: hidden before paint when the guard script marks the document */
+html[data-preloader="skip"] .preloader {
+  display: none;
+}
+
 /* Custom cursor: hide the native one only once the custom one is live */
 html.has-custom-cursor,
 html.has-custom-cursor a,
