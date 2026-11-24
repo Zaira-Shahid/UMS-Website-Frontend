@@ -365,8 +365,11 @@ At the end of every phase:
 ---
 
 ## 10. Git workflow
-- Branch `feature/ums-v2` (from `feature/ums-website`). Never commit to `main`. Never force-push.
+- Work directly on `main`. Before starting: `git checkout main` then `git pull origin main`. Do not create new feature branches; old ones stay as they are and are never deleted.
+- Commit and push as you go: after every logical piece of work (one component, one section, one fix) run lint, typecheck and `npm run build`. If they pass, make a Conventional Commit and push straight away with `git push origin main`. Do not save everything for the end of a phase.
+- Run `git pull --rebase origin main` before every push. Never force-push to `main` and never rewrite history. If a push is rejected or there is a conflict, stop and tell the owner.
 - Conventional Commits: `type(scope): imperative summary` — types feat, fix, style, refactor, perf, docs, chore, test. Scopes: setup, tokens, shapes, motion, layout, nav, home, hero, services, projects, about, quality, industries, careers, contact, rfq, insights, assistant, seo, content.
-- Several small logical commits per phase. Review `git diff --staged` before each commit. Never commit `.env*` (except `.env.example`), `node_modules`, `.next`.
-- Tag each phase: `git tag -a v2-phase-N -m "V2 Phase N: <name>"`, then `git push origin feature/ums-v2 --follow-tags`.
-- Do not merge to `main`. After V2-11, prepare a PR description `feature/ums-v2 → main` and wait for me.
+- Commits are authored only by the owner (check `git config user.name` and `git config user.email` match the owner's GitHub identity; if not, tell them, never change global config). No AI-tool attribution anywhere: no `Co-Authored-By` trailers, no "Generated with" lines, and no mention of AI tooling in commit messages, PR descriptions, tags, README or code comments.
+- Review `git diff --staged` before each commit. Never commit `.env*` (except `.env.example`), `node_modules`, `.next`.
+- Tag the end of each phase: `git tag -a v2-phase-N -m "V2 Phase N: <name>"`, then `git push origin main --follow-tags`.
+- After V2-11, prepare the release notes and wait for the owner.

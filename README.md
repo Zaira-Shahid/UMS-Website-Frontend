@@ -45,14 +45,11 @@ All company content lives in `content/`. Placeholder facts come from `content/du
 
 ## Git workflow
 
-- `main` holds stable, reviewed code only. Never commit directly to it.
-- V2 work happens on `feature/ums-v2` (branched from `feature/ums-website`); changes reach `main` through a
-  reviewed pull request.
+- Work directly on `main`: pull first, then commit and push after every logical piece of work once lint,
+  typecheck and build pass. Never force-push; run `git pull --rebase origin main` before each push.
 - Commits follow Conventional Commits: `type(scope): short imperative summary`
   (types: feat, fix, style, refactor, perf, docs, chore, test).
-- Every phase ends with lint + typecheck + build → commits → `v2-phase-N` tag → push → review.
-
-Full rules: `PROJECT_SPEC.md` §13.
+- The end of each phase is tagged `v2-phase-N` and pushed with `--follow-tags`.
 
 ## Forms and email
 
