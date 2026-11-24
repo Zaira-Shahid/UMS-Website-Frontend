@@ -1,462 +1,372 @@
-# MASTER PROMPT — UMS (Ultimate Mechanical Solutions) Corporate Website
+# PROJECT_SPEC.md — UMS Website V2 ("Advanced Edition")
 
-> **How to use:** Save this file in the project root as `PROJECT_SPEC.md`. Then paste the **"Kickoff prompt"** (Section 0) into Claude Code. After each phase, review in the browser, then paste the next phase prompt from Section 12.
-
----
-
-## 0. Kickoff prompt (paste this into Claude Code first)
-
-```
-You are a senior frontend engineer and award-level web designer. We are building the
-complete, production-grade corporate website for Ultimate Mechanical Solutions (UMS),
-a Pakistani MEP contracting company (HVAC, Fire Fighting, Electrical & ELV, Plumbing,
-Integrated MEP, Pools & Fountains) with offices in Islamabad and Lahore. Domain: umss.pk.
-
-Read PROJECT_SPEC.md in the project root fully before writing any code. It is the single
-source of truth for stack, design system, sitemap, page content, components and rules.
-
-Work strictly phase by phase (Section 12 of the spec). Right now do ONLY Phase 1.
-At the end of every phase (Section 13.4):
-  1. Run `npm run build` and `npm run lint` and fix every error.
-  2. Commit the work in logical Conventional Commits, tag `phase-N`, and push
-     `feature/ums-website` with tags.
-  3. Give me a short summary: files created, commit hashes, what to check in the
-     browser, open TODOs.
-  4. STOP and wait for my approval before the next phase.
-Follow the Git workflow in Section 13 at all times.
-
-Rules: never invent company facts (PEC numbers, phone numbers, addresses, client claims,
-project figures). Use clearly marked placeholders `{/* TODO: client to confirm */}` and
-keep all content in /content data files so it can be moved to a CMS later.
-The site must look premium and memorable — not like a template — while staying
-corporate, fast and accessible.
-```
+> This file **replaces** the previous PROJECT_SPEC.md completely. Ignore any earlier spec, phase list or design rule not written here. The old spec stays only in git history.
 
 ---
 
-## 1. Project goal
+## 0. Mission
 
-A website that:
-1. **Explains** UMS's engineering scope clearly (6 service disciplines).
-2. **Proves** it through project evidence (case studies with UMS's exact package and role).
-3. **Converts** buyers into tender / RFQ submissions, and candidates into job applications.
+Build an **award-level, advanced frontend** for **Ultimate Mechanical Solutions (UMS)** — a Pakistani MEP contracting company (HVAC, Fire Fighting, Electrical & ELV, Plumbing, Integrated MEP, Pools & Fountains), offices in Islamabad and Lahore, domain umss.pk.
 
-**Signature feature ("The UMS difference"):** every service, industry and project page connects to the others, and every "Request a Quote" button deep-links to the RFQ form with the relevant service pre-selected, e.g. `/request-a-quote?service=hvac&project=elanza-mall`.
+The bar: someone opening the site should stop and stare. It must feel like an **engineering firm that builds the hidden systems inside buildings** — precise, technical, alive — not a corporate template. Think Awwwards "Site of the Day" quality, while staying fast, accessible and conversion-focused (RFQ / tender enquiries).
 
-Visitor flow to design for: **Home → HVAC service → related HVAC case study → RFQ with HVAC pre-selected.**
+**Core rule — no repetition:** no two sections on any page may share the same layout, shape or card style. Every section has its own geometry (see Section 4, Shape Library).
 
 ---
 
-## 2. Tech stack (use exactly this)
+## 1. Relationship to existing code
+
+- Work on a new branch **`feature/ums-v2`**, created from the current `feature/ums-website`.
+- **Keep and reuse** working logic: Next.js setup, `/content` data model, zod schemas, `/api/rfq`, `/api/contact`, `/api/careers`, search index, SEO helpers, routes.
+- **Replace** the visual layer: design tokens, section components and page layouts are rebuilt to this spec. Delete old components once their V2 replacements are in use — no dead code, no two versions of the same component.
+- The RFQ / contact / careers form *logic* stays; their *UI* gets redesigned in their phase.
+
+---
+
+## 2. Tech stack
 
 | Concern | Choice |
 |---|---|
-| Framework | Next.js 15 (App Router), React 19, TypeScript (strict) |
-| Styling | Tailwind CSS v4 + CSS variables for design tokens |
-| UI primitives | shadcn/ui (Radix) — restyle to UMS brand, never default look |
-| Animation | Framer Motion (`motion`) + Lenis smooth scroll |
-| Icons | lucide-react + custom SVG icons for each MEP service |
-| Forms | react-hook-form + zod |
-| Search | Fuse.js (client-side index built from /content) |
-| Images | next/image, AVIF/WebP, blur placeholders |
-| Fonts | `next/font/google`: Barlow Semi Condensed (600/700/800) for headings, Inter (400/500/600) for body |
-| Content | Typed TS data files in `/content` (CMS-ready shape; Sanity can be plugged in later) |
-| Email / form delivery | Next.js Route Handlers + Resend (env-driven; log to console if no key) |
-| AI assistant | Route Handler `/api/assistant`, provider-agnostic; mock replies when no API key |
-| Lint/format | ESLint + Prettier |
-| Deployment | Vercel |
+| Framework | Next.js 15 App Router, React 19, TypeScript strict |
+| Styling | Tailwind CSS v4 + CSS variables |
+| Motion | **GSAP + ScrollTrigger** (scroll choreography, pinning, scrubbing) and **Framer Motion** (component/state animation) |
+| Smooth scroll | Lenis (synced with ScrollTrigger) |
+| 3D | **three + @react-three/fiber + @react-three/drei** (hero building, lazy-loaded) |
+| Shapes | Hand-written SVG, CSS `clip-path`, SVG `mask`, `flubber` for SVG path morphing |
+| Icons | lucide-react + custom animated SVG MEP icons |
+| Forms | react-hook-form + zod (existing) |
+| Search | Fuse.js (existing) |
+| Fonts | Barlow Semi Condensed (headings), Inter (body), **JetBrains Mono** (technical labels, coordinates, specs) |
+
+If any package install fails (network), **stop and tell me the exact `npm install` command** so I can run it myself. Never silently replace a required library.
 
 ---
 
 ## 3. Design system
 
-### 3.1 Brand colours (CSS variables)
+### 3.1 Colours
 ```
---ums-navy:      #173F60   /* headings, primary buttons, dark sections */
---ums-navy-900:  #0B2236   /* deep backgrounds, footer */
---ums-cyan:      #008CCB   /* accents, icons, links, focus rings */
---ums-cyan-300:  #5CC4EE   /* glows, hover states on dark */
---ums-white:     #FFFFFF
---ums-offwhite:  #F4F8FB   /* alternate sections, panels */
---ums-line:      #D9E4EC   /* borders, dividers */
---ums-text:      #1E2B37
---ums-muted:     #5B6B7A
---ums-fire:      #D9342B   /* ONLY for Fire Fighting service accent */
+--navy-950: #06141F   /* deepest backgrounds */
+--navy-900: #0B2236
+--navy:     #173F60   /* brand navy */
+--cyan:     #008CCB   /* brand cyan */
+--cyan-300: #5CC4EE   /* glows on dark */
+--cyan-100: #D6F0FB
+--white:    #FFFFFF
+--offwhite: #F4F8FB
+--steel:    #8A9BAA   /* metallic mid-grey */
+--line:     #D9E4EC
+--text:     #1E2B37
+--muted:    #5B6B7A
+/* discipline accents (used only on their own service content) */
+--hvac:     #00A8E8   /* cool blue */
+--fire:     #E0322B   /* red */
+--electric: #F5B700   /* amber */
+--plumbing: #00B3A4   /* teal */
+--mep:      #008CCB
+--pools:    #3FA9F5
 ```
-All text/background pairs must meet WCAG AA contrast.
+All text pairs must meet WCAG AA.
 
 ### 3.2 Typography
-- Headings: Barlow Semi Condensed, tight tracking, uppercase eyebrow labels (letter-spacing 0.14em, cyan, with a short cyan rule before it).
-- Fluid type scale with `clamp()`: H1 48→88px, H2 36→56px, H3 24→32px, body 16→18px.
-- Large numerals (stats) in Barlow 800.
+- Display headings: Barlow Semi Condensed 700/800, tight leading (0.95), huge sizes on hero (clamp 56→140px).
+- Body: Inter 400/500.
+- Technical labels: JetBrains Mono, uppercase, 11–13px, tracking 0.12em — used for coordinates, spec tags, section indexes (`[ 03 / INDUSTRIES ]`), stats units.
+- Split-text animations on major headings (per-word or per-line mask reveal).
 
-### 3.3 Visual language — "Engineered precision"
-The site must feel like a precision engineering firm, not a generic template:
-- **Blueprint grid:** subtle 24px technical grid lines (navy at 4–6% opacity) behind hero and dark sections.
-- **Pipe-line motif:** thin cyan SVG lines that "draw" themselves (stroke-dashoffset) as sections enter the viewport, connecting section headings like piping runs. Small circular "valve/joint" nodes at turns.
-- **Corner brackets:** technical-drawing corner marks on image cards and stat panels.
-- **Section index numbers:** `01 / Services`, `02 / Projects` style labels.
-- **Dark navy feature sections** alternating with white/off-white for rhythm.
-- **Photography:** large, high-quality MEP imagery (plant rooms, chillers, pipework, ducting, sprinklers). Duotone navy overlay on hover-states. Use Unsplash placeholders via `remotePatterns`, every image marked `// TODO: replace with approved UMS photography`.
-- Border radius small and precise (4–8px). No bubbly shapes.
+### 3.3 Visual language — "Inside the building"
+The site's concept: **we reveal the hidden systems inside buildings.** Recurring motifs:
+- **Blueprint layer:** technical grid, dimension lines with arrows and measurements, coordinate labels in mono font.
+- **Pipe network:** animated SVG pipes that flow between sections, with "fluid" moving inside (animated dash) — colour changes per discipline.
+- **X-ray reveal:** hovering or scrolling peels a photo to reveal a technical line-drawing version underneath (SVG mask).
+- **Grain + light:** subtle noise texture on dark sections, soft cyan radial glows, metallic gradients on numbers.
+- **Precision details:** corner brackets, crosshair markers, tick-mark rulers along section edges.
+- **Custom cursor** (desktop only): small crosshair that grows into a labelled circle ("View", "Drag", "Open") over interactive elements. Hidden on touch and reduced-motion.
 
-### 3.4 Motion rules
-- Section reveals: fade + 24px rise, staggered children (0.06s), triggered once.
-- Hero: slow Ken Burns zoom on the active slide + text mask reveal.
-- Animated number counters for stats.
-- Magnetic hover on primary CTAs; card hover = lift 4px + cyan border glow + image zoom 1.05.
-- Page transitions: subtle fade.
-- Everything respects `prefers-reduced-motion` (disable Lenis, counters show final values, no parallax).
-
----
-
-## 4. Sitemap and routes (32 launch pages)
-
-```
-/                                   Home
-/about                              About UMS (Overview)
-/about/mission-values               Mission & Values         (section anchor or page)
-/about/team                         Team & Organization
-/about/credentials                  Credentials (PEC etc.)
-/quality-safety-delivery            Quality, Safety & Delivery (QA/QC, HSE, inspection, testing, handover)
-/services                           Services overview
-/services/integrated-mep
-/services/hvac
-/services/fire-fighting
-/services/plumbing
-/services/electrical-elv
-/services/pools-fountains
-/industries                         Industries (6 sectors, anchor sections)
-/projects                           Project library with filters (All / Completed / Ongoing / Featured)
-/projects/[slug]                    Case study (6 featured at launch)
-/insights                           Blog & Insights hub
-/insights/category/[category]       safety-compliance | mep-systems | maintenance-operations
-/insights/[slug]                    Article (6 at launch)
-/careers                            Working at UMS, Open Positions, How to Apply
-/contact                            Islamabad office, Lahore office, General enquiries form
-/request-a-quote                    RFQ / tender form
-/search                             Full search results
-/privacy-policy
-```
-Plus `not-found.tsx`, `sitemap.ts`, `robots.ts`, `opengraph-image.tsx`.
+### 3.4 Motion principles
+- Every section has an **entrance choreography** (not one generic fade). Use GSAP timelines with ScrollTrigger.
+- Pinned storytelling where specified; scrubbed animations tied to scroll.
+- Hover states are rich: magnetic buttons, tilt (max 6°), image zoom with mask, underline draws.
+- 60fps target: animate only `transform`, `opacity`, `clip-path`, SVG stroke.
+- `prefers-reduced-motion`: disable 3D rotation, pinning, scrubbing, cursor, Lenis, marquees, counters (show final values). Content must still be fully readable and usable.
 
 ---
 
-## 5. Global layout
+## 4. Shape Library (use each at least once; never repeat on adjacent sections)
 
-### 5.1 Header
-- Sticky. Transparent over the hero, turns solid white with shadow after 40px scroll.
-- Left: UMS logo (`/public/brand/ums-logo.svg` — TODO: client file).
-- Nav: Home, About UMS ▾, Services ▾, Industries, Projects, Insights, Careers, Contact.
-- Right: search icon (opens command-palette style search, ⌘K / Ctrl+K), **Request a Quote** button (navy, magnetic).
-- **About mega-dropdown:** Overview, Mission & Values, Team & Organization, Quality Safety & Delivery, Credentials — each with an icon and one-line description.
-- **Services mega-dropdown:** 6 photo-led cards in a 3×2 grid (image, name, one-line scope) + "View all services" link + side panel with "Not sure which service? Request a quote."
-- Dropdowns: open on hover (desktop, with intent delay) and on click/keyboard; full ARIA support; Esc closes.
+| ID | Shape | Description |
+|---|---|---|
+| S1 | **Diagonal cut** | Section with `clip-path` slanted top/bottom edge (6–8°) |
+| S2 | **Notched corners** | Cards with chamfered corners like steel plates (`clip-path: polygon`) |
+| S3 | **Hexagon grid** | Honeycomb tiles (industries / capabilities) |
+| S4 | **Circular orbit** | Items arranged on a rotating ring around a central element |
+| S5 | **Pipe-bend card** | Card whose border is an SVG pipe with an elbow joint at one corner |
+| S6 | **Curved wave divider** | Animated SVG wave transition between sections |
+| S7 | **Stacked sticky cards** | Cards that stack and scale as you scroll (pinned deck) |
+| S8 | **Horizontal track** | Pinned section that scrolls horizontally |
+| S9 | **Split diagonal panels** | Two panels divided by an angled line, hover shifts the divide |
+| S10 | **Isometric tiles** | 30° isometric blocks (process steps, floors) |
+| S11 | **Masked text window** | Giant heading with video/image playing *inside* the letters |
+| S12 | **Radial gauge** | Circular dial/gauge used for stats |
+| S13 | **Blueprint frame** | Content framed by dimension lines and measurements |
+| S14 | **Morphing blob/shape** | SVG shape that morphs between discipline icons on scroll (flubber) |
+| S15 | **Asymmetric bento** | Mixed-size grid with varied radii and one cut-out tile |
+| S16 | **Ticket / tab card** | Cards with a tab notch (articles, careers) |
 
-### 5.2 Mobile navigation
-- Compact header: logo, search icon, menu icon.
-- Full-screen menu sheet with accordion sections (About, Services), big tap targets, Request a Quote fixed at the bottom, both office phone shortcuts.
-
-### 5.3 Footer (dark navy-900, blueprint grid background)
-- Large CTA band above footer: "Have a tender or project brief?" + Request a Quote + Download Company Profile (PDF, TODO).
-- Columns: Company, Services, Industries, Resources; Islamabad office and Lahore office cards (address, phone, email, map link — all TODO placeholders).
-- Bottom bar: © UMS, Privacy Policy, social links (TODO).
-
-### 5.4 Floating AI assistant (see Section 9)
-
----
-
-## 6. Page-by-page specification
-
-### 6.1 Home
-1. **Hero carousel** (full viewport height minus header):
-   - Slides: Integrated MEP, HVAC, Fire Protection, Electrical & ELV (Fire slide uses red pipework imagery and the `--ums-fire` accent).
-   - H1: **"MEP Contracting for Complex Buildings"**; subline: "HVAC, fire protection, electrical and plumbing services for complex developments."
-   - CTAs: **Request a Quote** (pre-selects the active slide's service) and **Explore Projects**.
-   - Bottom control bar: service tabs with animated progress underline, prev / next, **pause/play** (accessibility requirement), "Next: Fire Protection" preview thumbnail.
-   - Auto-rotate 7s, pauses on hover/focus, swipe on mobile.
-2. **Service shortcuts strip** overlapping the hero bottom: 4 cards (HVAC, Fire Protection, Electrical, Plumbing) with custom animated SVG icons.
-3. **Credentials / stats band:** animated counters — e.g. "37+ project entries", "6 service disciplines", "2 offices", "PEC registered" (all values TODO: client to confirm).
-4. **Services section** `01 / Services`: 6 offerings in an asymmetric bento grid, each with image, scope bullets and "Explore" link.
-5. **Featured projects** `02 / Projects`: horizontal scroll-snap carousel of the 6 case studies (sector tag, location, UMS package chips, image).
-6. **Industries** `03 / Industries`: 6 sectors (Healthcare, Commercial & Retail, Residential & Mixed-Use, Hospitality, Education & Institutional, Industrial & Warehousing) as interactive tiles; hovering a tile highlights which services apply.
-7. **Delivery process** `04 / How we deliver`: animated pipe-line timeline — Tender Review → Drawings & Coordination → Procurement → Installation → Testing & Commissioning → Handover. Line draws as you scroll.
-8. **Quality & safety teaser:** split section with QA/QC and HSE highlights, link to the full page.
-9. **Clients / collaborators:** grayscale logo marquee (TODO: approved logos only).
-10. **Latest insights:** 3 article cards.
-11. **Enquiry CTA band** (shared with footer CTA).
-
-### 6.2 About UMS
-- Overview: hero with company intro, story/timeline component, office presence.
-- Mission & Values: values as icon cards.
-- Team & Organization: org-structure diagram + leadership cards (TODO data).
-- Credentials: PEC registration card with verification placeholder, certifications grid.
-
-### 6.3 Quality, Safety & Delivery
-- Sections: QA/QC, HSE, Inspection & Testing, Commissioning, Handover Documentation.
-- Each with checklist-style content and a supporting image; sticky side table-of-contents on desktop.
-
-### 6.4 Services overview + 6 service pages (one shared template)
-Template sections:
-1. Hero: service name, one-line value statement, image, breadcrumb, CTA "Request a Quote for {Service}" (pre-selected).
-2. **Systems we deliver:** grid of systems (from Section 7 data) with icons.
-3. **Typical applications:** building types → links to Industries anchors.
-4. **UMS scope:** design support / supply / installation / testing & commissioning / maintenance — checklist.
-5. **Related projects:** filtered case-study cards for this service.
-6. **Related insights:** articles tagged with this service.
-7. FAQ accordion (with FAQPage JSON-LD).
-8. Service-specific RFQ CTA band.
-
-### 6.5 Industries
-- 6 anchored sections (`/industries#healthcare` etc.), sticky sector switcher, each sector shows relevant services and approved projects.
-
-### 6.6 Projects library
-- Tabs: All, Completed, Ongoing, Featured Case Studies.
-- Filters: sector, location, service, status — URL-synced query params, animated layout transitions (Framer `layout`), result count, clear-all.
-- Grid/list toggle. Empty state.
-
-### 6.7 Case study page (`/projects/[slug]`)
-- Hero image, project name, sector, location, status badge.
-- Key facts panel: client/developer, main contractor, consultant, **UMS role & package**, timeline (all TODO-safe fields; hide when empty).
-- Scope delivered (service chips linking to service pages), challenge → solution → outcome narrative, image gallery with lightbox.
-- "Need similar work?" CTA → RFQ pre-filled with this project's services and sector.
-- Next / previous project.
-
-### 6.8 Insights
-- Hub: featured article + grid, category filter chips, search.
-- Category pages: Safety & Compliance, MEP Systems, Maintenance & Operations.
-- Article: reading progress bar, TOC, author/date, related service links, related articles, Article JSON-LD.
-
-### 6.9 Careers
-- Working at UMS (culture, benefits), Open Positions list (from data; show a clear "No openings right now — send your CV" message when empty), How to Apply steps, application form (name, email, phone, position, CV upload PDF ≤5MB, message).
-
-### 6.10 Contact
-- Two office cards (Islamabad, Lahore) with map embed/links, phone, email (TODO), general enquiry form (separate from RFQ), WhatsApp click-to-chat (TODO number).
-
-### 6.11 Request a Quote (RFQ) — most important conversion page
-- Multi-step form with progress indicator:
-  1. Contact: name, company, email, phone.
-  2. Project: project name, location (city), sector (select), project stage.
-  3. Services: multi-select cards (6 services) — **pre-selected from `?service=` param**; scope description textarea.
-  4. Tender: tender/submission deadline (date), optional BOQ & drawing upload (PDF/DWG/ZIP, size limit, behind a feature flag `NEXT_PUBLIC_ENABLE_UPLOADS`).
-  5. Review & submit.
-- zod validation, inline errors, autosave draft to localStorage (try/catch), success screen with reference number and "what happens next".
-- POST to `/api/rfq` → email to UMS team + confirmation email to visitor (Resend; console fallback). Honeypot + rate-limit for spam.
-
-### 6.12 Search
-- Command-palette modal (⌘K) with live results grouped as Services / Projects / Insights / Pages, each with thumbnail + short description; "View all results" → `/search?q=`.
-
-### 6.13 Privacy Policy
-- Clean long-form typography template (content TODO).
+Each page section in Section 6 names its shape ID. Build each shape as a reusable component in `/components/shapes`.
 
 ---
 
-## 7. Content data (create in `/content`)
+## 5. Dummy data (use everywhere — no "To be confirmed" badges)
 
-Create typed files: `services.ts`, `industries.ts`, `projects.ts`, `insights.ts`, `careers.ts`, `offices.ts`, `site.ts`, `navigation.ts`. Shared types in `/types`.
+Replace every "TODO / To be confirmed / —" placeholder in the UI with realistic dummy data from a single file **`/content/dummy.ts`**, exported and consumed by the other content files. Keep `TODO.md` updated with a "Replace before launch" list referencing this file. Do not show any "dummy" label in the UI.
 
-**Services (systems lists — use these):**
-- **Integrated MEP:** tender review, drawings, coordination, procurement, installation, commissioning, handover.
-- **HVAC:** central plants, VRF systems, ductwork, chilled-water piping, boilers.
-- **Fire Fighting & Suppression:** sprinklers, hydrants, hose reels & cabinets, pump rooms, suppression systems.
-- **Plumbing & Public Health:** water supply, filtration, drainage, rainwater, irrigation, sewage treatment, LPG/NG systems.
-- **Electrical & ELV:** LT panels, ELV systems, fire alarm & detection, public address.
-- **Pools & Fountains:** pools, fountains, water features (supply & installation scope).
+```ts
+company: {
+  name: "Ultimate Mechanical Solutions",
+  shortName: "UMS",
+  tagline: "MEP Contracting for Complex Buildings",
+  founded: 2009,
+  pecRegistration: "PEC Reg. No. C-6/ME-2047",
+  ntn: "NTN 4219876-3",
+}
+offices: [
+  { city: "Islamabad", label: "Head Office",
+    address: "Office 12, 3rd Floor, Plot 21, Sector I-9/3, Islamabad 44000",
+    phone: "+92 51 4567 890", email: "info@umss.pk",
+    hours: "Mon–Sat, 9:00 AM – 6:00 PM", mapQuery: "I-9/3 Islamabad" },
+  { city: "Lahore", label: "Regional Office",
+    address: "45-B, Main Boulevard, Gulberg III, Lahore 54660",
+    phone: "+92 42 3578 1200", email: "lahore@umss.pk",
+    hours: "Mon–Sat, 9:00 AM – 6:00 PM", mapQuery: "Gulberg III Lahore" },
+]
+emails: { general: "info@umss.pk", tenders: "tenders@umss.pk",
+          careers: "careers@umss.pk", support: "support@umss.pk" }
+whatsapp: "+92 300 1234567"
+social: { linkedin: "https://linkedin.com/company/umss", facebook: "https://facebook.com/umss.pk",
+          instagram: "https://instagram.com/umss.pk", youtube: "https://youtube.com/@umss" }
+stats: [
+  { value: 15, suffix: "+", label: "Years of MEP delivery" },
+  { value: 37, suffix: "+", label: "Projects delivered" },
+  { value: 250, suffix: "+", label: "Engineers & technicians" },
+  { value: 2.4, suffix: "M sq ft", label: "Building area serviced" },
+  { value: 0, label: "Lost-time incidents in 2025", note: "HSE record" },
+  { value: 98, suffix: "%", label: "On-time handover rate" },
+]
+leadership: [
+  { name: "Engr. Ahmed Raza", role: "Chief Executive Officer" },
+  { name: "Engr. Sana Malik", role: "Director, Projects" },
+  { name: "Engr. Bilal Chaudhry", role: "Head of HVAC" },
+  { name: "Engr. Usman Tariq", role: "Head of Fire Protection" },
+  { name: "Engr. Ayesha Khan", role: "QA/QC Manager" },
+  { name: "Engr. Hamza Iqbal", role: "HSE Manager" },
+]
+clients: 10 fictional developer/contractor names styled as wordmarks
+  (e.g. "Crescent Developers", "Indus Builders", "Margalla Estates", "Ravi Construct",
+   "Karakoram Infra", "Summit Healthcare Group", "Jinnah Retail Holdings",
+   "Pak Steel Structures", "Capital Smart Towers", "Northern Hospitality")
+testimonials: 4 quotes from fictional people at those fictional companies
+certifications: ISO 9001:2015, ISO 45001:2018, ISO 14001:2015, PEC C-6, NFPA-aligned practices
+timeline: 2009 founded (Islamabad) · 2012 first hospital MEP package · 2015 Lahore office ·
+          2018 fire protection division · 2021 integrated MEP delivery · 2025 37+ projects
+careers: 4 dummy open positions (Site MEP Engineer – HVAC, Fire Protection Supervisor,
+          Electrical Design Engineer, QA/QC Inspector) with location, type, experience
+```
 
-**Featured case studies (names only; all other details TODO):**
-Lady Reading Hospital, Buch International Hospital, Elanza Mall, Pakistan Cricket Board House, CGGC Head Office at Eighteen, Jazz Destiny.
+**Projects:** expand `/content/projects.ts` to **12 projects** — the 6 featured (Lady Reading Hospital, Buch International Hospital, Elanza Mall, Pakistan Cricket Board House, CGGC Head Office at Eighteen, Jazz Destiny) + 6 dummy ones. Every project gets dummy sector, city, status (completed/ongoing), year, services, area (sq ft), UMS package description, challenge/solution/outcome copy and key facts — so filters, related projects and service preselection all work.
 
-**Insight articles (6):**
-- Safety & Compliance: "Site Safety Planning for MEP Works", "Fire Protection Inspection Records"
-- MEP Systems: "VRF and Chilled-Water Systems", "Coordinating MEP Shop Drawings"
-- Maintenance & Operations: "HVAC Maintenance Planning", "MEP Handover Documentation"
-
-Write professional, specific English copy for services and articles (general engineering knowledge is fine). **Never** invent UMS-specific facts — numbers, client names beyond the list above, certifications, addresses, phones.
+**Insights:** 6 full dummy articles (from the earlier topic list) with author, date, read time and real, useful body copy (600–900 words each).
 
 ---
 
-## 8. Component architecture
+## 6. Pages
 
-```
-/app                     routes (Section 4)
-/components
-  /layout                Header, MegaMenu, MobileNav, Footer, CTABand
-  /home                  HeroCarousel, ServiceShortcuts, StatsBand, ServicesBento,
-                         FeaturedProjects, IndustriesGrid, DeliveryTimeline, ...
-  /services, /projects, /insights, /careers, /rfq
-  /ui                    Button, Badge, Card, Chip, Accordion, Tabs, Dialog, Sheet,
-                         SectionHeading (eyebrow + index + pipe line), Counter,
-                         Reveal, BlueprintGrid, PipeLine, CornerBrackets, Breadcrumbs
-  /search                SearchPalette, SearchResults
-  /assistant             AssistantLauncher, AssistantPanel, MessageList, QuickActions
-/content                 data files
-/lib                     utils, search index, seo helpers, schema (JSON-LD), validations
-/public                  brand, images, icons
-```
-Server Components by default; `"use client"` only where interaction is needed.
+### 6.1 HOME — very detailed (the showpiece)
+
+Order of sections. Each must have its own shape and entrance choreography.
+
+**H0. Preloader (first visit only, ≤1.8s)**
+- Navy screen; a blueprint line draws the UMS logo outline, a pressure-gauge needle sweeps 0→100 as the counter loads, then the screen splits diagonally (S1) to reveal the hero. Skipped on repeat visits (sessionStorage) and with reduced motion.
+
+**H1. Hero — "The building, X-rayed" (3D)**
+- Full-viewport dark hero. Center/right: a **low-poly isometric 3D building** (React Three Fiber) — glass shell with internal MEP systems visible: blue ducts (HVAC), red sprinkler pipes (Fire), amber cable trays (Electrical), teal water pipes (Plumbing).
+- Slow auto-rotation; mouse moves the camera slightly (parallax). On scroll the building **explodes into floors** (layers separate vertically).
+- Left: mono label `[ 33.6844° N, 73.0479° E — ISLAMABAD ]`, giant split-text H1 **"We engineer what buildings breathe, drink and run on."**, subline "HVAC, fire protection, electrical and plumbing for complex buildings across Pakistan.", CTAs **Request a Quote** (magnetic, cyan) and **Explore Projects** (outline with arrow draw).
+- Bottom: **discipline switcher** — 4 chips (HVAC / Fire / Electrical / Plumbing). Selecting one highlights that system in the 3D model (others fade to 15%), changes the accent colour and updates the CTA to `/request-a-quote?service=…`. Auto-cycles every 6s with a progress ring; pause button.
+- Blueprint grid + noise + cyan glow behind. Scroll cue: animated pipe dropping down.
+- Fallback: static high-quality render image (WebP) on mobile < 768px, low-power devices and reduced motion. 3D chunk lazy-loaded after first paint; LCP element is the H1.
+
+**H2. Trust ribbon — infinite marquee (S6 wave edge)**
+- Two rows moving opposite directions: client wordmarks (row 1), certifications + "PEC Registered • ISO 9001 • ISO 45001 • 24/7 Maintenance" (row 2). Pauses on hover. Wave-shaped top edge.
+
+**H3. Manifesto — masked text (S11)**
+- Giant statement filling the viewport: **"Behind every wall, above every ceiling — UMS."** Video loop of pipework/plant room plays *inside* the letters. Words light up one by one as you scroll (scrubbed). Small mono annotation lines point to words with tiny specs.
+
+**H4. Stats — radial gauges (S12)**
+- 6 stats from dummy data shown as engineering gauges/dials: needle sweeps and number counts up when in view. Metallic gradient numbers. Dark section with ruler tick marks on edges. One gauge is larger (feature: "37+ projects delivered").
+
+**H5. Services — morph + stacked deck (S14 + S7)**
+- Pinned section. Left: a large SVG shape that **morphs** between the 6 discipline icons (fan → flame → lightning → droplet → network → fountain) as you scroll. Right: **stacked sticky cards**, one per service; each new card slides over the previous one, which scales down and dims.
+- Each card: discipline colour accent, service name, one-line value, 4 systems as mono tags, mini animated diagram, "Explore" + "Get a quote for this" links.
+- Mobile: no pinning — swipeable card carousel with the morphing icon on top.
+
+**H6. "Inside a building" interactive cross-section (S13 blueprint frame)**
+- A large **SVG cross-section** of a multi-storey building (basement plant room, typical floors, roof). Hotspots (pulsing dots) on: chillers, AHUs, sprinkler mains, fire pump room, LT panels, water tanks, STP, rooftop cooling towers, pool.
+- Hover/tap a hotspot → tooltip card with system name, what it does, which UMS service covers it, link to service page.
+- Toggle buttons to show/hide each discipline's layer (pipes recolour). Framed by blueprint dimension lines and measurements.
+
+**H7. Featured projects — horizontal track (S8)**
+- Pinned horizontal scroll through 6 featured projects. Each panel: large image with **X-ray hover** (photo peels to line drawing), project name in huge outlined text, sector/city/year mono tags, UMS package chips, area figure, "View case study". Progress bar + counter (`03 / 06`). Custom cursor says "Drag".
+- Mobile: snap carousel.
+
+**H8. Industries — hexagon grid (S3)**
+- 6 hexagons (Healthcare, Commercial & Retail, Residential & Mixed-Use, Hospitality, Education & Institutional, Industrial & Warehousing) with icons. Hover a hex → it lifts, neighbours dim, a side panel shows relevant services (coloured chips) and 1–2 related projects. Light section, diagonal-cut top (S1).
+
+**H9. Delivery process — isometric steps (S10) on a pipeline**
+- 6 isometric blocks (Tender Review → Drawings & Coordination → Procurement → Installation → Testing & Commissioning → Handover) connected by a pipe; fluid flows through the pipe as you scroll, lighting each step. Each block: step number, title, 2-line description, deliverable tag (e.g. "Shop drawings", "T&C reports").
+
+**H10. Why UMS — split diagonal panels (S9)**
+- Left panel "Quality & Safety" (QA/QC, HSE, 0 LTI, ISO), right panel "Integrated Delivery" (single point of responsibility, in-house teams, 24/7 maintenance). Moving the mouse shifts the diagonal divide toward the hovered side; each panel has an image + 4 checklist items with animated ticks.
+
+**H11. Capabilities orbit (S4)**
+- Center: UMS emblem in a glowing ring. Around it, 12 capability nodes orbit slowly (BIM coordination, VRF, chilled water, fire pumps, FM-200 suppression, LT panels, ELV, BMS, STP, rainwater harvesting, LPG/NG, pools & fountains). Hover a node → orbit pauses, a connector line draws to an info card.
+
+**H12. Testimonials — notched cards (S2)**
+- 4 testimonials on steel-plate notched cards with a large quote mark, person name, role, company wordmark, project tag. Auto-advancing with drag; the active card is larger and tilted 0°, others ±3°.
+
+**H13. Insights — ticket cards (S16) in an asymmetric bento (S15)**
+- 1 featured large article + 3 smaller, ticket-notch cards with category colour tab, read time, date. One bento tile is a cut-out "Subscribe to technical notes" mini form (email only, no backend — success toast).
+
+**H14. Tender CTA — blueprint stamp**
+- Bold dark section: heading **"Have a tender or BOQ? Get a response within 48 hours."** A rotating circular stamp ("UMS • TENDER DESK • 48H RESPONSE •") beside the CTA. Buttons: Request a Quote, WhatsApp, Call. Shows `tenders@umss.pk`. Background: animated drawing of a floor plan.
+
+**H15. Footer — pipe network**
+- Dark navy-950. Large outlined "UMS" wordmark across the bottom that fills with cyan on hover. Columns: Company, Services, Industries, Resources, Offices (both dummy offices with address/phone/email/hours), social icons, newsletter, legal links, back-to-top button shaped as a valve wheel that rotates on click.
+
+Homepage acceptance: Lighthouse mobile Performance ≥ 85 (3D lazy, fallback on mobile), Accessibility 100, CLS < 0.05, no horizontal overflow at 360/390/768/1024/1440/1920px.
+
+### 6.2 Services overview — `/services`
+- Hero: S11 masked text "SYSTEMS" with plant-room video inside.
+- 6 disciplines as an asymmetric bento (S15) with discipline colours; each tile has a mini looping animated diagram (fan spinning, flame flicker, current pulse, water flow).
+- "Integrated MEP" explainer: S4 orbit showing how disciplines connect.
+- CTA: S1 diagonal band.
+
+### 6.3 Service detail template — `/services/[slug]` (6 pages)
+Each page themed by its discipline colour. Sections:
+1. Hero: discipline icon morph-in (S14), big title, value line, image with X-ray hover, CTA with `?service=`.
+2. Systems we deliver: S2 notched cards with icons and specs.
+3. How it works: animated technical diagram specific to the discipline (e.g. chilled-water loop for HVAC, sprinkler riser for Fire, single-line diagram for Electrical, water supply path for Plumbing).
+4. Applications: S3 hexagons linking to industries.
+5. UMS scope: S10 isometric steps.
+6. Related projects: S8 horizontal track (filtered).
+7. FAQ: accordion with pipe-joint icon, FAQPage JSON-LD.
+8. CTA band (S9 split).
+Sticky in-page nav (desktop) styled as a vertical pipe with valves as section markers.
+
+### 6.4 Projects — `/projects`
+- Hero: counter strip (completed / ongoing / cities / sq ft) on S13 blueprint frame.
+- Tabs (All / Completed / Ongoing / Featured) + filters (sector, city, service, year) — URL-synced, animated reflow.
+- **Map view toggle**: stylised SVG map of Pakistan with project pins by city (Islamabad, Lahore, Peshawar, Multan, Karachi…); clicking a pin filters the grid.
+- Grid cards alternate two shapes (S2 notched / S5 pipe-bend) — never the same shape side by side.
+
+### 6.5 Case study — `/projects/[slug]`
+- Hero: full-bleed image with S11 masked project name, mono key facts bar.
+- Key facts panel on a blueprint frame (S13).
+- Challenge → Solution → Outcome as S7 stacked sticky cards.
+- Systems installed: S10 isometric floor stack with per-floor system labels.
+- Before/after or render/site comparison slider.
+- Gallery: masonry with lightbox.
+- Results: S12 gauges (area, duration, systems, team size — dummy).
+- "Need similar work?" CTA with `?service=&project=`. Prev/next project with image preview on hover.
+
+### 6.6 About — `/about` (+ mission-values, team, credentials)
+- Overview: S11 masked hero, story timeline as a horizontal pipeline (S8) with milestones from dummy data, office cards.
+- Mission & Values: values as S3 hexagons with flip interaction.
+- Team: leadership in S2 notched cards with duotone photo placeholders (generated initials avatars, no real faces), org chart as an animated pipe-network diagram.
+- Credentials: certificates as S16 ticket cards with "View certificate" modal, PEC badge, company profile download (dummy PDF link).
+
+### 6.7 Quality, Safety & Delivery — `/quality-safety-delivery`
+- Hero with animated hard-hat/shield line icon. Sticky side TOC.
+- QA/QC: inspection checklist with ticks that animate in.
+- HSE: 0 LTI gauge (S12), safety pillars as S2 cards.
+- Testing & Commissioning: S10 isometric steps.
+- Handover: documentation stack visual (S7).
+
+### 6.8 Industries — `/industries`
+- Hero: S3 hexagon mosaic of 6 sectors.
+- Each sector: anchored section, alternating shapes (S9 split, S1 diagonal, S5 pipe-bend…), relevant services, related projects, sector-specific challenges (e.g. medical gas & isolation rooms for healthcare).
+- `scroll-margin-top` for `/industries#<sector>` anchors.
+
+### 6.9 Insights — `/insights`, `/insights/category/[category]`, `/insights/[slug]`
+- Hub: featured article in S11 hero, category filter pills, S16 ticket card grid.
+- Article: reading progress as a pipe filling with water, TOC, mono meta line, pull quotes in notched cards, related services and articles, Article JSON-LD.
+
+### 6.10 Careers — `/careers`
+- Hero: "Build the systems inside Pakistan's landmark buildings."
+- Culture: S15 bento with dummy perks (training, site exposure, PEC support, health cover).
+- Open positions: S16 ticket cards with location/type/experience, expandable details, "Apply" scrolls to form with position preselected.
+- How to apply: S10 steps. Existing application form, redesigned.
+
+### 6.11 Contact — `/contact`
+- Split hero (S9): Islamabad | Lahore — hover reveals each office photo and details.
+- Office cards with dummy address, phone (click-to-call), email (mailto), hours, "Open in Google Maps" link (`https://maps.google.com/?q=<mapQuery>`), lazy map embed.
+- WhatsApp button, existing contact form redesigned, "Have a tender?" card → RFQ.
+
+### 6.12 Request a Quote — `/request-a-quote`
+- Keep all Phase 6 logic. Redesign UI: left side a **live "tender sheet"** preview (blueprint-styled document) that fills in as the user types; right side the multi-step form. Step indicator as a pipe with valves that open as steps complete. Service selection as large discipline-coloured tiles with animated icons.
+
+### 6.13 Search, 404, Privacy
+- Search palette: dark glass panel, results with discipline colour bars.
+- 404: animated "pipe leak" illustration — "This line doesn't connect." + links home/services/contact.
+- Privacy Policy: clean long-form typography with sticky TOC (dummy legal text, flagged in TODO.md for legal review).
 
 ---
 
-## 9. AI assistant ("UMS AI Assistant")
-
-- Desktop: floating launcher bottom-right → panel (380×560) with header "UMS AI Assistant", minimise/close.
-- Mobile: bottom sheet, opens below the hero actions, swipe-down to close.
-- Greeting: "How can I help with your project?" + quick actions: **Explore services**, **Request a quote**, **View projects**.
-- Message input, streaming responses, typing indicator, suggested follow-ups.
-- `/api/assistant`: answers ONLY from `/content` data (services, projects, offices); if `AI_API_KEY` is missing, return scripted mock answers. Detect quote intent → reply with a button linking to `/request-a-quote?service=…`.
-- Disclaimer line: "AI answers may be inaccurate. For tenders, contact our team."
+## 7. Global components
+- **Header:** transparent over dark heroes → glass (backdrop-blur) on scroll; hides on scroll down, shows on scroll up. Mega menus: Services menu shows the 6 disciplines with colour bars and a live mini 3D/animated icon preview; About menu with descriptions. Request a Quote magnetic button.
+- **Mobile nav:** full-screen with staggered big links, accordion submenus, offices + WhatsApp at bottom.
+- **AI assistant** (built in its own phase): floating valve-wheel launcher; panel with quick actions; answers from `/content`; mock replies without API key.
+- **Page transitions:** navy panel wipe with a pipe line drawing across (≤600ms).
 
 ---
 
-## 10. SEO, performance, accessibility
-
-**SEO**
-- `generateMetadata` per page: unique title, description, canonical, Open Graph, Twitter.
-- JSON-LD: Organization + LocalBusiness (both offices), Service, BreadcrumbList, Article, FAQPage.
-- `sitemap.ts`, `robots.ts`, dynamic OG images.
-- Internal linking: services ↔ industries ↔ projects ↔ insights.
-- Keyword themes: "MEP contracting in Pakistan", "HVAC contracting in Islamabad", "fire fighting contractors Lahore", etc.
-
-**Performance targets**
-- Lighthouse ≥ 95 Performance, 100 Accessibility, 100 Best Practices, 100 SEO (mobile).
-- LCP < 2.5s, CLS < 0.05. Hero first image `priority`; others lazy. Lazy-load the assistant and search palette.
-
-**Accessibility**
-- WCAG 2.2 AA: semantic landmarks, skip link, visible cyan focus rings, full keyboard nav for menus, carousel and filters, carousel pause control, alt text on every image, form labels and error announcements (aria-live), reduced-motion support.
-
-**Responsive**
-- Breakpoints: 360, 768, 1024, 1280, 1536. Mobile homepage: 2-column service grid, prominent hero CTAs.
+## 8. Performance, SEO, accessibility (non-negotiable)
+- 3D, GSAP-heavy sections and assistant are dynamically imported; mobile gets lighter fallbacks.
+- Images: next/image, AVIF/WebP, correct `sizes`, blur placeholders. Videos: muted, `playsInline`, poster, lazy, < 3MB each.
+- Metadata + JSON-LD (Organization, LocalBusiness ×2, Service, Article, FAQPage, BreadcrumbList) on every relevant page; sitemap, robots, OG images.
+- WCAG 2.2 AA: keyboard access to every interactive shape (hotspots, hexagons, orbit nodes, sliders), visible focus, `aria-*` on custom widgets, alt text, pause controls for anything that auto-moves > 5s, full reduced-motion support.
+- Targets: Lighthouse mobile Performance ≥ 85 on Home, ≥ 90 elsewhere; Accessibility, Best Practices, SEO = 100.
 
 ---
 
-## 11. Quality rules for Claude Code
-- TypeScript strict, no `any`. Small, reusable components.
-- No placeholder "Lorem ipsum" — write real copy or mark `TODO: client to confirm`.
-- Consistent naming: use "Fire Fighting" for the service page and "Fire Protection" only as the hero slide label; use "Insights" in nav, "Blog & Insights" as the hub page title.
-- Every phase must pass `npm run build` and `npm run lint` with zero errors, then end with
-  logical commits → tag → push → summary (with commit hashes) → STOP (Section 13).
-- Keep a `TODO.md` listing every client-dependent item (logo, photos, PEC details, phones, addresses, client logos, project facts, company profile PDF).
+## 9. Phases (one at a time — STOP after each for my approval)
+
+| Phase | Scope |
+|---|---|
+| **V2-1** | Branch `feature/ums-v2`, replace spec, install deps, new design tokens, fonts, `/content/dummy.ts` wired into all content (12 projects, 6 articles, careers, team…), remove all "To be confirmed" UI, Shape Library components (S1–S16) + `/dev/shapes` showcase page, custom cursor, Lenis+ScrollTrigger setup |
+| **V2-2** | Header, mega menus, mobile nav, footer (H15), page transitions, preloader (H0), search palette, 404 |
+| **V2-3** | Home part 1: H1 3D hero (with fallbacks), H2, H3, H4, H5 |
+| **V2-4** | Home part 2: H6 cross-section, H7, H8, H9, H10, H11, H12, H13, H14 + full homepage performance pass |
+| **V2-5** | Services overview + 6 service pages |
+| **V2-6** | Projects library (with map view) + 12 case studies |
+| **V2-7** | About (4 pages), Quality/Safety, Industries |
+| **V2-8** | Careers, Contact, Request a Quote redesign (logic kept), Privacy |
+| **V2-9** | Insights hub, categories, 6 articles |
+| **V2-10** | AI assistant |
+| **V2-11** | Final polish: SEO, Lighthouse, accessibility and reduced-motion audit, cross-browser check, remove dead code, README + TODO.md "Replace before launch" list |
+
+At the end of every phase:
+1. `npm run lint`, typecheck and `npm run build` — zero errors.
+2. Verify in a real browser at 360, 390, 768, 1024, 1440, 1920px, keyboard-only and with reduced motion. Take screenshots of new sections and list what you checked.
+3. Commit (Section 10), tag, push.
+4. Summary: what was built, commits, what I should check, open issues. Then **STOP**.
+5. Stop every server you started. Never start a server on port 3000 if one is already running — use another port.
 
 ---
 
-## 12. Build phases (paste one at a time after approving the previous)
-
-**Phase 1 — Foundation**
-```
-Do Phase 1: set up Next.js 15 + TS + Tailwind v4 + shadcn/ui + Framer Motion + Lenis.
-Implement the design tokens, fonts, global styles, and the UI primitives
-(Button, SectionHeading, Reveal, BlueprintGrid, PipeLine, CornerBrackets, Counter, Badge, Chip).
-Create all /content data files and types from Section 7. Create /dev/ui showcase page
-displaying all primitives. Build, lint, commit, tag, push, summarise (with commit hashes), stop.
-```
-
-**Phase 2 — Header, mega menus, mobile nav, footer, search palette**
-```
-Do Phase 2 from PROJECT_SPEC.md: Header (sticky/transparent behaviour), About and Services
-mega-dropdowns, mobile full-screen nav, Footer with CTA band, and the ⌘K search palette
-with Fuse.js. Fully keyboard accessible. Build, lint, commit, tag, push, summarise (with commit hashes), stop.
-```
-
-**Phase 3 — Homepage**
-```
-Do Phase 3: build the complete Home page per Section 6.1 with all motion from Section 3.4.
-Hero carousel must have pause/play, service tabs with progress, swipe, and the service-aware
-Request a Quote link. Check at 360px, 768px and 1440px. Build, lint, commit, tag, push, summarise (with commit hashes), stop.
-```
-
-**Phase 4 — Services**
-```
-Do Phase 4: Services overview + the shared service template + all 6 service pages
-(Section 6.4) with related projects/insights, FAQ + JSON-LD. Build, lint, commit, tag, push, summarise (with commit hashes), stop.
-```
-
-**Phase 5 — Projects & case studies**
-```
-Do Phase 5: Projects library with URL-synced filters and tabs, and the case study template
-with the 6 featured projects (Sections 6.6, 6.7). Build, lint, commit, tag, push, summarise (with commit hashes), stop.
-```
-
-**Phase 6 — RFQ & forms**
-```
-Do Phase 6: multi-step Request a Quote form with service pre-selection from query params,
-/api/rfq with Resend (console fallback), honeypot and rate limit; also the Contact form and
-Careers application form. Build, lint, commit, tag, push, summarise (with commit hashes), stop.
-```
-
-**Phase 7 — About, Quality/Safety, Industries, Careers, Contact, Privacy**
-```
-Do Phase 7: all remaining corporate pages (Sections 6.2, 6.3, 6.5, 6.9, 6.10, 6.13).
-Build, lint, commit, tag, push, summarise (with commit hashes), stop.
-```
-
-**Phase 8 — Insights**
-```
-Do Phase 8: Insights hub, 3 category pages, 6 articles with TOC, reading progress,
-related content and Article JSON-LD. Build, lint, commit, tag, push, summarise (with commit hashes), stop.
-```
-
-**Phase 9 — AI assistant**
-```
-Do Phase 9: the UMS AI Assistant (Section 9) — desktop panel, mobile bottom sheet,
-quick actions, streaming /api/assistant with mock fallback, quote-intent deep links.
-Build, lint, commit, tag, push, summarise (with commit hashes), stop.
-```
-
-**Phase 10 — SEO, performance, accessibility polish**
-```
-Do Phase 10: metadata on every page, sitemap, robots, OG images, all JSON-LD, image
-optimisation, lazy loading, reduced-motion audit, keyboard audit, contrast audit.
-Run Lighthouse on Home, a service page and a case study and fix issues to hit Section 10
-targets. Update TODO.md. Build, lint, commit, tag, push, final summary (with commit hashes).
-```
-
----
-
-## 13. Git workflow (mandatory, every phase)
-
-### 13.1 Branching
-- `main` = stable, reviewed code only. Never commit or push directly to `main`.
-- All work happens on `feature/ums-website`:
-    git checkout -b feature/ums-website
-    git push -u origin feature/ums-website
-- If the repo has no commits yet, first make an initial commit on `main`
-  (`chore: initial commit` with README + .gitignore), push `main`, then create the branch.
-- If `git remote -v` is empty, stop and ask me for the GitHub repository URL.
-  Never create a remote repo yourself.
-
-### 13.2 Commit messages — Conventional Commits
-Format: `type(scope): short imperative summary` (max ~72 chars, lowercase, no full stop),
-optional body explaining what and why.
-Types: feat, fix, style, refactor, perf, docs, chore, test (accessibility = fix(a11y)/feat(a11y)).
-Scopes: setup, ui, layout, nav, search, home, services, projects, rfq, forms, about,
-industries, careers, contact, insights, assistant, seo, content.
-Examples:
-  chore(setup): initialise next.js 15 with typescript, tailwind v4 and shadcn/ui
-  feat(ui): add design tokens, fonts and section heading primitive
-  feat(home): build hero carousel with service tabs and pause control
-  feat(rfq): pre-select service from query params in quote form
-  fix(nav): close mega menu on escape and restore focus
-
-### 13.3 Commit discipline
-- Several small, logical commits per phase — never one giant commit.
-- Only commit code that passes `npm run build` and `npm run lint`.
-- Stage files deliberately (`git add <paths>`) and review `git diff --staged` first.
-- Never commit secrets: .env* (except .env.example), API keys, node_modules, .next.
-  Keep .gitignore correct and maintain .env.example with every required variable.
-- No force-push or history rewriting unless I explicitly ask.
-
-### 13.4 End of every phase
-1. `npm run build && npm run lint` → zero errors.
-2. Commit remaining work in logical commits.
-3. Tag the milestone: `git tag -a phase-N -m "Phase N: <name> complete"`.
-4. `git push origin feature/ums-website --follow-tags`
-5. In the summary, list this phase's commits (`git log --oneline`) and confirm the push.
-
-### 13.5 Merging to main
-- Never merge yourself. After the final phase (or when I ask), prepare a Pull Request
-  description from feature/ums-website → main summarising all phases and wait for me.
-- If gh CLI is available and I ask, open the PR with `gh pr create`.
-
-### 13.6 README
-Keep README.md updated: overview, stack, setup (npm install, .env.example, npm run dev),
-scripts, folder structure, and these branch/commit conventions.
+## 10. Git workflow
+- Branch `feature/ums-v2` (from `feature/ums-website`). Never commit to `main`. Never force-push.
+- Conventional Commits: `type(scope): imperative summary` — types feat, fix, style, refactor, perf, docs, chore, test. Scopes: setup, tokens, shapes, motion, layout, nav, home, hero, services, projects, about, quality, industries, careers, contact, rfq, insights, assistant, seo, content.
+- Several small logical commits per phase. Review `git diff --staged` before each commit. Never commit `.env*` (except `.env.example`), `node_modules`, `.next`.
+- Tag each phase: `git tag -a v2-phase-N -m "V2 Phase N: <name>"`, then `git push origin feature/ums-v2 --follow-tags`.
+- Do not merge to `main`. After V2-11, prepare a PR description `feature/ums-v2 → main` and wait for me.
