@@ -16,27 +16,25 @@ export interface IsoStep {
 export function IsoBlock({
   n,
   color = "var(--cyan)",
-  lit = true,
   className,
 }: {
   n: number;
   color?: string;
-  lit?: boolean;
   className?: string;
 }) {
-  // A cube in a 120×120 box. Top face is a rhombus; the sides are parallelograms.
+  // A cube in a 120×120 box. The top face is a rhombus; the sides are parallelograms.
   const top = "60,10 110,38 60,66 10,38";
   const left = "10,38 60,66 60,114 10,86";
   const right = "110,38 60,66 60,114 110,86";
   return (
     <svg aria-hidden viewBox="0 0 120 120" className={cn("block", className)}>
-      <polygon points={left} fill={color} opacity={lit ? 0.55 : 0.18} />
-      <polygon points={right} fill={color} opacity={lit ? 0.8 : 0.28} />
-      <polygon points={top} fill={color} opacity={lit ? 1 : 0.4} />
+      <polygon points={left} fill={color} opacity={0.55} />
+      <polygon points={right} fill={color} opacity={0.8} />
+      <polygon points={top} fill={color} />
       <polygon points={top} fill="none" stroke="rgb(255 255 255 / 0.55)" strokeWidth="1" />
       <text
         x="60"
-        y="44"
+        y="38"
         textAnchor="middle"
         dominantBaseline="middle"
         fontFamily="var(--font-barlow), sans-serif"
@@ -52,9 +50,10 @@ export function IsoBlock({
 }
 
 /**
- * S10 · Isometric steps. Process steps drawn as 30° isometric blocks on a pipeline. The pipe
- * fills as the section scrolls through view (scrubbed) and each block lights up when the fluid
- * reaches it. With reduced motion every block is lit and the pipe is full.
+ * S10 · Isometric tiles. Process steps drawn as 30° isometric blocks connected by one pipe:
+ * a single row on wide screens, a vertical run on narrow ones. As the section scrolls through
+ * view the pipe fills (scrubbed) and each block lights up when the fluid reaches it. With reduced
+ * motion the pipe is full and every block is lit.
  */
 export function IsoSteps({
   steps,
@@ -75,52 +74,64 @@ export function IsoSteps({
     ({ reduceMotion }) => {
       const el = root.current;
       if (!el) return;
-      const fills = gsap.utils.toArray<HTMLElement>("[data-pipe-fill]", el);
       const blocks = gsap.utils.toArray<HTMLElement>("[data-iso]", el);
+      const lightUp = (p: number) =>
+        blocks.forEach((b, i) => {
+          b.dataset.lit = String(p >= (blocks.length === 1 ? 0 : i / (blocks.length - 1)) - 0.001);
+        });
+
       if (reduceMotion) {
-        gsap.set(fills, { scaleX: 1, scaleY: 1 });
-        gsap.set(blocks, { opacity: 1 });
+        el.style.setProperty("--p", "1");
+        lightUp(1);
         return;
       }
-      gsap.set(blocks, { opacity: 0.35 });
-      fills.forEach((f) => gsap.set(f, { scaleX: 0, scaleY: 0 }));
-      blocks.forEach((b, i) => {
-        gsap.to(b, {
-          opacity: 1,
-          ease: "none",
-          scrollTrigger: { trigger: b, start: "top 78%", end: "top 55%", scrub: true },
-        });
-        const fill = fills[i];
-        if (fill) {
-          gsap.to(fill, {
-            scaleX: 1,
-            scaleY: 1,
-            ease: "none",
-            scrollTrigger: { trigger: b, start: "top 70%", end: "bottom 45%", scrub: true },
-          });
-        }
+      el.style.setProperty("--p", "0");
+      lightUp(0);
+      gsap.to(el, {
+        "--p": 1,
+        ease: "none",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 70%",
+          end: "bottom 60%",
+          scrub: true,
+          onUpdate: (self) => lightUp(self.progress),
+        },
       });
     },
     [steps.length],
   );
 
   return (
-    <ol ref={root} className={cn("relative grid gap-10 sm:grid-cols-2 lg:grid-cols-3", className)}>
+    <ol
+      ref={root}
+      className={cn("relative grid gap-y-10 xl:grid-cols-6 xl:gap-x-6", className)}
+      style={{ ["--p" as string]: 1 }}
+    >
+      {/* The pipe: vertical on narrow screens, horizontal on xl. Runs behind the blocks. */}
+      <span
+        aria-hidden
+        className={cn(
+          "absolute left-12 top-12 h-[calc(100%-6rem)] w-[4px] rounded-full xl:left-12 xl:right-12 xl:top-12 xl:h-[4px] xl:w-auto",
+          dark ? "bg-white/15" : "bg-navy/15",
+        )}
+      >
+        <span
+          className="block h-full w-full origin-top rounded-full max-xl:[transform:scaleY(var(--p))] xl:origin-left xl:[transform:scaleX(var(--p))]"
+          style={{ background: color, boxShadow: `0 0 12px ${color}` }}
+        />
+      </span>
+
       {steps.map((s, i) => (
-        <li key={s.title} className="relative flex gap-5">
-          {/* Pipe connecting this block to the next (horizontal on wide screens, vertical on narrow) */}
-          {i < steps.length - 1 && (
-            <>
-              <span aria-hidden className={cn("absolute left-[3.75rem] top-[4.25rem] hidden h-[calc(100%-2rem)] w-[3px] sm:hidden", dark ? "bg-white/15" : "bg-navy/15")} />
-              <span aria-hidden className={cn("absolute left-8 top-[7.5rem] block h-[calc(100%-4rem)] w-[3px] sm:hidden", dark ? "bg-white/15" : "bg-navy/15")}>
-                <span data-pipe-fill className="block h-full w-full origin-top" style={{ background: color }} />
-              </span>
-            </>
-          )}
-          <div data-iso className="shrink-0">
-            <IsoBlock n={i + 1} color={color} className="size-24 sm:size-28" />
+        <li key={s.title} className="relative flex gap-5 xl:flex-col xl:gap-4">
+          <div
+            data-iso
+            data-lit="true"
+            className="shrink-0 opacity-40 transition-opacity duration-300 data-[lit=true]:opacity-100 motion-reduce:opacity-100"
+          >
+            <IsoBlock n={i + 1} color={color} className="size-24" />
           </div>
-          <div className="min-w-0 pb-8 pt-2">
+          <div className="min-w-0 pt-2 xl:pt-0">
             <h3 className={cn("text-xl", dark ? "text-white" : "text-navy")}>{s.title}</h3>
             <p className={cn("mt-2 text-[0.9375rem]", dark ? "text-white/70" : "text-muted")}>{s.text}</p>
             {s.tag && (

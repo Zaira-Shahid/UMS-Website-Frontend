@@ -80,10 +80,12 @@ export function HexGrid({
                 onMouseLeave={() => set(null)}
                 onFocus={() => set(item.id)}
                 onBlur={() => set(null)}
-                className="group relative block transition duration-300 ease-out focus-visible:outline-none"
+                className="group relative block transition duration-300 ease-out"
                 style={{
                   width: "var(--hex-w)",
                   aspectRatio: "1 / 1.1547",
+                  // The hexagon draws its own focus ring; the rectangular outline would not follow the shape.
+                  outline: "none",
                   transform: isActive ? "translateY(-6px) scale(1.04)" : undefined,
                   opacity: dim ? 0.4 : 1,
                   zIndex: isActive ? 2 : 1,

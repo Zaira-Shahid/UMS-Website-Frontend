@@ -49,8 +49,8 @@ export const MORPH_SHAPES = [
     id: "pools-fountains",
     label: "Pools & Fountains",
     color: "var(--pools)",
-    // Tiered fountain
-    d: "M50 6 C56 18 58 26 50 32 C42 26 44 18 50 6 Z M50 32 L50 32 C64 34 74 42 74 52 L58 52 L58 64 L84 64 C88 76 76 92 50 92 C24 92 12 76 16 64 L42 64 L42 52 L26 52 C26 42 36 34 50 32 Z",
+    // Fountain: a jet over two tiers and a basin, as one outline
+    d: "M50 6 C57 20 58 30 54 40 L72 44 C84 48 90 56 88 64 L76 64 L76 72 L92 72 L90 92 L10 92 L8 72 L24 72 L24 64 L12 64 C10 56 16 48 28 44 L46 40 C42 30 43 20 50 6 Z",
   },
 ] as const;
 

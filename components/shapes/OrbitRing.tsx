@@ -36,7 +36,7 @@ export function OrbitRing({
   return (
     <div className={cn("mx-auto w-full max-w-[34rem]", className)}>
       <div
-        className="orbit relative aspect-square w-full"
+        className="orbit relative aspect-square w-full overflow-clip"
         data-paused={active ? "true" : "false"}
         onMouseLeave={() => setActive(null)}
       >
@@ -49,11 +49,25 @@ export function OrbitRing({
           {center}
         </div>
 
-        {/* Rotating ring of nodes */}
-        <ul className="orbit-ring animate-orbit absolute inset-0 m-0 list-none p-0">
+        {/* Rotating ring: the connector and the nodes turn together, so the line always meets its node */}
+        <div className="orbit-ring animate-orbit absolute inset-0">
+          {activeNode && (
+            <svg aria-hidden viewBox="0 0 100 100" className="pointer-events-none absolute inset-0 h-full w-full">
+              <line
+                x1="50"
+                y1="50"
+                x2={50 + 40 * Math.cos(angle(activeIndex))}
+                y2={50 + 40 * Math.sin(angle(activeIndex))}
+                stroke="var(--cyan-300)"
+                strokeWidth="0.4"
+                strokeDasharray="1.2 1"
+              />
+            </svg>
+          )}
+          <ul className="absolute inset-0 m-0 list-none p-0">
           {nodes.map((n, i) => {
-            const x = 50 + 42 * Math.cos(angle(i));
-            const y = 50 + 42 * Math.sin(angle(i));
+            const x = 50 + 40 * Math.cos(angle(i));
+            const y = 50 + 40 * Math.sin(angle(i));
             return (
               <li key={n.id} className="absolute" style={{ left: `${x}%`, top: `${y}%`, transform: "translate(-50%, -50%)" }}>
                 <button
@@ -64,7 +78,7 @@ export function OrbitRing({
                   onFocus={() => setActive(n.id)}
                   onBlur={() => setActive(null)}
                   className={cn(
-                    "orbit-node animate-orbit-reverse flex size-[3.25rem] items-center justify-center rounded-full border text-center font-heading text-[0.5625rem] font-bold uppercase leading-[1.05] tracking-[0.03em] transition-colors duration-200 sm:size-16 sm:text-[0.625rem]",
+                    "orbit-node animate-orbit-reverse flex size-[3.5rem] items-center justify-center rounded-full border text-center font-heading text-[0.5625rem] font-bold uppercase leading-[1.05] tracking-[0.02em] transition-colors duration-200 sm:size-[4.5rem] sm:text-[0.6875rem]",
                     active === n.id
                       ? "border-cyan-300 bg-cyan text-navy-950"
                       : dark
@@ -77,14 +91,8 @@ export function OrbitRing({
               </li>
             );
           })}
-        </ul>
-
-        {/* Connector to the active node (drawn in the un-rotated frame, so it is shown only while paused) */}
-        {activeNode && (
-          <svg aria-hidden viewBox="0 0 100 100" className="pointer-events-none absolute inset-0 z-20 h-full w-full">
-            <line x1="50" y1="50" x2={50 + 42 * Math.cos(angle(activeIndex))} y2={50 + 42 * Math.sin(angle(activeIndex))} stroke="var(--cyan-300)" strokeWidth="0.4" strokeDasharray="1.2 1" />
-          </svg>
-        )}
+          </ul>
+        </div>
       </div>
 
       {/* Info card */}

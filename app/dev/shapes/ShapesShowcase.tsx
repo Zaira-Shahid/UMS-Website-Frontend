@@ -241,7 +241,7 @@ export function ShapesShowcase() {
             Two drifting wave layers on the seam between sections (this one is white over navy).
           </Label>
         </div>
-        <WaveDivider fill="var(--offwhite)" height={96} />
+        <WaveDivider fill="var(--offwhite)" backFill="var(--cyan-100)" height={96} />
       </section>
 
       {/* ---------- S7 */}
@@ -278,6 +278,14 @@ export function ShapesShowcase() {
                 <p className="mono-label text-cyan-300">Quality & safety</p>
                 <h3 className="mt-3 text-4xl text-white">Zero lost-time incidents</h3>
                 <p className="mt-3 text-white/70">QA/QC at every hold point, ISO-certified systems and a safe site every day.</p>
+                <ul className="mt-6 space-y-2 text-white/80">
+                  {["Inspection and test plans", "Permit-to-work", "Daily toolbox talks", "ISO 45001 certified"].map((t) => (
+                    <li key={t} className="flex gap-3">
+                      <span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-cyan-300" />
+                      {t}
+                    </li>
+                  ))}
+                </ul>
               </>
             }
             right={
@@ -285,6 +293,14 @@ export function ShapesShowcase() {
                 <p className="mono-label text-cyan-300">Integrated delivery</p>
                 <h3 className="mt-3 text-4xl text-white">One accountable team</h3>
                 <p className="mt-3 text-white/70">In-house trades, single-point responsibility and 24/7 maintenance.</p>
+                <ul className="mt-6 space-y-2 text-white/80">
+                  {["One contract, six disciplines", "In-house engineers", "Coordinated shop drawings", "24/7 maintenance"].map((t) => (
+                    <li key={t} className="flex gap-3">
+                      <span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-cyan-300" />
+                      {t}
+                    </li>
+                  ))}
+                </ul>
               </>
             }
           />

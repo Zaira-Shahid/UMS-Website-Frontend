@@ -1,7 +1,8 @@
 import type { CSSProperties, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-const TAB_W = "42%";
+/** Tab width: 42% of the card, but never narrower than a long category label needs. */
+const TAB_W = "max(42%, 9.5rem)";
 const TAB_H = "2rem";
 
 const SHAPE = `polygon(0 0, ${TAB_W} 0, calc(${TAB_W} + 14px) ${TAB_H}, 100% ${TAB_H}, 100% 100%, 0 100%)`;

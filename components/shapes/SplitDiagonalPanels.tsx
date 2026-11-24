@@ -29,7 +29,7 @@ export function SplitDiagonalPanels({
     if (e.pointerType !== "mouse" || !root.current) return;
     const rect = root.current.getBoundingClientRect();
     const t = (e.clientX - rect.left) / rect.width;
-    setSplit(Math.min(66, Math.max(34, 34 + t * 32)));
+    setSplit(Math.min(62, Math.max(38, 38 + t * 24)));
   };
 
   const slant = 8; // percentage points of horizontal offset between top and bottom of the divide
@@ -49,23 +49,23 @@ export function SplitDiagonalPanels({
           role="group"
           aria-label={leftLabel}
           tabIndex={0}
-          onFocus={() => setSplit(62)}
+          onFocus={() => setSplit(60)}
           onBlur={() => setSplit(50)}
           className="absolute inset-0 bg-navy transition-[clip-path] duration-500 ease-out"
           style={{ clipPath: leftClip } as CSSProperties}
         >
-          <div className="h-full w-[62%] p-10">{left}</div>
+          <div className="h-full w-[34%] min-w-[15rem] py-10 pl-10">{left}</div>
         </div>
         <div
           role="group"
           aria-label={rightLabel}
           tabIndex={0}
-          onFocus={() => setSplit(38)}
+          onFocus={() => setSplit(40)}
           onBlur={() => setSplit(50)}
           className="absolute inset-0 bg-navy-900 transition-[clip-path] duration-500 ease-out"
           style={{ clipPath: rightClip } as CSSProperties}
         >
-          <div className="ml-auto h-full w-[62%] p-10">{right}</div>
+          <div className="ml-auto h-full w-[34%] min-w-[15rem] py-10 pr-10">{right}</div>
         </div>
         {/* The divide line */}
         <svg aria-hidden className="pointer-events-none absolute inset-0 h-full w-full" preserveAspectRatio="none" viewBox="0 0 100 100">

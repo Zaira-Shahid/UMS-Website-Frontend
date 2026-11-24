@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { animate, useInView, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
 
@@ -47,9 +47,12 @@ export function RadialGauge({
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const gradId = `gauge-metal-${useId().replace(/:/g, "")}`;
   const inView = useInView(ref, { once: true, margin: "0px 0px -15% 0px" });
   const reduce = useReducedMotion();
-  const [t, setT] = useState(reduce ? 1 : 0);
+  // Server and first client render show the final value (no hydration mismatch, readable without JS);
+  // the sweep restarts from zero when the dial scrolls into view.
+  const [t, setT] = useState(1);
 
   useEffect(() => {
     if (!inView || reduce) return;
@@ -79,7 +82,7 @@ export function RadialGauge({
     >
       <svg aria-hidden viewBox="0 0 200 180" width={size} height={(size * 180) / 200} className="block overflow-visible">
         <defs>
-          <linearGradient id="gauge-metal" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
             <stop offset="0" stopColor="#fff" />
             <stop offset=".5" stopColor="#cfe7f4" />
             <stop offset="1" stopColor="#8a9baa" />
@@ -108,7 +111,7 @@ export function RadialGauge({
           fontFamily="var(--font-barlow), sans-serif"
           fontWeight="800"
           fontSize="34"
-          fill="url(#gauge-metal)"
+          fill={`url(#${gradId})`}
         >
           {shown}
           {suffix && <tspan fontSize="14" dx="3">{suffix}</tspan>}
