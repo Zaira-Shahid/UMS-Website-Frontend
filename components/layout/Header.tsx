@@ -25,7 +25,8 @@ const hasDarkHero = (pathname: string) =>
   pathname.startsWith("/projects/") ||
   pathname === "/request-a-quote" ||
   pathname === "/contact" ||
-  pathname === "/careers";
+  pathname === "/careers" ||
+  pathname === "/search";
 
 /**
  * Site header (spec §7). Transparent over dark heroes, glass (backdrop blur) once scrolled; hides

@@ -425,6 +425,38 @@ html.has-custom-cursor [data-cursor] {
   animation-play-state: paused;
 }
 
+/* 404 pipe leak */
+@keyframes ums-drip {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(86px);
+    opacity: 0;
+  }
+}
+@keyframes ums-puddle {
+  0%,
+  100% {
+    transform: scaleX(0.9);
+  }
+  50% {
+    transform: scaleX(1.08);
+  }
+}
+.nf-drip {
+  animation: ums-drip 1.5s ease-in infinite;
+}
+.nf-puddle {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ums-puddle 3s ease-in-out infinite;
+}
+
 /* Wave divider drift */
 @keyframes ums-wave-drift {
   to {
@@ -442,6 +474,8 @@ html.has-custom-cursor [data-cursor] {
   html.has-custom-cursor [data-cursor] {
     cursor: auto;
   }
+  .nf-drip,
+  .nf-puddle,
   .pipe-fluid,
   .animate-orbit,
   .animate-orbit-reverse,
