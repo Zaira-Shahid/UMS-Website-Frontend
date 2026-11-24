@@ -13,7 +13,14 @@ const HARD_CAP_MS = 1800;
  * Runs before first paint (inline in <head>): marks the document so the preloader overlay is hidden
  * by CSS on repeat visits, with reduced motion, and without JavaScript.
  */
-export const PRELOADER_GUARD = `try{if(sessionStorage.getItem("${PRELOADER_KEY}")||matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.dataset.preloader="skip"}catch(e){}`;
+export const PRELOADER_GUARD = `try{var d=document.documentElement;if(sessionStorage.getItem("${PRELOADER_KEY}")||matchMedia("(prefers-reduced-motion: reduce)").matches)d.dataset.preloader="skip";d.style.setProperty("--pl-t",(performance.now()/1000)+"s")}catch(e){}`;
+
+/**
+ * Inline critical CSS for the overlay (so it never depends on the main stylesheet arriving): fixed
+ * positioning, hidden when skipped, and a CSS-only hard cap that fades it out 1.8s after navigation
+ * start. \`--pl-t\` is the time already elapsed when the guard script ran, taken off the delay.
+ */
+export const PRELOADER_STYLE = `.preloader{position:fixed;inset:0;z-index:300;background:#06141f;animation:ums-preloader-cap .2s ease calc(${HARD_CAP_MS / 1000 - 0.2}s - var(--pl-t,0s)) forwards}html[data-preloader="skip"] .preloader{display:none}@keyframes ums-preloader-cap{to{opacity:0;visibility:hidden;pointer-events:none}}`;
 
 /**
  * H0 · Preloader (first visit of a session only; the animation is 1.45s and the overlay is gone by
@@ -108,7 +115,7 @@ export function Preloader() {
     <div
       ref={root}
       aria-hidden
-      className="preloader pointer-events-auto fixed inset-0 z-[300] overflow-hidden"
+      className="preloader pointer-events-auto overflow-hidden"
     >
       <div
         ref={topLeft}

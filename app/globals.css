@@ -382,17 +382,7 @@ h3 {
 html[data-preloader="skip"] .preloader {
   display: none;
 }
-/* CSS-only hard cap: the overlay fades out by 1.8s even if scripts never run */
-@keyframes ums-preloader-cap {
-  to {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-  }
-}
-.preloader {
-  animation: ums-preloader-cap 0.2s ease 1.6s forwards;
-}
+
 
 /* Custom cursor: hide the native one only once the custom one is live */
 html.has-custom-cursor,
