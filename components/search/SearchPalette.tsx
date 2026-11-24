@@ -94,7 +94,7 @@ export default function SearchPalette({
       onClick={(e) => {
         if (e.target === dialogRef.current) onClose();
       }}
-      className="bg-grain m-auto mt-[8vh] w-[calc(100%-2rem)] max-w-2xl overflow-hidden border border-white/15 bg-navy-950/90 p-0 text-white shadow-[0_30px_80px_-20px_rgb(0_0_0/0.7)] backdrop-blur-2xl backdrop:bg-navy-950/70 backdrop:backdrop-blur-sm sm:mt-[12vh]"
+      className="m-auto mt-[8vh] w-[calc(100%-2rem)] max-w-2xl overflow-hidden border border-white/15 bg-navy-950/90 p-0 text-white shadow-[0_30px_80px_-20px_rgb(0_0_0/0.7)] backdrop-blur-2xl backdrop:bg-navy-950/70 backdrop:backdrop-blur-sm sm:mt-[12vh]"
     >
       <div className="flex items-center gap-3 border-b border-white/10 px-5">
         <Search className="size-5 shrink-0 text-cyan-300" aria-hidden />
