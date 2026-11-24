@@ -1,7 +1,8 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { motion, useReducedMotion, type Variants } from "motion/react";
+import { motion, type Variants } from "motion/react";
+import { usePrefersReducedMotion } from "@/lib/motion/use-reduced-motion";
 
 const container: Variants = {
   hidden: {},
@@ -30,10 +31,17 @@ export function Reveal({
   stagger?: boolean;
   as?: "div" | "section" | "li" | "article" | "ul" | "ol";
 }) {
-  const reduce = useReducedMotion();
+  const reduce = usePrefersReducedMotion();
   const Tag = motion[as];
 
-  if (reduce) return <Tag className={className}>{children}</Tag>;
+  // `usePrefersReducedMotion` reports "no preference" during server render and hydration, so the
+  // first client render matches the server HTML; the switch to a plain element happens right after
+  // hydration. (Motion's own hook reads the preference immediately, which leaves the server-rendered
+  // `opacity: 0` style on the element: React does not patch mismatched attributes when hydrating.)
+  if (reduce) {
+    const Plain = as;
+    return <Plain className={className}>{children}</Plain>;
+  }
 
   return (
     <Tag
@@ -60,7 +68,7 @@ export function RevealItem({
   /** Use "li" when the parent is a list, so the markup stays valid. */
   as?: "div" | "li";
 }) {
-  const reduce = useReducedMotion();
+  const reduce = usePrefersReducedMotion();
   const Tag = motion[as];
   if (reduce) {
     const Plain = as;
