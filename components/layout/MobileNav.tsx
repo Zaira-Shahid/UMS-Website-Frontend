@@ -6,7 +6,8 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ChevronDown, Phone, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { BlueprintGrid } from "@/components/ui/BlueprintGrid";
-import { mainNav, quoteHref } from "@/content/navigation";
+import { usePathname } from "next/navigation";
+import { mainNav, quoteHrefForPath } from "@/content/navigation";
 import { offices } from "@/content/offices";
 import { cn } from "@/lib/utils";
 import { Logo } from "./Logo";
@@ -27,6 +28,7 @@ export function MobileNav({
   onClose: () => void;
   returnFocusRef: RefObject<HTMLButtonElement | null>;
 }) {
+  const pathname = usePathname();
   const reduce = useReducedMotion();
   const panelRef = useRef<HTMLDivElement>(null);
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -189,7 +191,7 @@ export function MobileNav({
               </div>
             )}
             <Button
-              href={quoteHref()}
+              href={quoteHrefForPath(pathname)}
               onClick={onClose}
               variant="accent"
               size="lg"

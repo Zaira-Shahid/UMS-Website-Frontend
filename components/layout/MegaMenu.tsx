@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { ArrowRight, BadgeCheck, Building2, ShieldCheck, Target, Users } from "lucide-react";
 import type { ComponentType } from "react";
-import { SiteImage } from "@/components/ui/SiteImage";
+import { ServiceVisual } from "@/components/services/ServiceVisual";
 import { Button } from "@/components/ui/Button";
-import { quoteHref } from "@/content/navigation";
+import { usePathname } from "next/navigation";
+import { quoteHrefForPath } from "@/content/navigation";
 import { services } from "@/content/services";
 import type { NavLink } from "@/types";
 import { cn } from "@/lib/utils";
@@ -58,6 +59,7 @@ export function AboutPanel({
 }
 
 export function ServicesPanel({ onNavigate }: { onNavigate: () => void }) {
+  const pathname = usePathname();
   return (
     <div className="mx-auto grid max-w-7xl grid-cols-12 gap-8 px-8 py-8">
       <ul className="col-span-9 grid grid-cols-3 gap-4">
@@ -68,10 +70,10 @@ export function ServicesPanel({ onNavigate }: { onNavigate: () => void }) {
               onClick={onNavigate}
               className="group relative block aspect-[4/3] overflow-hidden rounded-ums bg-navy-900"
             >
-              <SiteImage
-                asset={s.image}
+              <ServiceVisual
+                service={s}
                 sizes="(min-width:1280px) 280px, 22vw"
-                className="size-full object-cover opacity-70 transition duration-500 group-hover:scale-105 group-hover:opacity-50"
+                className="opacity-70 transition duration-500 group-hover:scale-105 group-hover:opacity-50"
               />
               <span
                 aria-hidden
@@ -103,7 +105,7 @@ export function ServicesPanel({ onNavigate }: { onNavigate: () => void }) {
           </p>
           <div className="mt-5">
             <Button
-              href={quoteHref()}
+              href={quoteHrefForPath(pathname)}
               onClick={onNavigate}
               variant="accent"
               size="sm"

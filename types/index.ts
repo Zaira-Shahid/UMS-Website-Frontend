@@ -1,6 +1,6 @@
 /**
- * Shared content types. Shapes are CMS-ready (e.g. Sanity) — every
- * client-dependent field is optional or flagged via `confirmed`.
+ * Shared content types. Shapes are CMS-ready (e.g. Sanity). All launch content comes from
+ * content/dummy.ts and is replaced with approved UMS content before launch (see TODO.md).
  */
 
 export type ServiceSlug =
@@ -19,7 +19,7 @@ export type IndustrySlug =
   | "education-institutional"
   | "industrial-warehousing";
 
-export type ProjectStatus = "completed" | "ongoing" | "unconfirmed";
+export type ProjectStatus = "completed" | "ongoing";
 
 export interface ImageAsset {
   src: string;
@@ -37,9 +37,29 @@ export interface FaqItem {
   answer: string;
 }
 
+/** Keys for the lucide icons used by the systems grid (mapped in components/services/SystemIcon). */
+export type SystemIconKey =
+  | "fan" | "snowflake" | "wind" | "thermometer" | "flame" | "droplets" | "waves" | "zap"
+  | "bell" | "megaphone" | "gauge" | "wrench" | "clipboard" | "package" | "hardhat" | "cable"
+  | "network" | "siren" | "shower" | "filter" | "cloudrain" | "sprout" | "ruler" | "filesearch"
+  | "layers" | "keyround" | "boxes" | "building" | "circuit" | "fuel";
+
 export interface ServiceSystem {
   name: string;
-  description?: string;
+  /** Two-line professional description of what the system is and does. */
+  description: string;
+  icon: SystemIconKey;
+}
+
+export interface ServiceApplication {
+  industry: IndustrySlug;
+  /** One line on why this sector needs the service. */
+  note: string;
+}
+
+export interface ScopeItem {
+  label: string;
+  detail: string;
 }
 
 export interface Service {
@@ -47,13 +67,19 @@ export interface Service {
   name: string;
   /** Hero-slide label, where it differs from `name` (e.g. "Fire Protection"). */
   shortName: string;
+  /** One-line value statement. */
   tagline: string;
+  /** Two or three sentences of introduction. */
   summary: string;
+  /** Unique meta description (≤ 160 chars). */
+  metaDescription: string;
   accent: "cyan" | "fire";
   systems: ServiceSystem[];
-  scope: string[];
-  applications: IndustrySlug[];
+  applications: ServiceApplication[];
+  scope: ScopeItem[];
   image: ImageAsset;
+  /** Draw a blueprint illustration instead of a photo (no suitable stock photo yet). */
+  illustration?: "plumbing";
   faqs: FaqItem[];
 }
 
@@ -65,30 +91,34 @@ export interface Industry {
   image: ImageAsset;
 }
 
-/** A value that still needs company confirmation. */
-export interface Unconfirmed {
-  confirmed: false;
-  note: string;
-}
-
 export interface Project {
   slug: string;
   name: string;
   featured: boolean;
   status: ProjectStatus;
-  sector?: IndustrySlug;
-  /** Services UMS delivered — TODO: client to confirm for every project. */
+  sector: IndustrySlug;
+  /** Services UMS delivered. */
   services: ServiceSlug[];
-  location?: string;
-  client?: string;
-  mainContractor?: string;
-  consultant?: string;
-  umsRole?: string;
-  timeline?: string;
+  /** City. */
+  location: string;
+  year: number;
+  /** Built area in square feet. */
+  areaSqFt: number;
+  client: string;
+  mainContractor: string;
+  consultant: string;
+  /** UMS package: what UMS was appointed to deliver. */
+  umsRole: string;
+  timeline: string;
+  durationMonths: number;
+  teamSize: number;
   summary: string;
+  challenge: string;
+  solution: string;
+  outcome: string;
   image: ImageAsset;
-  /** Fields still awaiting company confirmation (rendered as placeholders). */
-  pending: string[];
+  /** Gallery for the case study. */
+  gallery: ImageAsset[];
 }
 
 export type InsightCategory = "safety-compliance" | "mep-systems" | "maintenance-operations";
@@ -106,25 +136,62 @@ export interface Insight {
   services: ServiceSlug[];
   readingMinutes: number;
   image: ImageAsset;
+  /** Opening paragraph, shown above the first heading. */
+  intro: string;
   sections: InsightSection[];
-  /** Publish date — TODO: client to confirm */
-  publishedAt?: string;
+  author: string;
+  authorRole: string;
+  /** ISO date (YYYY-MM-DD). */
+  publishedAt: string;
 }
 
 export interface Office {
   city: "Islamabad" | "Lahore";
-  address?: string;
-  phone?: string;
-  email?: string;
-  mapUrl?: string;
+  label: string;
+  address: string;
+  phone: string;
+  email: string;
+  /** Opening hours as plain text. */
+  hours: string;
+  /** Search text for the map link and embed. */
+  mapQuery: string;
+  /** Link that opens the office in Google Maps. */
+  mapUrl: string;
+  /** Embeddable map URL (iframe src). */
+  mapEmbedUrl: string;
+  /** Coordinates; used for structured data. */
+  geo: { latitude: number; longitude: number };
 }
+
+export type CareerType = "Full-time" | "Contract";
 
 export interface Career {
   slug: string;
   title: string;
   department: string;
   location: string;
+  type: CareerType;
+  /** e.g. "5–8 years". */
+  experience: string;
   summary: string;
+  responsibilities: string[];
+  requirements: string[];
+}
+
+export interface Testimonial {
+  quote: string;
+  name: string;
+  role: string;
+  company: string;
+  /** Project the quote relates to (a slug from content/projects). */
+  project: string;
+}
+
+export interface Stat {
+  value: number;
+  suffix?: string;
+  label: string;
+  note?: string;
 }
 
 export interface NavLink {

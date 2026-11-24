@@ -1,44 +1,77 @@
 @import "tailwindcss";
 
 /* ------------------------------------------------------------------
-   UMS design tokens — "Engineered precision"
-   Source of truth: UMS_MASTER_PROMPT.md §3
+   UMS V2 design tokens — "Inside the building"
+   Source of truth: PROJECT_SPEC.md §3
    ------------------------------------------------------------------ */
 :root {
-  --ums-navy: #173f60;
-  --ums-navy-900: #0b2236;
-  --ums-cyan: #008ccb;
-  --ums-cyan-300: #5cc4ee;
-  --ums-white: #ffffff;
-  --ums-offwhite: #f4f8fb;
-  --ums-line: #d9e4ec;
-  --ums-text: #1e2b37;
-  --ums-muted: #5b6b7a;
-  --ums-fire: #d9342b;
+  --navy-950: #06141f;
+  --navy-900: #0b2236;
+  --navy: #173f60;
+  --cyan: #008ccb;
+  --cyan-300: #5cc4ee;
+  --cyan-100: #d6f0fb;
+  --white: #ffffff;
+  --offwhite: #f4f8fb;
+  --steel: #8a9baa;
+  --line: #d9e4ec;
+  --text: #1e2b37;
+  --muted: #5b6b7a;
+
+  /* Discipline accents — used only on their own service content */
+  --hvac: #00a8e8;
+  --fire: #e0322b;
+  --electric: #f5b700;
+  --plumbing: #00b3a4;
+  --mep: #008ccb;
+  --pools: #3fa9f5;
+
+  /* Legacy aliases — V1 components still read these until they are rebuilt */
+  --ums-navy: var(--navy);
+  --ums-navy-900: var(--navy-900);
+  --ums-cyan: var(--cyan);
+  --ums-cyan-300: var(--cyan-300);
+  --ums-white: var(--white);
+  --ums-offwhite: var(--offwhite);
+  --ums-line: var(--line);
+  --ums-text: var(--text);
+  --ums-muted: var(--muted);
+  --ums-fire: var(--fire);
 
   /* Fluid type scale (§3.2) */
+  --text-display: clamp(3.5rem, 2rem + 7.5vw, 8.75rem);
   --text-h1: clamp(3rem, 2.1rem + 4.2vw, 5.5rem);
   --text-h2: clamp(2.25rem, 1.8rem + 2.2vw, 3.5rem);
   --text-h3: clamp(1.5rem, 1.3rem + 0.9vw, 2rem);
   --text-body: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --text-mono: 0.75rem;
 
   --radius-ums: 6px;
   --header-h: 76px;
 }
 
 @theme inline {
-  --color-navy: var(--ums-navy);
-  --color-navy-900: var(--ums-navy-900);
-  --color-cyan: var(--ums-cyan);
-  --color-cyan-300: var(--ums-cyan-300);
-  --color-offwhite: var(--ums-offwhite);
-  --color-line: var(--ums-line);
-  --color-ink: var(--ums-text);
-  --color-muted: var(--ums-muted);
-  --color-fire: var(--ums-fire);
+  --color-navy-950: var(--navy-950);
+  --color-navy-900: var(--navy-900);
+  --color-navy: var(--navy);
+  --color-cyan: var(--cyan);
+  --color-cyan-300: var(--cyan-300);
+  --color-cyan-100: var(--cyan-100);
+  --color-steel: var(--steel);
+  --color-offwhite: var(--offwhite);
+  --color-line: var(--line);
+  --color-ink: var(--text);
+  --color-muted: var(--muted);
+  --color-hvac: var(--hvac);
+  --color-fire: var(--fire);
+  --color-electric: var(--electric);
+  --color-plumbing: var(--plumbing);
+  --color-mep: var(--mep);
+  --color-pools: var(--pools);
 
   --font-heading: var(--font-barlow), "Arial Narrow", sans-serif;
   --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "SFMono-Regular", Menlo, monospace;
 
   --radius-ums: var(--radius-ums);
 }
@@ -107,7 +140,12 @@ h3 {
 :focus-visible {
   outline: 2px solid var(--ums-cyan);
   outline-offset: 3px;
-  border-radius: 2px;
+}
+
+/* For non-interactive headings that are focused by script (step changes, confirmations) so
+   assistive tech announces them. Unlayered on purpose: it must out-rank the rule above. */
+.focus-quiet:focus-visible {
+  outline: none;
 }
 
 /* Blueprint grid (§3.3) — 24px technical grid */
@@ -182,6 +220,17 @@ h3 {
 .marquee:hover .animate-marquee,
 .marquee:focus-within .animate-marquee {
   animation-play-state: paused;
+}
+
+/* Blueprint illustration — flowing water in pipes */
+@keyframes ums-pipe-flow {
+  to {
+    stroke-dashoffset: -36;
+  }
+}
+.pipe-flow {
+  stroke-dasharray: 10 8;
+  animation: ums-pipe-flow 1.6s linear infinite;
 }
 
 /* Scroll cue */
@@ -261,12 +310,132 @@ h3 {
   animation: ums-wave 1.2s linear infinite;
 }
 
+/* ------------------------------------------------------------------
+   V2 utilities (spec 3.3)
+   ------------------------------------------------------------------ */
+
+/* Technical label: coordinates, spec tags, section indexes */
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Subtle film grain for dark sections: inline SVG turbulence, no extra request */
+.bg-grain {
+  position: relative;
+  isolation: isolate;
+}
+.bg-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* Soft cyan radial glow */
+.bg-glow-cyan {
+  background-image: radial-gradient(60% 60% at 50% 40%, rgb(0 140 203 / 0.28), transparent 70%);
+}
+
+/* Metallic numerals */
+.text-metal {
+  background-image: linear-gradient(180deg, #ffffff 0%, #cfe7f4 45%, #8a9baa 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Outlined display text (project names, UMS wordmark) */
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--stroke, #fff);
+}
+
+/* Custom cursor: hide the native one only once the custom one is live */
+html.has-custom-cursor,
+html.has-custom-cursor a,
+html.has-custom-cursor button,
+html.has-custom-cursor [data-cursor] {
+  cursor: none;
+}
+
+/* Fluid moving inside a pipe: stroke-dashoffset only */
+@keyframes ums-fluid {
+  to {
+    stroke-dashoffset: -48;
+  }
+}
+.pipe-fluid {
+  stroke-dasharray: 6 10;
+  animation: ums-fluid 1.4s linear infinite;
+}
+
+/* Slow rotation for orbit rings and stamps */
+@keyframes ums-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-orbit {
+  animation: ums-orbit 60s linear infinite;
+}
+.animate-orbit-reverse {
+  animation: ums-orbit 60s linear infinite reverse;
+}
+.animate-stamp {
+  animation: ums-orbit 24s linear infinite;
+}
+
+/* Orbit: pause the ring (and the counter-rotating nodes) on hover, focus or while a node is active */
+.orbit[data-paused="true"] .animate-orbit,
+.orbit[data-paused="true"] .animate-orbit-reverse,
+.orbit:hover .animate-orbit,
+.orbit:hover .animate-orbit-reverse,
+.orbit:focus-within .animate-orbit,
+.orbit:focus-within .animate-orbit-reverse {
+  animation-play-state: paused;
+}
+
+/* Wave divider drift */
+@keyframes ums-wave-drift {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-wave-drift {
+  animation: ums-wave-drift 14s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.has-custom-cursor,
+  html.has-custom-cursor a,
+  html.has-custom-cursor button,
+  html.has-custom-cursor [data-cursor] {
+    cursor: auto;
+  }
+  .pipe-fluid,
+  .animate-orbit,
+  .animate-orbit-reverse,
+  .animate-stamp,
+  .animate-wave-drift {
+    animation: none !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   /* No zoom, no timer-driven rotation, no marquee, no icon motion. */
   .animate-ken-burns,
   .animate-hero-progress,
   .animate-marquee,
   .animate-scroll-cue,
+  .pipe-flow,
   .icon-fan,
   .icon-flame,
   .icon-flow,

@@ -3,7 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Reveal, RevealItem } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { SiteImage } from "@/components/ui/SiteImage";
+import { ServiceVisual } from "@/components/services/ServiceVisual";
 import { services } from "@/content/services";
 import { cn } from "@/lib/utils";
 import type { Service, ServiceSlug } from "@/types";
@@ -27,11 +27,10 @@ function Card({ service, index }: { service: Service; index: number }) {
       className="group relative flex h-full min-h-[18rem] flex-col justify-end overflow-hidden bg-navy-900 text-white"
     >
       {/* TODO: replace with approved UMS photography */}
-      <SiteImage
-        asset={service.image}
-        fill
+      <ServiceVisual
+        service={service}
         sizes={cfg.tall ? "(min-width:1024px) 58vw, 100vw" : "(min-width:1024px) 33vw, 100vw"}
-        className="object-cover opacity-60 transition duration-700 ease-out group-hover:scale-105 group-hover:opacity-40"
+        className="opacity-60 transition duration-700 ease-out group-hover:scale-105 group-hover:opacity-40"
       />
       <span
         aria-hidden

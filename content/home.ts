@@ -1,4 +1,5 @@
 import type { ImageAsset, ServiceSlug } from "@/types";
+import { dummyClients } from "./dummy";
 import { photo } from "./images";
 
 /* ---------------------------------------------------------------- hero */
@@ -7,16 +8,52 @@ export interface HeroSlide {
   service: ServiceSlug;
   /** Hero-slide label ("Fire Protection" is used only here and on shortcuts). */
   label: string;
+  /** Short tab label shown below 1280px, where the full label would not fit. */
+  shortLabel: string;
   accent: "cyan" | "fire";
   image: ImageAsset;
+  /**
+   * CSS object-position per breakpoint, chosen so the main subject (pipework,
+   * plant, panel) stays in frame in portrait (mobile) and landscape (desktop) crops.
+   * Applied from md (768px) upward as "desktop".
+   */
+  objectPosition: { mobile: string; desktop: string };
 }
 
 // TODO: replace with approved UMS photography (all four hero images).
 export const heroSlides: HeroSlide[] = [
-  { service: "integrated-mep", label: "Integrated MEP", accent: "cyan", image: photo("glassTower", "center 38%") },
-  { service: "hvac", label: "HVAC", accent: "cyan", image: photo("pumpRoom", "center 32%") },
-  { service: "fire-fighting", label: "Fire Protection", accent: "fire", image: photo("redPipes", "center 45%") },
-  { service: "electrical-elv", label: "Electrical & ELV", accent: "cyan", image: photo("breakerPanel", "center 40%") },
+  {
+    service: "integrated-mep",
+    label: "Integrated MEP",
+    shortLabel: "MEP",
+    accent: "cyan",
+    image: photo("glassTower"),
+    objectPosition: { mobile: "50% 40%", desktop: "50% 38%" },
+  },
+  {
+    service: "hvac",
+    label: "HVAC",
+    shortLabel: "HVAC",
+    accent: "cyan",
+    image: photo("pumpRoom"),
+    objectPosition: { mobile: "50% 50%", desktop: "50% 32%" },
+  },
+  {
+    service: "fire-fighting",
+    label: "Fire Protection",
+    shortLabel: "Fire",
+    accent: "fire",
+    image: photo("redPipes"),
+    objectPosition: { mobile: "14% 55%", desktop: "50% 45%" },
+  },
+  {
+    service: "electrical-elv",
+    label: "Electrical & ELV",
+    shortLabel: "Electrical",
+    accent: "cyan",
+    image: photo("breakerPanel"),
+    objectPosition: { mobile: "70% 50%", desktop: "50% 40%" },
+  },
 ];
 
 /** Service shortcut strip overlapping the hero. */
@@ -58,7 +95,7 @@ export const deliverySteps = [
 
 /* ------------------------------------------------------------- quality */
 
-/** Topics covered by /quality-safety-delivery. UMS-specific procedures TBC. */
+/** Topics covered by /quality-safety-delivery. */
 export const qualityTopics = {
   qa: {
     title: "Quality assurance & control",
@@ -80,14 +117,5 @@ export const qualityTopics = {
 
 /* ------------------------------------------------------------- clients */
 
-/** TODO: approved client / collaborator logos only — slots are placeholders. */
-export const clientSlots = [
-  "Client 01",
-  "Client 02",
-  "Client 03",
-  "Client 04",
-  "Client 05",
-  "Client 06",
-  "Client 07",
-  "Client 08",
-] as const;
+/** Client and collaborator wordmarks (dummy names from content/dummy.ts). */
+export const clientNames = dummyClients;

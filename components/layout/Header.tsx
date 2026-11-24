@@ -7,7 +7,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ChevronDown, Menu, Search } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { mainNav, quoteHref } from "@/content/navigation";
+import { mainNav, quoteHrefForPath } from "@/content/navigation";
 import { cn } from "@/lib/utils";
 import { Logo } from "./Logo";
 import { AboutPanel, ServicesPanel } from "./MegaMenu";
@@ -22,7 +22,15 @@ const SearchPalette = dynamic(() => import("@/components/search/SearchPalette"),
  * Routes whose first screen is a dark hero, so the header starts transparent
  * with light text. Every other route gets the solid header from the start.
  */
-const TRANSPARENT_ROUTES = ["/"];
+const hasDarkHero = (pathname: string) =>
+  pathname === "/" ||
+  pathname === "/services" ||
+  pathname.startsWith("/services/") ||
+  pathname === "/projects" ||
+  pathname.startsWith("/projects/") ||
+  pathname === "/request-a-quote" ||
+  pathname === "/contact" ||
+  pathname === "/careers";
 
 export function Header() {
   const pathname = usePathname();
@@ -69,7 +77,7 @@ export function Header() {
     hoverTimer.current = setTimeout(() => setOpenMenu(label), delay);
   };
 
-  const transparentRoute = TRANSPARENT_ROUTES.includes(pathname);
+  const transparentRoute = hasDarkHero(pathname);
   const solid = !transparentRoute || scrolled || openMenu !== null || mobileOpen;
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
@@ -209,7 +217,7 @@ export function Header() {
             </button>
             <div className="hidden xl:block">
               <Button
-                href={quoteHref()}
+                href={quoteHrefForPath(pathname)}
                 variant={solid ? "primary" : "accent"}
                 size="md"
                 magnetic

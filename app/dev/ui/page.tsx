@@ -110,7 +110,6 @@ export default function UiShowcase() {
           <Badge tone="cyan">Healthcare</Badge>
           <Badge tone="fire">Fire Fighting</Badge>
           <Badge tone="outline">Ongoing</Badge>
-          <Badge tone="pending">Client to confirm</Badge>
         </div>
         <div className="mt-5 flex flex-wrap gap-3">
           <Chip>HVAC</Chip>

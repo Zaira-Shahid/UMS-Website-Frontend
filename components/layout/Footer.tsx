@@ -1,12 +1,11 @@
 import Link from "next/link";
-import { Badge } from "@/components/ui/Badge";
 import { BlueprintGrid } from "@/components/ui/BlueprintGrid";
 import { industries } from "@/content/industries";
 import { offices } from "@/content/offices";
 import { quoteHref } from "@/content/navigation";
 import { services } from "@/content/services";
 import { site } from "@/content/site";
-import { CTABand } from "./CTABand";
+import { FooterCTA } from "./FooterCTA";
 import { Logo } from "./Logo";
 
 const company = [
@@ -30,7 +29,8 @@ const socials = [
   { label: "LinkedIn", href: site.social.linkedin },
   { label: "Facebook", href: site.social.facebook },
   { label: "Instagram", href: site.social.instagram },
-].filter((s): s is { label: string; href: string } => Boolean(s.href));
+  { label: "YouTube", href: site.social.youtube },
+];
 
 const linkClass =
   "inline-block py-1 text-[0.9375rem] text-white/70 transition-colors hover:text-cyan-300";
@@ -63,7 +63,7 @@ function Column({
 export function Footer() {
   return (
     <>
-      <CTABand />
+      <FooterCTA />
       <footer className="relative isolate overflow-hidden bg-navy-900 text-white">
         <BlueprintGrid variant="dark" />
         <div className="relative mx-auto max-w-7xl px-5 pb-8 pt-16 sm:px-8 lg:pt-20">
@@ -121,22 +121,13 @@ export function Footer() {
                 </p>
                 <dl className="mt-3 space-y-1.5 text-[0.9375rem] text-white/70">
                   <ContactRow label="Address" value={o.address} />
-                  <ContactRow
-                    label="Phone"
-                    value={o.phone}
-                    href={o.phone ? `tel:${o.phone.replace(/\s/g, "")}` : undefined}
-                  />
-                  <ContactRow
-                    label="Email"
-                    value={o.email}
-                    href={o.email ? `mailto:${o.email}` : undefined}
-                  />
+                  <ContactRow label="Phone" value={o.phone} href={`tel:${o.phone.replace(/\s/g, "")}`} />
+                  <ContactRow label="Email" value={o.email} href={`mailto:${o.email}`} />
+                  <ContactRow label="Hours" value={o.hours} />
                 </dl>
-                {o.mapUrl && (
-                  <a href={o.mapUrl} target="_blank" rel="noopener noreferrer" className={`${linkClass} mt-3`}>
-                    View on map
-                  </a>
-                )}
+                <a href={o.mapUrl} target="_blank" rel="noopener noreferrer" className={`${linkClass} mt-3`}>
+                  View on map
+                </a>
               </address>
             ))}
           </div>
@@ -155,24 +146,19 @@ export function Footer() {
   );
 }
 
-function ContactRow({ label, value, href }: { label: string; value?: string; href?: string }) {
+function ContactRow({ label, value, href }: { label: string; value: string; href?: string }) {
   return (
     <div className="flex flex-wrap items-baseline gap-x-3">
       <dt className="w-16 shrink-0 text-xs uppercase tracking-[0.12em] text-white/45">
         {label}
       </dt>
       <dd>
-        {value ? (
-          href ? (
-            <a href={href} className="hover:text-cyan-300">
-              {value}
-            </a>
-          ) : (
-            value
-          )
+        {href ? (
+          <a href={href} className="hover:text-cyan-300">
+            {value}
+          </a>
         ) : (
-          // TODO: client to confirm — see content/offices.ts
-          <Badge tone="pending">To be confirmed</Badge>
+          value
         )}
       </dd>
     </div>

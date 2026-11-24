@@ -23,6 +23,7 @@ export function PipeLine({
   tone = "cyan",
   height = 24,
   progress,
+  color,
 }: {
   points?: [number, number][];
   nodes?: "none" | "ends" | "all";
@@ -31,6 +32,8 @@ export function PipeLine({
   height?: number;
   /** Drive the draw from scroll (0–1) instead of the in-view trigger. */
   progress?: MotionValue<number>;
+  /** Override the stroke colour (e.g. the fire accent). */
+  color?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "0px 0px -15% 0px" });
@@ -54,7 +57,7 @@ export function PipeLine({
       return `${i === 0 ? "M" : "L"}${X.toFixed(1)} ${Y.toFixed(1)}`;
     })
     .join(" ");
-  const stroke = tone === "light" ? "#5cc4ee" : "#008ccb";
+  const stroke = color ?? (tone === "light" ? "#5cc4ee" : "#008ccb");
   const nodePts =
     nodes === "none"
       ? []

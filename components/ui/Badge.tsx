@@ -11,8 +11,6 @@ const badgeStyles = cva(
         cyan: "bg-cyan/10 text-[#00608c]",
         fire: "bg-fire/10 text-[#a3201a]",
         outline: "border border-line text-muted",
-        /** Marks content that still needs company confirmation. */
-        pending: "border border-dashed border-[#b9770e] bg-[#fff6e5] text-[#7a4b00]",
       },
     },
     defaultVariants: { tone: "cyan" },

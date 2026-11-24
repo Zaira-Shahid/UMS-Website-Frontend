@@ -6,21 +6,37 @@ import { PipeLine } from "./PipeLine";
 export function Eyebrow({
   children,
   tone = "dark",
+  accent = "cyan",
   className,
 }: {
   children: ReactNode;
   tone?: "dark" | "light";
+  /** "fire" is reserved for the Fire Fighting service. */
+  accent?: "cyan" | "fire";
   className?: string;
 }) {
+  const fire = accent === "fire";
   return (
     <p
       className={cn(
         "flex items-center gap-3 font-heading text-[0.8125rem] font-semibold uppercase tracking-[0.14em]",
-        tone === "light" ? "text-cyan-300" : "text-[#00608c]",
+        fire
+          ? tone === "light"
+            ? "text-[#ff8a82]"
+            : "text-[#b3271f]"
+          : tone === "light"
+            ? "text-cyan-300"
+            : "text-[#00608c]",
         className,
       )}
     >
-      <span aria-hidden className={cn("h-px w-8", tone === "light" ? "bg-cyan-300" : "bg-cyan")} />
+      <span
+        aria-hidden
+        className={cn(
+          "h-px w-8",
+          fire ? "bg-fire" : tone === "light" ? "bg-cyan-300" : "bg-cyan",
+        )}
+      />
       {children}
     </p>
   );
@@ -36,6 +52,7 @@ export function SectionHeading({
   title,
   description,
   tone = "dark",
+  accent = "cyan",
   align = "left",
   as: Tag = "h2",
   className,
@@ -45,6 +62,7 @@ export function SectionHeading({
   title: ReactNode;
   description?: ReactNode;
   tone?: "dark" | "light";
+  accent?: "cyan" | "fire";
   align?: "left" | "center";
   as?: "h1" | "h2";
   className?: string;
@@ -52,7 +70,7 @@ export function SectionHeading({
   const light = tone === "light";
   return (
     <header className={cn("max-w-3xl", align === "center" && "mx-auto text-center", className)}>
-      <Eyebrow tone={tone} className={align === "center" ? "justify-center" : undefined}>
+      <Eyebrow tone={tone} accent={accent} className={align === "center" ? "justify-center" : undefined}>
         {index && <span className="tabular-nums">{index} /</span>}
         {label}
       </Eyebrow>
@@ -60,6 +78,7 @@ export function SectionHeading({
       <PipeLine
         className="mt-6 max-w-[14rem]"
         tone={light ? "light" : "cyan"}
+        color={accent === "fire" ? (light ? "#ff6a60" : "#d9342b") : undefined}
         nodes="ends"
         height={12}
       />
