@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { gsap } from "@/lib/motion/gsap";
 
@@ -11,7 +12,13 @@ let mounts = 0;
  * line draws across it, and the panel wipes upward. The whole sequence runs in 0.6s. Skipped for the
  * initial load and with reduced motion. (`template.tsx` remounts on each navigation.)
  */
+/** Keyed by pathname: Next only remounts a template when the top-level segment changes. */
 export default function Template({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
+  return <Transition key={pathname}>{children}</Transition>;
+}
+
+function Transition({ children }: { children: ReactNode }) {
   // Server render and hydration both see `mounts === 0`, so the markup always matches.
   const [panel, setPanel] = useState(
     () => mounts > 0 && !window.matchMedia("(prefers-reduced-motion: reduce)").matches,
