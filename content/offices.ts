@@ -1,7 +1,5 @@
 import type { Office } from "@/types";
+import { dummyOffices } from "./dummy";
 
-/** TODO: client to confirm — addresses, phones, emails, hours, coordinates and map links. */
-export const offices: Office[] = [
-  { city: "Islamabad" },
-  { city: "Lahore" },
-];
+/** Offices. Values come from content/dummy.ts. */
+export const offices: Office[] = dummyOffices;

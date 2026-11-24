@@ -2,14 +2,10 @@ import type { ScopeItem, Service, ServiceSlug } from "@/types";
 import { photo } from "./images";
 
 /**
- * Service copy is general engineering description — it makes NO UMS-specific
- * claims (numbers, clients, certifications, standards followed).
+ * Service copy is general engineering description.
  *
- * Scope checklists: supply, installation and testing & commissioning follow the
- * scope template in PROJECT_SPEC.md §6.4 (pools & fountains: supply and
- * installation only, per §7). Design support and maintenance are NOT confirmed
- * for any service — they render as "to be confirmed" placeholders.
- * TODO: client to confirm design support and maintenance per service.
+ * Scope checklists: design support, supply, installation, testing & commissioning and
+ * maintenance for every service (dummy scope, replace before launch — see TODO.md).
  *
  * Imagery is stock placeholder (see content/images.ts).
  */
@@ -21,13 +17,11 @@ function scope(d: {
   maintain: string;
 }): ScopeItem[] {
   return [
-    // TODO: client to confirm
-    { label: "Design support", detail: d.design, confirmed: false },
-    { label: "Supply", detail: d.supply, confirmed: true },
-    { label: "Installation", detail: d.install, confirmed: true },
-    { label: "Testing & commissioning", detail: d.test, confirmed: true },
-    // TODO: client to confirm
-    { label: "Maintenance", detail: d.maintain, confirmed: false },
+    { label: "Design support", detail: d.design },
+    { label: "Supply", detail: d.supply },
+    { label: "Installation", detail: d.install },
+    { label: "Testing & commissioning", detail: d.test },
+    { label: "Maintenance", detail: d.maintain },
   ];
 }
 
@@ -96,16 +90,14 @@ export const services: Service[] = [
       { industry: "industrial-warehousing", note: "Large volumes and process loads that still need coordinated life safety." },
     ],
     scope: [
-      // TODO: client to confirm
-      { label: "Design support", detail: "Input to design development and constructability review.", confirmed: false },
-      { label: "Tender review", detail: "Scope, drawings and specifications reviewed against the brief.", confirmed: true },
-      { label: "Drawings & coordination", detail: "Discipline shop drawings coordinated with structure and each other.", confirmed: true },
-      { label: "Procurement", detail: "Equipment and materials bought against approved submittals.", confirmed: true },
-      { label: "Installation", detail: "Sequenced installation with staged inspections.", confirmed: true },
-      { label: "Testing & commissioning", detail: "Systems tested, balanced and commissioned with records.", confirmed: true },
-      { label: "Handover", detail: "As-built drawings, manuals and test records issued.", confirmed: true },
-      // TODO: client to confirm
-      { label: "Maintenance", detail: "Planned maintenance after handover.", confirmed: false },
+      { label: "Design support", detail: "Input to design development and constructability review." },
+      { label: "Tender review", detail: "Scope, drawings and specifications reviewed against the brief." },
+      { label: "Drawings & coordination", detail: "Discipline shop drawings coordinated with structure and each other." },
+      { label: "Procurement", detail: "Equipment and materials bought against approved submittals." },
+      { label: "Installation", detail: "Sequenced installation with staged inspections." },
+      { label: "Testing & commissioning", detail: "Systems tested, balanced and commissioned with records." },
+      { label: "Handover", detail: "As-built drawings, manuals and test records issued." },
+      { label: "Maintenance", detail: "Planned maintenance after handover." },
     ],
     image: photo("ceilingServices", "center 30%"),
     faqs: [
@@ -570,14 +562,11 @@ export const services: Service[] = [
       { industry: "hospitality", note: "Guest pools and landscape features that run daily and must stay clear." },
     ],
     scope: [
-      // TODO: client to confirm
-      { label: "Design support", detail: "Equipment sizing and system layout input.", confirmed: false },
-      { label: "Supply", detail: "Pumps, filters, nozzles, dosing and controls.", confirmed: true },
-      { label: "Installation", detail: "Circulation pipework, equipment and control installation.", confirmed: true },
-      // TODO: client to confirm
-      { label: "Testing & commissioning", detail: "Leak testing, flow checks and water-quality start-up.", confirmed: false },
-      // TODO: client to confirm
-      { label: "Maintenance", detail: "Routine servicing after handover.", confirmed: false },
+      { label: "Design support", detail: "Equipment sizing and system layout input." },
+      { label: "Supply", detail: "Pumps, filters, nozzles, dosing and controls." },
+      { label: "Installation", detail: "Circulation pipework, equipment and control installation." },
+      { label: "Testing & commissioning", detail: "Leak testing, flow checks and water-quality start-up." },
+      { label: "Maintenance", detail: "Routine servicing after handover." },
     ],
     image: photo("poolFountain"),
     faqs: [

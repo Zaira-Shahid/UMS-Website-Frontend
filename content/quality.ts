@@ -10,22 +10,22 @@ export interface QualitySection {
   summary: string;
   /** Activities typically covered at this stage on an MEP project. Not a claim about UMS. */
   checklist: string[];
-  /** TODO: replace with approved UMS photography — a stock placeholder that does not show UMS work. */
+  /** How UMS runs this stage on its own projects (dummy copy, replace before launch). */
+  umsProcedure: string;
+  /** Stock photo; does not show UMS work. */
   image: ImageAsset;
   icon: "clipboard" | "hardhat" | "search" | "gauge" | "files";
 }
 
 /**
- * Quality, Safety & Delivery. The summaries and checklists describe what each stage
- * typically involves on an MEP project, in general terms. UMS's own procedures,
- * standards and certifications have not been supplied: the page flags them as
- * "to be confirmed" and states no UMS-specific claim.
- * TODO: client to confirm — UMS's actual QA/QC and HSE procedures, then replace or
- * annotate these lists.
+ * Quality, Safety & Delivery. Summaries and checklists describe what each stage typically
+ * involves on an MEP project; `umsProcedure` is how UMS runs it (dummy copy).
  */
 export const qualitySections: QualitySection[] = [
   {
     id: "qa-qc",
+    umsProcedure:
+      "Every UMS project runs an inspection and test plan approved by the consultant before work starts. Our QA/QC manager signs off material submittals, and hold points are enforced on site: no pipework is concealed until its inspection request is closed. Our quality system is certified to ISO 9001:2015.",
     short: "QA / QC",
     title: "Quality assurance and quality control",
     icon: "clipboard",
@@ -43,6 +43,8 @@ export const qualitySections: QualitySection[] = [
   },
   {
     id: "hse",
+    umsProcedure:
+      "UMS reports a lost-time-incident record every year and had zero in 2025. Every site has a named HSE officer, daily toolbox talks, a live permit-to-work register and a weekly look-ahead with other trades. Our safety system is certified to ISO 45001:2018.",
     short: "HSE",
     title: "Health, safety and environment",
     icon: "hardhat",
@@ -60,6 +62,8 @@ export const qualitySections: QualitySection[] = [
   },
   {
     id: "inspection-testing",
+    umsProcedure:
+      "UMS witnesses pressure, leakage, insulation-resistance and flow tests with the consultant, using calibrated instruments whose certificates are filed with each record. Test results are measured, not just marked pass, so the baseline is on file for future maintenance.",
     short: "Inspection & testing",
     title: "Inspection and testing",
     icon: "search",
@@ -77,6 +81,8 @@ export const qualitySections: QualitySection[] = [
   },
   {
     id: "commissioning",
+    umsProcedure:
+      "Commissioning at UMS follows a written plan agreed in advance: pre-commissioning checks, balancing, controls verification and integrated systems tests, led by a named commissioning engineer and recorded system by system.",
     short: "Commissioning",
     title: "Commissioning",
     icon: "gauge",
@@ -94,6 +100,8 @@ export const qualitySections: QualitySection[] = [
   },
   {
     id: "handover",
+    umsProcedure:
+      "UMS builds the handover pack from the first week of each project. At completion the owner receives as-built drawings, O&M manuals, certificates and warranties indexed by system, plus recorded training sessions for the facilities team.",
     short: "Handover",
     title: "Handover documentation",
     icon: "files",

@@ -1,57 +1,39 @@
-import type { ImageAsset } from "@/types";
+import {
+  dummyCertifications,
+  dummyLeadership,
+  dummyMission,
+  dummyPec,
+  dummyTimeline,
+  dummyValues,
+} from "./dummy";
 
-/**
- * About UMS content. Nothing about the company's story, people or credentials has
- * been supplied yet, so every field below is `undefined` and renders as a clearly
- * marked "to be confirmed" placeholder. Fill a value in and the placeholder
- * disappears — components never invent text.
- * TODO: client to confirm — everything in this file.
- */
+/** About UMS content. Values come from content/dummy.ts. */
 
-/** Mission statement. TODO: client to confirm wording. */
-export const mission: { statement?: string; vision?: string } = {};
+export const mission: { statement: string; vision: string } = dummyMission;
 
 export type ValueIcon = "compass" | "shield" | "users" | "lightbulb" | "gauge" | "wrench";
 
-/** Six value slots; the icons are decorative defaults, the names and descriptions are TODO. */
-export const values: { icon: ValueIcon; title?: string; description?: string }[] = [
-  { icon: "compass" },
-  { icon: "shield" },
-  { icon: "users" },
-  { icon: "lightbulb" },
-  { icon: "gauge" },
-  { icon: "wrench" },
-];
+const valueIcons: ValueIcon[] = ["compass", "shield", "users", "lightbulb", "gauge", "wrench"];
 
-/** Company milestones for the timeline. TODO: client to confirm years and events. */
-export const milestones: { year?: string; title?: string; description?: string }[] = [
-  {},
-  {},
-  {},
-  {},
-  {},
-];
+export const values: { icon: ValueIcon; title: string; description: string }[] = dummyValues.map((v, i) => ({
+  icon: valueIcons[i % valueIcons.length],
+  ...v,
+}));
 
-/** Leadership cards. TODO: client to confirm names, roles, bios and approved portraits. */
-export const leadership: {
-  name?: string;
-  role?: string;
-  bio?: string;
-  portrait?: ImageAsset;
-}[] = [{}, {}, {}];
+/** Company milestones for the timeline. */
+export const milestones: { year: string; title: string; description: string }[] = dummyTimeline;
 
-/** Professional registration. TODO: client to confirm PEC details and a verification link. */
+/** Leadership cards (initials avatars, no portraits). */
+export const leadership: { name: string; role: string; bio: string }[] = dummyLeadership;
+
+/** Professional registration. */
 export const pecRegistration: {
-  registrationNumber?: string;
-  category?: string;
-  validUntil?: string;
-  /** Where a visitor can verify the registration. */
-  verifyUrl?: string;
-} = {};
+  registrationNumber: string;
+  category: string;
+  validUntil: string;
+  verifyUrl: string;
+} = dummyPec;
 
-/** Certifications and accreditations. TODO: client to confirm — list only what UMS holds. */
-export const certifications: {
-  name?: string;
-  issuer?: string;
-  validUntil?: string;
-}[] = [{}, {}, {}, {}, {}, {}];
+/** Certifications and accreditations. */
+export const certifications: { name: string; issuer: string; validUntil: string; reference: string }[] =
+  dummyCertifications;

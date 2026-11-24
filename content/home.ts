@@ -1,4 +1,5 @@
 import type { ImageAsset, ServiceSlug } from "@/types";
+import { dummyClients } from "./dummy";
 import { photo } from "./images";
 
 /* ---------------------------------------------------------------- hero */
@@ -94,7 +95,7 @@ export const deliverySteps = [
 
 /* ------------------------------------------------------------- quality */
 
-/** Topics covered by /quality-safety-delivery. UMS-specific procedures TBC. */
+/** Topics covered by /quality-safety-delivery. */
 export const qualityTopics = {
   qa: {
     title: "Quality assurance & control",
@@ -116,14 +117,5 @@ export const qualityTopics = {
 
 /* ------------------------------------------------------------- clients */
 
-/** TODO: approved client / collaborator logos only — slots are placeholders. */
-export const clientSlots = [
-  "Client 01",
-  "Client 02",
-  "Client 03",
-  "Client 04",
-  "Client 05",
-  "Client 06",
-  "Client 07",
-  "Client 08",
-] as const;
+/** Client and collaborator wordmarks (dummy names from content/dummy.ts). */
+export const clientNames = dummyClients;

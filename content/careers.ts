@@ -1,25 +1,16 @@
 import type { Career } from "@/types";
+import { dummyBenefits, dummyCareers, dummyCulture } from "./dummy";
 
-/** No openings are published until UMS supplies them. */
-export const careers: Career[] = [];
+/** Open positions. Values come from content/dummy.ts. */
+export const careers: Career[] = dummyCareers;
 
-/**
- * Working at UMS. Nothing about culture or benefits has been supplied, so these are
- * empty slots that render as "to be confirmed" placeholders — never invented perks.
- * TODO: client to confirm — culture statements and the benefits actually offered.
- */
-export const culture: { icon: "users" | "graduation" | "building"; title?: string; description?: string }[] = [
-  { icon: "users" },
-  { icon: "graduation" },
-  { icon: "building" },
-];
+/** Working at UMS: three culture statements. */
+export const culture = dummyCulture;
 
-export const benefits: { title?: string }[] = [{}, {}, {}, {}, {}, {}];
+/** Benefits offered. */
+export const benefits: { title: string }[] = dummyBenefits.map((title) => ({ title }));
 
-/**
- * How to apply. These steps describe what the website's application form does, which is
- * known. What UMS does after receiving an application is not, so that is a placeholder.
- */
+/** How to apply: steps follow what the application form does. */
 export const applySteps: { title: string; description: string }[] = [
   {
     title: "Choose how to apply",
