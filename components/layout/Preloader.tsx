@@ -6,6 +6,9 @@ import { getLenis } from "@/lib/motion/lenis-store";
 
 export const PRELOADER_KEY = "ums-preloaded";
 
+/** The overlay is always gone this long after navigation start, however slow the page was to load. */
+const HARD_CAP_MS = 1800;
+
 /**
  * Runs before first paint (inline in <head>): marks the document so the preloader overlay is hidden
  * by CSS on repeat visits, with reduced motion, and without JavaScript.
@@ -13,8 +16,11 @@ export const PRELOADER_KEY = "ums-preloaded";
 export const PRELOADER_GUARD = `try{if(sessionStorage.getItem("${PRELOADER_KEY}")||matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.dataset.preloader="skip"}catch(e){}`;
 
 /**
- * H0 · Preloader (first visit of a session only, about 1.5s): a blueprint line draws the UMS
- * outline while a pressure-gauge needle sweeps 0 to 100 with the counter; then the screen splits
+ * H0 · Preloader (first visit of a session only; the animation is 1.45s and the overlay is gone by
+ * 1.8s after navigation start at the latest, also without JavaScript via a CSS fallback). It sits above
+ * the page, which renders underneath at full speed, so it never delays LCP.
+ *
+ * A blueprint line draws the UMS outline while a pressure-gauge needle sweeps 0 to 100 with the counter; then the screen splits
  * along a diagonal and the halves slide away. Skipped on repeat visits and with reduced motion.
  */
 export function Preloader() {
@@ -76,8 +82,16 @@ export function Preloader() {
       .to(topLeft.current, { xPercent: -105, yPercent: -105, duration: 0.45, ease: "power3.inOut" }, 1.0)
       .to(bottomRight.current, { xPercent: 105, yPercent: 105, duration: 0.45, ease: "power3.inOut" }, 1.0);
 
-    // Never trap a visitor behind the overlay.
-    const safety = window.setTimeout(finish, 2600);
+    // Hard cap: compress the timeline into the time left before 1.8s from navigation start, and
+    // drop the overlay outright if that time has already passed (slow first load).
+    const remaining = HARD_CAP_MS - performance.now();
+    if (remaining <= 120) {
+      tl.progress(1);
+      finish();
+    } else if (tl.duration() > remaining / 1000) {
+      tl.timeScale(tl.duration() / (remaining / 1000));
+    }
+    const safety = window.setTimeout(finish, Math.max(0, remaining));
     return () => {
       window.clearTimeout(safety);
       tl.kill();
