@@ -47,10 +47,11 @@ export const mainNav: NavItem[] = [
   { label: "Contact", href: "/contact" },
 ];
 
-export const quoteHref = (params?: { service?: string; project?: string }) => {
+export const quoteHref = (params?: { service?: string; project?: string; sector?: string }) => {
   const q = new URLSearchParams();
   if (params?.service) q.set("service", params.service);
   if (params?.project) q.set("project", params.project);
+  if (params?.sector) q.set("sector", params.sector);
   const qs = q.toString();
   return `/request-a-quote${qs ? `?${qs}` : ""}`;
 };

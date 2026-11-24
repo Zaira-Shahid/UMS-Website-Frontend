@@ -146,7 +146,14 @@ export interface Office {
   address?: string;
   phone?: string;
   email?: string;
+  /** Link that opens the office in a map app. */
   mapUrl?: string;
+  /** Opening hours as plain text, e.g. "Mon–Fri 9:00–17:30". */
+  hours?: string;
+  /** Confirmed coordinates; used for structured data. */
+  geo?: { latitude: number; longitude: number };
+  /** Embeddable map URL (iframe src). The map area stays a placeholder until this is set. */
+  mapEmbedUrl?: string;
 }
 
 export interface Career {

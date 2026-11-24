@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { site } from "@/content/site";
 
 /** Absolute URL for a site-relative path. */
@@ -26,4 +27,30 @@ export const breadcrumbLd = (items: { name: string; path: string }[]) => ({
     name: it.name,
     item: absoluteUrl(it.path),
   })),
+});
+
+/** Unique title, description, canonical, Open Graph and Twitter metadata for a page. */
+export const pageMetadata = ({
+  title,
+  description,
+  path,
+  noindex,
+}: {
+  title: string;
+  description: string;
+  path: string;
+  noindex?: boolean;
+}): Metadata => ({
+  title,
+  description,
+  alternates: { canonical: path },
+  ...(noindex ? { robots: { index: false, follow: true } } : {}),
+  openGraph: {
+    type: "website",
+    siteName: `${site.name} — ${site.fullName}`,
+    title: `${title} | ${site.name}`,
+    description,
+    url: path,
+  },
+  twitter: { card: "summary_large_image", title: `${title} | ${site.name}`, description },
 });

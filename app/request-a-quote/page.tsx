@@ -23,11 +23,15 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title: `Request a Quote | ${site.name}`, description },
 };
 
-type SearchParams = Promise<{ service?: string | string[]; project?: string | string[] }>;
+type SearchParams = Promise<{
+  service?: string | string[];
+  project?: string | string[];
+  sector?: string | string[];
+}>;
 
 /**
  * Query params are resolved on the server, so the form arrives pre-selected without a flash:
- *   ?service=hvac,fire-fighting   ?project=<case-study slug>
+ *   ?service=hvac,fire-fighting   ?project=<case-study slug>   ?sector=<industry slug>
  * Invalid values are ignored.
  */
 export default async function RequestQuotePage({ searchParams }: { searchParams: SearchParams }) {
@@ -58,7 +62,7 @@ export default async function RequestQuotePage({ searchParams }: { searchParams:
           <div className="lg:col-span-8">
             {/* key: a different preselection (new URL) remounts the form with fresh defaults */}
             <RfqForm
-              key={`${preselect.services.join(",")}|${preselect.project?.slug ?? ""}`}
+              key={`${preselect.services.join(",")}|${preselect.project?.slug ?? ""}|${preselect.sector ?? ""}`}
               preselect={preselect}
             />
           </div>
