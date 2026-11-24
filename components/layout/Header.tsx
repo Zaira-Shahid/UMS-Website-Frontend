@@ -89,6 +89,18 @@ export function Header() {
     return () => document.removeEventListener("keydown", onKey);
   }, [openSearch]);
 
+  // Esc closes an open mega menu wherever focus is (hover-opened menus have no focus inside).
+  useEffect(() => {
+    if (!openMenu) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      setOpenMenu(null);
+      document.querySelector<HTMLButtonElement>(`button[aria-controls="menu-${openMenu}"]`)?.focus();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [openMenu]);
+
   const intent = (label: string | null, delay: number) => (e: React.PointerEvent) => {
     if (e.pointerType !== "mouse") return;
     clearTimeout(hoverTimer.current);
@@ -207,7 +219,7 @@ export function Header() {
                         <motion.div
                           id={`menu-${item.label}`}
                           {...panelMotion}
-                          className="absolute inset-x-0 top-full border-t border-white/10 bg-navy-950/95 text-white shadow-[0_24px_40px_-24px_rgb(0_0_0/0.6)] backdrop-blur-xl"
+                          className="absolute inset-x-0 top-full border-t border-white/10 bg-navy-950 text-white shadow-[0_24px_40px_-24px_rgb(0_0_0/0.6)]"
                         >
                           {item.label === "Services" ? (
                             <ServicesPanel onNavigate={closeMenus} />
