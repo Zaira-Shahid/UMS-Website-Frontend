@@ -13,7 +13,7 @@ export const PRELOADER_KEY = "ums-preloaded";
 export const PRELOADER_GUARD = `try{if(sessionStorage.getItem("${PRELOADER_KEY}")||matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.dataset.preloader="skip"}catch(e){}`;
 
 /**
- * H0 · Preloader (first visit of a session only, about 1.6s): a blueprint line draws the UMS
+ * H0 · Preloader (first visit of a session only, about 1.5s): a blueprint line draws the UMS
  * outline while a pressure-gauge needle sweeps 0 to 100 with the counter; then the screen splits
  * along a diagonal and the halves slide away. Skipped on repeat visits and with reduced motion.
  */
@@ -57,13 +57,13 @@ export function Preloader() {
     const tl = gsap.timeline({ onComplete: finish });
     gsap.set(outline.current, { strokeDasharray: len * 4, strokeDashoffset: len * 4 });
     gsap.set(needle.current, { rotation: -120, transformOrigin: "50% 50%" });
-    tl.to(outline.current, { strokeDashoffset: 0, duration: 1.0, ease: "power2.inOut" }, 0)
-      .to(needle.current, { rotation: 120, duration: 1.0, ease: "power2.inOut" }, 0)
+    tl.to(outline.current, { strokeDashoffset: 0, duration: 0.8, ease: "power2.inOut" }, 0)
+      .to(needle.current, { rotation: 120, duration: 0.8, ease: "power2.inOut" }, 0)
       .to(
         state,
         {
           n: 100,
-          duration: 1.0,
+          duration: 0.8,
           ease: "power2.inOut",
           onUpdate: () => {
             if (counter.current) counter.current.textContent = String(Math.round(state.n));
@@ -71,10 +71,10 @@ export function Preloader() {
         },
         0,
       )
-      .to(outline.current, { fill: "#ffffff", duration: 0.25 }, 0.95)
-      .to(content.current, { opacity: 0, scale: 0.96, duration: 0.25, ease: "power1.in" }, 1.2)
-      .to(topLeft.current, { xPercent: -105, yPercent: -105, duration: 0.5, ease: "power3.inOut" }, 1.3)
-      .to(bottomRight.current, { xPercent: 105, yPercent: 105, duration: 0.5, ease: "power3.inOut" }, 1.3);
+      .to(outline.current, { fill: "#ffffff", duration: 0.2 }, 0.75)
+      .to(content.current, { opacity: 0, scale: 0.96, duration: 0.2, ease: "power1.in" }, 0.95)
+      .to(topLeft.current, { xPercent: -105, yPercent: -105, duration: 0.45, ease: "power3.inOut" }, 1.0)
+      .to(bottomRight.current, { xPercent: 105, yPercent: 105, duration: 0.45, ease: "power3.inOut" }, 1.0);
 
     // Never trap a visitor behind the overlay.
     const safety = window.setTimeout(finish, 2600);
@@ -104,7 +104,8 @@ export function Preloader() {
       <div
         ref={bottomRight}
         className="bg-blueprint-dark absolute inset-0 bg-navy-950"
-        style={{ clipPath: "polygon(100% 0, 100% 100%, 0 100%)" }}
+        // Overlaps the other half by 2px so no hairline shows along the diagonal.
+        style={{ clipPath: "polygon(calc(100% + 1px) -1px, calc(100% + 1px) calc(100% + 1px), -1px calc(100% + 1px), -1px calc(100% - 2px), calc(100% - 2px) -1px)" }}
       />
       <div ref={content} className="absolute inset-0 flex flex-col items-center justify-center gap-8">
         <svg viewBox="0 0 320 110" className="w-[min(70vw,20rem)]" fill="none">
