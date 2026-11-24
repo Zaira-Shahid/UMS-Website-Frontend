@@ -1,26 +1,18 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { CornerBrackets } from "@/components/ui/CornerBrackets";
 import { Reveal } from "@/components/ui/Reveal";
 import { SiteImage } from "@/components/ui/SiteImage";
 import { quoteHref } from "@/content/navigation";
 import { serviceBySlug } from "@/content/services";
-import { featuredProjects } from "@/lib/projects";
 import { projects } from "@/content/projects";
 import { cn } from "@/lib/utils";
 import type { Industry } from "@/types";
 
-/**
- * One anchored sector section (/industries#<slug>). Related projects are those whose
- * CONFIRMED sector matches; until the client confirms sectors none do, so three featured
- * projects are shown with a note — never implying a sector that has not been confirmed.
- */
+/** One anchored sector section (/industries#<slug>) with the sector's related projects. */
 export function SectorSection({ industry: i, index }: { industry: Industry; index: number }) {
-  const confirmed = projects.filter((p) => p.sector === i.slug);
-  const isFallback = confirmed.length === 0;
-  const related = isFallback ? featuredProjects(3) : confirmed;
+  const related = projects.filter((p) => p.sector === i.slug);
   const flip = index % 2 === 1;
   const serviceList = i.services.map((s) => serviceBySlug(s)).filter((s) => !!s);
 
@@ -61,13 +53,6 @@ export function SectorSection({ industry: i, index }: { industry: Industry; inde
           <h3 className="mt-8 font-heading text-sm font-semibold uppercase tracking-[0.12em] text-navy">
             Related projects
           </h3>
-          {isFallback && (
-            // TODO: client to confirm — the sector of each project
-            <p className="mt-3">
-              <Badge tone="pending">Project sectors to be confirmed</Badge>
-              <span className="mt-2 block text-sm text-muted">Featured projects are shown until each project&rsquo;s sector is confirmed.</span>
-            </p>
-          )}
           <ul className="mt-3 divide-y divide-line border-y border-line">
             {related.map((p) => (
               <li key={p.slug}>
@@ -99,12 +84,10 @@ export function SectorSection({ industry: i, index }: { industry: Industry; inde
         <Reveal className={cn("lg:col-span-6", flip && "lg:order-1")}>
           <CornerBrackets>
             <div className="relative aspect-[4/3] overflow-hidden bg-navy-900 lg:aspect-[4/5]">
-              {/* TODO: replace with approved UMS photography (stock placeholder) */}
               <SiteImage asset={i.image} fill sizes="(min-width:1024px) 45vw, 100vw" className="object-cover" />
               <span aria-hidden className="absolute inset-0 bg-gradient-to-t from-navy-900/40 via-transparent to-transparent" />
             </div>
           </CornerBrackets>
-          <p className="mt-2 text-xs text-muted">Placeholder photograph — it does not show a UMS project.</p>
         </Reveal>
       </div>
     </section>

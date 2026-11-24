@@ -1,19 +1,13 @@
 import { Award, ShieldCheck } from "lucide-react";
-import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Reveal, RevealItem } from "@/components/ui/Reveal";
 import { certifications, pecRegistration } from "@/content/about";
 import { site } from "@/content/site";
 
-const pending = (label: string) => <Badge tone="pending">{label} · to be confirmed</Badge>;
-
-/**
- * PEC registration card. Registration number, category, validity and the verification link
- * are all unconfirmed, so each shows a placeholder (TODO: client to confirm — content/about.ts).
- */
+/** PEC registration card. */
 export function PecCard() {
   const p = pecRegistration;
-  const rows: [string, string | undefined][] = [
+  const rows: [string, string][] = [
     ["Registration number", p.registrationNumber],
     ["Category", p.category],
     ["Valid until", p.validUntil],
@@ -36,19 +30,20 @@ export function PecCard() {
           {rows.map(([k, v]) => (
             <div key={k} className="grid gap-1 py-3 sm:grid-cols-[12rem_1fr]">
               <dt className="text-sm text-muted">{k}</dt>
-              <dd className="text-ink">{v ?? pending(k)}</dd>
+              <dd className="text-ink">{v}</dd>
             </div>
           ))}
           <div className="grid gap-1 py-3 sm:grid-cols-[12rem_1fr]">
             <dt className="text-sm text-muted">Verification</dt>
             <dd>
-              {p.verifyUrl ? (
-                <a href={p.verifyUrl} target="_blank" rel="noopener noreferrer" className="font-medium text-cyan underline underline-offset-4">
-                  Verify this registration<span className="sr-only"> (opens in a new tab)</span>
-                </a>
-              ) : (
-                pending("Verification link")
-              )}
+              <a
+                href={p.verifyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-cyan underline underline-offset-4"
+              >
+                Verify this registration<span className="sr-only"> (opens in a new tab)</span>
+              </a>
             </dd>
           </div>
         </dl>
@@ -57,28 +52,20 @@ export function PecCard() {
   );
 }
 
-/** Grid of certification slots — list only what UMS actually holds. */
+/** Grid of certifications UMS holds. */
 export function CertificationGrid() {
   return (
     <Reveal stagger as="ul" className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {certifications.map((c, i) => (
-        <RevealItem key={i} as="li">
+      {certifications.map((c) => (
+        <RevealItem key={c.name} as="li">
           <article className="h-full border border-line bg-white p-6">
             <span className="flex size-12 items-center justify-center border border-cyan/40 text-cyan">
               <Award aria-hidden className="size-6" />
             </span>
-            {c.name ? (
-              <>
-                <h3 className="mt-5 text-navy">{c.name}</h3>
-                {c.issuer && <p className="mt-1 text-muted">Issued by {c.issuer}</p>}
-                {c.validUntil && <p className="mt-1 text-sm text-muted">Valid until {c.validUntil}</p>}
-              </>
-            ) : (
-              <div className="mt-5">
-                {pending("Certification")}
-                <p className="mt-3 text-sm text-muted">Only certifications UMS holds will be listed here.</p>
-              </div>
-            )}
+            <h3 className="mt-5 text-navy">{c.name}</h3>
+            <p className="mt-1 text-muted">{c.issuer}</p>
+            <p className="mt-1 text-sm text-muted">Valid until {c.validUntil}</p>
+            <p className="mono-label mt-3 text-steel">{c.reference}</p>
           </article>
         </RevealItem>
       ))}
@@ -86,20 +73,11 @@ export function CertificationGrid() {
   );
 }
 
-/** Company profile download. Disabled with a placeholder until the PDF is supplied. */
+/** Company profile download. */
 export function CompanyProfileButton({ tone = "light" }: { tone?: "light" | "dark" }) {
-  const url = site.companyProfileUrl;
-  const variant = tone === "dark" ? "outline-light" : "outline";
-  return url ? (
-    <Button href={url} variant={variant} size="lg" download>
+  return (
+    <Button href={site.companyProfileUrl} variant={tone === "dark" ? "outline-light" : "outline"} size="lg" download>
       Download company profile (PDF)
     </Button>
-  ) : (
-    <div className="flex flex-wrap items-center gap-3">
-      <Button type="button" variant={variant} size="lg" disabled aria-disabled>
-        Download company profile (PDF)
-      </Button>
-      <Badge tone="pending">File to be confirmed</Badge>
-    </div>
   );
 }

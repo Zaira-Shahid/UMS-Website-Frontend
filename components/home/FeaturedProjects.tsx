@@ -7,13 +7,9 @@ import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ProjectCard } from "@/components/projects/ProjectCard";
-import { projects } from "@/content/projects";
+import { featuredProjects } from "@/lib/projects";
 
-/**
- * Horizontal scroll-snap carousel of the six case studies. Only the project
- * NAMES are confirmed — sector, location and UMS package render as pending
- * placeholders until the client supplies them (TODO: client to confirm).
- */
+/** Horizontal scroll-snap carousel of the six featured case studies. */
 export function FeaturedProjects() {
   const trackRef = useRef<HTMLUListElement>(null);
   const [progress, setProgress] = useState(0);
@@ -57,7 +53,7 @@ export function FeaturedProjects() {
               index="02"
               label="Projects"
               title="Buildings that depend on their services"
-              description="Hospitals, malls, headquarters and developments. Project details are shown as they are confirmed with UMS."
+              description="Hospitals, malls, headquarters and developments, each with the exact package UMS delivered."
             />
           </div>
           <div className="flex items-center gap-2">
@@ -96,7 +92,7 @@ export function FeaturedProjects() {
             scrollPaddingLeft: "max(1.25rem, calc((100vw - 80rem) / 2 + 2rem))",
           }}
         >
-          {projects.map((p, i) => (
+          {featuredProjects().map((p, i) => (
             <li key={p.slug} className="w-[82vw] shrink-0 snap-start sm:w-[24rem] lg:w-[26rem]">
               <ProjectCard project={p} index={i} />
             </li>

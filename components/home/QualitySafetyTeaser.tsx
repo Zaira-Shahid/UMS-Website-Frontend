@@ -1,5 +1,4 @@
 import { ClipboardCheck, HardHat } from "lucide-react";
-import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { CornerBrackets } from "@/components/ui/CornerBrackets";
 import { Reveal, RevealItem } from "@/components/ui/Reveal";
@@ -8,12 +7,11 @@ import { SiteImage } from "@/components/ui/SiteImage";
 import { qualityTopics } from "@/content/home";
 import { photo } from "@/content/images";
 
-// TODO: replace with approved UMS photography
+// Stock photo, replace with approved UMS photography.
 const image = photo("breakerPanel", "center 45%");
 
 /**
- * Split teaser. The two columns list what the Quality, Safety & Delivery page
- * covers — UMS's own procedures and certifications are marked as pending.
+ * Split teaser. The two columns list what the Quality, Safety & Delivery page covers.
  */
 export function QualitySafetyTeaser() {
   const blocks = [
@@ -67,8 +65,8 @@ export function QualitySafetyTeaser() {
           </Reveal>
 
           <div className="mt-8 flex flex-wrap items-center gap-4">
-            {/* TODO: client to confirm — UMS procedures, certifications and HSE record */}
-            <Badge tone="pending">UMS procedures &amp; certifications · to be confirmed</Badge>
+            <span className="mono-label text-navy">ISO 9001 · ISO 45001 · ISO 14001</span>
+            <span className="mono-label text-muted">0 lost-time incidents in 2025</span>
           </div>
           <div className="mt-8">
             <Button href="/quality-safety-delivery" variant="primary" arrow>

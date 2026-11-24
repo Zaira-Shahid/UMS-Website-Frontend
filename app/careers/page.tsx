@@ -51,7 +51,6 @@ export default function CareersPage() {
             Open positions
           </h2>
           {careers.length === 0 ? (
-            // No openings are published until UMS supplies them (content/careers.ts).
             <div className="mt-6 max-w-2xl border border-dashed border-line bg-offwhite p-6">
               <Badge tone="outline">No openings right now</Badge>
               <p className="mt-3 text-ink">
@@ -65,7 +64,7 @@ export default function CareersPage() {
                 <li key={c.slug} className="border border-line p-5">
                   <h3 className="font-heading text-lg font-semibold uppercase text-navy">{c.title}</h3>
                   <p className="mt-1 text-sm text-muted">
-                    {c.department} · {c.location}
+                    {c.department} · {c.location} · {c.type} · {c.experience}
                   </p>
                   <p className="mt-3 text-ink">{c.summary}</p>
                 </li>

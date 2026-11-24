@@ -71,8 +71,7 @@ function Group({
 /**
  * The four library filters — status, sector, location, service. Shared by the
  * desktop sidebar (applies instantly) and the mobile bottom sheet (applies on
- * "Apply"). Counts are totals across all projects, so unconfirmed attributes
- * show 0 rather than being guessed.
+ * "Apply"). Counts are totals across all projects.
  */
 export function FilterPanel({
   value,
@@ -129,7 +128,6 @@ export function FilterPanel({
         options={locationOptions}
         value={value.location}
         onChange={(v) => onChange({ ...value, location: v })}
-        emptyNote="Project locations will appear here once UMS confirms them."
       />
       <Group
         legend="Service"

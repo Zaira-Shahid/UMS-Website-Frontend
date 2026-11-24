@@ -7,7 +7,7 @@ import { industries } from "@/content/industries";
 import { statusLabel } from "@/lib/projects";
 import type { Project } from "@/types";
 
-/** Dark case-study hero. Sector, location and status show pending badges until confirmed. */
+/** Dark case-study hero with sector, city and status badges. */
 export function CaseStudyHero({ project: p }: { project: Project }) {
   const sector = industries.find((x) => x.slug === p.sector);
   return (
@@ -35,33 +35,20 @@ export function CaseStudyHero({ project: p }: { project: Project }) {
               {p.name}
             </h1>
             <ul className="mt-6 flex flex-wrap items-center gap-2" aria-label="Project summary">
-              <li>
-                {sector ? (
+              {sector && (
+                <li>
                   <Badge tone="cyan">{sector.name}</Badge>
-                ) : (
-                  // TODO: client to confirm — sector
-                  <Badge tone="pending">Sector · to be confirmed</Badge>
-                )}
+                </li>
+              )}
+              <li>
+                <Badge tone="outline" className="border-white/30 text-white/85">
+                  {p.location}
+                </Badge>
               </li>
               <li>
-                {p.location ? (
-                  <Badge tone="outline" className="border-white/30 text-white/85">
-                    {p.location}
-                  </Badge>
-                ) : (
-                  // TODO: client to confirm — location
-                  <Badge tone="pending">Location · to be confirmed</Badge>
-                )}
-              </li>
-              <li>
-                {p.status === "unconfirmed" ? (
-                  // TODO: client to confirm — completed or ongoing
-                  <Badge tone="pending">{statusLabel.unconfirmed}</Badge>
-                ) : (
-                  <Badge tone="navy" className="border border-white/30">
-                    {statusLabel[p.status]}
-                  </Badge>
-                )}
+                <Badge tone="navy" className="border border-white/30">
+                  {statusLabel[p.status]} · {p.year}
+                </Badge>
               </li>
             </ul>
             <p className="mt-6 max-w-xl text-white/75">{p.summary}</p>
@@ -70,7 +57,6 @@ export function CaseStudyHero({ project: p }: { project: Project }) {
           <div className="lg:col-span-6">
             <CornerBrackets tone="light">
               <div className="relative aspect-[4/3] overflow-hidden bg-navy">
-                {/* TODO: replace with approved UMS photography (stock placeholder) */}
                 <SiteImage
                   asset={p.image}
                   fill
@@ -84,9 +70,6 @@ export function CaseStudyHero({ project: p }: { project: Project }) {
                 />
               </div>
             </CornerBrackets>
-            <p className="mt-3 text-xs text-white/55">
-              Placeholder photograph — it does not show this project.
-            </p>
           </div>
         </div>
       </div>

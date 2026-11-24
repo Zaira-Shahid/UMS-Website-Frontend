@@ -27,7 +27,6 @@ export function CTABand() {
           <Button href={quoteHref()} variant="accent" size="lg" magnetic arrow>
             Request a Quote
           </Button>
-          {/* Shown only once UMS supplies the PDF — TODO.md → Brand */}
           {site.companyProfileUrl && (
             <Button href={site.companyProfileUrl} variant="outline-light" size="lg">
               Download Company Profile

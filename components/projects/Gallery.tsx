@@ -11,7 +11,7 @@ import type { ImageAsset } from "@/types";
  *   focus is trapped, Esc closes, and focus returns to the thumbnail that opened it.
  * - ← → keys, the arrow buttons and horizontal swipe move between images.
  * - The current position is announced politely ("Image 2 of 3").
- * Images are stock placeholders (TODO: replace with approved UMS photography).
+ * Images are stock photography (see content/images.ts).
  */
 export function Gallery({ images, projectName }: { images: ImageAsset[]; projectName: string }) {
   const dialog = useRef<HTMLDialogElement>(null);
@@ -167,9 +167,6 @@ export function Gallery({ images, projectName }: { images: ImageAsset[]; project
 
           <p className="px-4 py-4 text-center text-sm text-white/75 sm:px-6">
             {img.alt}
-            <span className="block text-xs text-white/50">
-              Placeholder photograph — it does not show this project.
-            </span>
           </p>
         </div>
       </dialog>

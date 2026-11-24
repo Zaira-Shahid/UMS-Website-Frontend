@@ -7,10 +7,7 @@ import { serviceBySlug } from "@/content/services";
 import { statusLabel } from "@/lib/projects";
 import type { Project } from "@/types";
 
-/**
- * List-view row for the projects library (dark surface). Unconfirmed facts render
- * as pending placeholders — nothing is invented (TODO: client to confirm).
- */
+/** List-view row for the projects library (dark surface). */
 export function ProjectRow({ project: p, index }: { project: Project; index: number }) {
   const sector = industries.find((x) => x.slug === p.sector);
   return (
@@ -36,18 +33,10 @@ export function ProjectRow({ project: p, index }: { project: Project; index: num
           </span>
         </span>
         <span className="mt-2 flex flex-wrap items-center gap-2 text-sm">
-          {sector ? (
-            <Badge tone="cyan">{sector.name}</Badge>
-          ) : (
-            <Badge tone="pending">Sector · to be confirmed</Badge>
-          )}
-          {p.location ? (
-            <span className="text-white/75">{p.location}</span>
-          ) : (
-            <Badge tone="pending">Location · to be confirmed</Badge>
-          )}
+          {sector && <Badge tone="cyan">{sector.name}</Badge>}
+          <span className="text-white/75">{p.location}</span>
           <span className="hidden text-white/60 sm:inline">
-            {p.status === "unconfirmed" ? "" : statusLabel[p.status]}
+            {statusLabel[p.status]} · {p.year}
           </span>
           {p.services.map((slug) => (
             <span

@@ -1,11 +1,10 @@
 import { OfficeCard } from "@/components/contact/OfficeCard";
-import { Badge } from "@/components/ui/Badge";
+import { rfqResponseTime } from "@/content/dummy";
 import { offices } from "@/content/offices";
 import { services } from "@/content/services";
 
 /**
- * Desktop side panel for the RFQ form. Only facts that exist in /content are stated;
- * the response time and office details are placeholders until UMS confirms them.
+ * Desktop side panel for the RFQ form. Facts come from /content.
  */
 export function RfqAside() {
   return (
@@ -32,9 +31,9 @@ export function RfqAside() {
       <section className="border border-line bg-white">
         <div className="p-5">
           <h2 className="font-heading text-lg font-semibold uppercase tracking-[0.08em] text-navy">Response time</h2>
-          {/* TODO: client to confirm — typical response time for quote requests */}
-          <p className="mt-3">
-            <Badge tone="pending">Typical response time · to be confirmed</Badge>
+          <p className="mt-3 text-sm text-ink">
+            The tender desk replies <strong className="font-semibold text-navy">{rfqResponseTime}</strong> with
+            questions or a pricing route.
           </p>
         </div>
       </section>

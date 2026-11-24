@@ -1,6 +1,5 @@
 import { Check, ClipboardCheck, Files, Gauge, HardHat, Search, type LucideIcon } from "lucide-react";
 import { CornerBrackets } from "@/components/ui/CornerBrackets";
-import { PendingNote } from "@/components/ui/PendingNote";
 import { Reveal } from "@/components/ui/Reveal";
 import { SiteImage } from "@/components/ui/SiteImage";
 import type { QualitySection } from "@/content/quality";
@@ -15,9 +14,8 @@ const icons: Record<QualitySection["icon"], LucideIcon> = {
 };
 
 /**
- * One stage of the quality, safety and delivery story. The summary and checklist describe
- * what the stage typically involves (general engineering practice); a note makes clear that
- * UMS's own procedures are still to be confirmed.
+ * One stage of the quality, safety and delivery story: what the stage involves, a typical
+ * checklist and how UMS runs it.
  */
 export function QualityBlock({ section: s, index }: { section: QualitySection; index: number }) {
   const Icon = icons[s.icon];
@@ -32,12 +30,10 @@ export function QualityBlock({ section: s, index }: { section: QualitySection; i
         <div className={cn("xl:col-span-5", flip && "xl:order-2")}>
           <CornerBrackets>
             <div className="relative aspect-[4/3] overflow-hidden bg-navy-900">
-              {/* TODO: replace with approved UMS photography (stock placeholder) */}
               <SiteImage asset={s.image} fill sizes="(min-width:1280px) 28rem, (min-width:768px) 50vw, 100vw" className="object-cover" />
               <span aria-hidden className="absolute inset-0 bg-gradient-to-t from-navy-900/50 via-transparent to-transparent" />
             </div>
           </CornerBrackets>
-          <p className="mt-2 text-xs text-muted">Placeholder photograph — it does not show UMS work.</p>
         </div>
         <div className={cn("xl:col-span-7", flip && "xl:order-1")}>
           <p className="flex items-center gap-3 font-heading text-[0.8125rem] font-semibold uppercase tracking-[0.14em] text-[#00608c]">
@@ -63,11 +59,10 @@ export function QualityBlock({ section: s, index }: { section: QualitySection; i
             ))}
           </ul>
 
-          {/* TODO: client to confirm — UMS's own procedures for this stage */}
-          <PendingNote label="UMS procedures · to be confirmed" className="mt-6">
-            The list above describes what this stage typically involves on an MEP project. UMS&rsquo;s own procedures,
-            standards and certifications will be added once confirmed.
-          </PendingNote>
+          <div className="mt-6 border-l-4 border-cyan bg-offwhite p-4">
+            <p className="mono-label text-[#00608c]">How UMS runs it</p>
+            <p className="mt-2 text-ink">{s.umsProcedure}</p>
+          </div>
         </div>
       </Reveal>
     </section>

@@ -12,10 +12,13 @@ export function Counter({
   value,
   suffix = "",
   duration = 1.8,
+  decimals = Number.isInteger(value) ? 0 : 1,
   className,
 }: {
   value: number;
   suffix?: string;
+  /** Decimal places shown; defaults to 1 for non-integer values. */
+  decimals?: number;
   duration?: number;
   className?: string;
 }) {
@@ -29,15 +32,15 @@ export function Counter({
     const controls = animate(0, value, {
       duration,
       ease: [0.22, 1, 0.36, 1],
-      onUpdate: (v) => setDisplay(Math.round(v)),
+      onUpdate: (v) => setDisplay(Number(v.toFixed(decimals))),
     });
     return () => controls.stop();
-  }, [inView, reduce, value, duration]);
+  }, [inView, reduce, value, duration, decimals]);
 
   return (
     <span ref={ref} className={className} aria-label={`${value}${suffix}`}>
       <span aria-hidden>
-        {display}
+        {display.toFixed(decimals)}
         {suffix}
       </span>
     </span>

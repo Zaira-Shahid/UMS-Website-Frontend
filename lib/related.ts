@@ -2,7 +2,7 @@ import { insights } from "@/content/insights";
 import { projects } from "@/content/projects";
 import type { Insight, Project, ServiceSlug } from "@/types";
 
-/** Projects whose confirmed UMS scope includes this service. Empty until the client confirms. */
+/** Projects whose UMS scope includes this service. */
 export const projectsForService = (slug: ServiceSlug): Project[] =>
   projects.filter((p) => p.services.includes(slug));
 

@@ -50,7 +50,7 @@ export default function TeamPage() {
               index="02"
               label="Leadership"
               title="Leadership team"
-              description="Names, roles and portraits are added once UMS supplies and approves them."
+              description="The people who lead delivery, quality and safety across every UMS project."
             />
           </div>
           <LeadershipCards />

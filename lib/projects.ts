@@ -25,7 +25,6 @@ export function adjacentProjects(slug: string): { prev: Project; next: Project }
 export const statusLabel: Record<ProjectStatus, string> = {
   completed: "Completed",
   ongoing: "Ongoing",
-  unconfirmed: "Status to be confirmed",
 };
 
 /* ───────────── Library filters (URL-synced) ───────────── */
@@ -86,9 +85,9 @@ export function filtersToQuery(f: ProjectFilters): string {
   return s ? `?${s}` : "";
 }
 
-/** Distinct CONFIRMED project locations. Empty until the client supplies them. */
+/** Distinct project cities. */
 export function projectLocations(): string[] {
-  return [...new Set(projects.map((p) => p.location).filter((l): l is string => !!l))].sort();
+  return [...new Set(projects.map((p) => p.location))].sort();
 }
 
 export function filterProjects(list: Project[], f: ProjectFilters): Project[] {
@@ -114,6 +113,5 @@ export function projectCounts(list: Project[] = projects) {
     completed: list.filter((p) => p.status === "completed").length,
     ongoing: list.filter((p) => p.status === "ongoing").length,
     featured: list.filter((p) => p.featured).length,
-    unconfirmed: list.filter((p) => p.status === "unconfirmed").length,
   };
 }

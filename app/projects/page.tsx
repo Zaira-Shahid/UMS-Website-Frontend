@@ -28,16 +28,11 @@ export const metadata: Metadata = {
 
 export default function ProjectsPage() {
   const counts = projectCounts();
-  // Completed / ongoing are only stated once the client confirms a status for a project.
-  const stats: { label: string; value: string; pending?: boolean }[] = [
+  const stats: { label: string; value: string }[] = [
     { label: "Projects", value: String(counts.total) },
     { label: "Featured case studies", value: String(counts.featured) },
-    counts.completed > 0
-      ? { label: "Completed", value: String(counts.completed) }
-      : { label: "Completed", value: "To be confirmed", pending: true },
-    counts.ongoing > 0
-      ? { label: "Ongoing", value: String(counts.ongoing) }
-      : { label: "Ongoing", value: "To be confirmed", pending: true },
+    { label: "Completed", value: String(counts.completed) },
+    { label: "Ongoing", value: String(counts.ongoing) },
   ];
 
   const structuredData = [
@@ -84,8 +79,8 @@ export default function ProjectsPage() {
                 Buildings we have delivered
               </h1>
               <p className="mt-5 max-w-2xl text-lg text-white/75">
-                Hospitals, malls, headquarters and developments. Project details are published as UMS
-                confirms them, so some facts below are marked as to be confirmed.
+                Hospitals, malls, headquarters and developments across Pakistan, each with the sector, city and
+                package UMS delivered.
               </p>
             </div>
           </div>
@@ -96,15 +91,7 @@ export default function ProjectsPage() {
                 <dt className="font-heading text-[0.75rem] font-semibold uppercase tracking-[0.14em] text-white/60">
                   {s.label}
                 </dt>
-                <dd
-                  className={
-                    s.pending
-                      ? "mt-2 text-sm font-medium text-[#f5c26b]"
-                      : "mt-1 font-heading text-4xl font-bold tabular-nums text-white"
-                  }
-                >
-                  {s.value}
-                </dd>
+                <dd className="mt-1 font-heading text-4xl font-bold tabular-nums text-white">{s.value}</dd>
               </div>
             ))}
           </dl>

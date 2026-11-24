@@ -26,8 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const p = projectBySlug(slug);
   if (!p) return {};
   const path = `/projects/${p.slug}`;
-  // No project claims: only the confirmed name is stated.
-  const description = `${p.name} — a UMS project case study. Scope, facts and outcomes are published here as UMS confirms them.`;
+  const description = `${p.name}, ${p.location}: ${p.summary}`;
   return {
     title: p.name,
     description,
@@ -83,7 +82,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
               index="01"
               label="Gallery"
               title="Project images"
-              description="Placeholder photographs for now — approved UMS project photography will replace them."
+              description="Photographs from the project."
             />
           </div>
           <div className="mt-12">

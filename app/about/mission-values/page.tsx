@@ -3,7 +3,6 @@ import { ValueCards } from "@/components/about/ValueCards";
 import { PageHero } from "@/components/layout/PageHero";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { BlueprintGrid } from "@/components/ui/BlueprintGrid";
-import { PendingNote } from "@/components/ui/PendingNote";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { mission } from "@/content/about";
@@ -42,16 +41,13 @@ export default function MissionValuesPage() {
             <SectionHeading tone="light" index="01" label="Our mission" title="Mission statement" />
           </div>
           <Reveal className="mt-10">
-            {mission.statement ? (
-              <blockquote className="border-l-4 border-cyan-300 pl-6 font-heading text-[clamp(1.5rem,1.1rem+1.6vw,2.5rem)] font-semibold leading-snug text-white">
-                {mission.statement}
-              </blockquote>
-            ) : (
-              // TODO: client to confirm — mission statement wording
-              <PendingNote label="Mission statement · to be confirmed" className="max-w-2xl">
-                UMS has not yet supplied its mission statement. It will appear here, in the company&rsquo;s own words.
-              </PendingNote>
-            )}
+            <blockquote className="border-l-4 border-cyan-300 pl-6 font-heading text-[clamp(1.5rem,1.1rem+1.6vw,2.5rem)] font-semibold leading-snug text-white">
+              {mission.statement}
+            </blockquote>
+            <p className="mt-8 max-w-3xl border-l-4 border-white/20 pl-6 text-lg text-white/75">
+              <span className="mono-label mb-2 block text-cyan-300">Our vision</span>
+              {mission.vision}
+            </p>
           </Reveal>
         </div>
       </section>
@@ -64,7 +60,7 @@ export default function MissionValuesPage() {
               index="02"
               label="Our values"
               title="Values"
-              description="Each value will carry its name and a short description once UMS confirms them."
+              description="Six commitments that shape how UMS plans, builds and hands over."
             />
           </div>
           <ValueCards />

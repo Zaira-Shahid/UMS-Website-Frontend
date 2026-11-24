@@ -103,11 +103,6 @@ export function ProjectsLibrary() {
     return () => mq.removeEventListener("change", onChange);
   }, []);
 
-  const unconfirmedNote =
-    counts.unconfirmed > 0
-      ? `${counts.unconfirmed} of ${counts.total} projects still have unconfirmed details (status, sector, location, services), so filters cannot match them yet.`
-      : null;
-
   return (
     <section
       aria-label="Project library"
@@ -304,7 +299,7 @@ export function ProjectsLibrary() {
                     No projects match these filters
                   </h2>
                   <p className="mx-auto mt-3 max-w-xl text-white/75">
-                    {unconfirmedNote ?? "Try removing a filter to see more projects."}
+                    Try removing a filter to see more projects.
                   </p>
                   <Button onClick={clearAll} variant="outline-light" className="mt-6">
                     Clear all filters
@@ -313,12 +308,6 @@ export function ProjectsLibrary() {
               )}
             </div>
 
-            {unconfirmedNote && results.length > 0 && filterCount === 0 && (
-              // TODO: client to confirm status, sector, location and services per project
-              <p className="mt-10 border-t border-white/10 pt-5 text-sm text-white/60">
-                {unconfirmedNote}
-              </p>
-            )}
           </div>
         </div>
       </div>

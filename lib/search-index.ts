@@ -44,7 +44,7 @@ export const searchItems: SearchItem[] = [
     id: `pr-${p.slug}`,
     group: "Projects",
     title: p.name,
-    description: "Featured project — details pending confirmation.",
+    description: `${p.location} · ${p.status === "ongoing" ? "Ongoing" : "Completed"} · ${p.summary}`,
     href: `/projects/${p.slug}`,
     image: p.image,
   })),

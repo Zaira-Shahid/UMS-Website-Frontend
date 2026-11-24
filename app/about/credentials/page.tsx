@@ -26,7 +26,7 @@ export default function CredentialsPage() {
       <PageHero
         eyebrow="Credentials"
         title="Registrations and certifications"
-        intro="The professional registration and certifications UMS holds. Only confirmed credentials are listed."
+        intro="The professional registration and certifications UMS holds."
         crumbs={[{ label: "Home", href: "/" }, { label: "About UMS", href: "/about" }, { label: "Credentials" }]}
         titleId="cred-title"
       />
@@ -50,7 +50,7 @@ export default function CredentialsPage() {
               index="02"
               label="Certifications"
               title="Certifications and accreditations"
-              description="Each certificate will be listed with its issuer and validity once UMS confirms it."
+              description="Each certificate with its issuer, validity and reference."
             />
           </div>
           <CertificationGrid />

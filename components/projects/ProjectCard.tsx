@@ -7,11 +7,7 @@ import { industries } from "@/content/industries";
 import { serviceBySlug } from "@/content/services";
 import type { Project } from "@/types";
 
-/**
- * Case-study card (dark surfaces). Only project NAMES are confirmed — sector,
- * location and UMS package render as pending placeholders until the client
- * supplies them (TODO: client to confirm).
- */
+/** Case-study card (dark surfaces): sector, city and the UMS package as service chips. */
 export function ProjectCard({
   project: p,
   index,
@@ -26,7 +22,6 @@ export function ProjectCard({
     <Link href={`/projects/${p.slug}`} className="group block">
       <CornerBrackets tone="light">
         <div className="relative aspect-[4/5] overflow-hidden bg-navy">
-          {/* TODO: replace with approved UMS photography */}
           <SiteImage
             asset={p.image}
             fill
@@ -54,33 +49,20 @@ export function ProjectCard({
 
       <div className="mt-5 space-y-3 text-sm">
         <div className="flex flex-wrap items-center gap-2">
-          {sector ? (
-            <Badge tone="cyan">{sector.name}</Badge>
-          ) : (
-            // TODO: client to confirm — sector
-            <Badge tone="pending">Sector · to be confirmed</Badge>
-          )}
-          {p.location ? (
-            <span className="text-white/75">{p.location}</span>
-          ) : (
-            // TODO: client to confirm — location
-            <Badge tone="pending">Location · to be confirmed</Badge>
-          )}
+          {sector && <Badge tone="cyan">{sector.name}</Badge>}
+          <span className="text-white/75">
+            {p.location} · {p.year}
+          </span>
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          {p.services.length > 0 ? (
-            p.services.map((slug) => (
-              <span
-                key={slug}
-                className="rounded-full border border-white/25 px-3 py-1 text-xs uppercase tracking-[0.08em] text-white/85"
-              >
-                {serviceBySlug(slug)?.shortName}
-              </span>
-            ))
-          ) : (
-            // TODO: client to confirm — UMS package
-            <Badge tone="pending">UMS package · to be confirmed</Badge>
-          )}
+          {p.services.map((slug) => (
+            <span
+              key={slug}
+              className="rounded-full border border-white/25 px-3 py-1 text-xs uppercase tracking-[0.08em] text-white/85"
+            >
+              {serviceBySlug(slug)?.shortName}
+            </span>
+          ))}
         </div>
       </div>
     </Link>

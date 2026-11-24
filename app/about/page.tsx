@@ -5,13 +5,12 @@ import { Timeline } from "@/components/about/Timeline";
 import { OfficeCard } from "@/components/contact/OfficeCard";
 import { PageHero } from "@/components/layout/PageHero";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { Badge } from "@/components/ui/Badge";
 import { BlueprintGrid } from "@/components/ui/BlueprintGrid";
-import { PendingNote } from "@/components/ui/PendingNote";
 import { Reveal, RevealItem } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { offices } from "@/content/offices";
 import { services } from "@/content/services";
+import { company } from "@/content/dummy";
 import { site } from "@/content/site";
 import { breadcrumbLd, pageMetadata } from "@/lib/seo";
 
@@ -51,10 +50,11 @@ export default function AboutPage() {
             </div>
             <Reveal className="mt-8 space-y-5 text-lg text-ink">
               <p>{site.description}</p>
-              {/* TODO: client to confirm — company history, founding and growth */}
-              <PendingNote label="Company story · to be confirmed">
-                How UMS started, how it has grown and what it is proud of will be written here once UMS supplies it.
-              </PendingNote>
+              <p>
+                Founded in {company.founded}, UMS began as a mechanical contractor in Islamabad and now delivers HVAC,
+                fire fighting, electrical and ELV, plumbing and pools and fountains as separate packages or as one
+                integrated MEP scope, from offices in Islamabad and Lahore.
+              </p>
             </Reveal>
           </div>
           <Reveal className="lg:col-span-5">
@@ -69,9 +69,7 @@ export default function AboutPage() {
               </div>
               <div className="flex items-baseline justify-between gap-4 py-4">
                 <dt className="text-muted">PEC registration</dt>
-                <dd>
-                  <Badge tone="pending">To be confirmed</Badge>
-                </dd>
+                <dd className="text-right text-navy">{company.pecRegistration}</dd>
               </div>
             </dl>
           </Reveal>
@@ -117,7 +115,7 @@ export default function AboutPage() {
       <section aria-labelledby="offices-title" className="bg-offwhite py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <div id="offices-title">
-            <SectionHeading index="03" label="Offices" title="Islamabad and Lahore" description="Two offices, one team. Contact details are added as UMS confirms them." />
+            <SectionHeading index="03" label="Offices" title="Islamabad and Lahore" description="Two offices, one team." />
           </div>
           <Reveal stagger as="div" className="mt-12 grid gap-6 md:grid-cols-2">
             {offices.map((o) => (
@@ -133,7 +131,7 @@ export default function AboutPage() {
       <section aria-labelledby="story-title" className="bg-white py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <div id="story-title">
-            <SectionHeading index="04" label="Our story" title="Milestones" description="The company's key moments, once UMS confirms them." />
+            <SectionHeading index="04" label="Our story" title="Milestones" description="The company's key moments since it was founded." />
           </div>
           <Timeline />
         </div>
