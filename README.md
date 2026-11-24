@@ -70,5 +70,15 @@ and validates with the same zod schemas the browser uses (`lib/forms/schemas.ts`
   Delete `node_modules/next` (or all of `node_modules`) and run `npm install` again.
 - **Odd `ENOENT` errors under `.next`, stale pages, or changes not appearing** — the build cache is stale.
   Stop the dev server, delete the `.next` folder and start again.
-- **Never run two dev servers at once** (or a dev server while building) in the same folder — they fight over
+- **Never run two dev servers at once** (or a dev server while building) in the same folder: they fight over
   `.next`. Check that port 3000 is free before starting, and stop any server when you are done.
+- **Builds fail at random while a dev server is running** (`no direct app page entry found`, `next/font/google
+  queries have exactly one entry`) — the build and the dev server share `.next`. Build into a separate folder
+  instead; the dev server keeps `.next`:
+
+  ```bash
+  NEXT_DIST_DIR=.next-test npm run build
+  NEXT_DIST_DIR=.next-test npx next start -p 3101   # test the build on a free port
+  ```
+
+  `.next-test` is git-ignored and skipped by ESLint and TypeScript.
