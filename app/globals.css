@@ -394,6 +394,16 @@ html.has-custom-cursor [data-cursor] {
   animation: ums-orbit 24s linear infinite;
 }
 
+/* Orbit: pause the ring (and the counter-rotating nodes) on hover, focus or while a node is active */
+.orbit[data-paused="true"] .animate-orbit,
+.orbit[data-paused="true"] .animate-orbit-reverse,
+.orbit:hover .animate-orbit,
+.orbit:hover .animate-orbit-reverse,
+.orbit:focus-within .animate-orbit,
+.orbit:focus-within .animate-orbit-reverse {
+  animation-play-state: paused;
+}
+
 /* Wave divider drift */
 @keyframes ums-wave-drift {
   to {
