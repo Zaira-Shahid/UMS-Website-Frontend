@@ -13,25 +13,26 @@ export function Card({ children, className }: { children: ReactNode; className?:
  * Service tile (mobile "Our Services" grid): a coloured icon tile and the service name, linking to its page.
  * The `active` tile (or the hovered or focused one) gets a blue border.
  */
-export function ServiceCard({ slug, label, active, className }: { slug: ServiceSlug; label: string; active?: boolean; className?: string }) {
+export function ServiceCard({ slug, label, active, compact, className }: { slug: ServiceSlug; label: string; active?: boolean; compact?: boolean; className?: string }) {
   const color = serviceColor(slug);
   return (
     <Link
       href={`/services/${slug}`}
       aria-current={active ? "true" : undefined}
       className={cn(
-        "group flex items-center gap-4 rounded-card border-2 bg-white p-3 shadow-card transition-colors hover:border-blue focus-visible:border-blue sm:p-4",
+        "group flex items-center rounded-card border-2 bg-white shadow-card transition-colors hover:border-blue focus-visible:border-blue",
+        compact ? "gap-2 p-2" : "gap-4 p-3 sm:p-4",
         active ? "border-blue bg-cyan-100/40" : "border-transparent",
         className,
       )}
     >
       <span
-        className="flex size-14 shrink-0 items-center justify-center rounded-xl"
+        className={cn("flex shrink-0 items-center justify-center rounded-xl", compact ? "size-10" : "size-14")}
         style={{ background: `color-mix(in srgb, ${color} 14%, white)`, color }}
       >
-        <ServiceIcon slug={slug} className="size-8" />
+        <ServiceIcon slug={slug} className={compact ? "size-6" : "size-8"} />
       </span>
-      <span className="text-[1.0625rem] font-bold leading-tight text-navy">{label}</span>
+      <span className={cn("font-bold leading-tight text-navy", compact ? "font-heading text-[0.78rem]" : "text-[1.0625rem]")}>{label}</span>
     </Link>
   );
 }

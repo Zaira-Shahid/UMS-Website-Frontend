@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/home/Hero";
+import { ServicesSlider } from "@/components/home/ServicesSlider";
 import { site } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -9,5 +10,10 @@ export const metadata: Metadata = {
 
 /** Homepage. The final sections (PROJECT_SPEC.md, H1 to H9) are built in phases F2 and F3. */
 export default function Home() {
-  return <Hero />;
+  return (
+    <>
+      <Hero />
+      <ServicesSlider />
+    </>
+  );
 }
