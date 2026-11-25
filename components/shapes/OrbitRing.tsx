@@ -72,7 +72,6 @@ export function OrbitRing({
               <li key={n.id} className="absolute" style={{ left: `${x}%`, top: `${y}%`, transform: "translate(-50%, -50%)" }}>
                 <button
                   type="button"
-                  data-cursor="Open"
                   aria-describedby={active === n.id ? "orbit-card" : undefined}
                   onMouseEnter={() => setActive(n.id)}
                   onFocus={() => setActive(n.id)}

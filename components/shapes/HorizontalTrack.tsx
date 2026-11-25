@@ -70,7 +70,6 @@ export function HorizontalTrack({
     >
       <ul
         ref={track}
-        data-cursor="Drag"
         tabIndex={0}
         className={cn(
           "flex w-max gap-6 px-5 sm:px-8",

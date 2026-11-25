@@ -18,16 +18,3 @@ export function usePrefersReducedMotion(): boolean {
     () => false,
   );
 }
-
-/** true on devices with a mouse-like primary pointer (used by the custom cursor). */
-export function useFinePointer(): boolean {
-  return useSyncExternalStore(
-    (cb) => {
-      const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
-      mq.addEventListener("change", cb);
-      return () => mq.removeEventListener("change", cb);
-    },
-    () => window.matchMedia("(hover: hover) and (pointer: fine)").matches,
-    () => false,
-  );
-}

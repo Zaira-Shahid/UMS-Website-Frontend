@@ -5,7 +5,6 @@ import { Header } from "@/components/layout/Header";
 import { PageTransition } from "@/components/layout/PageTransition";
 import { PRELOADER_GUARD, PRELOADER_STYLE, Preloader } from "@/components/layout/Preloader";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
-import { CustomCursor } from "@/components/motion/CustomCursor";
 import { site } from "@/content/site";
 import "./globals.css";
 
@@ -63,7 +62,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#main" className="skip-link">
           Skip to main content
         </a>
-        <CustomCursor />
         <SmoothScroll>
           <Header />
           {/* The header is fixed: pages with a full-bleed hero sit under it, other pages offset themselves. */}

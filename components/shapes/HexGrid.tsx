@@ -74,7 +74,6 @@ export function HexGrid({
               <button
                 key={item.id}
                 type="button"
-                data-cursor="Open"
                 aria-pressed={isActive}
                 onMouseEnter={() => set(item.id)}
                 onMouseLeave={() => set(null)}

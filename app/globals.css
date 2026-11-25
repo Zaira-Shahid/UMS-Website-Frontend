@@ -384,12 +384,14 @@ html[data-preloader="skip"] .preloader {
 }
 
 
-/* Custom cursor: hide the native one only once the custom one is live */
-html.has-custom-cursor,
-html.has-custom-cursor a,
-html.has-custom-cursor button,
-html.has-custom-cursor [data-cursor] {
-  cursor: none;
+/* Standard system cursors: pointer on anything clickable (Tailwind's reset makes buttons an arrow) */
+a[href],
+button:not(:disabled),
+summary,
+select,
+label[for],
+[role="button"]:not([aria-disabled="true"]) {
+  cursor: pointer;
 }
 
 /* Fluid moving inside a pipe: stroke-dashoffset only */
@@ -472,12 +474,6 @@ html.has-custom-cursor [data-cursor] {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html.has-custom-cursor,
-  html.has-custom-cursor a,
-  html.has-custom-cursor button,
-  html.has-custom-cursor [data-cursor] {
-    cursor: auto;
-  }
   .nf-drip,
   .nf-puddle,
   .pipe-fluid,
