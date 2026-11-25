@@ -69,6 +69,8 @@ export default function ChatWidget() {
   const [busy, setBusy] = useState(false);
   const [typing, setTyping] = useState(false);
   const [covering, setCovering] = useState(false);
+  const [lift, setLift] = useState(0);
+  const dock = useRef<HTMLDivElement>(null);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([{ id: 0, role: "assistant", content: GREETING }]);
   const idRef = useRef(1);
@@ -124,12 +126,19 @@ export default function ChatWidget() {
 
   // On phones, step aside while the launcher would sit on top of a "Request a Quote" button (or the quote link bar).
   useEffect(() => {
-    if (open) return;
     let frame = 0;
     const check = () => {
       frame = 0;
+      // Lift the button above the footer's bottom bar (Privacy Policy) whenever that bar is on screen.
+      const bar = document.querySelector("[data-footer-bar]");
+      const wrap = dock.current;
+      if (bar && wrap) {
+        const top = bar.getBoundingClientRect().top;
+        const rest = window.innerHeight - parseFloat(getComputedStyle(wrap).bottom) - wrap.offsetHeight;
+        setLift(Math.max(0, Math.round(rest + wrap.offsetHeight - (top - 12))));
+      } else setLift(0);
       const l = launcher.current?.getBoundingClientRect();
-      if (!l || window.innerWidth >= 768) return setCovering(false);
+      if (open || !l || window.innerWidth >= 768) return setCovering(false);
       const pad = 8;
       const hit = [...document.querySelectorAll<HTMLElement>('a[href^="/request-a-quote"], button[type="submit"]')].some((el) => {
         if (el.closest("[role=dialog]")) return false;
@@ -353,7 +362,11 @@ export default function ChatWidget() {
         </div>
       )}
 
-      <div className={cn("fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 z-40 transition-opacity md:bottom-5 md:right-5 motion-reduce:transition-none", hideOnPhone && "max-md:hidden", covering && "max-md:pointer-events-none max-md:opacity-0")}>
+      <div
+        ref={dock}
+        style={{ transform: lift ? `translateY(-${lift}px)` : undefined }}
+        className={cn("fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 z-40 transition-[opacity,transform] md:bottom-5 md:right-5 motion-reduce:transition-none", hideOnPhone && "max-md:hidden", covering && "max-md:pointer-events-none max-md:opacity-0")}
+      >
         {tip && !open && (
           <p aria-hidden className="absolute bottom-full right-0 mb-2 whitespace-nowrap rounded-lg bg-navy-950 px-3 py-1.5 text-sm font-semibold text-white shadow-lg">
             Ask UMS

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import type { ComponentType, KeyboardEvent } from "react";
-import { ArrowUpRight, Building2, ShieldCheck, Target } from "lucide-react";
+import { ArrowUpRight, Building2, ShieldCheck, Target, Wrench } from "lucide-react";
 import { ServiceIcon, serviceColor } from "@/components/ui/ServiceIcon";
 import { services } from "@/content/services";
 import { cn } from "@/lib/utils";
@@ -11,6 +11,7 @@ import type { NavLink } from "@/types";
 const aboutIcons: Record<string, ComponentType<{ className?: string }>> = {
   "/about": Building2,
   "/about/mission-values": Target,
+  "/about/capabilities": Wrench,
   "/quality-safety-delivery": ShieldCheck,
 };
 

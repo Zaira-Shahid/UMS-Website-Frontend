@@ -35,20 +35,20 @@ const explore = [
   { label: "Careers", href: "/careers" },
 ];
 
-const linkClass = "inline-block py-2 text-[1.1875rem] text-white/90 transition-colors hover:text-cyan focus-visible:text-cyan";
+const linkClass = "inline-block py-1.5 text-[1.125rem] text-white/90 transition-colors hover:text-cyan focus-visible:text-cyan";
 
 function ColumnHead({ children }: { children: string }) {
   return (
     <>
-      <h2 className="font-heading text-[1.875rem] font-bold leading-tight text-white">{children}</h2>
-      <span aria-hidden className="mt-3 block h-1 w-28 rounded-full bg-cyan" />
+      <h2 className="font-heading text-[1.75rem] font-bold leading-tight text-white">{children}</h2>
+      <span aria-hidden className="mt-2 block h-1 w-24 rounded-full bg-cyan" />
     </>
   );
 }
 
 /** One column of the footer. From the large breakpoint the columns are separated by a thin cyan line. */
 function Column({ children, className }: { children: React.ReactNode; className?: string }) {
-  return <div className={`min-w-0 lg:border-l-2 lg:border-cyan lg:pl-8 ${className ?? ""}`}>{children}</div>;
+  return <div className={`min-w-0 lg:border-l-2 lg:border-cyan lg:pl-6 ${className ?? ""}`}>{children}</div>;
 }
 
 export function Footer() {
@@ -59,17 +59,17 @@ export function Footer() {
     <>
       <FooterCTA />
       <footer className="bg-navy-950 text-white">
-        <div className="wrap pt-12 lg:pt-14">
-          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8 xl:grid-cols-[1.35fr_1fr_1.1fr_1fr_1.1fr]">
+        <div className="wrap pt-8 lg:pt-9">
+          <div className="grid grid-cols-2 gap-x-5 gap-y-7 lg:grid-cols-4 lg:gap-6 xl:grid-cols-[1.35fr_1fr_1.1fr_1fr_1.1fr]">
             {/* Brand */}
-            <div className="min-w-0 sm:col-span-2 lg:col-span-4 xl:col-span-1">
-              <Link href="/" aria-label={`${site.fullName}, home`} className="inline-block rounded-xl bg-white px-3 py-2.5">
-                <LogoMark className="h-14 w-auto" />
+            <div className="col-span-2 min-w-0 lg:col-span-4 xl:col-span-1">
+              <Link href="/" aria-label={`${site.fullName}, home`} className="inline-block rounded-lg bg-white px-2.5 py-2">
+                <LogoMark className="h-11 w-auto" />
               </Link>
-              <p className="mt-5 font-heading text-[2rem] font-bold leading-[1.12] text-white">{site.fullName}</p>
-              <span aria-hidden className="mt-3 block h-1 w-24 rounded-full bg-cyan" />
+              <p className="mt-3 font-heading text-[1.75rem] font-bold leading-[1.12] text-white">{site.fullName}</p>
+              <span aria-hidden className="mt-2 block h-1 w-20 rounded-full bg-cyan" />
               {socials.length > 0 && (
-                <ul className="mt-6 flex flex-wrap gap-3" aria-label="Social links">
+                <ul className="mt-4 flex flex-wrap gap-2.5" aria-label="Social links">
                   {socials.map(({ label, href, Icon }) => (
                     <li key={label}>
                       <a
@@ -77,9 +77,9 @@ export function Footer() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={`${label} (opens in a new tab)`}
-                        className="flex size-11 items-center justify-center rounded-lg border-2 border-cyan text-white transition-colors hover:bg-cyan hover:text-navy-950"
+                        className="flex size-9 items-center justify-center rounded-lg border-2 border-cyan text-white transition-colors hover:bg-cyan hover:text-navy-950"
                       >
-                        <Icon className="size-5" />
+                        <Icon className="size-4" />
                       </a>
                     </li>
                   ))}
@@ -91,14 +91,14 @@ export function Footer() {
                 width={417}
                 height={145}
                 sizes="(min-width:1024px) 22rem, 70vw"
-                className="mt-6 hidden h-auto w-full max-w-[24rem] [mask-image:radial-gradient(ellipse_at_center,black_62%,transparent_100%)] sm:block"
+                className="mt-4 hidden h-auto w-full max-w-[20rem] [mask-image:radial-gradient(ellipse_at_center,black_62%,transparent_100%)] sm:block"
               />
             </div>
 
             <Column>
               <nav aria-label="Explore">
                 <ColumnHead>Explore</ColumnHead>
-                <ul className="mt-5">
+                <ul className="mt-3">
                   {explore.map((l) => (
                     <li key={l.href}>
                       <Link href={l.href} className={linkClass}>
@@ -113,7 +113,7 @@ export function Footer() {
             <Column>
               <nav aria-label="Services">
                 <ColumnHead>Services</ColumnHead>
-                <ul className="mt-5">
+                <ul className="mt-3">
                   {footerServiceOrder.map((slug) => (
                     <li key={slug}>
                       <Link href={`/services/${slug}`} className={linkClass}>
@@ -127,7 +127,7 @@ export function Footer() {
 
             <Column>
               <ColumnHead>Offices</ColumnHead>
-              <ul className="mt-5">
+              <ul className="mt-3">
                 {contact.offices.map((o) => (
                   <li key={o.city}>
                     {o.mapUrl ? (
@@ -136,19 +136,19 @@ export function Footer() {
                         <span className="sr-only"> (opens in a new tab)</span>
                       </a>
                     ) : (
-                      <span className="inline-block py-2 text-[1.1875rem] text-white/90">{o.city}</span>
+                      <span className="inline-block py-1.5 text-[1.125rem] text-white/90">{o.city}</span>
                     )}
                   </li>
                 ))}
               </ul>
-              <Link href="/contact" className={`${linkClass} mt-4`}>
+              <Link href="/contact" className={`${linkClass} mt-2`}>
                 View Office Locations
               </Link>
             </Column>
 
-            <Column className="sm:col-span-2 lg:col-span-1">
+            <Column className="col-span-2 lg:col-span-1">
               <ColumnHead>Contact Us</ColumnHead>
-              <ul className="mt-5">
+              <ul className="mt-3">
                 {headHasLocation ? (
                   <>
                     <li>
@@ -173,15 +173,15 @@ export function Footer() {
                   </li>
                 )}
               </ul>
-              <Button href={quoteHref()} variant="outline-cyan" className="mt-6">
+              <Button href={quoteHref()} variant="outline-cyan" size="sm" className="mt-4">
                 Request a Quote
               </Button>
             </Column>
           </div>
         </div>
 
-        <div className="mt-10 border-t-2 border-cyan">
-          <div className="wrap flex flex-col gap-2 py-5 text-[1.1875rem] text-white/90 sm:flex-row sm:items-center sm:justify-between">
+        <div data-footer-bar className="mt-7 border-t-2 border-cyan">
+          <div className="wrap flex flex-col gap-1 py-4 text-[1.125rem] text-white/90 sm:flex-row sm:items-center sm:justify-between">
             <p>{site.fullName}</p>
             <Link href="/privacy-policy" className="hover:text-cyan">
               Privacy Policy

@@ -15,7 +15,7 @@ export function CTABand() {
         sizes="40vw"
         className="pointer-events-none absolute bottom-0 right-0 -z-10 hidden h-[88%] w-auto max-w-[46%] object-contain object-right-bottom opacity-90 [mask-image:linear-gradient(to_right,transparent,black_30%)] md:block"
       />
-      <div className="wrap py-12 lg:py-16">
+      <div className="wrap py-10 lg:py-12">
         <div className="max-w-[56rem]">
           <span aria-hidden className="block h-[7px] w-[6.5rem] bg-blue" />
           <h2 id="cta-band-title" className="mt-5 text-[clamp(2rem,1rem+3vw,3.5rem)] font-extrabold leading-tight text-white">
