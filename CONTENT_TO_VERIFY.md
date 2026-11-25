@@ -32,8 +32,13 @@ Forms deliver mail only when `RESEND_API_KEY`, `MAIL_FROM`, `RFQ_TO_EMAIL`, `CON
 - **Known flaws in the supplied crops:** `hero/hero-building-mobile.png` has a stray blue bar cropped in at its
   top-left; `projects/illustrative-hospital-2.png` is only about 256 x 145 px; `sections/wireframe-building-projects.png`
   has a small stray artefact at its bottom-left. Please supply clean files.
-- **Missing illustrations:** Plumbing, Electrical & ELV, Integrated MEP and Pools & Fountains have no artwork yet
-  (needed for the services slider in Phase F2).
+- **Missing illustrations:** Plumbing, Electrical & ELV, Integrated MEP and Pools & Fountains have no artwork yet.
+  The services slider shows a large service icon tile for them until artwork is supplied (`content/home.ts`, `sliderArt`).
+- **Featured Projects:** the two hospital pictures are low resolution, so they are shown at about their natural size
+  on the right of each card and look soft. The Commercial & Retail, Residential and Institutional tabs show an
+  empty-state line because no project has a confirmed sector yet (set `sector` and `city` in `content/dummy.ts`).
+- **Slider and delivery copy:** the one-line descriptions in the services slider (`content/home.ts`, `sliderLine`) are
+  general wording written for the site, not taken from the mockup. Please approve or replace them.
 - **Colours.** The spec's navy values were adjusted to the values sampled from the mockups: footer `#032139`, hero
   and dark sections `#03294a`. The bright blue `#1BA6E8` is kept as specified; white text on it is about 2.9:1, so
   buttons use bold, 16px or larger text. Confirm the brand blue and navy.
