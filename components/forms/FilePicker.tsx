@@ -67,7 +67,7 @@ export function FilePicker({
               className="flex items-center justify-between gap-3 rounded-ums border border-line bg-offwhite px-3 py-2 text-sm"
             >
               <span className="flex min-w-0 items-center gap-2">
-                <FileText aria-hidden className="size-4 shrink-0 text-blue" />
+                <FileText aria-hidden className="size-4 shrink-0 text-blue-700" />
                 <span className="truncate">{f.name}</span>
                 <span className="shrink-0 text-muted">{formatBytes(f.size)}</span>
               </span>

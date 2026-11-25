@@ -19,7 +19,7 @@ export function InsightRow({ insight: a, index }: { insight: Insight; index?: nu
           <span className="mono-label block text-muted">
             {category?.name} · {a.readingMinutes} min read
           </span>
-          <span className="mt-2 block font-heading text-[clamp(1.5rem,1.1rem+1.4vw,2.25rem)] font-bold uppercase leading-tight text-navy transition-colors group-hover:text-blue">
+          <span className="mt-2 block font-heading text-[clamp(1.5rem,1.1rem+1.4vw,2.25rem)] font-bold uppercase leading-tight text-navy transition-colors group-hover:text-blue-700">
             {a.title}
           </span>
           <span className="mt-2 block max-w-2xl text-muted">{a.excerpt}</span>
@@ -31,7 +31,7 @@ export function InsightRow({ insight: a, index }: { insight: Insight; index?: nu
             ))}
           </span>
         </span>
-        <ArrowUpRight aria-hidden className="mr-1 mt-2 size-6 text-muted transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-blue sm:mr-3" />
+        <ArrowUpRight aria-hidden className="mr-1 mt-2 size-6 text-muted transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-blue-700 sm:mr-3" />
       </Link>
     </li>
   );

@@ -144,7 +144,7 @@ export function Header() {
                 const active = itemActive(item);
                 const itemClass = cn(
                   "relative inline-flex items-center gap-1 py-2 text-[1.0625rem] transition-colors min-[1400px]:text-[1.125rem] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue",
-                  active || open ? "font-semibold text-blue" : "font-medium text-navy hover:text-blue",
+                  active || open ? "font-semibold text-blue-700" : "font-medium text-navy hover:text-blue-700",
                 );
                 const underline = active ? (
                   <span aria-hidden className="pointer-events-none absolute inset-x-0 -bottom-1 h-1 rounded-full bg-blue" />

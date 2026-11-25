@@ -55,7 +55,7 @@ export function SearchResults() {
 
       {total === 0 ? (
         <p className="mt-10 text-lg text-muted">
-          Nothing matched. Try a service name such as “HVAC”, or browse <Link href="/services" className="text-blue underline underline-offset-4">all services</Link>.
+          Nothing matched. Try a service name such as “HVAC”, or browse <Link href="/services" className="text-blue-700 underline underline-offset-4">all services</Link>.
         </p>
       ) : (
         grouped.map((g) => (
@@ -74,7 +74,7 @@ export function SearchResults() {
                       </span>
                     )}
                     <span className="min-w-0">
-                      <span className="block font-medium text-navy group-hover:text-blue">{item.title}</span>
+                      <span className="block font-medium text-navy group-hover:text-blue-700">{item.title}</span>
                       <span className="line-clamp-2 block text-sm text-muted">{item.description}</span>
                     </span>
                   </Link>

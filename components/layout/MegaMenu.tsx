@@ -3,10 +3,11 @@
 import Link from "next/link";
 import type { ComponentType, KeyboardEvent } from "react";
 import { ArrowUpRight, Building2, ShieldCheck, Target } from "lucide-react";
-import { SiteImage } from "@/components/ui/SiteImage";
+import Image from "next/image";
+import { ServiceIcon, serviceColor } from "@/components/ui/ServiceIcon";
 import { services } from "@/content/services";
 import { cn } from "@/lib/utils";
-import type { NavLink } from "@/types";
+import type { NavLink, ServiceSlug } from "@/types";
 
 const aboutIcons: Record<string, ComponentType<{ className?: string }>> = {
   "/about": Building2,
@@ -32,14 +33,29 @@ export function onPanelKeyDown(e: KeyboardEvent<HTMLElement>) {
 const rowClass =
   "group flex items-center gap-4 rounded-xl p-2.5 transition-colors hover:bg-offwhite focus-visible:bg-offwhite focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-blue";
 
+/** Illustrations from the design pack. The other services show a clean icon tile until artwork is supplied. */
+const artwork: Partial<Record<ServiceSlug, string>> = {
+  hvac: "/images/services/hvac.png",
+  "fire-fighting": "/images/services/fire-fighting.png",
+};
+
 /** One service: rounded thumbnail, semibold name, one-line description. Used by the desktop panel and the mobile menu. */
 export function ServiceRow({ slug, onNavigate, className }: { slug: string; onNavigate: () => void; className?: string }) {
   const s = services.find((x) => x.slug === slug);
   if (!s) return null;
+  const src = artwork[s.slug];
+  const color = serviceColor(s.slug);
   return (
     <Link href={`/services/${s.slug}`} onClick={onNavigate} className={cn(rowClass, className)}>
-      <span className="relative h-14 w-[72px] shrink-0 overflow-hidden rounded-lg bg-navy-900">
-        <SiteImage asset={s.image} fill sizes="72px" className="object-cover transition-transform duration-500 group-hover:scale-110" />
+      <span
+        className="relative flex h-14 w-[72px] shrink-0 items-center justify-center overflow-hidden rounded-lg"
+        style={{ background: src ? "var(--sky-50)" : `color-mix(in srgb, ${color} 14%, white)`, color }}
+      >
+        {src ? (
+          <Image src={src} alt="" fill sizes="72px" className="object-contain p-1" />
+        ) : (
+          <ServiceIcon slug={s.slug} className="size-8" />
+        )}
       </span>
       <span className="min-w-0">
         <span className="block truncate font-semibold text-navy">{s.name}</span>
@@ -62,7 +78,7 @@ function PanelHead({ eyebrow, title, href, linkLabel, onNavigate }: { eyebrow: s
         <Link
           href={href}
           onClick={onNavigate}
-          className="inline-flex items-center gap-1 text-sm font-semibold text-blue transition-colors hover:text-navy focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue"
+          className="inline-flex items-center gap-1 text-sm font-semibold text-blue-700 transition-colors hover:text-navy focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue"
         >
           {linkLabel}
           <ArrowUpRight aria-hidden className="size-4" />
@@ -106,7 +122,7 @@ export function AboutPanel({ links, onNavigate }: { links: NavLink[]; onNavigate
           return (
             <li key={l.href}>
               <Link href={l.href} onClick={onNavigate} className={rowClass}>
-                <span className="flex size-14 shrink-0 items-center justify-center rounded-lg bg-offwhite text-blue transition-colors group-hover:bg-blue group-hover:text-white">
+                <span className="flex size-14 shrink-0 items-center justify-center rounded-lg bg-offwhite text-blue-700 transition-colors group-hover:bg-blue group-hover:text-white">
                   <Icon className="size-6" aria-hidden />
                 </span>
                 <span className="min-w-0">

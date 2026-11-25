@@ -79,7 +79,7 @@ export function ContactForm() {
       <div className="border-t-2 border-navy p-5 sm:p-8">
         <h2 className="text-[1.75rem] text-navy">Send us a message</h2>
         <p className="mt-2 text-muted">
-          For a project quotation, use <Link className="font-medium text-blue underline underline-offset-4" href="/request-a-quote">Request a Quote</Link> instead.
+          For a project quotation, use <Link className="font-medium text-blue-700 underline underline-offset-4" href="/request-a-quote">Request a Quote</Link> instead.
         </p>
         <p className="mt-1 text-sm text-muted">
           <span aria-hidden className="text-[#b3271f]">*</span> Required field

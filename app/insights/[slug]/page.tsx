@@ -119,9 +119,9 @@ export default async function InsightPage({ params }: { params: Promise<Params> 
               <li key={s.slug}>
                 <Link href={`/services/${s.slug}`} className="group flex items-center gap-4 py-4">
                   <span aria-hidden className="size-2.5 shrink-0 rounded-full" style={{ background: disciplineColor[s.slug] }} />
-                  <span className="font-heading text-lg font-bold uppercase text-navy transition-colors group-hover:text-blue">{s.name}</span>
+                  <span className="font-heading text-lg font-bold uppercase text-navy transition-colors group-hover:text-blue-700">{s.name}</span>
                   <span className="hidden text-muted sm:inline">{s.tagline}</span>
-                  <ArrowUpRight aria-hidden className="ml-auto size-5 text-muted group-hover:text-blue" />
+                  <ArrowUpRight aria-hidden className="ml-auto size-5 text-muted group-hover:text-blue-700" />
                 </Link>
               </li>
             ))}

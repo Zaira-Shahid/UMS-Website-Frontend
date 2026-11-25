@@ -262,7 +262,7 @@ export function RfqForm({ preselect }: { preselect: RfqPreselect }) {
       {preselect.project && (
         <p className="border-l-4 border-blue bg-blue/5 px-4 py-3 text-navy">
           Enquiry related to{" "}
-          <Link href={`/projects/${preselect.project.slug}`} className="font-semibold underline underline-offset-4 hover:text-blue">
+          <Link href={`/projects/${preselect.project.slug}`} className="font-semibold underline underline-offset-4 hover:text-blue-700">
             {preselect.project.name}
           </Link>
           .
@@ -523,7 +523,7 @@ function ReviewSection({
           type="button"
           onClick={onEdit}
           aria-label={`Edit ${title.toLowerCase()} details`}
-          className="text-sm font-medium text-blue underline-offset-4 hover:underline"
+          className="text-sm font-medium text-blue-700 underline-offset-4 hover:underline"
         >
           Edit
         </button>

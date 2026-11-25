@@ -62,10 +62,10 @@ export function SectorSection({ industry: i, index }: { industry: Industry; inde
                 <Link href={`/services/${s.slug}`} className="group grid grid-cols-[auto_1fr_auto] items-start gap-x-4 py-5">
                   <span aria-hidden className="mt-2 size-2.5 rounded-full" style={{ background: disciplineColor[s.slug] }} />
                   <span>
-                    <span className="block font-heading text-xl font-bold uppercase text-navy transition-colors group-hover:text-blue">{s.name}</span>
+                    <span className="block font-heading text-xl font-bold uppercase text-navy transition-colors group-hover:text-blue-700">{s.name}</span>
                     {note && <span className="mt-1 block text-[0.9375rem] text-muted">{note}</span>}
                   </span>
-                  <ArrowUpRight aria-hidden className="mt-1.5 size-5 text-muted transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-blue" />
+                  <ArrowUpRight aria-hidden className="mt-1.5 size-5 text-muted transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-blue-700" />
                 </Link>
               </RevealItem>
             ))}

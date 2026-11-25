@@ -11,7 +11,9 @@
   --navy-800: #10305a;
   --navy: #0f2a4a; /* headings on light, dark pill buttons */
   --blue: #1ba6e8; /* primary: buttons, accents, active states */
-  --blue-600: #0e8bd0; /* hover */
+  --blue-600: #0e8bd0;
+  --blue-700: #0a78b5; /* button fills and small blue text: white on it is 4.8:1 (WCAG AA) */
+  --blue-800: #086399; /* hover */
   --cyan: #22d3ee; /* outline buttons on dark, footer dividers */
   --cyan-300: #5cc4ee; /* light accent text on dark */
   --cyan-100: #d6f0fb;
@@ -59,6 +61,8 @@
   --color-navy: var(--navy);
   --color-blue: var(--blue);
   --color-blue-600: var(--blue-600);
+  --color-blue-700: var(--blue-700);
+  --color-blue-800: var(--blue-800);
   --color-cyan: var(--cyan);
   --color-cyan-300: var(--cyan-300);
   --color-cyan-100: var(--cyan-100);

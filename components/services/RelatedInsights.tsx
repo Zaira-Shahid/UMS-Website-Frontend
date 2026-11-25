@@ -21,10 +21,10 @@ export function RelatedInsights({ service, index }: { service: Service; index: s
             <li key={a.slug}>
               <Link href={`/insights/${a.slug}`} className="group flex items-start justify-between gap-4 py-5">
                 <span>
-                  <span className="block font-heading text-xl font-bold uppercase text-navy transition-colors group-hover:text-blue">{a.title}</span>
+                  <span className="block font-heading text-xl font-bold uppercase text-navy transition-colors group-hover:text-blue-700">{a.title}</span>
                   <span className="mt-1 block text-[0.9375rem] text-muted">{a.excerpt}</span>
                 </span>
-                <ArrowUpRight aria-hidden className="mt-1 size-5 shrink-0 text-muted group-hover:text-blue" />
+                <ArrowUpRight aria-hidden className="mt-1 size-5 shrink-0 text-muted group-hover:text-blue-700" />
               </Link>
             </li>
           ))}

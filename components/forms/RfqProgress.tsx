@@ -20,7 +20,7 @@ export function RfqProgress({ current, onGo }: { current: number; onGo: (step: n
                 aria-hidden
                 className={cn(
                   "flex size-8 shrink-0 items-center justify-center rounded-full border-2 font-heading text-sm font-bold transition-colors",
-                  done && "border-blue bg-blue text-white",
+                  done && "border-blue-700 bg-blue-700 text-white",
                   active && "border-navy bg-navy text-white",
                   !done && !active && "border-navy/25 text-muted",
                 )}

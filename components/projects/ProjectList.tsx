@@ -26,14 +26,14 @@ export function ProjectList({ tone = "dark", large = false }: { tone?: "dark" | 
               className={cn(
                 "min-w-0 font-heading font-bold uppercase leading-[1.05] tracking-[0.01em] transition-transform duration-300 group-hover:translate-x-2",
                 large ? "text-[clamp(1.75rem,1rem+3.4vw,4.25rem)]" : "text-[clamp(1.5rem,1rem+2.2vw,2.75rem)]",
-                dark ? "text-white" : "text-navy group-hover:text-blue",
+                dark ? "text-white" : "text-navy group-hover:text-blue-700",
               )}
             >
               {p.name}
             </span>
             <ArrowUpRight
               aria-hidden
-              className={cn("mr-1 size-6 transition-colors sm:mr-3", dark ? "text-white/50 group-hover:text-cyan-300" : "text-navy/40 group-hover:text-blue")}
+              className={cn("mr-1 size-6 transition-colors sm:mr-3", dark ? "text-white/50 group-hover:text-cyan-300" : "text-navy/40 group-hover:text-blue-700")}
             />
           </Link>
         </li>

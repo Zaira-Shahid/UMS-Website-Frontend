@@ -110,7 +110,7 @@ export function MobileNav({
                 const isOpen = expanded === item.label;
                 const labelClass = cn(
                   "flex min-h-14 w-full items-center justify-between font-heading text-xl font-bold",
-                  active ? "text-blue" : "text-navy",
+                  active ? "text-blue-700" : "text-navy",
                 );
                 return (
                   <li key={item.label} className="border-b border-line">
@@ -124,13 +124,13 @@ export function MobileNav({
                           className={labelClass}
                         >
                           {item.label}
-                          <ChevronDown aria-hidden className={cn("size-5 text-blue transition-transform", isOpen && "rotate-180")} />
+                          <ChevronDown aria-hidden className={cn("size-5 text-blue-700 transition-transform", isOpen && "rotate-180")} />
                         </button>
                         <div id={`mobile-sub-${item.label}`} hidden={!isOpen} className="pb-4">
                           <Link
                             href={item.href}
                             onClick={onClose}
-                            className="mb-1 inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-blue"
+                            className="mb-1 inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-blue-700"
                           >
                             {item.label === "Services" ? "Services overview" : "About overview"}
                             <ArrowUpRight aria-hidden className="size-4" />
@@ -174,7 +174,7 @@ export function MobileNav({
             <button
               type="button"
               onClick={onSearch}
-              className="flex min-h-11 w-full items-center justify-center gap-2 rounded-ums text-[0.9375rem] font-semibold text-navy hover:text-blue"
+              className="flex min-h-11 w-full items-center justify-center gap-2 rounded-ums text-[0.9375rem] font-semibold text-navy hover:text-blue-700"
             >
               <Search aria-hidden className="size-5" />
               Search the site

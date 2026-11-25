@@ -29,7 +29,7 @@ export function SlantedButton({
       className={cn(
         shape,
         skew,
-        variant === "solid" ? "bg-blue text-white hover:bg-blue-600" : "border-2 border-blue bg-white text-navy hover:bg-blue hover:text-white",
+        variant === "solid" ? "bg-blue-700 text-white hover:bg-blue-800" : "border-2 border-blue-700 bg-white text-navy hover:bg-blue-700 hover:text-white",
         className,
       )}
     >
@@ -50,7 +50,7 @@ export function SlantedTab({
       type="button"
       role="tab"
       aria-selected={active}
-      className={cn(shape, skew, "px-7", active ? "bg-blue text-white" : "text-navy hover:text-blue", className)}
+      className={cn(shape, skew, "px-7", active ? "bg-blue-700 text-white" : "text-navy hover:text-blue-700", className)}
       {...rest}
     >
       <span className={unskew}>{children}</span>

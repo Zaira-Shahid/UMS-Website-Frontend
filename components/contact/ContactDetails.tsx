@@ -23,7 +23,7 @@ export function ContactDetails({ tone = "light", className }: { tone?: "light" |
   if (offices.length === 0 && general.length === 0) return null;
 
   const muted = dark ? "text-white/60" : "text-muted";
-  const link = dark ? "hover:text-cyan-300" : "hover:text-blue";
+  const link = dark ? "hover:text-cyan-300" : "hover:text-blue-700";
 
   return (
     <div className={cn("space-y-8", dark ? "text-white" : "text-navy", className)}>
