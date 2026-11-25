@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { DeliveryProcess } from "@/components/home/DeliveryProcess";
 import { FeaturedProjects } from "@/components/home/FeaturedProjects";
 import { HomeHero } from "@/components/home/HomeHero";
+import { LatestInsights } from "@/components/home/LatestInsights";
 import { IndustriesSection } from "@/components/home/IndustriesSection";
 import { QualitySafety } from "@/components/home/QualitySafety";
 import { ServicesShowcase } from "@/components/home/ServicesShowcase";
@@ -28,6 +29,7 @@ export default function Home() {
       <DeliveryProcess />
       <FeaturedProjects />
       <QualitySafety />
+      <LatestInsights />
     </>
   );
 }

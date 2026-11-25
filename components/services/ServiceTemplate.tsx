@@ -1,8 +1,10 @@
 import { quoteHref } from "@/content/navigation";
+import { insightsForService } from "@/lib/insights";
 import { absoluteUrl, jsonLd, organizationRef } from "@/lib/seo";
 import type { Service } from "@/types";
 import { ApplicationsList } from "./ApplicationsList";
 import { FaqSection } from "./FaqSection";
+import { RelatedInsights } from "./RelatedInsights";
 import { ScopeStages } from "./ScopeStages";
 import { SectionNav, type NavSection } from "./SectionNav";
 import { ServiceCTA } from "./ServiceCTA";
@@ -19,6 +21,7 @@ export function ServiceTemplate({ service }: { service: Service }) {
     { id: "how", label: "How it works" },
     { id: "applications", label: "Applications" },
     { id: "scope", label: "Scope" },
+    ...(insightsForService(service.slug).length > 0 ? [{ id: "insights", label: "Reading" }] : []),
     { id: "faq", label: "FAQ" },
   ];
 
@@ -72,10 +75,11 @@ export function ServiceTemplate({ service }: { service: Service }) {
       <ServiceDiagramSection service={service} />
       <ApplicationsList service={service} />
       <ScopeStages service={service} />
+      <RelatedInsights service={service} index="05" />
       <FaqSection
         faqs={service.faqs}
         accent={service.accent}
-        index="05"
+        index="06"
         description={`Straight answers on ${service.shortName} — written in general engineering terms, not as UMS commitments.`}
       />
       <ServiceCTA service={service} />

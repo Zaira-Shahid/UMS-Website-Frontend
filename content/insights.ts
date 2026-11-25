@@ -1,6 +1,8 @@
-import type { ImageAsset, Insight, InsightCategory } from "@/types";
-import { dummyArticles } from "./dummy";
-import { photo } from "./images";
+import type { Insight, InsightCategory } from "@/types";
+import { articles } from "./articles";
+
+/** The only attribution used on articles. There are no personal authors and no publication dates. */
+export const insightAuthor = "UMS Engineering Team";
 
 export const insightCategories: { slug: InsightCategory; name: string; summary: string }[] = [
   {
@@ -20,24 +22,10 @@ export const insightCategories: { slug: InsightCategory; name: string; summary: 
   },
 ];
 
-/** Stock images per article (not UMS work). */
-const articleImages: Record<string, ImageAsset> = {
-  "site-safety-planning-for-mep-works": photo("ceilingServices", "center 40%"),
-  "fire-protection-inspection-records": photo("redPipes"),
-  "vrf-and-chilled-water-systems": photo("pumpRoom", "center 30%"),
-  "coordinating-mep-shop-drawings": photo("glassTower", "center 55%"),
-  "hvac-maintenance-planning": photo("pumpRoom", "center 75%"),
-  "mep-handover-documentation": photo("glassReflection"),
-};
-
 const words = (text: string) => text.trim().split(/\s+/).length;
 
-/** Six articles from content/dummy-articles.ts. Reading time is computed from the text. */
-export const insights: Insight[] = dummyArticles.map((a) => {
+/** The articles, with reading time computed from the text. */
+export const insights: Insight[] = articles.map((a) => {
   const total = words(a.intro) + a.sections.reduce((n, s) => n + s.body.reduce((m, b) => m + words(b), 0), 0);
-  return {
-    ...a,
-    readingMinutes: Math.max(1, Math.round(total / 200)),
-    image: articleImages[a.slug] ?? photo("glassTower"),
-  };
+  return { ...a, readingMinutes: Math.max(1, Math.round(total / 200)) };
 });

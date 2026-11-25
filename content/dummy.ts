@@ -8,9 +8,6 @@
  * Article bodies live in ./dummy-articles.ts to keep this file readable; they are
  * re-exported from here.
  */
-export { dummyArticles } from "./dummy-articles";
-export type { DummyArticle } from "./dummy-articles";
-
 /* ------------------------------------------------------------ company */
 
 export const company = {

@@ -5,7 +5,7 @@ import { SearchResults } from "@/components/search/SearchResults";
 
 export const metadata: Metadata = {
   title: "Search",
-  description: "Search UMS services, projects and pages.",
+  description: "Search UMS services, projects, insights and pages.",
   robots: { index: false, follow: true },
 };
 

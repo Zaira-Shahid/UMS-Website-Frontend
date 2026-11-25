@@ -1,11 +1,12 @@
 import Fuse from "fuse.js";
+import { insights } from "@/content/insights";
 import { projects } from "@/content/projects";
 import { services } from "@/content/services";
 import { disciplineColor } from "@/lib/discipline";
 import type { ImageAsset } from "@/types";
 
-export type SearchGroup = "Services" | "Projects" | "Pages";
-export const searchGroups: SearchGroup[] = ["Services", "Projects", "Pages"];
+export type SearchGroup = "Services" | "Projects" | "Insights" | "Pages";
+export const searchGroups: SearchGroup[] = ["Services", "Projects", "Insights", "Pages"];
 
 export interface SearchItem {
   id: string;
@@ -47,6 +48,14 @@ export const searchItems: SearchItem[] = [
     title: p.name,
     description: "Project",
     href: `/projects/${p.slug}`,
+  })),
+  ...insights.map<SearchItem>((i) => ({
+    id: `i-${i.slug}`,
+    group: "Insights",
+    title: i.title,
+    description: i.excerpt,
+    href: `/insights/${i.slug}`,
+    color: i.services[0] ? disciplineColor[i.services[0]] : undefined,
   })),
   ...pages,
 ];

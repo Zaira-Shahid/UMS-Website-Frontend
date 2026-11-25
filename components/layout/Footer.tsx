@@ -21,6 +21,7 @@ const company = [
 
 const resources = [
   { label: "Projects", href: "/projects" },
+  { label: "Insights", href: "/insights" },
   { label: "Request a Quote", href: quoteHref() },
   { label: "Search", href: "/search" },
 ];

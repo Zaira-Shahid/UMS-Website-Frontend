@@ -1,24 +1,22 @@
 import type { InsightCategory, InsightSection, ServiceSlug } from "@/types";
 
 /**
- * Dummy article bodies (600–900 words each). Part of the placeholder dataset exported from
- * content/dummy.ts — replace with approved UMS articles before launch (see TODO.md).
+ * Insight articles: general technical knowledge about building services. They are written in the third person
+ * and make no claims about UMS, its projects or its practices. Attribution is the single constant
+ * `insightAuthor` in content/insights.ts; there are no personal authors and no publication dates.
  */
-export interface DummyArticle {
+export interface Article {
   slug: string;
   title: string;
   category: InsightCategory;
   excerpt: string;
   services: ServiceSlug[];
-  author: string;
-  authorRole: string;
-  publishedAt: string;
   /** Intro paragraph shown above the first heading. */
   intro: string;
   sections: InsightSection[];
 }
 
-export const dummyArticles: DummyArticle[] = [
+export const articles: Article[] = [
   /* ------------------------------------------------------------------ 1 */
   {
     slug: "site-safety-planning-for-mep-works",
@@ -27,9 +25,6 @@ export const dummyArticles: DummyArticle[] = [
     excerpt:
       "MEP installation overlaps with many trades. A written safety plan, agreed before mobilisation, keeps that overlap under control.",
     services: ["integrated-mep", "hvac", "fire-fighting", "plumbing", "electrical-elv", "pools-fountains"],
-    author: "Engr. Hamza Iqbal",
-    authorRole: "HSE Manager",
-    publishedAt: "2026-09-18",
     intro:
       "On a busy building site, the mechanical, electrical and plumbing crews are rarely alone. They share ceilings, shafts and plant rooms with structure, blockwork, finishes and fit-out teams, and the work changes shape every week. A safety plan that was written once and filed away does not survive that pace. A plan that was written for the actual activities, and is reviewed as often as the programme changes, does.",
     sections: [
@@ -37,14 +32,14 @@ export const dummyArticles: DummyArticle[] = [
         heading: "Start with the work, not the template",
         body: [
           "Good safety planning begins with a plain list of the activities that will actually take place: working at height on scaffold towers and mobile platforms, hot works for brazing and welding, lifting chillers and air-handling units into plant rooms, entering tanks and trenches, and energising live electrical equipment. Each activity on that list gets its own risk assessment and method statement, written for this site and this sequence rather than adapted from the last job.",
-          "The most useful method statements are short enough to be read at the point of work. One or two pages that state who does what, in which order, with which equipment and which controls, will be used. A forty-page document that is only ever signed will not. We ask supervisors to brief their crews from the method statement every morning that the activity is live, and to stop the task and revise the document when conditions change.",
+          "The most useful method statements are short enough to be read at the point of work. One or two pages that state who does what, in which order, with which equipment and which controls, will be used. A forty-page document that is only ever signed will not. Supervisors should brief their crews from the method statement every morning that the activity is live, and stop the task and revise the document when conditions change.",
         ],
       },
       {
         heading: "Coordinate with other trades",
         body: [
           "Most serious incidents on a services package do not come from the package itself. They come from the interface: a ceiling closed over a pressure test that has not been signed off, a hot-work spark landing on stored insulation, or a crew working below another crew that is lifting. Permit-to-work arrangements exist to stop exactly this, and they only work when every trade on the floor honours them.",
-          "A weekly three-week look-ahead, attended by every subcontractor with work in the same zone, is the simplest control we know. It lets the team see clashes in time and sequence rather than in person, and it gives the HSE officer a reason to walk the zone before the work starts, not after.",
+          "A weekly three-week look-ahead, attended by every subcontractor with work in the same zone, is one of the simplest controls available. It lets the team see clashes in time and sequence rather than in person, and it gives the HSE officer a reason to walk the zone before the work starts, not after.",
         ],
       },
       {
@@ -79,9 +74,6 @@ export const dummyArticles: DummyArticle[] = [
     excerpt:
       "A fire protection system is only as credible as its paper trail. Here is what inspection and test records should capture.",
     services: ["fire-fighting", "electrical-elv", "integrated-mep"],
-    author: "Engr. Usman Tariq",
-    authorRole: "Head of Fire Protection",
-    publishedAt: "2026-08-06",
     intro:
       "A sprinkler system sits quietly behind the ceiling for years and is expected to work perfectly on the one day it is needed. Nobody can prove that by looking at it. What a building owner, an insurer or an authority can do is read the records: who inspected what, when, against which standard, and what was found. Good records turn a hidden system into an accountable one.",
     sections: [
@@ -89,7 +81,7 @@ export const dummyArticles: DummyArticle[] = [
         heading: "Why the paper trail matters",
         body: [
           "Inspection and test records serve three audiences. The authority having jurisdiction uses them to decide whether a building may be occupied. The insurer uses them to judge risk. The facilities team uses them for years afterwards to understand what was installed, how it was tested and what the baseline performance was. If a record is missing, the work has to be repeated or the risk has to be assumed, and both cost more than keeping the record in the first place.",
-          "For that reason we treat records as a deliverable of the installation itself, not as an administrative afterthought. Each stage of the work produces a signed document before the next stage begins.",
+          "For that reason records are best treated as a deliverable of the installation itself, not as an administrative afterthought. Each stage of the work should produce a signed document before the next stage begins.",
         ],
       },
       {
@@ -109,7 +101,7 @@ export const dummyArticles: DummyArticle[] = [
       {
         heading: "Keep records usable",
         body: [
-          "A box of unsorted certificates satisfies nobody. Records should be indexed by system and by location, so that a facilities engineer can find the test of the third-floor zone valve in a minute rather than a day. We number every inspection request, link it to the drawing revision it relates to, and scan the signed copy into a project register the same week it is signed.",
+          "A box of unsorted certificates satisfies nobody. Records should be indexed by system and by location, so that a facilities engineer can find the test of the third-floor zone valve in a minute rather than a day. Every inspection request should be numbered, linked to the drawing revision it relates to, and the signed copy scanned into a project register the same week it is signed.",
           "As-built drawings belong in the same register. A hydraulic calculation based on a design that was later changed on site is not a reliable record of the system that was actually installed.",
         ],
       },
@@ -131,9 +123,6 @@ export const dummyArticles: DummyArticle[] = [
     excerpt:
       "Two of the most common ways to cool a large building, and how to think about which one fits.",
     services: ["hvac"],
-    author: "Engr. Bilal Chaudhry",
-    authorRole: "Head of HVAC",
-    publishedAt: "2026-07-14",
     intro:
       "Choosing the cooling system for a large building is one of the biggest decisions on the services budget. Two families dominate the discussion: variable refrigerant flow, usually called VRF, and chilled-water systems. Neither is better in every case. The right choice depends on the size of the building, how its load changes through the day, who will operate it, and what the owner expects to pay over thirty years rather than three.",
     sections: [
@@ -183,9 +172,6 @@ export const dummyArticles: DummyArticle[] = [
     excerpt:
       "Most site clashes can be found on a drawing for far less than it costs to fix them in a ceiling void.",
     services: ["integrated-mep", "hvac", "fire-fighting", "plumbing", "electrical-elv"],
-    author: "Engr. Sana Malik",
-    authorRole: "Director, Projects",
-    publishedAt: "2026-06-02",
     intro:
       "Design drawings show what the building services should achieve. Shop drawings show how they will actually be built: exact routes, exact levels, exact supports. The step between the two is where most clashes are found, and where most of their cost is avoided. A duct that meets a beam on paper costs an hour to move. The same duct meeting the same beam in a finished ceiling costs a week.",
     sections: [
@@ -236,9 +222,6 @@ export const dummyArticles: DummyArticle[] = [
     excerpt:
       "A maintenance plan decides whether an HVAC system keeps its design performance or slowly loses it.",
     services: ["hvac"],
-    author: "Engr. Bilal Chaudhry",
-    authorRole: "Head of HVAC",
-    publishedAt: "2026-04-22",
     intro:
       "An HVAC system rarely fails all at once. It drifts. Filters load up, coils foul, belts stretch, sensors wander out of calibration, and the building uses more energy to deliver slightly less comfort. By the time occupants complain, the system has often been underperforming for months. A written maintenance plan is how an owner keeps that drift in check.",
     sections: [
@@ -289,9 +272,6 @@ export const dummyArticles: DummyArticle[] = [
     excerpt:
       "What a complete handover pack contains, and why assembling it from the first week is easier than assembling it in the last.",
     services: ["integrated-mep", "hvac", "fire-fighting", "plumbing", "electrical-elv", "pools-fountains"],
-    author: "Engr. Ayesha Khan",
-    authorRole: "QA/QC Manager",
-    publishedAt: "2026-02-11",
     intro:
       "When the last system is commissioned, the building does not belong to the contractor any more. It belongs to the people who will run it for decades. Whether those people can operate, maintain and modify the services depends almost entirely on what is in the handover pack. A good pack saves the owner money every year. A weak one costs them every time something breaks.",
     sections: [
@@ -299,7 +279,7 @@ export const dummyArticles: DummyArticle[] = [
         heading: "What a complete pack contains",
         body: [
           "A complete handover pack has several parts. As-built drawings show the systems as installed, including final routes, valve positions, panel schedules and equipment locations. Operation and maintenance manuals explain how each item works, what it needs and how to recognise a fault. Test and commissioning certificates prove that each system met its acceptance criteria. Warranties and manufacturer documentation record what is covered, for how long, and who to call.",
-          "To these we add schedules of spare parts and special tools, a list of the supplier and subcontractor contacts, and a short summary for each system that tells a new facilities engineer, in plain language, what the system is for and where to start.",
+          "To these are added schedules of spare parts and special tools, a list of the supplier and subcontractor contacts, and a short summary for each system that tells a new facilities engineer, in plain language, what the system is for and where to start.",
         ],
       },
       {
@@ -312,7 +292,7 @@ export const dummyArticles: DummyArticle[] = [
       {
         heading: "Make it easy to find things",
         body: [
-          "A pack is only useful if it can be navigated. We organise documents by system, then by type, using a consistent numbering scheme that matches the asset tags on the equipment. A facilities engineer standing next to a pump should be able to read its tag and find its datasheet, its test record and its service history in a single lookup.",
+          "A pack is only useful if it can be navigated. Documents are best organised by system, then by type, using a consistent numbering scheme that matches the asset tags on the equipment. A facilities engineer standing next to a pump should be able to read its tag and find its datasheet, its test record and its service history in a single lookup.",
           "Digital delivery helps. Searchable PDF files, a clear folder structure and an index spreadsheet linking assets, drawings and documents let the operating team find what they need in seconds. Where the owner uses a computerised maintenance management system, loading the asset register directly saves them weeks of data entry.",
         ],
       },

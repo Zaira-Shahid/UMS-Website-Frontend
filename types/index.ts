@@ -112,14 +112,9 @@ export interface Insight {
   excerpt: string;
   services: ServiceSlug[];
   readingMinutes: number;
-  image: ImageAsset;
   /** Opening paragraph, shown above the first heading. */
   intro: string;
   sections: InsightSection[];
-  author: string;
-  authorRole: string;
-  /** ISO date (YYYY-MM-DD). */
-  publishedAt: string;
 }
 
 export type CareerType = "Full-time" | "Contract";
