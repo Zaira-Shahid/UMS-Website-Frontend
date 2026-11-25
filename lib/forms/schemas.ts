@@ -191,7 +191,7 @@ export const contactSchema = z.object({
   name,
   email,
   phone: optionalPhone,
-  office: z.string().refine((v) => (CONTACT_OFFICES as readonly string[]).includes(v), "Choose an office, or General enquiry."),
+  office: z.string({ error: "Choose an office, or General enquiry." }).refine((v) => (CONTACT_OFFICES as readonly string[]).includes(v), "Choose an office, or General enquiry."),
   subject: required("Subject", 120),
   message: required("Message", 3000).refine((v) => v.length >= 10, "Tell us a little more (at least 10 characters)."),
 });

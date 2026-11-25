@@ -1,146 +1,95 @@
-# Content to verify
+# Client checklist — what UMS still has to supply or approve
 
-Everything the owner still has to supply, confirm or replace before launch. Nothing below is shown as fact on the
-site until it is confirmed. Updated at the end of each phase (last update: Phase F1).
+The site is built and live. Nothing below is shown as fact until you confirm it. Tick each item as it is done and send the
+details to the developer, or edit the named file yourself. (Last updated: final QA, v1.0.0.)
 
-## 1. Contact details (one file: `content/site.ts`, the `contact` object)
+## 1. Company contact details (`content/site.ts`, the `contact` object)
 
-All values are empty. A field renders only when it has a value; the WhatsApp button in the header and every social
-icon in the footer stay hidden until filled.
+All of these are empty today and appear on the site only once filled.
 
-| Field | What to supply |
-| --- | --- |
-| `offices[Islamabad]` / `offices[Lahore]`: `address`, `phone`, `email`, `hours`, `mapUrl` | Street address (one line), phone, office email, hours, map link. The footer shows "Head Office Location" and "Get Directions" only when the Islamabad address or map link is set |
-| `phone`, `email.general`, `email.tenders`, `email.careers` | Company-wide numbers and mailboxes |
-| `whatsapp` | International format, e.g. `+92 3xx xxxxxxx`. Shows the green WhatsApp button (header, mobile header) and the footer icon |
-| `social.linkedin / facebook / instagram / youtube / x / tiktok` | Full profile URLs. Each footer icon appears only when its URL is set |
-| `companyProfileUrl` | A real company-profile PDF (reserved; no button until a file exists) |
-| `NEXT_PUBLIC_SITE_URL` | The real domain (defaults to `https://umss.pk`) |
+- [ ] **Islamabad office:** street address, phone, email, opening hours, map link
+- [ ] **Lahore office:** street address, phone, email, opening hours, map link
+- [ ] **Company phone and emails:** `phone`, `email.general`, `email.tenders`, `email.careers`
+- [ ] **WhatsApp number** in international format (shows the green header button and footer icon)
+- [ ] **Social profiles:** LinkedIn, Facebook, Instagram, YouTube, X, TikTok (each icon appears when its URL is set)
+- [ ] **Domain:** set `NEXT_PUBLIC_SITE_URL` to the real address (default `https://umss.pk`)
 
-Forms deliver mail only when `RESEND_API_KEY`, `MAIL_FROM`, `RFQ_TO_EMAIL`, `CONTACT_TO_EMAIL` and
-`CAREERS_TO_EMAIL` are set; otherwise the forms answer with an honest error in production.
+## 2. Email for the forms (Vercel environment variables)
 
-## 2. Brand and artwork
+- [ ] `RESEND_API_KEY` and `MAIL_FROM` (a sender verified in Resend)
+- [ ] `RFQ_TO_EMAIL`, `CONTACT_TO_EMAIL`, `CAREERS_TO_EMAIL`: who receives each form
+- [ ] Decide on BOQ/drawing uploads (`NEXT_PUBLIC_ENABLE_UPLOADS=true`)
 
-- **Official logo SVG.** The header and footer use a logo rebuilt as an SVG from the mockup (gear, speed lines, italic
-  "UMS" in Montserrat). Replace it with the official artwork (`components/layout/Logo.tsx`). The low-resolution
-  `public/images/brand/ums-logo-from-mockup.png` is not used.
-- **High-resolution replacements needed** for the crops in `public/images/` (all are low resolution):
-  `hero/hero-building-desktop.png`, `hero/hero-building-mobile.png`, `services/hvac.png`, `services/fire-fighting.png`,
-  `delivery/01 to 05`, `projects/illustrative-hospital-1.png`, `projects/illustrative-hospital-2.png`,
-  `sections/*` (five files) and `sections/footer-building.png` (used now).
-- **Known flaws in the supplied crops:** `hero/hero-building-mobile.png` has a stray blue bar cropped in at its
-  top-left; `projects/illustrative-hospital-2.png` is only about 256 x 145 px; `sections/wireframe-building-projects.png`
-  has a small stray artefact at its bottom-left. Please supply clean files.
-- **Missing illustrations:** Plumbing, Electrical & ELV, Integrated MEP and Pools & Fountains have no artwork yet.
-  The services slider shows a large service icon tile for them until artwork is supplied (`content/home.ts`, `sliderArt`).
-- **Featured Projects:** the two hospital pictures are low resolution, so they are shown at about their natural size
-  on the right of each card and look soft. The Commercial & Retail, Residential and Institutional tabs show an
-  empty-state line because no project has a confirmed sector yet (set `sector` and `city` in `content/dummy.ts`).
-- **Slider and delivery copy:** the one-line descriptions in the services slider (`content/home.ts`, `sliderLine`) are
-  general wording written for the site, not taken from the mockup. Please approve or replace them.
-- **Colours.** The spec's navy values were adjusted to the values sampled from the mockups: footer `#032139`, hero
-  and dark sections `#03294a`. The bright blue `#1BA6E8` is kept as specified; white text on it is about 2.9:1, so
-  buttons use bold, 16px or larger text. Confirm the brand blue and navy.
+Until these are set, the forms tell visitors to contact UMS directly instead of pretending to send.
 
-## 2b. Services page photographs (Section 13.3)
+## 3. Optional: smarter chatbot
 
-**Source: the owner's own approved mockups.** The photos in `public/images/services/<slug>/card.jpg` (all six),
-`public/images/services/integrated-mep/{hero,included,app-1,app-2}.jpg` and `public/images/projects/circles/circle-1..3.jpg`
-are crops of mockups 10 and 11, so they are only about 460 px wide (the hero is 948 px). They are shown at no more than
-their natural width (never upscaled), so the Services pages are laid out in a narrow column. They are not licensed
-stock photos and their original photographers are unknown; please confirm UMS may use them. **High-resolution
-replacements are still wanted.** Save a larger file under the same name (`<role>.jpg`) and it takes over.
+- [ ] Add `ANTHROPIC_API_KEY` or `OPENAI_API_KEY` to let a model write the answers. Without one, a rule-based assistant answers
+  from the site's content. Approve the wording of its replies for prices, certifications and "I don't know"
+  (`lib/chat/knowledge.ts`).
 
-Where a service has no `hero`, `included` or `app-*` file yet:
-- the hero reuses that service's `card.jpg` at its natural size;
-- "What's Included" shows the list without a photo for HVAC and Fire Fighting (no photo that fits), and a stand-in
-  Unsplash photo that fits the service for Plumbing (plant-room pump and valves), Electrical (breaker) and Pools (fountain
-  pool); Integrated MEP has its own;
-- the two application cards use stand-in Unsplash building exteriors labelled "Illustrative previews".
+## 4. Projects (`content/dummy.ts`)
 
-Still needed for the five services other than Integrated MEP: `hero`, `included`, `app-1`, `app-2`. Suggested
-subjects: HVAC (air handling unit, ductwork; hospital and hotel exteriors), Fire Fighting (sprinkler pipework or fire
-pump room; commercial and residential tower exteriors), Plumbing (water pipework and valves; residential and school
-exteriors), Electrical & ELV (LT panels, cable trays; commercial and industrial exteriors), Pools & Fountains (pool with
-fountain; hotel and residential exteriors). No visible brand names or logos.
+Only six names are confirmed: Lady Reading Hospital, Buch International Hospital, Elanza Mall, Pakistan Cricket Board House,
+CGGC Head Office at Eighteen, Jazz Destiny.
 
-Stock photos that are still used (Unsplash, free licence; credits are in `content/images.ts`): the industry pages, and
-the application cards and plumbing, electrical and pools "included" photos described above.
+- [ ] Confirm Buch International Hospital (Multan) and Lady Reading Hospital (Peshawar) are Healthcare
+- [ ] For the other four: sector and city, UMS's role, and approved photographs
+- [ ] Replace the two "Illustrative imagery" hospital pictures with real, high-resolution project photos
 
-## 3. Projects
+## 5. Clients and partners (`content/clients.ts`)
 
-Only the six project names are confirmed: Lady Reading Hospital, Buch International Hospital, Elanza Mall, Pakistan
-Cricket Board House, CGGC Head Office at Eighteen, Jazz Destiny. The spec states Buch International Hospital is in
-Multan and Lady Reading Hospital in Peshawar (both Healthcare). Please confirm those and supply sector and city for
-the others, UMS's role, and approved photographs. The two "Illustrative imagery" pictures are not real project photos.
+- [ ] Confirm the client relationship for BNP, Venture Engineering, Banu Mukhtar, Mecatech and Gold Roof, and supply their
+  logo files. The homepage section stays hidden until at least one is verified.
 
-## 4. Clients and partners (Phase F3)
+## 6. Team page (`content/team.ts`)
 
-`content/clients.ts` will list BNP, Venture Engineering, Banu Mukhtar, Mecatech and Gold Roof as `verified: false` with
-no logo files. Confirm each client relationship and supply the logo files; the section stays hidden until at least one
-entry is verified.
+- [ ] Real names, roles and photos, then switch `showTeamPage` on. The page and its links are hidden until then.
+- [ ] Confirm the project-control roles shown in its chart (Site Engineering, QA/QC, HSE, Drafting, Site Delivery)
 
-## 5. Wording the owner must approve
+## 7. Photographs and artwork (`public/images/`)
 
-- Homepage Credentials & Milestones (`components/home/Credentials.tsx`): the three lines are general wording written
-  for the site ("Qualifications and approvals relevant to your project are confirmed on request", milestones planned
-  and tracked, quality and safety practices built into delivery). The mockup's own sentences were not used because
-  they state facts that are not verified. Approve, or supply real credentials and a credentials page.
-- Homepage FAQ answers (`content/home.ts`, `homeFaqs`) describe how the site works only. Approve or edit.
-- Enquiry band (`components/layout/CTABand.tsx`): "Tell us about your requirements and explore the right MEP
-  engineering solution with UMS." is the mockup's sentence. Approve.
+The Services and circle photos are crops of the approved mockups (about 460 px wide), so they are shown small and soft.
 
-- Mission, vision and values (`content/dummy.ts`, shown on `/about/mission-values`).
-- Quality, Safety & Delivery (`content/quality.ts`): general descriptions only.
-- Service and industry copy (`content/services.ts`, `content/industries.ts`): confirm all six disciplines are real
-  UMS offerings. The service "How it works" diagrams are generic illustrations, not UMS projects.
-- Insights articles (`content/articles.ts`): general technical articles, third person, attributed only to
-  "UMS Engineering Team", no dates. Confirm UMS is happy to publish them under that name.
-- Privacy policy (`content/legal.ts`): neutral template. The retention, rights and security statements need the
-  owner's confirmation and a legal review.
-- Careers: no listings are shown; add real roles in `content/careers.ts`.
+- [ ] Confirm UMS may use the mockup crops (their original photographers are unknown)
+- [ ] High-resolution replacements: save as `public/images/services/<slug>/<role>.jpg` (`card`, `hero`, `included`,
+  `app-1`, `app-2`); `public/images/projects/circles/circle-1..3.jpg`
+- [ ] The five services other than Integrated MEP still need `hero`, `included`, `app-1`, `app-2` (suggestions: HVAC air
+  handling unit and ductwork, hospital and hotel exteriors; Fire Fighting sprinkler pipework or pump room; Plumbing water
+  pipework; Electrical LT panels and cable trays; Pools fountain pool). No visible brand names or logos.
+- [ ] Industry pages and some "What's Included" and application cards use free-licence Unsplash stand-in photos (credits in
+  `content/images.ts`). Replace with UMS photography when available.
+- [ ] High-resolution versions of the pack artwork: hero building (desktop and mobile), `services/hvac.png`,
+  `services/fire-fighting.png`, `delivery/01 to 05`, `sections/*`. The mobile hero has a faint top edge; the
+  `wireframe-building-projects.png` has a small artefact at its bottom-left.
+- [ ] Artwork missing for Plumbing, Electrical & ELV, Integrated MEP and Pools & Fountains in the homepage services slider
+  (a large icon tile is shown instead)
+- [ ] **Official logo SVG** (the site uses a rebuild: `components/layout/Logo.tsx`)
+- [ ] Confirm the brand colours: blue `#1BA6E8` (used for accents and large headings; buttons and small text use a deeper
+  `#0A78B5` so they pass accessibility contrast) and the navy values sampled from the mockups
 
-## 5b. AI assistant (Phase F4)
+## 6b. Wording to approve
 
-The assistant answers only from the site's own content (`lib/chat/knowledge.ts`): services and what each includes,
-industries, delivery steps, FAQs, the six project names (with sector and city only where confirmed) and the site's
-pages. It never gives prices, timelines, certifications or contact details. Offices are described only as "Islamabad
-and Lahore" until addresses, phones and emails are filled in `content/site.ts`; once they are, it will quote them.
-With no API key it uses a rule-based responder; set `ANTHROPIC_API_KEY` or `OPENAI_API_KEY` (see `.env.example`) to
-have a model write the answers (still restricted to the same content). Please approve the wording of the greeting and
-of the replies for pricing, certifications and "I don't know".
+- [ ] Homepage: services slider lines (`content/home.ts`), FAQ answers, "How We Deliver" lines, the Credentials &
+  Milestones lines (`components/home/Credentials.tsx`, general wording; replace with real credentials when available)
+- [ ] CTA band sentence (`components/layout/CTABand.tsx`)
+- [ ] About, Mission & Vision, Values, Capabilities (`content/about.ts`, `content/dummy.ts`)
+- [ ] Quality, Safety & Delivery (`content/quality.ts`)
+- [ ] Services and industries copy (`content/services.ts`, `content/service-pages.ts`, `content/industries.ts`): confirm all six
+  disciplines are real UMS offerings
+- [ ] Insights articles are general technical pieces attributed to "UMS Engineering Team", with no dates
+- [ ] **Privacy policy** (`content/legal.ts`): neutral template; needs a legal review
+- [ ] Careers: add real openings in `content/careers.ts` (none are shown)
 
-## 5c. Inner pages (Phase F5): facts in mockups 12 to 18 that were left out
+## 7. Facts from the mockups that are NOT on the site
 
-The inner pages follow the mockups' layout and style only. These details from the mockups are NOT on the site until
-you confirm them:
+These appear in the design mockups but are unverified, so they are not used until you confirm them:
 
-- **About (12):** "Islamabad-based", "operating since 2009", the two street addresses (Abdullah Plaza, Ghouri Garden;
-  MI Tower Phase 1, Khayaban-e-Jinnah Road), and the industrial plant photograph. The office cards show only the city
-  and a "Contact this office" link until an address and map link are set in `content/site.ts`.
-- **Contact (17):** "Office #1, 1st Floor, Abdullah Plaza...", "Suite #7, Second Floor, MI Tower Phase-1...",
-  "Call 0333 1811113", "ums.isb@gmail.com", "info@umss.pk", "WhatsApp: To be confirmed", the social icons, and the map
-  picture. Addresses, phones, emails, WhatsApp and directions appear only when filled in `content/site.ts`. The
-  "Find Our Offices" section appears only when an office has a map link. The mockup's "Office Location" dropdown is not
-  in the form (the form logic is unchanged).
-- **Mission, vision and values (13, 14):** the mockup's sentences and its six values (Trust, Honesty, Integrity, Hard
-  Work, Excellence, Transparency) were not used. The pages use the existing general wording in `content/dummy.ts`
-  (Precision, Safety, Integrity, Collaboration, Reliability, Craft). Approve or replace.
-- **Capabilities (15):** the four photographs of people in "UMS" vests and helmets were not used (they show staff who are
-  not verified). Each card has an icon instead. The four descriptions are general wording about process.
-- **Team (16):** the page `/about/team` exists but is hidden (404) and unlinked. Set `showTeamPage = true` in
-  `content/team.ts` and add real names, roles and photos to show it. The project-control roles in the chart
-  (Site Engineering, QA/QC, HSE, Drafting, Site Delivery) are general and need confirming before the page is shown.
-- **Projects (18):** the four circular building photographs in the mockup are not used; the site uses your cropped
-  circles, labelled "Illustrative imagery". The mockup's text "across commercial, residential and industrial sectors"
-  was replaced with "by sector".
-- **Insights:** articles are attributed to "UMS Engineering Team" with no dates. Confirm this.
-- **Privacy policy:** neutral template; needs legal review.
-
-## 6. Statements in the supplied mockups that are NOT used
-
-The mockups contain wording and details that are not verified, so they are not on the site: the Credentials section
-text ("We maintain the essential professional qualifications..."), "operating since 2009", the street addresses,
-phone numbers and email addresses on the contact mockup, "WhatsApp: To be confirmed", and the people shown as UMS
-staff. Supply real facts and they can be used.
+- "Islamabad-based" and "operating since 2009"
+- The street addresses (Abdullah Plaza, Ghouri Garden; MI Tower Phase 1, Khayaban-e-Jinnah Road)
+- Phone, emails and WhatsApp on the Contact mockup, and the map picture
+- The Credentials sentences ("We maintain the essential professional qualifications...")
+- The people shown as UMS staff on the Capabilities mockup
+- The mockup's own mission, vision and six values (Trust, Honesty, Integrity, Hard Work, Excellence, Transparency): the
+  site uses the general wording in `content/dummy.ts` instead
+- "across commercial, residential and industrial sectors" on the projects band (the site says "by sector")
