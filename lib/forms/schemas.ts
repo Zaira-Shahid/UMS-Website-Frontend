@@ -184,10 +184,14 @@ export const RFQ_STEP_FIELDS = [
 
 /* ───────────── Contact ───────────── */
 
+/** Where the enquiry is for. The visitor picks one; the team email says which. */
+export const CONTACT_OFFICES = ["Islamabad", "Lahore", "General enquiry"] as const;
+
 export const contactSchema = z.object({
   name,
   email,
   phone: optionalPhone,
+  office: z.string().refine((v) => (CONTACT_OFFICES as readonly string[]).includes(v), "Choose an office, or General enquiry."),
   subject: required("Subject", 120),
   message: required("Message", 3000).refine((v) => v.length >= 10, "Tell us a little more (at least 10 characters)."),
 });

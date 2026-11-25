@@ -6,8 +6,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/Button";
 import { submitForm } from "@/lib/forms/client";
-import { contactSchema, type ContactInput, type ContactValues } from "@/lib/forms/schemas";
-import { Field, FormAlert, Honeypot, TextArea, TextInput } from "./fields";
+import { CONTACT_OFFICES, contactSchema, type ContactInput, type ContactValues } from "@/lib/forms/schemas";
+import { Field, FormAlert, Honeypot, SelectInput, TextArea, TextInput } from "./fields";
 import { SubmissionSuccess } from "./SubmissionSuccess";
 
 const id = (n: string) => `contact-${n}`;
@@ -16,7 +16,7 @@ const id = (n: string) => `contact-${n}`;
 export function ContactForm() {
   const form = useForm<ContactInput, unknown, ContactValues>({
     resolver: zodResolver(contactSchema),
-    defaultValues: { name: "", email: "", phone: "", subject: "", message: "" },
+    defaultValues: { name: "", email: "", phone: "", office: "", subject: "", message: "" },
     mode: "onTouched",
   });
   const { register, handleSubmit, setError, setFocus, reset, formState } = form;
@@ -94,7 +94,19 @@ export function ContactForm() {
           <Field id={id("phone")} label="Phone number" optional hintBelow hint="Include the country code." error={errors.phone?.message}>
             {(a) => <TextInput {...a} {...register("phone")} invalid={!!errors.phone} type="tel" inputMode="tel" autoComplete="tel" />}
           </Field>
-          <Field id={id("subject")} label="Subject" required error={errors.subject?.message}>
+          <Field id={id("office")} label="Office location" required hintBelow error={errors.office?.message}>
+            {(a) => (
+              <SelectInput {...a} {...register("office")} invalid={!!errors.office}>
+                <option value="">Select office</option>
+                {CONTACT_OFFICES.map((o) => (
+                  <option key={o} value={o}>
+                    {o}
+                  </option>
+                ))}
+              </SelectInput>
+            )}
+          </Field>
+          <Field id={id("subject")} label="Subject" required className="sm:col-span-2" error={errors.subject?.message}>
             {(a) => <TextInput {...a} {...register("subject")} invalid={!!errors.subject} />}
           </Field>
           <Field id={id("message")} label="Message" required className="sm:col-span-2" error={errors.message?.message}>

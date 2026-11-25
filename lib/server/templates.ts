@@ -103,6 +103,7 @@ export function contactTeamEmail(d: ContactValues, ref: string, to: string[]): M
     ["Name", d.name],
     ["Email", d.email],
     ["Phone", d.phone || "—"],
+    ["Office", d.office],
     ["Subject", d.subject],
     ["Message", d.message],
   ]);
