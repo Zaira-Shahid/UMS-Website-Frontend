@@ -25,7 +25,6 @@ const company = [
 
 const resources = [
   { label: "Projects", href: "/projects" },
-  { label: "Insights", href: "/insights" },
   { label: "Request a Quote", href: quoteHref() },
   { label: "Search", href: "/search" },
 ];
@@ -191,9 +190,6 @@ export function Footer() {
               © {new Date().getFullYear()} {site.fullName}. All rights reserved.
             </p>
             <nav aria-label="Legal" className="flex items-center gap-5">
-              <Link href="/privacy-policy" className="hover:text-cyan-300">
-                Privacy Policy
-              </Link>
               <Link href="/search" className="hover:text-cyan-300">
                 Search
               </Link>

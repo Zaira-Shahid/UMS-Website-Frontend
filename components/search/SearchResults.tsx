@@ -33,14 +33,14 @@ export function SearchResults() {
         className="flex border border-line focus-within:border-cyan"
       >
         <label htmlFor="site-search" className="sr-only">
-          Search services, projects, insights and pages
+          Search services, projects and pages
         </label>
         <input
           id="site-search"
           type="search"
           value={draft}
           onChange={(e) => setDraft(e.target.value)}
-          placeholder="Search services, projects, insights…"
+          placeholder="Search services and projects…"
           autoComplete="off"
           className="h-14 min-w-0 flex-1 bg-white px-5 text-lg outline-none"
         />

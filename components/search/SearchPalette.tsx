@@ -105,8 +105,8 @@ export default function SearchPalette({
           aria-expanded="true"
           aria-controls={listId}
           aria-activedescendant={flat.length ? `${listId}-opt-${active}` : undefined}
-          aria-label="Search services, projects, insights and pages"
-          placeholder="Search services, projects, insights…"
+          aria-label="Search services, projects and pages"
+          placeholder="Search services and projects…"
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);

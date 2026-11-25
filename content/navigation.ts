@@ -42,7 +42,6 @@ export const mainNav: NavItem[] = [
   },
   { label: "Industries", href: "/industries" },
   { label: "Projects", href: "/projects" },
-  { label: "Insights", href: "/insights" },
   { label: "Careers", href: "/careers" },
   { label: "Contact", href: "/contact" },
 ];

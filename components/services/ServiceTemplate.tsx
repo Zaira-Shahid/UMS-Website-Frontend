@@ -1,10 +1,8 @@
 import { quoteHref } from "@/content/navigation";
 import { absoluteUrl, jsonLd, organizationRef } from "@/lib/seo";
-import { insightsForService } from "@/lib/related";
 import type { Service } from "@/types";
 import { ApplicationsList } from "./ApplicationsList";
 import { FaqSection } from "./FaqSection";
-import { RelatedInsights } from "./RelatedInsights";
 import { RelatedProjects } from "./RelatedProjects";
 import { ScopeChecklist } from "./ScopeChecklist";
 import { SectionNav, type NavSection } from "./SectionNav";
@@ -21,7 +19,6 @@ export function ServiceTemplate({ service }: { service: Service }) {
     { id: "applications", label: "Applications" },
     { id: "scope", label: "Scope" },
     { id: "projects", label: "Projects" },
-    ...(insightsForService(service.slug).length > 0 ? [{ id: "insights", label: "Insights" }] : []),
     { id: "faq", label: "FAQ" },
   ];
 
@@ -75,7 +72,6 @@ export function ServiceTemplate({ service }: { service: Service }) {
       <ApplicationsList service={service} />
       <ScopeChecklist service={service} />
       <RelatedProjects service={service} />
-      <RelatedInsights service={service} />
       <FaqSection
         faqs={service.faqs}
         accent={service.accent}

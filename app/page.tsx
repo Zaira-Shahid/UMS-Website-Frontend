@@ -4,7 +4,6 @@ import { DeliveryTimeline } from "@/components/home/DeliveryTimeline";
 import { FeaturedProjects } from "@/components/home/FeaturedProjects";
 import { HomeHero } from "@/components/home/HomeHero";
 import { IndustriesGrid } from "@/components/home/IndustriesGrid";
-import { LatestInsights } from "@/components/home/LatestInsights";
 import { QualitySafetyTeaser } from "@/components/home/QualitySafetyTeaser";
 import { ServicesBento } from "@/components/home/ServicesBento";
 import { StatsBand } from "@/components/home/StatsBand";
@@ -30,7 +29,6 @@ export default function Home() {
       <DeliveryTimeline />
       <QualitySafetyTeaser />
       <ClientsMarquee />
-      <LatestInsights />
     </>
   );
 }
