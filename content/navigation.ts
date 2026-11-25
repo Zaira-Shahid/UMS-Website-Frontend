@@ -15,6 +15,11 @@ export const mainNav: NavItem[] = [
         description: "What guides our work.",
       },
       {
+        label: "Capabilities",
+        href: "/about/capabilities",
+        description: "How the work is planned and delivered.",
+      },
+      {
         label: "Quality, Safety & Delivery",
         href: "/quality-safety-delivery",
         description: "QA/QC, HSE and handover.",

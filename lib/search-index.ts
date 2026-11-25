@@ -23,6 +23,7 @@ export interface SearchItem {
 const pages: SearchItem[] = [
   { id: "p-about", group: "Pages", title: "About UMS", description: "Who we are and where we work.", href: "/about" },
   { id: "p-values", group: "Pages", title: "Mission & Values", description: "What guides our work.", href: "/about/mission-values" },
+  { id: "p-capabilities", group: "Pages", title: "Capabilities", description: "How the work is planned and delivered.", href: "/about/capabilities" },
   { id: "p-quality", group: "Pages", title: "Quality, Safety & Delivery", description: "QA/QC, HSE, testing, commissioning and handover.", href: "/quality-safety-delivery", keywords: ["HSE", "QA", "QC", "inspection"] },
   { id: "p-industries", group: "Pages", title: "Industries", description: "Sectors UMS serves.", href: "/industries" },
   { id: "p-careers", group: "Pages", title: "Careers", description: "Working at UMS and how to apply.", href: "/careers", keywords: ["jobs", "apply"] },
