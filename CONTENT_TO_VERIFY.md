@@ -12,6 +12,52 @@ Legend for **Planned action**: *Remove* = omit from the UI until verified · *Co
 configurable value that renders nothing while empty · *Rewrite* = replace with factual, non-claim copy
 · *Keep* = verified-by-nature (generic engineering content or the real project name only).
 
+## Status after Phase C (read this first)
+
+Sections 1 to 10 below are the original Phase A audit. Since then the following was **removed from the site**
+(not just hidden), so it no longer appears anywhere:
+
+- All office addresses, phone numbers, emails, opening hours, the WhatsApp number and the social profile links.
+- The statistics band, the clients strip, the testimonials, the ISO/PEC badges and certification cards.
+- The six fictional projects and every invented project detail (only the six confirmed names remain).
+- The Team & Organization and Credentials pages (invented people, PEC and ISO numbers), the About timeline,
+  and the "Founded in 2009" and PEC lines.
+- The "within 48 hours" response promise, the placeholder company profile download, and the newsletter form.
+- The Insights and Privacy Policy links (pages come in Phase E).
+
+Still on the site and still unverified (rebuilt in Phase E): the Careers page (four invented job listings, culture
+text and benefits such as "PEC registration support"), the Mission & Values wording, the Quality, Safety &
+Delivery procedures in `content/quality.ts`, the service and industry copy, and all stock photography.
+
+### Contact details to supply
+
+Everything lives in one place: **`content/site.ts`, the `contact` object.** All values are empty today. Fill a value
+in and it appears automatically in the footer, the Contact page and the quote page. A field that is empty renders
+nothing. Until then the site shows only "Offices in Islamabad & Lahore", a "Contact us" button and a
+"Request a Quote" button.
+
+| Field in `contact` | What to supply | Shown on |
+| --- | --- | --- |
+| `offices[Islamabad].address` | Street address, one line | Footer, Contact, Quote page |
+| `offices[Islamabad].phone` | Phone number | same |
+| `offices[Islamabad].email` | Office email | same |
+| `offices[Islamabad].hours` | Opening hours text | same |
+| `offices[Islamabad].mapUrl` | Map link (makes the address a link) | same |
+| `offices[Lahore].*` | The same five fields for Lahore | same |
+| `phone` | Main phone number, if separate from the offices | Footer, Contact, Quote page |
+| `whatsapp` | International format, e.g. `+92 3xx xxxxxxx` | Footer, Contact, Quote page |
+| `email.general` | General enquiries mailbox | Footer, Contact, Quote page |
+| `email.tenders` | Tender desk mailbox | Footer, Contact, Quote page |
+| `email.careers` | Careers mailbox (not displayed yet) | reserved |
+| `social.linkedin / facebook / instagram / youtube` | Full profile URLs | Footer icons (each appears only when set) |
+| `companyProfileUrl` | Path or URL of a real company profile PDF | reserved (no button until a file exists) |
+
+Separate from the display fields above, the **forms deliver mail** through environment variables (see
+`.env.example`): `RESEND_API_KEY`, `MAIL_FROM`, `RFQ_TO_EMAIL`, `CONTACT_TO_EMAIL`, `CAREERS_TO_EMAIL`. In
+production, if any is missing the forms return an error instead of pretending to send.
+
+Also needed: the real **domain** (`NEXT_PUBLIC_SITE_URL`, currently defaulting to `https://umss.pk`).
+
 ## 1. Company identity
 
 | Item | Where | Value now | Planned action |
