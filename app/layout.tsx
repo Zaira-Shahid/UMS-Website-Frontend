@@ -3,7 +3,6 @@ import { Barlow_Semi_Condensed, Inter, JetBrains_Mono } from "next/font/google";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { PageTransition } from "@/components/layout/PageTransition";
-import { PRELOADER_GUARD, PRELOADER_STYLE, Preloader } from "@/components/layout/Preloader";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { site } from "@/content/site";
 import "./globals.css";
@@ -48,16 +47,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${barlow.variable} ${inter.variable} ${jetbrains.variable}`} suppressHydrationWarning>
-      <head>
-        {/* Hides the preloader before first paint on repeat visits and with reduced motion. */}
-        <style dangerouslySetInnerHTML={{ __html: PRELOADER_STYLE }} />
-        <script dangerouslySetInnerHTML={{ __html: PRELOADER_GUARD }} />
-        <noscript>
-          <style>{".preloader{display:none!important}"}</style>
-        </noscript>
-      </head>
       <body>
-        <Preloader />
         <PageTransition />
         <a href="#main" className="skip-link">
           Skip to main content

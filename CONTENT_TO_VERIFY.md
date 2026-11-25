@@ -87,21 +87,12 @@ Smart Towers, Northern Hospitality. All invented. *Remove.*
 **Testimonials** (`dummyTestimonials`, four quotes with names, roles and companies): Dr. Imran Qureshi,
 Farah Nadeem, Tariq Mehmood, Nadia Siddiqui. Fabricated quotes. *Remove.*
 
-**Projects** (`dummyProjects`, 12 entries; `content/projects.ts`):
+**Projects** (`confirmedProjects` in `content/dummy.ts`): **resolved in Phase B.** The six fictional projects and
+every invented field were deleted. What remains is the name of six projects the owner confirmed: Lady Reading
+Hospital, Buch International Hospital, Elanza Mall, Pakistan Cricket Board House, CGGC Head Office at Eighteen,
+Jazz Destiny. The site shows names only (no city, year, sector, scope, client, photos or outcomes).
 
-- The six "featured" names are real buildings but UMS's involvement in each is **unconfirmed**: Lady Reading
-  Hospital, Buch International Hospital, Elanza Mall, Pakistan Cricket Board House, CGGC Head Office at
-  Eighteen, Jazz Destiny.
-- Every other field on those six is invented: city, year, area, status, client, main contractor, consultant,
-  UMS scope ("umsRole"), duration, team size, challenge, solution, outcome.
-- Six further projects are entirely fictional: Margalla Heights Residences, Ravi Riverside Hotel, Indus
-  Institute Campus, Karakoram Logistics Park, Gulberg Medical Centre, Summit Business Square.
-- Photography is Unsplash stock (`content/images.ts`) and depicts none of the projects.
-- Claims inside the text, for example "400-bed", "220-room", "zero lost-time incidents", "passed first time",
-  "maintained by UMS under a service agreement".
-
-Planned action: *Remove* the six fictional projects and all invented fields. Keep a real project only with a
-name and the fields the owner has confirmed; the page degrades to a name and sector until then.
+**Needed from the owner to expand any project:** UMS's role and scope, city, year, status, and approved photographs.
 
 ## 7. Company story
 
@@ -144,9 +135,10 @@ offerings. Line-by-line review happens in Phase E.
 
 | Item | Where |
 | --- | --- |
-| Privacy policy template with "TODO: legal review" markers | `content/legal.ts` (unused; footer links to `/privacy-policy`, which does not exist) |
-| Newsletter form in the footer | `NewsletterForm.tsx` has no backend: a valid email shows a success message and nothing is sent (its own comment says so). Violates "no fake form success"; wire up or remove |
-| Forms deliver by email only when `RESEND_API_KEY`, `MAIL_FROM` and recipients are set; otherwise the message is only printed to the server console, and the visitor still sees a success message | `lib/server/mail.ts`; owner must supply real recipients before launch |
+| Privacy policy | Footer link hidden until `/privacy-policy` is built in Phase E from a neutral template. `content/legal.ts` is unused until then and needs legal review |
+| Insights | All Insights links hidden until `/insights` is built in Phase E. Articles will be attributed to "UMS Engineering Team" with no dates |
+| Newsletter form in the footer | **Removed in Phase B** (it had no backend and showed a fake success) |
+| Form delivery | **Fixed in Phase B:** in production, if `RESEND_API_KEY`, `MAIL_FROM` or the recipient (`RFQ_TO_EMAIL`, `CONTACT_TO_EMAIL`, `CAREERS_TO_EMAIL`) is missing, the form returns an error asking the visitor to contact UMS directly. Console output is development-only. **Owner must supply the sender and recipient addresses before launch** |
 | Stock photography (all hero, service, project, article images) | `content/images.ts`, `next.config.ts` allows `images.unsplash.com`; 1 TODO per image |
 | "AI assistant" / `AI_API_KEY` placeholder | `.env.example` (no code uses it) |
 | `TODO.md` | duplicates this list for the previous spec and describes the site as shipping "dummy data"; to be replaced by this file |

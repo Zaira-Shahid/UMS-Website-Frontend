@@ -378,12 +378,6 @@ h3 {
   -webkit-text-stroke: 1.5px var(--stroke, #fff);
 }
 
-/* Preloader: hidden before paint when the guard script marks the document */
-html[data-preloader="skip"] .preloader {
-  display: none;
-}
-
-
 /* Standard system cursors: pointer on anything clickable (Tailwind's reset makes buttons an arrow) */
 a[href],
 button:not(:disabled),
