@@ -2,8 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { PageHero } from "@/components/layout/PageHero";
+import Image from "next/image";
 import { Button } from "@/components/ui/Button";
+import { CenterTitle } from "@/components/ui/CenterTitle";
+import { PageBanner } from "@/components/ui/PageBanner";
+import { featuredImages } from "@/content/home";
+import { industries } from "@/content/industries";
 import { quoteHref } from "@/content/navigation";
 import { projects } from "@/content/projects";
 import { site } from "@/content/site";
@@ -54,73 +58,66 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
     ],
   };
 
+  const sectorName = industries.find((i) => i.slug === p.sector)?.name;
+  const image = featuredImages[p.slug];
+  const facts = [sectorName && { label: "Sector", value: sectorName }, p.city && { label: "Location", value: p.city }].filter(
+    (f): f is { label: string; value: string } => !!f,
+  );
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(structuredData) }} />
-      <PageHero
-        sketch="integrated-mep"
-        eyebrow="Project"
+      <PageBanner
         title={p.name}
+        intro={[p.city, sectorName].filter(Boolean).join(" · ") || undefined}
         crumbs={[{ label: "Home", href: "/" }, { label: "Projects", href: "/projects" }, { label: p.name }]}
         titleId="project-title"
       />
 
-      <section
-        aria-labelledby="similar-title"
-        className="relative isolate overflow-hidden bg-navy py-16 text-white md:py-20"
-      >
-          <div className="relative mx-auto flex max-w-7xl flex-col gap-8 px-5 sm:px-8 md:flex-row md:items-end md:justify-between">
-          <div className="max-w-2xl">
-            <h2 id="similar-title" className="text-white">
-              Need similar work?
-            </h2>
-            <p className="mt-4 text-white/75">
-              Send us the drawings, the brief or just the outline. We will tell you what we need to
-              price it and what happens next.
-            </p>
+      <section aria-labelledby="project-about-title" className="bg-white py-12 md:py-16">
+        <div className="wrap grid items-start gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-12">
+          {image ? (
+            <figure>
+              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-sky-50">
+                <Image src={image.src} alt="" fill sizes="(min-width: 1024px) 55vw, 96vw" className="object-cover" />
+              </div>
+              <figcaption className="mt-2 text-sm italic text-muted">Illustrative imagery</figcaption>
+            </figure>
+          ) : null}
+          <div className={image ? undefined : "lg:col-span-2 lg:max-w-3xl"}>
+            <CenterTitle id="project-about-title" lead="Project" accent="Details" className="text-left [&>span]:mx-0" />
+            {facts.length > 0 && (
+              <dl className="mt-6 divide-y divide-border border-y border-border">
+                {facts.map((f) => (
+                  <div key={f.label} className="flex justify-between gap-4 py-3">
+                    <dt className="text-muted">{f.label}</dt>
+                    <dd className="font-semibold text-navy">{f.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
+            <p className="mt-6 text-base leading-relaxed text-navy md:text-lg">More details about this project, such as scope and photographs, will be shared here once they are confirmed.</p>
+            <Button href={quoteHref({ project: p.slug })} size="lg" className="mt-6 h-auto min-h-12 whitespace-normal py-3 text-center">
+              Request a Quote for similar work
+            </Button>
           </div>
-          <Button
-            href={quoteHref({ project: p.slug })}
-            variant="primary"
-            size="lg"
-            arrow
-            className="w-full sm:w-auto"
-          >
-            Request a Quote
-          </Button>
         </div>
       </section>
 
       {adjacent && (
-        <nav aria-label="More projects" className="border-t border-line bg-white">
-          <div className="mx-auto grid max-w-7xl sm:grid-cols-2">
-            <Link
-              href={`/projects/${adjacent.prev.slug}`}
-              rel="prev"
-              className="group flex items-center gap-4 border-b border-line px-5 py-8 transition-colors hover:bg-offwhite sm:border-b-0 sm:border-r sm:px-8"
-            >
+        <nav aria-label="More projects" className="border-t border-border bg-[#f2f7fb]">
+          <div className="wrap grid gap-4 py-6 sm:grid-cols-2">
+            <Link href={`/projects/${adjacent.prev.slug}`} rel="prev" className="group flex items-center gap-4 rounded-card border border-blue/70 bg-white p-5 transition-colors hover:border-blue">
               <ArrowLeft aria-hidden className="size-5 shrink-0 text-blue-700 transition-transform group-hover:-translate-x-1" />
               <span>
-                <span className="block font-heading text-xs font-semibold uppercase tracking-[0.14em] text-muted">
-                  Previous project
-                </span>
-                <span className="mt-1 block font-heading text-xl font-bold uppercase text-navy">
-                  {adjacent.prev.name}
-                </span>
+                <span className="block text-sm text-muted">Previous project</span>
+                <span className="mt-1 block font-heading text-lg font-bold text-navy">{adjacent.prev.name}</span>
               </span>
             </Link>
-            <Link
-              href={`/projects/${adjacent.next.slug}`}
-              rel="next"
-              className="group flex items-center justify-end gap-4 px-5 py-8 text-right transition-colors hover:bg-offwhite sm:px-8"
-            >
+            <Link href={`/projects/${adjacent.next.slug}`} rel="next" className="group flex items-center justify-end gap-4 rounded-card border border-blue/70 bg-white p-5 text-right transition-colors hover:border-blue">
               <span>
-                <span className="block font-heading text-xs font-semibold uppercase tracking-[0.14em] text-muted">
-                  Next project
-                </span>
-                <span className="mt-1 block font-heading text-xl font-bold uppercase text-navy">
-                  {adjacent.next.name}
-                </span>
+                <span className="block text-sm text-muted">Next project</span>
+                <span className="mt-1 block font-heading text-lg font-bold text-navy">{adjacent.next.name}</span>
               </span>
               <ArrowRight aria-hidden className="size-5 shrink-0 text-blue-700 transition-transform group-hover:translate-x-1" />
             </Link>

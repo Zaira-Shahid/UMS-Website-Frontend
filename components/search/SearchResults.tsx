@@ -30,7 +30,7 @@ export function SearchResults() {
           e.preventDefault();
           router.push(`/search?q=${encodeURIComponent(draft.trim())}`);
         }}
-        className="flex border border-line focus-within:border-blue"
+        className="flex overflow-hidden rounded-full border border-blue/70 bg-white focus-within:border-blue"
       >
         <label htmlFor="site-search" className="sr-only">
           Search services, projects, insights and pages
@@ -42,14 +42,14 @@ export function SearchResults() {
           onChange={(e) => setDraft(e.target.value)}
           placeholder="Search services, projects and insights…"
           autoComplete="off"
-          className="h-14 min-w-0 flex-1 bg-white px-5 text-lg outline-none"
+          className="h-14 min-w-0 flex-1 bg-white px-6 text-lg text-navy outline-none"
         />
-        <button type="submit" className="flex h-14 items-center gap-2 bg-navy px-6 font-heading text-sm font-semibold uppercase tracking-[0.08em] text-white hover:bg-blue">
+        <button type="submit" className="flex h-14 items-center gap-2 bg-blue-700 px-6 font-heading font-bold text-white transition-colors hover:bg-blue-800">
           <Search className="size-4" aria-hidden /> Search
         </button>
       </form>
 
-      <p className="mono-label mt-6 text-muted" role="status" aria-live="polite">
+      <p className="mt-6 text-sm font-semibold text-muted" role="status" aria-live="polite">
         {q ? `${total} ${total === 1 ? "result" : "results"} for “${q}”` : `All ${total} pages, services, projects and articles`}
       </p>
 

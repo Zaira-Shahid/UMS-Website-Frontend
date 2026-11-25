@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { CareersForm } from "@/components/forms/CareersForm";
-import { PageHero } from "@/components/layout/PageHero";
+import { CenterTitle } from "@/components/ui/CenterTitle";
+import { PageBanner } from "@/components/ui/PageBanner";
 import { careers } from "@/content/careers";
 import { site } from "@/content/site";
 import { breadcrumbLd, jsonLd } from "@/lib/seo";
@@ -36,31 +37,26 @@ export default function CareersPage() {
           ),
         }}
       />
-      <PageHero
-        eyebrow="Careers"
+      <PageBanner
         title="Work with UMS"
         intro="Interested in building mechanical, electrical and plumbing systems with us? Send us your CV."
         crumbs={[{ label: "Home", href: "/" }, { label: "Careers" }]}
       />
 
       <section aria-labelledby="positions-title" className="bg-white py-12 md:py-16">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <h2 id="positions-title" className="text-navy">
-            Open positions
-          </h2>
+        <div className="wrap">
+          <CenterTitle id="positions-title" lead="Open" accent="Positions" />
           {careers.length === 0 ? (
-            <p className="mt-4 max-w-2xl text-lg text-ink">
-              No open positions right now — send us your CV using the form below and we will keep it on file.
-            </p>
+            <p className="mx-auto mt-6 max-w-2xl text-center text-lg text-navy">No open positions right now. Send us your CV using the form below and we will keep it on file.</p>
           ) : (
-            <ul className="mt-6 divide-y divide-line border-y border-line">
+            <ul className="mt-8 grid gap-4 md:grid-cols-2">
               {careers.map((c) => (
-                <li key={c.slug} className="py-5">
-                  <h3 className="font-heading text-lg font-semibold uppercase text-navy">{c.title}</h3>
+                <li key={c.slug} className="rounded-card border border-blue/70 bg-white p-5 shadow-card">
+                  <h3 className="font-heading text-xl font-bold text-navy">{c.title}</h3>
                   <p className="mt-1 text-sm text-muted">
                     {c.department} · {c.location} · {c.type} · {c.experience}
                   </p>
-                  <p className="mt-3 text-ink">{c.summary}</p>
+                  <p className="mt-3 text-navy">{c.summary}</p>
                 </li>
               ))}
             </ul>
@@ -68,8 +64,8 @@ export default function CareersPage() {
         </div>
       </section>
 
-      <section aria-label="Application" className="bg-offwhite py-12 md:py-16">
-        <div className="mx-auto max-w-3xl px-5 sm:px-8">
+      <section aria-label="Application" className="bg-[#f2f7fb] py-12 md:py-16">
+        <div className="wrap max-w-3xl">
           <CareersForm />
         </div>
       </section>

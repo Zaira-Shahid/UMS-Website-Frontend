@@ -1,27 +1,33 @@
 import type { Metadata } from "next";
-import { ProjectList } from "@/components/projects/ProjectList";
-import { PageHero } from "@/components/layout/PageHero";
+import { ProjectsBrowser, type BrowserProject } from "@/components/projects/ProjectsBrowser";
+import { CenterTitle } from "@/components/ui/CenterTitle";
+import { PageBanner } from "@/components/ui/PageBanner";
+import { ProjectBand } from "@/components/ui/ProjectBand";
+import { featuredImages } from "@/content/home";
+import { industries } from "@/content/industries";
 import { projects } from "@/content/projects";
 import { site } from "@/content/site";
 import { absoluteUrl, jsonLd } from "@/lib/seo";
 
-const description = "Selected UMS projects.";
+const description = "Selected UMS projects, by sector.";
 
 export const metadata: Metadata = {
   title: "Projects",
   description,
   alternates: { canonical: "/projects" },
-  openGraph: {
-    type: "website",
-    siteName: `${site.name} — ${site.fullName}`,
-    title: `Projects | ${site.name}`,
-    description,
-    url: "/projects",
-  },
+  openGraph: { type: "website", siteName: `${site.name} — ${site.fullName}`, title: `Projects | ${site.name}`, description, url: "/projects" },
   twitter: { card: "summary_large_image", title: `Projects | ${site.name}`, description },
 };
 
 export default function ProjectsPage() {
+  const items: BrowserProject[] = projects.map((p) => ({
+    slug: p.slug,
+    name: p.name,
+    city: p.city,
+    sector: p.sector,
+    sectorName: industries.find((i) => i.slug === p.sector)?.name,
+    image: featuredImages[p.slug],
+  }));
   const structuredData = [
     {
       "@context": "https://schema.org",
@@ -34,12 +40,7 @@ export default function ProjectsPage() {
     {
       "@context": "https://schema.org",
       "@type": "ItemList",
-      itemListElement: projects.map((p, i) => ({
-        "@type": "ListItem",
-        position: i + 1,
-        name: p.name,
-        url: absoluteUrl(`/projects/${p.slug}`),
-      })),
+      itemListElement: projects.map((p, i) => ({ "@type": "ListItem", position: i + 1, name: p.name, url: absoluteUrl(`/projects/${p.slug}`) })),
     },
   ];
 
@@ -48,18 +49,16 @@ export default function ProjectsPage() {
       {structuredData.map((d, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(d) }} />
       ))}
-      <PageHero
-        sketch="integrated-mep"
-        eyebrow="Our Projects"
-        title="Projects"
-        crumbs={[{ label: "Home", href: "/" }, { label: "Projects" }]}
-        titleId="projects-title"
-      />
-      <section aria-label="Project list" className="bg-white py-14 md:py-20">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <ProjectList tone="light" large />
+      <PageBanner title="Projects" intro="Selected projects, by sector." crumbs={[{ label: "Home", href: "/" }, { label: "Projects" }]} titleId="projects-title" art />
+      <section aria-labelledby="projects-list-title" className="bg-white py-12 md:py-16">
+        <div className="wrap">
+          <CenterTitle id="projects-list-title" lead="Our" accent="Projects" />
+          <div className="mt-8">
+            <ProjectsBrowser projects={items} />
+          </div>
         </div>
       </section>
+      <ProjectBand />
     </>
   );
 }

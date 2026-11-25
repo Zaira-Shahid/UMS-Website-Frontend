@@ -75,10 +75,9 @@ export function ContactForm() {
   }
 
   return (
-    <form noValidate onSubmit={onSubmit} aria-label="Contact form" className="relative border border-line bg-white">
-      <div className="border-t-2 border-navy p-5 sm:p-8">
-        <h2 className="text-[1.75rem] text-navy">Send us a message</h2>
-        <p className="mt-2 text-muted">
+    <form noValidate onSubmit={onSubmit} aria-label="Contact form" className="relative rounded-2xl border border-blue/70 bg-white">
+      <div className="p-5 sm:p-8">
+        <p className="text-muted">
           For a project quotation, use <Link className="font-medium text-blue-700 underline underline-offset-4" href="/request-a-quote">Request a Quote</Link> instead.
         </p>
         <p className="mt-1 text-sm text-muted">
@@ -113,8 +112,8 @@ export function ContactForm() {
 
         <div className="mt-8 flex flex-col gap-4 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-muted">We use your details only to reply to this message.</p>
-          <Button type="submit" variant="primary" disabled={submitting} aria-busy={submitting}>
-            {submitting ? "Sending…" : "Send message"}
+          <Button type="submit" variant="primary" size="lg" disabled={submitting} aria-busy={submitting} className="w-full sm:w-auto sm:min-w-[14rem]">
+            {submitting ? "Sending…" : "Send a Message"}
           </Button>
         </div>
       </div>

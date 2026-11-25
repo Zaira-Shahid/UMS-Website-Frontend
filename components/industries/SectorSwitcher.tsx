@@ -28,9 +28,9 @@ export function SectorSwitcher({ sectors }: { sectors: Sector[] }) {
   }, [active]);
 
   return (
-    <div className="sticky top-16 z-30 border-b border-line bg-white shadow-[0_8px_16px_-12px_rgb(11_34_54/0.25)]">
-      <nav aria-label="Sectors" className="mx-auto max-w-7xl px-5 sm:px-8">
-        <ul ref={strip} className="flex gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <div className="sticky top-[var(--header-h)] z-30 border-b border-border bg-white shadow-[0_8px_16px_-12px_rgb(11_34_54/0.25)]">
+      <nav aria-label="Sectors" className="wrap">
+        <ul ref={strip} className="flex gap-2 overflow-x-auto py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {sectors.map((s) => {
             const on = active === s.id;
             return (
@@ -39,18 +39,11 @@ export function SectorSwitcher({ sectors }: { sectors: Sector[] }) {
                   href={`#${s.id}`}
                   aria-current={on ? "location" : undefined}
                   className={cn(
-                    "relative block whitespace-nowrap px-4 py-4 font-heading text-sm font-semibold uppercase tracking-[0.1em] transition-colors",
-                    on ? "text-navy" : "text-muted hover:text-navy",
+                    "block whitespace-nowrap rounded-full border px-4 py-1.5 text-sm font-semibold transition-colors",
+                    on ? "border-blue-700 bg-blue-700 text-white" : "border-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white",
                   )}
                 >
                   {s.label}
-                  <span
-                    aria-hidden
-                    className={cn(
-                      "absolute inset-x-4 bottom-0 h-0.5 origin-left bg-blue transition-transform duration-300",
-                      on ? "scale-x-100" : "scale-x-0",
-                    )}
-                  />
                 </a>
               </li>
             );

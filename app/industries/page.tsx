@@ -1,4 +1,4 @@
-import { PageHero } from "@/components/layout/PageHero";
+import { PageBanner } from "@/components/ui/PageBanner";
 import { SectorSection } from "@/components/industries/SectorSection";
 import { SectorSwitcher } from "@/components/industries/SectorSwitcher";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -18,14 +18,7 @@ export default function IndustriesPage() {
   return (
     <>
       <JsonLd data={breadcrumbLd([{ name: "Home", path: "/" }, { name: "Industries", path: "/industries" }])} />
-      <PageHero
-        sketch="integrated-mep"
-        eyebrow="Industries"
-        title="Buildings that depend on their services"
-        intro="Six sectors, each with its own demands, and the services each typically needs."
-        crumbs={[{ label: "Home", href: "/" }, { label: "Industries" }]}
-        titleId="industries-title"
-      />
+      <PageBanner title="Industries" intro="Six sectors, each with its own demands, and the services each typically needs." crumbs={[{ label: "Home", href: "/" }, { label: "Industries" }]} titleId="industries-title" />
       <SectorSwitcher sectors={sectors} />
       {industries.map((i, idx) => (
         <SectorSection key={i.slug} industry={i} index={idx} />
