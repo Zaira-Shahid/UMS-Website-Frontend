@@ -3,13 +3,11 @@
 import Link from "next/link";
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { ChevronDown, MessageCircle, Phone, X } from "lucide-react";
+import { ChevronDown, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { BlueprintGrid } from "@/components/ui/BlueprintGrid";
 import { usePathname } from "next/navigation";
 import { mainNav, quoteHrefForPath } from "@/content/navigation";
-import { offices } from "@/content/offices";
-import { site } from "@/content/site";
 import { cn } from "@/lib/utils";
 import { Logo } from "./Logo";
 
@@ -33,8 +31,6 @@ export function MobileNav({
   const reduce = useReducedMotion();
   const panelRef = useRef<HTMLDivElement>(null);
   const [expanded, setExpanded] = useState<string | null>(null);
-  const callable = offices;
-  const waHref = `https://wa.me/${site.whatsapp.replace(/\D/g, "")}`;
 
   useEffect(() => {
     if (!open) return;
@@ -179,26 +175,9 @@ export function MobileNav({
           </nav>
 
           <div className="relative shrink-0 border-t border-white/10 bg-navy-900 p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
-            <div className="mb-3 grid grid-cols-3 gap-2">
-              {callable.map((o) => (
-                <a
-                  key={o.city}
-                  href={`tel:${o.phone.replace(/\s/g, "")}`}
-                  className="flex min-h-11 items-center justify-center gap-2 border border-white/25 text-sm hover:border-white"
-                >
-                  <Phone className="size-4" aria-hidden /> {o.city}
-                </a>
-              ))}
-              <a
-                href={waHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex min-h-11 items-center justify-center gap-2 border border-white/25 text-sm hover:border-white"
-              >
-                <MessageCircle className="size-4" aria-hidden /> WhatsApp
-                <span className="sr-only"> (opens in a new tab)</span>
-              </a>
-            </div>
+            <Button href="/contact" onClick={onClose} variant="outline-light" size="lg" block className="mb-3">
+              Contact us
+            </Button>
             <Button
               href={quoteHrefForPath(pathname)}
               onClick={onClose}

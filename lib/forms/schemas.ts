@@ -107,7 +107,7 @@ const email = z
 const PHONE_CHARS = /^[+0-9\s().-]+$/;
 const phoneDigits = (v: string) => v.replace(/\D/g, "").length;
 const phoneRule = (v: string) => PHONE_CHARS.test(v) && phoneDigits(v) >= 7 && phoneDigits(v) <= 15;
-const phoneMessage = "Enter a phone number with 7–15 digits, e.g. +92 300 1234567.";
+const phoneMessage = "Enter a phone number with 7–15 digits, including the country code.";
 
 const phone = z.string().trim().min(1, "Phone number is required.").refine(phoneRule, phoneMessage);
 const optionalPhone = z

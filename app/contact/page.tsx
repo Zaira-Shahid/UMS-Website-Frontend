@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
-import { OfficeCard } from "@/components/contact/OfficeCard";
+import { ContactDetails } from "@/components/contact/ContactDetails";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { PageHero } from "@/components/layout/PageHero";
-import { offices } from "@/content/offices";
+import { Button } from "@/components/ui/Button";
+import { quoteHref } from "@/content/navigation";
 import { site } from "@/content/site";
 import { breadcrumbLd, jsonLd } from "@/lib/seo";
 
 const description =
-  "Contact UMS — Ultimate Mechanical Solutions — at our Islamabad and Lahore offices, or send a general enquiry. For project pricing, use Request a Quote.";
+  "Contact UMS — Ultimate Mechanical Solutions — with offices in Islamabad and Lahore. Send a general enquiry, or use Request a Quote for project pricing.";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -23,7 +24,6 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title: `Contact | ${site.name}`, description },
 };
 
-/** Minimal Phase 6 page: the form and both office cards. The full design follows in Phase 7. */
 export default function ContactPage() {
   return (
     <>
@@ -41,7 +41,7 @@ export default function ContactPage() {
       <PageHero
         eyebrow="Contact"
         title="Get in touch"
-        intro="Questions about our services or how we work? Send us a message, or visit one of our two offices."
+        intro="Questions about our services or how we work? Send us a message."
         crumbs={[{ label: "Home", href: "/" }, { label: "Contact" }]}
       />
 
@@ -50,11 +50,19 @@ export default function ContactPage() {
           <div className="lg:col-span-7">
             <ContactForm />
           </div>
-          <div className="space-y-5 lg:col-span-5">
-            <h2 className="font-heading text-lg font-semibold uppercase tracking-[0.08em] text-navy">Our offices</h2>
-            {offices.map((o) => (
-              <OfficeCard key={o.city} office={o} />
-            ))}
+          <div className="lg:col-span-5 lg:pl-6">
+            <h2 className="font-heading text-lg font-semibold uppercase tracking-[0.08em] text-navy">
+              Offices in Islamabad &amp; Lahore
+            </h2>
+            <p className="mt-3 text-muted">
+              For project pricing, send the brief through Request a Quote and the tender team will pick it up.
+            </p>
+            <div className="mt-6">
+              <Button href={quoteHref()} variant="primary" arrow>
+                Request a Quote
+              </Button>
+            </div>
+            <ContactDetails className="mt-10" />
           </div>
         </div>
       </section>

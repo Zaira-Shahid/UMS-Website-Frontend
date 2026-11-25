@@ -2,7 +2,6 @@ import { BlueprintGrid } from "@/components/ui/BlueprintGrid";
 import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/SectionHeading";
 import { quoteHref } from "@/content/navigation";
-import { site } from "@/content/site";
 
 /** Shared enquiry band — sits above the footer on every page. */
 export function CTABand() {
@@ -27,11 +26,9 @@ export function CTABand() {
           <Button href={quoteHref()} variant="accent" size="lg" magnetic arrow>
             Request a Quote
           </Button>
-          {site.companyProfileUrl && (
-            <Button href={site.companyProfileUrl} variant="outline-light" size="lg">
-              Download Company Profile
-            </Button>
-          )}
+          <Button href="/contact" variant="outline-light" size="lg">
+            Contact us
+          </Button>
         </div>
       </div>
     </section>

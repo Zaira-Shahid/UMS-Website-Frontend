@@ -323,7 +323,7 @@ export function RfqForm({ preselect }: { preselect: RfqPreselect }) {
                 <Field id={fieldId("email")} label="Email address" required error={err("email")}>
                   {(a) => <TextInput {...a} {...register("email")} invalid={!!errors.email} type="email" inputMode="email" autoComplete="email" />}
                 </Field>
-                <Field id={fieldId("phone")} label="Phone number" required hintBelow hint="Include the country code, e.g. +92 300 1234567." error={err("phone")}>
+                <Field id={fieldId("phone")} label="Phone number" required hintBelow hint="Include the country code." error={err("phone")}>
                   {(a) => <TextInput {...a} {...register("phone")} invalid={!!errors.phone} type="tel" inputMode="tel" autoComplete="tel" />}
                 </Field>
               </div>

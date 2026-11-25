@@ -4,8 +4,6 @@ import { cn } from "@/lib/utils";
 const links = [
   { href: "/about", label: "Overview" },
   { href: "/about/mission-values", label: "Mission & Values" },
-  { href: "/about/team", label: "Team & Organization" },
-  { href: "/about/credentials", label: "Credentials" },
   { href: "/quality-safety-delivery", label: "Quality, Safety & Delivery" },
 ] as const;
 

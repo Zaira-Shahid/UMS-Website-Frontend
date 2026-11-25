@@ -1,16 +1,14 @@
 import Link from "next/link";
-import { ArrowUpRight, Award, ClipboardCheck, Target, Users } from "lucide-react";
+import { ArrowUpRight, ClipboardCheck, Target } from "lucide-react";
 import { AboutSubnav } from "@/components/about/AboutSubnav";
-import { Timeline } from "@/components/about/Timeline";
-import { OfficeCard } from "@/components/contact/OfficeCard";
 import { PageHero } from "@/components/layout/PageHero";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { BlueprintGrid } from "@/components/ui/BlueprintGrid";
 import { Reveal, RevealItem } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { offices } from "@/content/offices";
+import { Button } from "@/components/ui/Button";
+import { quoteHref } from "@/content/navigation";
 import { services } from "@/content/services";
-import { company } from "@/content/dummy";
 import { site } from "@/content/site";
 import { breadcrumbLd, pageMetadata } from "@/lib/seo";
 
@@ -23,8 +21,6 @@ export const metadata = pageMetadata({
 
 const explore = [
   { href: "/about/mission-values", title: "Mission & Values", text: "What guides our work.", icon: Target },
-  { href: "/about/team", title: "Team & Organization", text: "How UMS is organised and who leads it.", icon: Users },
-  { href: "/about/credentials", title: "Credentials", text: "Registrations and certifications.", icon: Award },
   { href: "/quality-safety-delivery", title: "Quality, Safety & Delivery", text: "How work is checked, made safe and handed over.", icon: ClipboardCheck },
 ];
 
@@ -51,9 +47,8 @@ export default function AboutPage() {
             <Reveal className="mt-8 space-y-5 text-lg text-ink">
               <p>{site.description}</p>
               <p>
-                Founded in {company.founded}, UMS began as a mechanical contractor in Islamabad and now delivers HVAC,
-                fire fighting, electrical and ELV, plumbing and pools and fountains as separate packages or as one
-                integrated MEP scope, from offices in Islamabad and Lahore.
+                UMS delivers HVAC, fire fighting, electrical and ELV, plumbing and pools and fountains as separate
+                packages or as one integrated MEP scope.
               </p>
             </Reveal>
           </div>
@@ -66,10 +61,6 @@ export default function AboutPage() {
               <div className="flex items-baseline justify-between gap-4 py-4">
                 <dt className="text-muted">Offices</dt>
                 <dd className="text-right text-navy">Islamabad and Lahore</dd>
-              </div>
-              <div className="flex items-baseline justify-between gap-4 py-4">
-                <dt className="text-muted">PEC registration</dt>
-                <dd className="text-right text-navy">{company.pecRegistration}</dd>
               </div>
             </dl>
           </Reveal>
@@ -112,28 +103,19 @@ export default function AboutPage() {
       </section>
 
       {/* Offices — light */}
-      <section aria-labelledby="offices-title" className="bg-offwhite py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+      <section aria-labelledby="offices-title" className="bg-offwhite py-16 md:py-20">
+        <div className="mx-auto flex max-w-7xl flex-col gap-6 px-5 sm:px-8 md:flex-row md:items-end md:justify-between">
           <div id="offices-title">
-            <SectionHeading index="03" label="Offices" title="Islamabad and Lahore" description="Two offices, one team." />
+            <SectionHeading index="03" label="Offices" title="Offices in Islamabad & Lahore" />
           </div>
-          <Reveal stagger as="div" className="mt-12 grid gap-6 md:grid-cols-2">
-            {offices.map((o) => (
-              <RevealItem key={o.city}>
-                <OfficeCard office={o} />
-              </RevealItem>
-            ))}
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Story / timeline — white */}
-      <section aria-labelledby="story-title" className="bg-white py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div id="story-title">
-            <SectionHeading index="04" label="Our story" title="Milestones" description="The company's key moments since it was founded." />
+          <div className="flex flex-wrap gap-3">
+            <Button href="/contact" variant="primary" arrow>
+              Contact us
+            </Button>
+            <Button href={quoteHref()} variant="outline">
+              Request a Quote
+            </Button>
           </div>
-          <Timeline />
         </div>
       </section>
 
@@ -141,9 +123,9 @@ export default function AboutPage() {
       <section aria-labelledby="explore-title" className="bg-offwhite py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <div id="explore-title">
-            <SectionHeading index="05" label="Explore" title="More about UMS" />
+            <SectionHeading index="04" label="Explore" title="More about UMS" />
           </div>
-          <Reveal stagger as="ul" className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <Reveal stagger as="ul" className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
             {explore.map((e) => (
               <RevealItem key={e.href} as="li">
                 <Link

@@ -122,24 +122,6 @@ export interface Insight {
   publishedAt: string;
 }
 
-export interface Office {
-  city: "Islamabad" | "Lahore";
-  label: string;
-  address: string;
-  phone: string;
-  email: string;
-  /** Opening hours as plain text. */
-  hours: string;
-  /** Search text for the map link and embed. */
-  mapQuery: string;
-  /** Link that opens the office in Google Maps. */
-  mapUrl: string;
-  /** Embeddable map URL (iframe src). */
-  mapEmbedUrl: string;
-  /** Coordinates; used for structured data. */
-  geo: { latitude: number; longitude: number };
-}
-
 export type CareerType = "Full-time" | "Contract";
 
 export interface Career {

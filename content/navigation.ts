@@ -15,19 +15,9 @@ export const mainNav: NavItem[] = [
         description: "What guides our work.",
       },
       {
-        label: "Team & Organization",
-        href: "/about/team",
-        description: "How UMS is organised.",
-      },
-      {
         label: "Quality, Safety & Delivery",
         href: "/quality-safety-delivery",
         description: "QA/QC, HSE and handover.",
-      },
-      {
-        label: "Credentials",
-        href: "/about/credentials",
-        description: "Registrations and certifications.",
       },
     ],
   },

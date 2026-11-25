@@ -22,12 +22,10 @@ export interface SearchItem {
 const pages: SearchItem[] = [
   { id: "p-about", group: "Pages", title: "About UMS", description: "Who we are and where we work.", href: "/about" },
   { id: "p-values", group: "Pages", title: "Mission & Values", description: "What guides our work.", href: "/about/mission-values" },
-  { id: "p-team", group: "Pages", title: "Team & Organization", description: "How UMS is organised.", href: "/about/team" },
-  { id: "p-credentials", group: "Pages", title: "Credentials", description: "Registrations and certifications.", href: "/about/credentials", keywords: ["PEC", "certification"] },
   { id: "p-quality", group: "Pages", title: "Quality, Safety & Delivery", description: "QA/QC, HSE, testing, commissioning and handover.", href: "/quality-safety-delivery", keywords: ["HSE", "QA", "QC", "inspection"] },
   { id: "p-industries", group: "Pages", title: "Industries", description: "Sectors UMS serves.", href: "/industries" },
   { id: "p-careers", group: "Pages", title: "Careers", description: "Working at UMS and how to apply.", href: "/careers", keywords: ["jobs", "apply"] },
-  { id: "p-contact", group: "Pages", title: "Contact", description: "Islamabad and Lahore offices.", href: "/contact" },
+  { id: "p-contact", group: "Pages", title: "Contact", description: "Offices in Islamabad and Lahore.", href: "/contact" },
   { id: "p-quote", group: "Pages", title: "Request a Quote", description: "Send a tender or project brief.", href: "/request-a-quote", keywords: ["RFQ", "tender", "enquiry"] },
 ];
 

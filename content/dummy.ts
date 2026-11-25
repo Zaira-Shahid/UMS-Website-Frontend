@@ -1,15 +1,14 @@
 /**
  * DUMMY DATA — single source for every placeholder fact on the site (spec §5).
  *
- * Everything here is realistic but invented. The other /content files import from this
- * file, so replacing it (or pieces of it) with approved UMS information updates the whole
- * site. Nothing in the UI is labelled "dummy" or "to be confirmed"; the "Replace before
- * launch" list in TODO.md tracks what must be swapped for real data.
+ * Everything here except `confirmedProjects` is unverified. Company contact details live in
+ * content/site.ts (empty until supplied). CONTENT_TO_VERIFY.md tracks what must be confirmed or
+ * replaced before launch. Nothing in the UI is labelled "dummy" or "to be confirmed".
  *
  * Article bodies live in ./dummy-articles.ts to keep this file readable; they are
  * re-exported from here.
  */
-import type { CareerType, Stat, Testimonial } from "@/types";
+import type { CareerType } from "@/types";
 
 export { dummyArticles } from "./dummy-articles";
 export type { DummyArticle } from "./dummy-articles";
@@ -20,185 +19,7 @@ export const company = {
   name: "Ultimate Mechanical Solutions",
   shortName: "UMS",
   tagline: "MEP Contracting for Complex Buildings",
-  founded: 2009,
-  pecRegistration: "PEC Reg. No. C-6/ME-2047",
-  ntn: "NTN 4219876-3",
 } as const;
-
-export const emails = {
-  general: "info@umss.pk",
-  tenders: "tenders@umss.pk",
-  careers: "careers@umss.pk",
-  support: "support@umss.pk",
-} as const;
-
-export const whatsapp = "+92 300 1234567";
-
-export const social = {
-  linkedin: "https://linkedin.com/company/umss",
-  facebook: "https://facebook.com/umss.pk",
-  instagram: "https://instagram.com/umss.pk",
-  youtube: "https://youtube.com/@umss",
-} as const;
-
-/** Link to the company profile PDF (dummy). */
-export const companyProfileUrl = "/downloads/ums-company-profile.pdf";
-
-/** Typical time to a first response on a tender or RFQ. */
-export const rfqResponseTime = "within 48 hours";
-
-/* ------------------------------------------------------------ offices */
-
-const mapUrl = (q: string) => `https://maps.google.com/?q=${encodeURIComponent(q)}`;
-const mapEmbed = (q: string) => `https://maps.google.com/maps?q=${encodeURIComponent(q)}&output=embed`;
-
-export const dummyOffices = [
-  {
-    city: "Islamabad" as const,
-    label: "Head Office",
-    address: "Office 12, 3rd Floor, Plot 21, Sector I-9/3, Islamabad 44000",
-    phone: "+92 51 4567 890",
-    email: emails.general,
-    hours: "Mon–Sat, 9:00 AM – 6:00 PM",
-    mapQuery: "I-9/3 Islamabad",
-    mapUrl: mapUrl("I-9/3 Islamabad"),
-    mapEmbedUrl: mapEmbed("I-9/3 Islamabad"),
-    geo: { latitude: 33.6844, longitude: 73.0479 },
-  },
-  {
-    city: "Lahore" as const,
-    label: "Regional Office",
-    address: "45-B, Main Boulevard, Gulberg III, Lahore 54660",
-    phone: "+92 42 3578 1200",
-    email: "lahore@umss.pk",
-    hours: "Mon–Sat, 9:00 AM – 6:00 PM",
-    mapQuery: "Gulberg III Lahore",
-    mapUrl: mapUrl("Gulberg III Lahore"),
-    mapEmbedUrl: mapEmbed("Gulberg III Lahore"),
-    geo: { latitude: 31.5204, longitude: 74.3587 },
-  },
-];
-
-/* -------------------------------------------------------------- stats */
-
-export const dummyStats: Stat[] = [
-  { value: 15, suffix: "+", label: "Years of MEP delivery" },
-  { value: 37, suffix: "+", label: "Projects delivered" },
-  { value: 250, suffix: "+", label: "Engineers & technicians" },
-  { value: 2.4, suffix: "M sq ft", label: "Building area serviced" },
-  { value: 0, label: "Lost-time incidents in 2025", note: "HSE record" },
-  { value: 98, suffix: "%", label: "On-time handover rate" },
-];
-
-/* -------------------------------------------------------------- people */
-
-export const dummyLeadership = [
-  {
-    name: "Engr. Ahmed Raza",
-    role: "Chief Executive Officer",
-    bio: "Founded UMS in 2009 after a decade in hospital and commercial MEP delivery. Leads strategy, key client relationships and the company's commitment to single-point responsibility.",
-  },
-  {
-    name: "Engr. Sana Malik",
-    role: "Director, Projects",
-    bio: "Oversees programme, coordination and commercial control across every active site. Previously led the integrated MEP package on UMS's first large hospital project.",
-  },
-  {
-    name: "Engr. Bilal Chaudhry",
-    role: "Head of HVAC",
-    bio: "Leads central plant, VRF and chilled-water delivery. Specialises in plant-room coordination and commissioning of large air-conditioning systems.",
-  },
-  {
-    name: "Engr. Usman Tariq",
-    role: "Head of Fire Protection",
-    bio: "Heads the fire fighting and suppression division, from hydraulic design review to witnessed testing and authority approvals.",
-  },
-  {
-    name: "Engr. Ayesha Khan",
-    role: "QA/QC Manager",
-    bio: "Owns inspection and test plans, material approvals and the handover documentation process across all UMS projects.",
-  },
-  {
-    name: "Engr. Hamza Iqbal",
-    role: "HSE Manager",
-    bio: "Sets and audits site safety standards, runs induction and toolbox programmes and reports the company's lost-time-incident record.",
-  },
-];
-
-/* ------------------------------------------------------------ clients */
-
-/** Ten fictional developers and contractors, rendered as typographic wordmarks. */
-export const dummyClients = [
-  "Crescent Developers",
-  "Indus Builders",
-  "Margalla Estates",
-  "Ravi Construct",
-  "Karakoram Infra",
-  "Summit Healthcare Group",
-  "Jinnah Retail Holdings",
-  "Pak Steel Structures",
-  "Capital Smart Towers",
-  "Northern Hospitality",
-] as const;
-
-export const dummyTestimonials: Testimonial[] = [
-  {
-    quote:
-      "UMS coordinated every service in our hospital as one package. Clashes were solved on drawings, not in the ceiling, and the handover pack was the most complete we have received.",
-    name: "Dr. Imran Qureshi",
-    role: "Director, Facilities",
-    company: "Summit Healthcare Group",
-    project: "lady-reading-hospital",
-  },
-  {
-    quote:
-      "Their fire protection team treats testing as a deliverable, not a formality. Every witnessed test was documented, and the authority approvals came through first time.",
-    name: "Farah Nadeem",
-    role: "Project Director",
-    company: "Jinnah Retail Holdings",
-    project: "elanza-mall",
-  },
-  {
-    quote:
-      "On a tight programme with six trades in the same shafts, UMS kept to the look-ahead and never held up the finishes. That is rare on a services package.",
-    name: "Tariq Mehmood",
-    role: "Construction Manager",
-    company: "Capital Smart Towers",
-    project: "cggc-head-office-eighteen",
-  },
-  {
-    quote:
-      "Safety was visible from day one: inductions, permits and toolbox talks every morning. We finished the building with zero lost-time incidents on the MEP package.",
-    name: "Nadia Siddiqui",
-    role: "HSE Lead",
-    company: "Northern Hospitality",
-    project: "ravi-riverside-hotel",
-  },
-];
-
-export const dummyCertifications = [
-  { name: "ISO 9001:2015", issuer: "Quality management systems", validUntil: "March 2028", reference: "QMS-PK-20418" },
-  { name: "ISO 45001:2018", issuer: "Occupational health and safety", validUntil: "March 2028", reference: "OHS-PK-11273" },
-  { name: "ISO 14001:2015", issuer: "Environmental management", validUntil: "March 2028", reference: "EMS-PK-09865" },
-  { name: "PEC C-6", issuer: "Pakistan Engineering Council", validUntil: "June 2027", reference: "C-6/ME-2047" },
-  { name: "NFPA-aligned practices", issuer: "Fire protection design and testing", validUntil: "Reviewed annually", reference: "Internal audit FP-2025" },
-];
-
-export const dummyPec = {
-  registrationNumber: "C-6/ME-2047",
-  category: "C-6 · Mechanical & Electrical contractor",
-  validUntil: "30 June 2027",
-  verifyUrl: "https://www.pec.org.pk",
-};
-
-export const dummyTimeline = [
-  { year: "2009", title: "UMS is founded", description: "Founded in Islamabad as a mechanical contractor focused on HVAC and plumbing for commercial buildings." },
-  { year: "2012", title: "First hospital MEP package", description: "Awarded a full MEP package on a major teaching hospital, setting the pattern for later healthcare work." },
-  { year: "2015", title: "Lahore office opens", description: "A regional office in Gulberg opens to serve projects across Punjab." },
-  { year: "2018", title: "Fire protection division", description: "A dedicated fire protection team is formed, covering sprinklers, hydrants, pump rooms and suppression." },
-  { year: "2021", title: "Integrated MEP delivery", description: "UMS begins delivering HVAC, fire, electrical, ELV and plumbing as a single coordinated package." },
-  { year: "2025", title: "37+ projects delivered", description: "UMS passes 37 completed projects and a year with no lost-time incidents across all sites." },
-];
 
 export const dummyMission = {
   statement:

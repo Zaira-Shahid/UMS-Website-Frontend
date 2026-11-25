@@ -64,10 +64,6 @@ export function QualitySafetyTeaser() {
             ))}
           </Reveal>
 
-          <div className="mt-8 flex flex-wrap items-center gap-4">
-            <span className="mono-label text-navy">ISO 9001 · ISO 45001 · ISO 14001</span>
-            <span className="mono-label text-muted">0 lost-time incidents in 2025</span>
-          </div>
           <div className="mt-8">
             <Button href="/quality-safety-delivery" variant="primary" arrow>
               Quality, safety &amp; delivery

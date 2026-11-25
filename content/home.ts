@@ -1,5 +1,3 @@
-import { dummyClients } from "./dummy";
-
 /* ------------------------------------------------------------ delivery */
 
 export const deliverySteps = [
@@ -50,8 +48,3 @@ export const qualityTopics = {
     ],
   },
 } as const;
-
-/* ------------------------------------------------------------- clients */
-
-/** Client and collaborator wordmarks (dummy names from content/dummy.ts). */
-export const clientNames = dummyClients;
