@@ -230,3 +230,22 @@ Each phase report: what changed, files, commits, real test results, mockup-vs-bu
 - Never force-push or rewrite history. Never commit secrets or `.env*` (except `.env.example`).
 - No AI or Claude attribution in commits, tags, PRs or files.
 - Stop every server you start, and never use port 3000 if it's busy.
+
+---
+
+## 12. Design principle — match the mockups, simple, neat and clean (owner priority)
+- The final website must look like the images I provided in docs/reference/mockups/
+  (same layout, section order, colours, fonts, buttons and imagery). When unsure,
+  open the mockup and copy what it shows.
+- The site must be SIMPLE, NEAT and CLEAN:
+  - generous white space, aligned grids, consistent spacing between sections
+  - one clear heading style, one primary button style and one outline button style
+  - no extra decoration, effects, animations or sections that are not in the mockups
+  - no clutter: fewer elements, done well
+  - subtle motion only (fade/slide on scroll, gentle hover), switched off with
+    reduced motion
+- Before reporting any section or page as done, compare a screenshot of it with the
+  matching mockup and fix visible differences in layout, spacing, size and colour.
+  If a page has no mockup, follow the same visual style as the homepage mockups.
+- If anything in the code conflicts with this section, this section wins.
+
