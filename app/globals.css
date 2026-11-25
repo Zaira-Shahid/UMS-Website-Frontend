@@ -511,3 +511,52 @@ label[for],
     scroll-behavior: auto !important;
   }
 }
+
+/* ------------------------------------------------------------------
+   Homepage hero: building cutaway (components/home/BuildingCutaway.tsx)
+   ------------------------------------------------------------------ */
+.cutaway-sys {
+  transition: opacity 0.3s ease;
+}
+/* While a service is hovered or focused, only its system stays bright. */
+.cutaway[data-active] .cutaway-sys {
+  opacity: 0.18;
+}
+.cutaway[data-active="hvac"] .cutaway-sys-hvac,
+.cutaway[data-active="fire"] .cutaway-sys-fire,
+.cutaway[data-active="elec"] .cutaway-sys-elec,
+.cutaway[data-active="plumb"] .cutaway-sys-plumb {
+  opacity: 1;
+}
+.cutaway-flow {
+  stroke-dasharray: 2 10;
+  animation: ums-flow 1.6s linear infinite;
+}
+@keyframes ums-flow {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+@keyframes ums-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.hero-rise {
+  animation: ums-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.hero-rise-late {
+  animation: ums-rise 1s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cutaway-flow,
+  .hero-rise,
+  .hero-rise-late {
+    animation: none !important;
+  }
+}

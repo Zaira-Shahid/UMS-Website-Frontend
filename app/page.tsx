@@ -2,11 +2,10 @@ import type { Metadata } from "next";
 import { ClientsMarquee } from "@/components/home/ClientsMarquee";
 import { DeliveryTimeline } from "@/components/home/DeliveryTimeline";
 import { FeaturedProjects } from "@/components/home/FeaturedProjects";
-import { HeroCarousel } from "@/components/home/HeroCarousel";
+import { HomeHero } from "@/components/home/HomeHero";
 import { IndustriesGrid } from "@/components/home/IndustriesGrid";
 import { LatestInsights } from "@/components/home/LatestInsights";
 import { QualitySafetyTeaser } from "@/components/home/QualitySafetyTeaser";
-import { ServiceShortcuts } from "@/components/home/ServiceShortcuts";
 import { ServicesBento } from "@/components/home/ServicesBento";
 import { StatsBand } from "@/components/home/StatsBand";
 import { site } from "@/content/site";
@@ -23,8 +22,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      <HeroCarousel />
-      <ServiceShortcuts />
+      <HomeHero />
       <StatsBand />
       <ServicesBento />
       <FeaturedProjects />

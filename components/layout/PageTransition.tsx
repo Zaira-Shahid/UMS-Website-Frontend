@@ -40,7 +40,6 @@ export function PageTransition() {
   // The new page has arrived.
   useEffect(() => {
     reveal();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   useEffect(() => {
@@ -71,7 +70,6 @@ export function PageTransition() {
       document.removeEventListener("click", onClick, true);
       window.clearTimeout(giveUp.current);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
   return (
