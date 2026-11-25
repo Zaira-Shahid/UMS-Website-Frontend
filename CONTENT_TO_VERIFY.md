@@ -101,6 +101,16 @@ entry is verified.
   owner's confirmation and a legal review.
 - Careers: no listings are shown; add real roles in `content/careers.ts`.
 
+## 5b. AI assistant (Phase F4)
+
+The assistant answers only from the site's own content (`lib/chat/knowledge.ts`): services and what each includes,
+industries, delivery steps, FAQs, the six project names (with sector and city only where confirmed) and the site's
+pages. It never gives prices, timelines, certifications or contact details. Offices are described only as "Islamabad
+and Lahore" until addresses, phones and emails are filled in `content/site.ts`; once they are, it will quote them.
+With no API key it uses a rule-based responder; set `ANTHROPIC_API_KEY` or `OPENAI_API_KEY` (see `.env.example`) to
+have a model write the answers (still restricted to the same content). Please approve the wording of the greeting and
+of the replies for pricing, certifications and "I don't know".
+
 ## 6. Statements in the supplied mockups that are NOT used
 
 The mockups contain wording and details that are not verified, so they are not on the site: the Credentials section
