@@ -2,8 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Barlow_Semi_Condensed, Inter, JetBrains_Mono } from "next/font/google";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
-import { PageTransition } from "@/components/layout/PageTransition";
-import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { site } from "@/content/site";
 import "./globals.css";
 
@@ -48,18 +46,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${barlow.variable} ${inter.variable} ${jetbrains.variable}`} suppressHydrationWarning>
       <body>
-        <PageTransition />
         <a href="#main" className="skip-link">
           Skip to main content
         </a>
-        <SmoothScroll>
-          <Header />
-          {/* The header is fixed: pages with a full-bleed hero sit under it, other pages offset themselves. */}
-          <main id="main" className="min-h-svh">
-            {children}
-          </main>
-          <Footer />
-        </SmoothScroll>
+        <Header />
+        {/* The header is fixed: pages with a full-bleed hero sit under it, other pages offset themselves. */}
+        <main id="main" className="min-h-svh">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );

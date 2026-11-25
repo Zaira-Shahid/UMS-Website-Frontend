@@ -7,7 +7,6 @@ import { quoteHref } from "@/content/navigation";
 import { services } from "@/content/services";
 import { contact, site } from "@/content/site";
 import { disciplineColor } from "@/lib/discipline";
-import { BackToTop } from "./BackToTop";
 import { FooterCTA } from "./FooterCTA";
 import { Logo } from "./Logo";
 
@@ -118,7 +117,6 @@ export function Footer() {
               <Link href="/privacy-policy" className="hover:text-cyan-300">
                 Privacy Policy
               </Link>
-              <BackToTop />
             </nav>
           </div>
         </div>
