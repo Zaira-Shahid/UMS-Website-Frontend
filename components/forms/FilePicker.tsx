@@ -57,7 +57,7 @@ export function FilePicker({
         multiple={multiple}
         accept={rules.extensions.join(",")}
         onChange={(e) => add(e.target.files)}
-        className="block w-full rounded-ums border border-navy/25 bg-white text-sm text-ink file:mr-4 file:h-12 file:cursor-pointer file:border-0 file:bg-navy file:px-5 file:font-heading file:text-[0.8125rem] file:font-semibold file:uppercase file:tracking-[0.08em] file:text-white hover:file:bg-cyan"
+        className="block w-full rounded-ums border border-navy/25 bg-white text-sm text-ink file:mr-4 file:h-12 file:cursor-pointer file:border-0 file:bg-navy file:px-5 file:font-heading file:text-[0.8125rem] file:font-semibold file:uppercase file:tracking-[0.08em] file:text-white hover:file:bg-blue"
       />
       {files.length > 0 && (
         <ul className="mt-3 space-y-2" aria-label="Selected files">
@@ -67,7 +67,7 @@ export function FilePicker({
               className="flex items-center justify-between gap-3 rounded-ums border border-line bg-offwhite px-3 py-2 text-sm"
             >
               <span className="flex min-w-0 items-center gap-2">
-                <FileText aria-hidden className="size-4 shrink-0 text-cyan" />
+                <FileText aria-hidden className="size-4 shrink-0 text-blue" />
                 <span className="truncate">{f.name}</span>
                 <span className="shrink-0 text-muted">{formatBytes(f.size)}</span>
               </span>

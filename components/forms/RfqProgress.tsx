@@ -20,7 +20,7 @@ export function RfqProgress({ current, onGo }: { current: number; onGo: (step: n
                 aria-hidden
                 className={cn(
                   "flex size-8 shrink-0 items-center justify-center rounded-full border-2 font-heading text-sm font-bold transition-colors",
-                  done && "border-cyan bg-cyan text-white",
+                  done && "border-blue bg-blue text-white",
                   active && "border-navy bg-navy text-white",
                   !done && !active && "border-navy/25 text-muted",
                 )}
@@ -29,7 +29,7 @@ export function RfqProgress({ current, onGo }: { current: number; onGo: (step: n
               </span>
               <span
                 className={cn(
-                  "hidden font-heading text-[0.8125rem] font-semibold uppercase tracking-[0.1em] sm:inline",
+                  "hidden font-heading text-[0.8125rem] font-semibold uppercase tracking-[0.1em] xl:inline",
                   active ? "text-navy" : "text-muted",
                 )}
               >
@@ -61,14 +61,14 @@ export function RfqProgress({ current, onGo }: { current: number; onGo: (step: n
               {i < RFQ_STEPS.length - 1 && (
                 <span
                   aria-hidden
-                  className={cn("mx-2 h-0.5 flex-1 sm:mx-4", i < current ? "bg-cyan" : "bg-navy/15")}
+                  className={cn("mx-2 h-0.5 flex-1 xl:mx-4", i < current ? "bg-blue" : "bg-navy/15")}
                 />
               )}
             </li>
           );
         })}
       </ol>
-      <p aria-hidden className="mt-3 font-heading text-[0.8125rem] font-semibold uppercase tracking-[0.1em] text-navy sm:hidden">
+      <p aria-hidden className="mt-3 font-heading text-[0.8125rem] font-semibold uppercase tracking-[0.1em] text-navy xl:hidden">
         Step {current + 1} of {RFQ_STEPS.length} · {RFQ_STEPS[current]}
       </p>
     </div>

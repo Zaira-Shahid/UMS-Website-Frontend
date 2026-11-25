@@ -12,14 +12,14 @@ const buttonStyles = cva(
   {
     variants: {
       variant: {
-        primary: "bg-navy text-white hover:bg-cyan",
-        accent: "bg-cyan text-white hover:bg-navy",
+        primary: "bg-navy text-white hover:bg-blue",
+        accent: "bg-blue text-white hover:bg-navy",
         fire: "bg-fire text-white hover:bg-navy",
         outline:
           "border border-navy/30 text-navy hover:border-navy hover:bg-navy hover:text-white",
         "outline-light":
           "border border-white/40 text-white hover:border-white hover:bg-white hover:text-navy",
-        ghost: "text-navy hover:text-cyan",
+        ghost: "text-navy hover:text-blue",
       },
       size: {
         sm: "h-10 px-4 text-[0.8125rem]",

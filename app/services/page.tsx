@@ -43,7 +43,7 @@ export default function ServicesPage() {
           <div className="mt-10 grid gap-10 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-8">
               <p className="flex items-center gap-3 font-heading text-[0.8125rem] font-semibold uppercase tracking-[0.14em] text-[#00608c]">
-                <span aria-hidden className="h-px w-8 bg-cyan" />
+                <span aria-hidden className="h-px w-8 bg-blue" />
                 Our Services
               </p>
               <h1 id="services-title" className="mt-5 text-[clamp(2.5rem,1.5rem+4.6vw,5.5rem)] text-navy">

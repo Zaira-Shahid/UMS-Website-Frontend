@@ -30,7 +30,7 @@ export function SearchResults() {
           e.preventDefault();
           router.push(`/search?q=${encodeURIComponent(draft.trim())}`);
         }}
-        className="flex border border-line focus-within:border-cyan"
+        className="flex border border-line focus-within:border-blue"
       >
         <label htmlFor="site-search" className="sr-only">
           Search services, projects, insights and pages
@@ -44,7 +44,7 @@ export function SearchResults() {
           autoComplete="off"
           className="h-14 min-w-0 flex-1 bg-white px-5 text-lg outline-none"
         />
-        <button type="submit" className="flex h-14 items-center gap-2 bg-navy px-6 font-heading text-sm font-semibold uppercase tracking-[0.08em] text-white hover:bg-cyan">
+        <button type="submit" className="flex h-14 items-center gap-2 bg-navy px-6 font-heading text-sm font-semibold uppercase tracking-[0.08em] text-white hover:bg-blue">
           <Search className="size-4" aria-hidden /> Search
         </button>
       </form>
@@ -55,7 +55,7 @@ export function SearchResults() {
 
       {total === 0 ? (
         <p className="mt-10 text-lg text-muted">
-          Nothing matched. Try a service name such as “HVAC”, or browse <Link href="/services" className="text-cyan underline underline-offset-4">all services</Link>.
+          Nothing matched. Try a service name such as “HVAC”, or browse <Link href="/services" className="text-blue underline underline-offset-4">all services</Link>.
         </p>
       ) : (
         grouped.map((g) => (
@@ -67,14 +67,14 @@ export function SearchResults() {
               {g.items.map((item) => (
                 <li key={item.id}>
                   <Link href={item.href} className="group relative flex items-center gap-4 py-4 pl-5 pr-2 transition-colors hover:bg-offwhite">
-                    <span aria-hidden className="absolute inset-y-3 left-0 w-1" style={{ background: item.color ?? "var(--cyan)" }} />
+                    <span aria-hidden className="absolute inset-y-3 left-0 w-1" style={{ background: item.color ?? "var(--blue)" }} />
                     {item.image && (
                       <span className="hidden size-14 shrink-0 overflow-hidden bg-navy-900 sm:block">
                         <SiteImage asset={item.image} sizes="56px" className="size-full object-cover" />
                       </span>
                     )}
                     <span className="min-w-0">
-                      <span className="block font-medium text-navy group-hover:text-cyan">{item.title}</span>
+                      <span className="block font-medium text-navy group-hover:text-blue">{item.title}</span>
                       <span className="line-clamp-2 block text-sm text-muted">{item.description}</span>
                     </span>
                   </Link>

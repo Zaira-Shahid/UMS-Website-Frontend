@@ -158,7 +158,7 @@ export default function SearchPalette({
                     <span
                       aria-hidden
                       className="absolute inset-y-2 left-0 w-1 transition-transform duration-200"
-                      style={{ background: item.color ?? "var(--cyan)", transform: i === active ? "scaleY(1)" : "scaleY(0.5)" }}
+                      style={{ background: item.color ?? "var(--blue)", transform: i === active ? "scaleY(1)" : "scaleY(0.5)" }}
                     />
                     {item.image ? (
                       <span className="size-11 shrink-0 overflow-hidden bg-navy-900">

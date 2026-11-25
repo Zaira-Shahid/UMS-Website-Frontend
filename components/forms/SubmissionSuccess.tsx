@@ -21,8 +21,8 @@ export function SubmissionSuccess({
   }, []);
 
   return (
-    <div role="status" className="border-t-2 border-cyan bg-white p-6 sm:p-10">
-      <CheckCircle2 aria-hidden className="size-10 text-cyan" />
+    <div role="status" className="border-t-2 border-blue bg-white p-6 sm:p-10">
+      <CheckCircle2 aria-hidden className="size-10 text-blue" />
       <h2 ref={heading} tabIndex={-1} className="focus-quiet mt-4 text-navy">
         {title}
       </h2>

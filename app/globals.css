@@ -1,133 +1,139 @@
 @import "tailwindcss";
 
 /* ------------------------------------------------------------------
-   UMS V2 design tokens — "Inside the building"
-   Source of truth: PROJECT_SPEC.md §3
+   UMS design tokens. Source of truth: PROJECT_SPEC.md section 3
    ------------------------------------------------------------------ */
 :root {
-  --navy-950: #06141f;
-  --navy-900: #0b2236;
-  --navy: #173f60;
-  --cyan: #008ccb;
-  --cyan-300: #5cc4ee;
+  /* Colours (3.1) */
+  --navy-950: #071b33; /* footer, darkest */
+  --navy-900: #0b2545; /* hero and dark sections */
+  --navy-800: #10305a;
+  --navy: #0f2a4a; /* headings on light, dark pill buttons */
+  --blue: #1ba6e8; /* primary: buttons, accents, active states */
+  --blue-600: #0e8bd0; /* hover */
+  --cyan: #22d3ee; /* outline buttons on dark, footer dividers */
+  --cyan-300: #5cc4ee; /* light accent text on dark */
   --cyan-100: #d6f0fb;
+  --sky-50: #eef5fb; /* light section backgrounds */
   --white: #ffffff;
-  --offwhite: #f4f8fb;
+  --text: #0f2a4a;
+  --muted: #52657a;
+  --border: #dce7f1;
   --steel: #8a9baa;
-  --line: #d9e4ec;
-  --text: #1e2b37;
-  --muted: #5b6b7a;
 
-  /* Discipline accents — used only on their own service content */
-  --hvac: #00a8e8;
-  --fire: #e0322b;
-  --electric: #f5b700;
-  --plumbing: #00b3a4;
-  --mep: #008ccb;
-  --pools: #3fa9f5;
+  /* Service accents (chips, icons) */
+  --mep: #8b3fd9; /* Integrated MEP: purple */
+  --hvac: #14b8c4; /* HVAC: teal */
+  --fire: #e53935; /* Fire Fighting: red */
+  --plumbing: #14b8a6; /* Plumbing: teal-green */
+  --electric: #f5b400; /* Electrical & ELV: amber */
+  --pools: #1ba6e8; /* Pools & Fountains: blue */
 
-  /* Legacy aliases — V1 components still read these until they are rebuilt */
+  /* Aliases kept for components not yet restyled (inner pages, Phase F5) */
+  --offwhite: var(--sky-50);
+  --line: var(--border);
   --ums-navy: var(--navy);
   --ums-navy-900: var(--navy-900);
-  --ums-cyan: var(--cyan);
-  --ums-cyan-300: var(--cyan-300);
+  --ums-cyan: var(--blue);
   --ums-white: var(--white);
-  --ums-offwhite: var(--offwhite);
-  --ums-line: var(--line);
   --ums-text: var(--text);
-  --ums-muted: var(--muted);
-  --ums-fire: var(--fire);
 
-  /* Fluid type scale (§3.2) */
-  --text-display: clamp(3.5rem, 2rem + 7.5vw, 8.75rem);
-  --text-h1: clamp(3rem, 2.1rem + 4.2vw, 5.5rem);
-  --text-h2: clamp(2.25rem, 1.8rem + 2.2vw, 3.5rem);
-  --text-h3: clamp(1.5rem, 1.3rem + 0.9vw, 2rem);
-  --text-body: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
-  --text-mono: 0.75rem;
+  /* Fluid type scale */
+  --text-h1: clamp(2.5rem, 1.6rem + 3.6vw, 4.5rem);
+  --text-h2: clamp(1.875rem, 1.4rem + 1.8vw, 3rem);
+  --text-h3: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
+  --text-body: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+  --text-label: 0.75rem;
 
-  --radius-ums: 6px;
+  --radius-ums: 10px; /* buttons */
+  --radius-card: 16px; /* cards */
+  --shadow-card: 0 10px 30px -12px rgb(15 42 74 / 0.18), 0 2px 6px -2px rgb(15 42 74 / 0.08);
   --header-h: 76px;
 }
 
 @theme inline {
   --color-navy-950: var(--navy-950);
   --color-navy-900: var(--navy-900);
+  --color-navy-800: var(--navy-800);
   --color-navy: var(--navy);
+  --color-blue: var(--blue);
+  --color-blue-600: var(--blue-600);
   --color-cyan: var(--cyan);
   --color-cyan-300: var(--cyan-300);
   --color-cyan-100: var(--cyan-100);
+  --color-sky-50: var(--sky-50);
   --color-steel: var(--steel);
-  --color-offwhite: var(--offwhite);
-  --color-line: var(--line);
+  --color-offwhite: var(--sky-50);
+  --color-line: var(--border);
   --color-ink: var(--text);
   --color-muted: var(--muted);
+  --color-mep: var(--mep);
   --color-hvac: var(--hvac);
   --color-fire: var(--fire);
-  --color-electric: var(--electric);
   --color-plumbing: var(--plumbing);
-  --color-mep: var(--mep);
+  --color-electric: var(--electric);
   --color-pools: var(--pools);
 
-  --font-heading: var(--font-barlow), "Arial Narrow", sans-serif;
+  --font-heading: var(--font-montserrat), system-ui, sans-serif;
   --font-sans: var(--font-inter), system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, "SFMono-Regular", Menlo, monospace;
 
   --radius-ums: var(--radius-ums);
+  --radius-card: var(--radius-card);
+  --shadow-card: var(--shadow-card);
 }
 
-/* Base styles live in @layer base so Tailwind utilities (text-white, text-[…])
-   can override them — unlayered CSS would always win over layered utilities. */
+/* Base styles live in @layer base so Tailwind utilities (text-white, text-[...])
+   can override them: unlayered CSS would always win over layered utilities. */
 @layer base {
-html {
-  scroll-behavior: auto;
-  -webkit-text-size-adjust: 100%;
-}
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
 
-body {
-  background: var(--ums-white);
-  color: var(--ums-text);
-  font-family: var(--font-sans);
-  font-size: var(--text-body);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  overflow-x: clip;
-}
+  body {
+    background: var(--white);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
 
-h1,
-h2,
-h3,
-h4 {
-  font-family: var(--font-heading);
-  color: var(--ums-navy);
-  letter-spacing: -0.01em;
-  line-height: 1.04;
-  text-wrap: balance;
-}
-h1 {
-  font-size: var(--text-h1);
-  font-weight: 800;
-}
-h2 {
-  font-size: var(--text-h2);
-  font-weight: 700;
-}
-h3 {
-  font-size: var(--text-h3);
-  font-weight: 600;
-  line-height: 1.15;
-}
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading);
+    color: var(--navy);
+    letter-spacing: -0.015em;
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+  h1 {
+    font-size: var(--text-h1);
+    font-weight: 800;
+  }
+  h2 {
+    font-size: var(--text-h2);
+    font-weight: 700;
+  }
+  h3 {
+    font-size: var(--text-h3);
+    font-weight: 700;
+    line-height: 1.2;
+  }
 }
 
 ::selection {
-  background: var(--ums-cyan);
+  background: var(--blue);
   color: #fff;
 }
 
 /* Visible focus ring everywhere (WCAG 2.2) */
 :focus-visible {
-  outline: 2px solid var(--ums-cyan);
+  outline: 2px solid var(--blue);
   outline-offset: 3px;
 }
 
@@ -137,20 +143,6 @@ h3 {
   outline: none;
 }
 
-/* Blueprint grid (§3.3) — 24px technical grid */
-.bg-blueprint {
-  background-image:
-    linear-gradient(to right, rgb(23 63 96 / 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(23 63 96 / 0.04) 1px, transparent 1px);
-  background-size: 24px 24px;
-}
-.bg-blueprint-dark {
-  background-image:
-    linear-gradient(to right, rgb(92 196 238 / 0.045) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(92 196 238 / 0.045) 1px, transparent 1px);
-  background-size: 24px 24px;
-}
-
 /* Skip link */
 .skip-link {
   position: absolute;
@@ -158,7 +150,7 @@ h3 {
   top: -4rem;
   z-index: 100;
   padding: 0.75rem 1rem;
-  background: var(--ums-navy);
+  background: var(--navy);
   color: #fff;
   border-radius: var(--radius-ums);
   transition: top 0.2s;
@@ -167,185 +159,27 @@ h3 {
   top: 1rem;
 }
 
-/* Ken Burns — used by hero slides (Phase 3) */
-@keyframes ums-ken-burns {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.08);
-  }
-}
-.animate-ken-burns {
-  animation: ums-ken-burns 9s ease-out forwards;
-}
-
-/* Hero progress bar — also the autoplay timer (animationend advances the slide) */
-@keyframes ums-progress {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: scaleX(1);
-  }
-}
-.animate-hero-progress {
-  transform-origin: left;
-  animation: ums-progress 7s linear forwards;
-}
-
-/* Marquee */
-@keyframes ums-marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-.animate-marquee {
-  animation: ums-marquee 42s linear infinite;
-}
-.marquee:hover .animate-marquee,
-.marquee:focus-within .animate-marquee {
-  animation-play-state: paused;
-}
-
-/* Blueprint illustration — flowing water in pipes */
-@keyframes ums-pipe-flow {
-  to {
-    stroke-dashoffset: -36;
-  }
-}
-.pipe-flow {
-  stroke-dasharray: 10 8;
-  animation: ums-pipe-flow 1.6s linear infinite;
-}
-
-/* Scroll cue */
-@keyframes ums-scroll-cue {
-  0% {
-    transform: translateY(-100%);
-  }
-  100% {
-    transform: translateY(100%);
-  }
-}
-.animate-scroll-cue {
-  animation: ums-scroll-cue 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
-}
-
-/* Custom service icons — animate on card hover / keyboard focus */
-@keyframes ums-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-@keyframes ums-flicker {
-  0%,
-  100% {
-    transform: scaleY(1);
-  }
-  50% {
-    transform: scaleY(1.09);
-  }
-}
-@keyframes ums-dash {
-  to {
-    stroke-dashoffset: -16;
-  }
-}
-@keyframes ums-bolt {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.3;
-  }
-}
-@keyframes ums-wave {
-  to {
-    transform: translateX(-12px);
-  }
-}
-.icon-fan,
-.icon-flame,
-.icon-wave {
-  transform-box: fill-box;
-  transform-origin: center;
-}
-.icon-flame {
-  transform-origin: bottom;
-}
-.group:hover .icon-fan,
-.group:focus-visible .icon-fan {
-  animation: ums-spin 1.4s linear infinite;
-}
-.group:hover .icon-flame,
-.group:focus-visible .icon-flame {
-  animation: ums-flicker 0.7s ease-in-out infinite;
-}
-.group:hover .icon-flow,
-.group:focus-visible .icon-flow {
-  animation: ums-dash 0.9s linear infinite;
-}
-.group:hover .icon-bolt,
-.group:focus-visible .icon-bolt {
-  animation: ums-bolt 0.8s steps(2, jump-none) infinite;
-}
-.group:hover .icon-wave,
-.group:focus-visible .icon-wave {
-  animation: ums-wave 1.2s linear infinite;
-}
-
-/* Always-on variant of the service icon animations (menu preview) */
-.icon-live .icon-fan {
-  animation: ums-spin 2.4s linear infinite;
-}
-.icon-live .icon-flame {
-  animation: ums-flicker 0.7s ease-in-out infinite;
-}
-.icon-live .icon-flow {
-  animation: ums-dash 0.9s linear infinite;
-}
-.icon-live .icon-bolt {
-  animation: ums-bolt 0.8s steps(2, jump-none) infinite;
-}
-.icon-live .icon-wave {
-  animation: ums-wave 1.2s linear infinite;
-}
-
-/* ------------------------------------------------------------------
-   V2 utilities (spec 3.3)
-   ------------------------------------------------------------------ */
-
-/* Technical label: coordinates, spec tags, section indexes */
+/* Small uppercase label (eyebrows, indexes, captions) */
 .mono-label {
-  font-family: var(--font-mono);
-  font-size: var(--text-mono);
-  font-weight: 500;
+  font-family: var(--font-sans);
+  font-size: var(--text-label);
+  font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
-/* Soft cyan radial glow */
-.bg-glow-cyan {
-  background-image: radial-gradient(60% 60% at 50% 40%, rgb(0 140 203 / 0.28), transparent 70%);
+/* Short blue accent bar above section titles (about 70 x 5px) */
+.accent-bar {
+  display: block;
+  width: 70px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--blue);
 }
 
-/* Metallic numerals */
-.text-metal {
-  background-image: linear-gradient(180deg, #ffffff 0%, #cfe7f4 45%, #8a9baa 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* Outlined display text (project names, UMS wordmark) */
-.text-outline {
-  color: transparent;
-  -webkit-text-stroke: 1.5px var(--stroke, #fff);
+/* Two-tone headings: the second part in blue ("How We <span class="text-blue">Deliver</span>") */
+.heading-two-tone .text-blue {
+  color: var(--blue);
 }
 
 /* Standard system cursors: pointer on anything clickable (Tailwind's reset makes buttons an arrow) */
@@ -358,7 +192,27 @@ label[for],
   cursor: pointer;
 }
 
-/* Fluid moving inside a pipe: stroke-dashoffset only */
+/* Blueprint grid: used by the 404 page until Phase F5 restyles it */
+.bg-blueprint-dark {
+  background-image:
+    linear-gradient(to right, rgb(92 196 238 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(92 196 238 / 0.045) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Flowing dashes: service diagrams use dg-flow, the 404 page uses pipe-fluid */
+@keyframes ums-flow {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+.dg-flow {
+  stroke-dasharray: 2 12;
+  animation: ums-flow 1.8s linear infinite;
+}
+.dg-flow-rev {
+  animation-direction: reverse;
+}
 @keyframes ums-fluid {
   to {
     stroke-dashoffset: -48;
@@ -369,30 +223,15 @@ label[for],
   animation: ums-fluid 1.4s linear infinite;
 }
 
-/* Slow rotation for orbit rings and stamps */
-@keyframes ums-orbit {
-  to {
-    transform: rotate(360deg);
+/* On phones the service diagrams are small, so numbered badges are drawn larger */
+.sec-badge {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@media (max-width: 767px) {
+  .sec-badge {
+    transform: scale(1.9);
   }
-}
-.animate-orbit {
-  animation: ums-orbit 60s linear infinite;
-}
-.animate-orbit-reverse {
-  animation: ums-orbit 60s linear infinite reverse;
-}
-.animate-stamp {
-  animation: ums-orbit 24s linear infinite;
-}
-
-/* Orbit: pause the ring (and the counter-rotating nodes) on hover, focus or while a node is active */
-.orbit[data-paused="true"] .animate-orbit,
-.orbit[data-paused="true"] .animate-orbit-reverse,
-.orbit:hover .animate-orbit,
-.orbit:hover .animate-orbit-reverse,
-.orbit:focus-within .animate-orbit,
-.orbit:focus-within .animate-orbit-reverse {
-  animation-play-state: paused;
 }
 
 /* 404 pipe leak */
@@ -427,44 +266,12 @@ label[for],
   animation: ums-puddle 3s ease-in-out infinite;
 }
 
-/* Wave divider drift */
-@keyframes ums-wave-drift {
-  to {
-    transform: translateX(-50%);
-  }
-}
-.animate-wave-drift {
-  animation: ums-wave-drift 14s linear infinite;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .nf-drip,
   .nf-puddle,
   .pipe-fluid,
-  .animate-orbit,
-  .animate-orbit-reverse,
-  .animate-stamp,
-  .animate-wave-drift {
+  .dg-flow {
     animation: none !important;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  /* No zoom, no timer-driven rotation, no marquee, no icon motion. */
-  .animate-ken-burns,
-  .animate-hero-progress,
-  .animate-marquee,
-  .animate-scroll-cue,
-  .pipe-flow,
-  .icon-fan,
-  .icon-flame,
-  .icon-flow,
-  .icon-bolt,
-  .icon-wave {
-    animation: none !important;
-  }
-  .animate-hero-progress {
-    transform: scaleX(1);
   }
   *,
   *::before,
@@ -473,104 +280,5 @@ label[for],
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
-  }
-}
-
-/* ------------------------------------------------------------------
-   Homepage hero: building cutaway (components/home/BuildingCutaway.tsx)
-   ------------------------------------------------------------------ */
-.cutaway-sys {
-  transition: opacity 0.3s ease;
-}
-/* While a service is hovered or focused, only its system stays bright. */
-.cutaway[data-active] .cutaway-sys {
-  opacity: 0.18;
-}
-.cutaway[data-active="hvac"] .cutaway-sys-hvac,
-.cutaway[data-active="fire"] .cutaway-sys-fire,
-.cutaway[data-active="elec"] .cutaway-sys-elec,
-.cutaway[data-active="plumb"] .cutaway-sys-plumb {
-  opacity: 1;
-}
-.cutaway-flow {
-  stroke-dasharray: 2 10;
-  animation: ums-flow 1.6s linear infinite;
-}
-@keyframes ums-flow {
-  to {
-    stroke-dashoffset: -24;
-  }
-}
-@keyframes ums-rise {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-.hero-rise {
-  animation: ums-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-.hero-rise-late {
-  animation: ums-rise 1s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
-}
-@media (prefers-reduced-motion: reduce) {
-  .cutaway-flow,
-  .hero-rise,
-  .hero-rise-late {
-    animation: none !important;
-  }
-}
-
-/* ------------------------------------------------------------------
-   "Inside a building" section drawing (components/home/BuildingSection.tsx)
-   ------------------------------------------------------------------ */
-.sec-sys {
-  transition: opacity 0.3s ease;
-}
-/* The selected system keeps its colour; the others recede. */
-.building-section[data-active] .sec-sys {
-  opacity: 0.13;
-}
-.building-section[data-active="hvac"] .sec-sys-hvac,
-.building-section[data-active="fire"] .sec-sys-fire,
-.building-section[data-active="elec"] .sec-sys-elec,
-.building-section[data-active="plumb"] .sec-sys-plumb {
-  opacity: 1;
-}
-/* On phones the drawing is small, so badges and level names are drawn larger. */
-.sec-badge,
-.sec-lvl {
-  transform-box: fill-box;
-}
-.sec-badge {
-  transform-origin: center;
-}
-.sec-lvl {
-  transform-origin: left center;
-}
-@media (max-width: 767px) {
-  .sec-badge {
-    transform: scale(1.9);
-  }
-  .sec-lvl {
-    transform: scale(1.7);
-  }
-}
-
-/* Service page diagrams: flowing dashes along the main runs */
-.dg-flow {
-  stroke-dasharray: 2 12;
-  animation: ums-flow 1.8s linear infinite;
-}
-.dg-flow-rev {
-  animation-direction: reverse;
-}
-@media (prefers-reduced-motion: reduce) {
-  .dg-flow {
-    animation: none !important;
   }
 }

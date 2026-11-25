@@ -33,7 +33,7 @@ export function Eyebrow({
         aria-hidden
         className={cn(
           "h-px w-8",
-          fire ? "bg-fire" : tone === "light" ? "bg-cyan-300" : "bg-cyan",
+          fire ? "bg-fire" : tone === "light" ? "bg-cyan-300" : "bg-blue",
         )}
       />
       {children}

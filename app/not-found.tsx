@@ -31,7 +31,7 @@ function PipeLeak() {
         <path d="M600 200 H470 Q430 200 430 160" stroke="var(--cyan-300)" strokeWidth="2.5" strokeDasharray="4 10" opacity="0.5" />
       </g>
       <rect x="420" y="146" width="20" height="8" fill="var(--navy-900)" stroke="var(--cyan-300)" strokeWidth="2" />
-      <text x="330" y="140" textAnchor="middle" fontFamily="var(--font-jetbrains), monospace" fontSize="13" letterSpacing="2" fill="var(--steel)">
+      <text x="330" y="140" textAnchor="middle" fontFamily="var(--font-inter), sans-serif" fontSize="13" letterSpacing="2" fill="var(--steel)">
         404
       </text>
       <path d="M262 150 L276 146 M388 150 L374 146" stroke="var(--fire)" strokeWidth="2" strokeLinecap="round" />

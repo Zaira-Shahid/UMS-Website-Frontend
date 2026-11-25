@@ -260,9 +260,9 @@ export function RfqForm({ preselect }: { preselect: RfqPreselect }) {
   return (
     <div className="space-y-5">
       {preselect.project && (
-        <p className="border-l-4 border-cyan bg-cyan/5 px-4 py-3 text-navy">
+        <p className="border-l-4 border-blue bg-blue/5 px-4 py-3 text-navy">
           Enquiry related to{" "}
-          <Link href={`/projects/${preselect.project.slug}`} className="font-semibold underline underline-offset-4 hover:text-cyan">
+          <Link href={`/projects/${preselect.project.slug}`} className="font-semibold underline underline-offset-4 hover:text-blue">
             {preselect.project.name}
           </Link>
           .
@@ -270,7 +270,7 @@ export function RfqForm({ preselect }: { preselect: RfqPreselect }) {
       )}
 
       {draftOffer && (
-        <div role="region" aria-label="Saved draft" className="flex flex-col gap-3 border border-cyan/40 bg-cyan/5 p-4 sm:flex-row sm:items-center sm:justify-between">
+        <div role="region" aria-label="Saved draft" className="flex flex-col gap-3 border border-blue/40 bg-blue/5 p-4 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-navy">
             <strong className="font-semibold">You have a saved draft</strong> from{" "}
             {new Date(draftOffer.savedAt).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })}.
@@ -378,7 +378,7 @@ export function RfqForm({ preselect }: { preselect: RfqPreselect }) {
                         <label
                           key={s.slug}
                           className={cn(
-                            "flex cursor-pointer items-start gap-3 rounded-ums border p-4 transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-cyan",
+                            "flex cursor-pointer items-start gap-3 rounded-ums border p-4 transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-blue",
                             checked ? (fire ? "border-fire bg-fire/5" : "border-navy bg-offwhite") : "border-navy/25 hover:border-navy/60",
                           )}
                         >
@@ -523,7 +523,7 @@ function ReviewSection({
           type="button"
           onClick={onEdit}
           aria-label={`Edit ${title.toLowerCase()} details`}
-          className="text-sm font-medium text-cyan underline-offset-4 hover:underline"
+          className="text-sm font-medium text-blue underline-offset-4 hover:underline"
         >
           Edit
         </button>

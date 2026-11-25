@@ -72,7 +72,7 @@ export function FaqSection({
                       onKeyDown={(e) => onKeyDown(e, i)}
                       className="group flex min-h-16 w-full items-center justify-between gap-6 py-5 text-left"
                     >
-                      <span className="font-heading text-[1.25rem] font-semibold leading-snug text-navy transition-colors group-hover:text-cyan sm:text-[1.375rem]">
+                      <span className="font-heading text-[1.25rem] font-semibold leading-snug text-navy transition-colors group-hover:text-blue sm:text-[1.375rem]">
                         {f.question}
                       </span>
                       <span
@@ -82,7 +82,7 @@ export function FaqSection({
                           isOpen
                             ? accent === "fire"
                               ? "border-fire bg-fire text-white"
-                              : "border-cyan bg-cyan text-white"
+                              : "border-blue bg-blue text-white"
                             : "border-navy/30 text-navy group-hover:border-navy",
                         )}
                       >

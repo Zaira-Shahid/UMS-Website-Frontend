@@ -3,7 +3,7 @@ import { AlertCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const control =
-  "block w-full rounded-ums border bg-white px-4 text-base text-ink placeholder:text-muted/70 transition-colors focus:outline-none focus-visible:outline-none focus:border-cyan focus:ring-2 focus:ring-cyan/30 disabled:opacity-60";
+  "block w-full rounded-ums border bg-white px-4 text-base text-ink placeholder:text-muted/70 transition-colors focus:outline-none focus-visible:outline-none focus:border-blue focus:ring-2 focus:ring-blue/30 disabled:opacity-60";
 
 const state = (invalid: boolean) => (invalid ? "border-[#b3271f]" : "border-navy/25 hover:border-navy/50");
 
@@ -127,7 +127,7 @@ export function FormAlert({ children, tone = "error" }: { children: ReactNode; t
       role={tone === "error" ? "alert" : "status"}
       className={cn(
         "flex items-start gap-3 rounded-ums border p-4 text-sm",
-        tone === "error" ? "border-[#b3271f]/40 bg-[#fdecea] text-[#7a1712]" : "border-cyan/40 bg-cyan/5 text-navy",
+        tone === "error" ? "border-[#b3271f]/40 bg-[#fdecea] text-[#7a1712]" : "border-blue/40 bg-blue/5 text-navy",
       )}
     >
       <AlertCircle aria-hidden className="mt-0.5 size-5 shrink-0" />

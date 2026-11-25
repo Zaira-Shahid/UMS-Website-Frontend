@@ -95,7 +95,7 @@ export function MobileNav({
               data-autofocus
               onClick={onClose}
               aria-label="Close menu"
-              className="flex size-11 items-center justify-center rounded-ums border border-line text-navy hover:border-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan"
+              className="flex size-11 items-center justify-center rounded-ums border border-line text-navy hover:border-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
             >
               <X className="size-5" aria-hidden />
             </button>
@@ -108,7 +108,7 @@ export function MobileNav({
                 const isOpen = expanded === item.label;
                 const labelClass = cn(
                   "flex min-h-14 w-full items-center justify-between font-heading text-2xl font-semibold uppercase tracking-[0.04em]",
-                  active ? "text-cyan" : "text-navy",
+                  active ? "text-blue" : "text-navy",
                 );
                 return (
                   <li key={item.label} className="border-b border-line">
@@ -122,13 +122,13 @@ export function MobileNav({
                           className={labelClass}
                         >
                           {item.label}
-                          <ChevronDown aria-hidden className={cn("size-5 text-cyan transition-transform", isOpen && "rotate-180")} />
+                          <ChevronDown aria-hidden className={cn("size-5 text-blue transition-transform", isOpen && "rotate-180")} />
                         </button>
                         <div id={`mobile-sub-${item.label}`} hidden={!isOpen} className="pb-4">
                           <Link
                             href={item.href}
                             onClick={onClose}
-                            className="mb-1 inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-cyan"
+                            className="mb-1 inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-blue"
                           >
                             {item.label === "Services" ? "Services overview" : "About overview"}
                             <ArrowUpRight aria-hidden className="size-4" />

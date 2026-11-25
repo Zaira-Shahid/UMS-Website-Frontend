@@ -1,25 +1,19 @@
 import type { Metadata, Viewport } from "next";
-import { Barlow_Semi_Condensed, Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, Montserrat } from "next/font/google";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { site } from "@/content/site";
 import "./globals.css";
 
-const barlow = Barlow_Semi_Condensed({
-  variable: "--font-barlow",
+/** Headings (PROJECT_SPEC.md 3.2): bold geometric Montserrat. */
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin"],
   weight: ["600", "700", "800"],
   display: "swap",
 });
 
-/** Technical labels: coordinates, spec tags, section indexes (spec 3.2). */
-const jetbrains = JetBrains_Mono({
-  variable: "--font-jetbrains",
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  display: "swap",
-});
-
+/** Body and UI. */
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -37,14 +31,14 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#173f60",
+  themeColor: "#ffffff",
   width: "device-width",
   initialScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${barlow.variable} ${inter.variable} ${jetbrains.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${montserrat.variable} ${inter.variable}`} suppressHydrationWarning>
       <body>
         <a href="#main" className="skip-link">
           Skip to main content

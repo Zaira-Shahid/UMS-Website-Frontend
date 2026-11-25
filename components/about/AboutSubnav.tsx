@@ -28,7 +28,7 @@ export function AboutSubnav({ current }: { current: (typeof links)[number]["href
                   {l.label}
                   <span
                     aria-hidden
-                    className={cn("absolute inset-x-4 bottom-0 h-0.5 bg-cyan transition-transform", on ? "scale-x-100" : "scale-x-0")}
+                    className={cn("absolute inset-x-4 bottom-0 h-0.5 bg-blue transition-transform", on ? "scale-x-100" : "scale-x-0")}
                   />
                 </Link>
               </li>

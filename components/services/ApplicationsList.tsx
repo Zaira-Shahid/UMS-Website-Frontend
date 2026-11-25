@@ -41,7 +41,7 @@ export function ApplicationsList({ service }: { service: Service }) {
                       <span
                         className={cn(
                           "font-heading text-[clamp(1.5rem,1.2rem+0.9vw,2rem)] font-bold uppercase leading-tight text-navy transition-all duration-300 group-hover:translate-x-1.5",
-                          service.accent === "fire" ? "group-hover:text-fire" : "group-hover:text-cyan",
+                          service.accent === "fire" ? "group-hover:text-fire" : "group-hover:text-blue",
                         )}
                       >
                         {ind.name}
@@ -51,7 +51,7 @@ export function ApplicationsList({ service }: { service: Service }) {
                         aria-hidden
                         className={cn(
                           "hidden size-5 text-navy/40 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 sm:block",
-                          service.accent === "fire" ? "group-hover:text-fire" : "group-hover:text-cyan",
+                          service.accent === "fire" ? "group-hover:text-fire" : "group-hover:text-blue",
                         )}
                       />
                     </Link>

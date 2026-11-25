@@ -4,17 +4,17 @@
  */
 export const accents = {
   cyan: {
-    text: "text-cyan",
+    text: "text-blue",
     /** Readable on white (AA). */
     textOnLight: "text-[#00608c]",
     /** Readable on navy backgrounds. */
     textOnDark: "text-cyan-300",
-    bg: "bg-cyan",
-    bgSoft: "bg-cyan/10",
-    border: "border-cyan",
-    ring: "ring-cyan",
+    bg: "bg-blue",
+    bgSoft: "bg-blue/10",
+    border: "border-blue",
+    ring: "ring-blue",
     rule: "bg-cyan-300",
-    hoverBg: "hover:bg-cyan",
+    hoverBg: "hover:bg-blue",
     badge: "cyan" as const,
     button: "accent" as const,
     buttonOnLight: "primary" as const,

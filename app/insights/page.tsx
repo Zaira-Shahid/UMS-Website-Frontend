@@ -31,7 +31,7 @@ export default function InsightsPage() {
             <li className="shrink-0">
               <span aria-current="page" className="relative block whitespace-nowrap px-4 py-4 font-heading text-sm font-semibold uppercase tracking-[0.1em] text-navy">
                 All
-                <span aria-hidden className="absolute inset-x-4 bottom-0 h-0.5 bg-cyan" />
+                <span aria-hidden className="absolute inset-x-4 bottom-0 h-0.5 bg-blue" />
               </span>
             </li>
             {insightCategories.map((c) => (

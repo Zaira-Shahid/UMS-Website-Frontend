@@ -139,7 +139,7 @@ export function Header() {
         transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] as const },
       };
 
-  const linkTone = light ? "text-white hover:text-cyan-300" : "text-navy hover:text-cyan";
+  const linkTone = light ? "text-white hover:text-cyan-300" : "text-navy hover:text-blue";
 
   return (
     <>
@@ -173,7 +173,7 @@ export function Header() {
                 const active = itemActive(item);
                 const itemClass = cn(
                   "relative inline-flex items-center gap-1 whitespace-nowrap py-2 font-heading text-[0.9375rem] font-semibold uppercase tracking-[0.08em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300",
-                  active || open ? (light ? "text-cyan-300" : "text-cyan") : linkTone,
+                  active || open ? (light ? "text-cyan-300" : "text-blue") : linkTone,
                 );
                 const underline = active ? (
                   <svg

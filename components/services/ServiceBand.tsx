@@ -29,7 +29,7 @@ export function ServiceBand({ service, index }: { service: Service; index: numbe
           <div className="mt-7 flex flex-wrap items-center gap-x-8 gap-y-3">
             <Link
               href={`/services/${service.slug}`}
-              className="group inline-flex items-center gap-1.5 font-heading text-sm font-semibold uppercase tracking-[0.1em] text-navy hover:text-cyan"
+              className="group inline-flex items-center gap-1.5 font-heading text-sm font-semibold uppercase tracking-[0.1em] text-navy hover:text-blue"
             >
               View service
               <ArrowUpRight aria-hidden className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />

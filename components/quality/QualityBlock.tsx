@@ -26,7 +26,7 @@ export function QualityBlock({ section: s, index }: { section: QualitySection; i
           <ul className="mt-3 divide-y divide-line border-y border-line">
             {s.checklist.map((item) => (
               <li key={item} className="flex gap-3 py-3 text-ink">
-                <Check aria-hidden className="mt-1 size-4 shrink-0 text-cyan" strokeWidth={2.5} />
+                <Check aria-hidden className="mt-1 size-4 shrink-0 text-blue" strokeWidth={2.5} />
                 {item}
               </li>
             ))}

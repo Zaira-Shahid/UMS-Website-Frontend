@@ -33,7 +33,7 @@ export function PageHero({
         <div className="mt-10 grid items-center gap-10 lg:grid-cols-12">
           <div className={sketch ? "lg:col-span-8" : "lg:col-span-9"}>
             <p className="flex items-center gap-3 font-heading text-[0.8125rem] font-semibold uppercase tracking-[0.14em] text-[#00608c]">
-              <span aria-hidden className="h-px w-8 bg-cyan" />
+              <span aria-hidden className="h-px w-8 bg-blue" />
               {eyebrow}
             </p>
             <h1 id={titleId} className="mt-5 text-[clamp(2.25rem,1.4rem+3.8vw,4.5rem)] text-navy">

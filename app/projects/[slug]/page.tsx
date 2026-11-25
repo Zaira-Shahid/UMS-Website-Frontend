@@ -100,7 +100,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
               rel="prev"
               className="group flex items-center gap-4 border-b border-line px-5 py-8 transition-colors hover:bg-offwhite sm:border-b-0 sm:border-r sm:px-8"
             >
-              <ArrowLeft aria-hidden className="size-5 shrink-0 text-cyan transition-transform group-hover:-translate-x-1" />
+              <ArrowLeft aria-hidden className="size-5 shrink-0 text-blue transition-transform group-hover:-translate-x-1" />
               <span>
                 <span className="block font-heading text-xs font-semibold uppercase tracking-[0.14em] text-muted">
                   Previous project
@@ -123,7 +123,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
                   {adjacent.next.name}
                 </span>
               </span>
-              <ArrowRight aria-hidden className="size-5 shrink-0 text-cyan transition-transform group-hover:translate-x-1" />
+              <ArrowRight aria-hidden className="size-5 shrink-0 text-blue transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
         </nav>

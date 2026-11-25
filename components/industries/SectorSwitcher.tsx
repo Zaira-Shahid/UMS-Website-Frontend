@@ -47,7 +47,7 @@ export function SectorSwitcher({ sectors }: { sectors: Sector[] }) {
                   <span
                     aria-hidden
                     className={cn(
-                      "absolute inset-x-4 bottom-0 h-0.5 origin-left bg-cyan transition-transform duration-300",
+                      "absolute inset-x-4 bottom-0 h-0.5 origin-left bg-blue transition-transform duration-300",
                       on ? "scale-x-100" : "scale-x-0",
                     )}
                   />

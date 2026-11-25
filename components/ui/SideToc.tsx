@@ -31,7 +31,7 @@ export function SideToc({ items, title = "On this page" }: { items: TocItem[]; t
               aria-current={on ? "location" : undefined}
               className={cn(
                 "flex items-baseline gap-3 border-l-2 py-2 pl-4 text-[0.9375rem] transition-colors",
-                on ? "border-cyan font-semibold text-navy" : "border-line text-muted hover:border-navy/40 hover:text-navy",
+                on ? "border-blue font-semibold text-navy" : "border-line text-muted hover:border-navy/40 hover:text-navy",
               )}
             >
               <span aria-hidden className="font-heading text-xs tabular-nums text-muted">

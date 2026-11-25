@@ -58,7 +58,7 @@ export default async function InsightCategoryPage({ params }: { params: Promise<
                   {on ? (
                     <span aria-current="page" className="relative block whitespace-nowrap px-4 py-4 font-heading text-sm font-semibold uppercase tracking-[0.1em] text-navy">
                       {x.name}
-                      <span aria-hidden className="absolute inset-x-4 bottom-0 h-0.5 bg-cyan" />
+                      <span aria-hidden className="absolute inset-x-4 bottom-0 h-0.5 bg-blue" />
                     </span>
                   ) : (
                     <Link href={`/insights/category/${x.slug}`} className="block whitespace-nowrap px-4 py-4 font-heading text-sm font-semibold uppercase tracking-[0.1em] text-muted transition-colors hover:text-navy">

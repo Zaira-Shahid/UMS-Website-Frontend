@@ -111,9 +111,9 @@ export default function AboutPage() {
             {explore.map((e) => (
               <li key={e.href}>
                 <Link href={e.href} className="group grid items-center gap-x-8 gap-y-1 py-6 sm:grid-cols-[22rem_1fr_auto]">
-                  <span className="font-heading text-2xl font-bold uppercase text-navy transition-colors group-hover:text-cyan">{e.title}</span>
+                  <span className="font-heading text-2xl font-bold uppercase text-navy transition-colors group-hover:text-blue">{e.title}</span>
                   <span className="text-muted">{e.text}</span>
-                  <ArrowUpRight aria-hidden className="hidden size-5 text-muted transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-cyan sm:block" />
+                  <ArrowUpRight aria-hidden className="hidden size-5 text-muted transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-blue sm:block" />
                 </Link>
               </li>
             ))}

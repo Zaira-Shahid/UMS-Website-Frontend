@@ -30,7 +30,7 @@ export function onPanelKeyDown(e: KeyboardEvent<HTMLElement>) {
 }
 
 const rowClass =
-  "group flex items-center gap-4 rounded-xl p-2.5 transition-colors hover:bg-offwhite focus-visible:bg-offwhite focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-cyan";
+  "group flex items-center gap-4 rounded-xl p-2.5 transition-colors hover:bg-offwhite focus-visible:bg-offwhite focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-blue";
 
 /** One service: rounded thumbnail, semibold name, one-line description. Used by the desktop panel and the mobile menu. */
 export function ServiceRow({ slug, onNavigate, className }: { slug: string; onNavigate: () => void; className?: string }) {
@@ -62,7 +62,7 @@ function PanelHead({ eyebrow, title, href, linkLabel, onNavigate }: { eyebrow: s
         <Link
           href={href}
           onClick={onNavigate}
-          className="inline-flex items-center gap-1 text-sm font-semibold text-cyan transition-colors hover:text-navy focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan"
+          className="inline-flex items-center gap-1 text-sm font-semibold text-blue transition-colors hover:text-navy focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue"
         >
           {linkLabel}
           <ArrowUpRight aria-hidden className="size-4" />
@@ -106,7 +106,7 @@ export function AboutPanel({ links, onNavigate }: { links: NavLink[]; onNavigate
           return (
             <li key={l.href}>
               <Link href={l.href} onClick={onNavigate} className={rowClass}>
-                <span className="flex size-14 shrink-0 items-center justify-center rounded-lg bg-offwhite text-cyan transition-colors group-hover:bg-cyan group-hover:text-white">
+                <span className="flex size-14 shrink-0 items-center justify-center rounded-lg bg-offwhite text-blue transition-colors group-hover:bg-blue group-hover:text-white">
                   <Icon className="size-6" aria-hidden />
                 </span>
                 <span className="min-w-0">

@@ -65,7 +65,7 @@ export function SectionNav({
                       aria-hidden
                       className={cn(
                         "absolute inset-x-4 bottom-0 h-0.5 origin-left transition-transform duration-300",
-                        accent === "fire" ? "bg-fire" : "bg-cyan",
+                        accent === "fire" ? "bg-fire" : "bg-blue",
                         on ? "scale-x-100" : "scale-x-0",
                       )}
                     />
