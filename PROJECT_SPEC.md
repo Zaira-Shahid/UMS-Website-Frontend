@@ -249,3 +249,65 @@ Each phase report: what changed, files, commits, real test results, mockup-vs-bu
   If a page has no mockup, follow the same visual style as the homepage mockups.
 - If anything in the code conflicts with this section, this section wins.
 
+
+---
+
+## 13. Services pages + dropdown icons (mockups 10 and 11)
+
+New mockups: docs/reference/mockups/10-services-overview.jpg and 11-service-detail.jpg. Match them closely, following
+Section 12. Keep the site's normal header and footer (the mockups show a simplified header).
+
+### 13.1 /services: Services overview (mockup 10)
+- Centred intro: UMS logo + "Ultimate Mechanical Solutions" between two blue lines, big "Our Services" heading with a
+  blue underline, and the subline "Mechanical, electrical and plumbing services for complex buildings."
+- 2-column grid (1 column on mobile) of 6 service cards: a photo on top, then the title, a one-line description and
+  "Explore Service →". White cards with a thin blue border, rounded corners and a hover lift. Titles: Integrated MEP /
+  HVAC Systems / Fire Fighting & Protection / Plumbing & Public Health / Electrical & ELV / Pools & Fountains, with the
+  lines as in the mockup. Clicking a card opens that service's page.
+- "Explore Our Project Experience": 3 circular building images (label "Illustrative imagery"), a vertical divider, and
+  "View Projects →" linking to /projects.
+- Navy rounded CTA bar: "Let's Discuss Your Project" | "Request a Quote" button.
+
+### 13.2 /services/[slug]: Service detail (mockup 11), the same template for all 6
+- Centred intro: logo line, breadcrumb "Services / <Service>", big service title, and a 2–3 line intro paragraph
+  (general, accurate wording; no company claims).
+- Wide rounded hero photo for the service with a small italic caption.
+- Two columns: a photo on the left and "What's Included" on the right, as a list of 4–6 rows with a light-blue icon tile
+  + text and thin dividers. Write service-specific items (e.g. HVAC: chillers & central plant, VRF/split systems,
+  ductwork & air distribution, chilled-water piping, testing & balancing).
+- "Scope Agreed Separately" light-blue info bar (icon | title | text), plus the italic note "Final inclusions and
+  exclusions are confirmed in your proposal."
+- "<Service> Typical Applications" (the mockup says "Project Previews"; rename it so it isn't presented as real
+  projects): 2 cards with photo, building type (e.g. Commercial Building, Industrial Facility, Hospital, Hotel), 2–3
+  lines on how the service applies, and "Learn more →" linking to the matching /industries#anchor. Caption:
+  "Illustrative previews". Pick sensible building types per service.
+- Navy CTA bar: "Discuss Your <Service short name> Project" | "Request a Quote" linking to
+  /request-a-quote?service=<slug>.
+- Keep the existing FAQ + FAQPage JSON-LD below the CTA if it fits cleanly; otherwise remove it. Remove the old flow
+  animations and numbered diagrams.
+- Unique metadata + BreadcrumbList JSON-LD per service.
+
+### 13.3 Images
+- Download high-resolution, free-licence (Unsplash/Pexels, commercial use allowed) photos for each service: plant
+  rooms, ductwork, fire pump rooms, sprinkler/red pipework, blue water pipework and valves, LT panels and cable trays,
+  pools and fountains, engineers reviewing BIM models, and building exteriors for the applications. No visible brand
+  names or company logos on people's clothing.
+- Save them under public/images/services/<slug>/ (overview card, hero, included, applications) and record source URL +
+  photographer in CONTENT_TO_VERIFY.md.
+- Mark generic building photos "Illustrative imagery" / "Illustrative previews".
+- If downloads are blocked, give the owner the list of URLs to download.
+
+### 13.4 Services dropdown icons
+- In the navbar Services dropdown, each row shows its coloured service icon (the same icon set as the hero chips: MEP
+  network purple, HVAC fan teal, Fire sprinkler red, Plumbing tap teal, Electrical bolt amber, Pools fountain blue) in
+  a rounded light tile, then the name and one-line description, as in mockup 01's chips. Same icons in the mobile
+  menu. About dropdown rows also get clean line icons.
+
+### 13.5 Responsive
+- Check 360/390/768/1024/1440/1920: the card grid goes to 1 column on mobile, the "What's Included" columns stack
+  (photo first), the CTA bar stacks with a full-width button, the circles shrink in a row or scroll sideways, and there
+  is no overflow.
+- Compare /services and /services/hvac with mockups 10 and 11 at 1440px and 390px, and fix the differences.
+
+Git: commit + push per piece to main, no AI attribution. Tag final-phase-F3b when Section 13 is done. Report with
+comparison screenshots and STOP before F4. Order: finish F3, then Section 13, then F4.
