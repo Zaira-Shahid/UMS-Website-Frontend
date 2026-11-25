@@ -114,7 +114,12 @@ export function Footer() {
             <p>
               © {new Date().getFullYear()} {site.fullName}. All rights reserved.
             </p>
-            <BackToTop />
+            <nav aria-label="Legal" className="flex items-center gap-5">
+              <Link href="/privacy-policy" className="hover:text-cyan-300">
+                Privacy Policy
+              </Link>
+              <BackToTop />
+            </nav>
           </div>
         </div>
       </footer>

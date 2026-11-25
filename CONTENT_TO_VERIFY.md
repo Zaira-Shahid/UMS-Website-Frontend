@@ -45,6 +45,13 @@ confirm all six disciplines are offered), and all stock photography (service thu
   descriptions. Confirm that all six disciplines are real UMS offerings.
 - The "How it works" diagrams and every line drawing are illustrations, not drawings of any UMS project.
 
+- **Privacy policy** (`content/legal.ts`, `/privacy-policy`): written in neutral general language from how the site
+  actually works. The retention, rights and security statements are general and **need the owner's confirmation and a
+  legal review** before launch. No policy date is shown because no real date exists.
+- **Insights articles** (`content/articles.ts`): rewritten in the third person as general technical knowledge, with no
+  authors and no dates, attributed only to "UMS Engineering Team". The owner should confirm they are happy to publish
+  under that name and that the technical content is acceptable.
+
 ### Contact details to supply
 
 Everything lives in one place: **`content/site.ts`, the `contact` object.** All values are empty today. Fill a value
