@@ -12,7 +12,7 @@ import { quoteHref } from "@/content/navigation";
 import { projects } from "@/content/projects";
 import { site } from "@/content/site";
 import { adjacentProjects, projectBySlug } from "@/lib/projects";
-import { absoluteUrl, jsonLd } from "@/lib/seo";
+import { absoluteUrl, jsonLd, ogImage, ogImages } from "@/lib/seo";
 
 type Params = { slug: string };
 
@@ -30,14 +30,14 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
     title: p.name,
     description,
     alternates: { canonical: path },
-    openGraph: {
+    openGraph: { images: ogImages,
       type: "article",
       siteName: `${site.name} — ${site.fullName}`,
       title: `${p.name} | ${site.name}`,
       description,
       url: path,
     },
-    twitter: { card: "summary_large_image", title: `${p.name} | ${site.name}`, description },
+    twitter: { card: "summary_large_image", images: [ogImage.url], title: `${p.name} | ${site.name}`, description },
   };
 }
 

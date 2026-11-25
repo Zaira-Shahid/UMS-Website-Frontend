@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { CenterTitle } from "@/components/ui/CenterTitle";
 import { quoteHref } from "@/content/navigation";
 import { contact, site, type OfficeConfig } from "@/content/site";
-import { breadcrumbLd, jsonLd } from "@/lib/seo";
+import { breadcrumbLd, jsonLd, ogImage, ogImages } from "@/lib/seo";
 
 const description =
   "Contact UMS — Ultimate Mechanical Solutions — with offices in Islamabad and Lahore. Send a general enquiry, or use Request a Quote for project pricing.";
@@ -15,8 +15,8 @@ export const metadata: Metadata = {
   title: "Contact",
   description,
   alternates: { canonical: "/contact" },
-  openGraph: { type: "website", siteName: `${site.name} — ${site.fullName}`, title: `Contact | ${site.name}`, description, url: "/contact" },
-  twitter: { card: "summary_large_image", title: `Contact | ${site.name}`, description },
+  openGraph: { images: ogImages, type: "website", siteName: `${site.name} — ${site.fullName}`, title: `Contact | ${site.name}`, description, url: "/contact" },
+  twitter: { card: "summary_large_image", images: [ogImage.url], title: `Contact | ${site.name}`, description },
 };
 
 const tel = (v: string) => `tel:${v.replace(/[^\d+]/g, "")}`;

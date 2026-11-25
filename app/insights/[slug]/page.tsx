@@ -11,7 +11,7 @@ import { insightAuthor, insightCategories, insights } from "@/content/insights";
 import { serviceBySlug } from "@/content/services";
 import { ServiceIcon, serviceColor } from "@/components/ui/ServiceIcon";
 import { headingId, insightBySlug, relatedInsights } from "@/lib/insights";
-import { absoluteUrl, jsonLd, organizationRef } from "@/lib/seo";
+import { absoluteUrl, jsonLd, organizationRef, ogImage, ogImages } from "@/lib/seo";
 import { site } from "@/content/site";
 
 type Params = { slug: string };
@@ -28,8 +28,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
     title: a.title,
     description: a.excerpt,
     alternates: { canonical: path },
-    openGraph: { type: "article", siteName: `${site.name} — ${site.fullName}`, title: `${a.title} | ${site.name}`, description: a.excerpt, url: path },
-    twitter: { card: "summary_large_image", title: `${a.title} | ${site.name}`, description: a.excerpt },
+    openGraph: { images: ogImages, type: "article", siteName: `${site.name} — ${site.fullName}`, title: `${a.title} | ${site.name}`, description: a.excerpt, url: path },
+    twitter: { card: "summary_large_image", images: [ogImage.url], title: `${a.title} | ${site.name}`, description: a.excerpt },
   };
 }
 

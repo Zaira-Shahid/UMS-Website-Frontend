@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ServiceTemplate } from "@/components/services/ServiceTemplate";
 import { serviceBySlug, services } from "@/content/services";
 import { site } from "@/content/site";
+import { ogImage, ogImages } from "@/lib/seo";
 import type { ServiceSlug } from "@/types";
 
 type Params = { slug: string };
@@ -24,7 +25,7 @@ export async function generateMetadata({
     title: service.name,
     description: service.metaDescription,
     alternates: { canonical: path },
-    openGraph: {
+    openGraph: { images: ogImages,
       type: "website",
       siteName: `${site.name} — ${site.fullName}`,
       title: `${service.name} | ${site.name}`,

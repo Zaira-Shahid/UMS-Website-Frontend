@@ -10,7 +10,7 @@ import { servicePages } from "@/content/service-pages";
 import { services } from "@/content/services";
 import { site } from "@/content/site";
 import { serviceImage } from "@/lib/service-images";
-import { absoluteUrl, jsonLd } from "@/lib/seo";
+import { absoluteUrl, jsonLd, ogImage, ogImages } from "@/lib/seo";
 
 const description =
   "Six MEP disciplines — integrated MEP, HVAC, fire fighting, plumbing, electrical and ELV, and pools and fountains — delivered separately or as one coordinated package.";
@@ -19,14 +19,14 @@ export const metadata: Metadata = {
   title: "Services",
   description,
   alternates: { canonical: "/services" },
-  openGraph: {
+  openGraph: { images: ogImages,
     type: "website",
     siteName: `${site.name} — ${site.fullName}`,
     title: `Services | ${site.name}`,
     description,
     url: "/services",
   },
-  twitter: { card: "summary_large_image", title: `Services | ${site.name}`, description },
+  twitter: { card: "summary_large_image", images: [ogImage.url], title: `Services | ${site.name}`, description },
 };
 
 /** Card order and titles follow mockup 10 (the page title for Integrated MEP is the short form). */

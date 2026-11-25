@@ -29,6 +29,10 @@ export const breadcrumbLd = (items: { name: string; path: string }[]) => ({
   })),
 });
 
+/** Default social-sharing image (app/opengraph-image.tsx). Pages that set their own openGraph must repeat it. */
+export const ogImage = { url: "/opengraph-image", width: 1200, height: 630, alt: `${site.name} — ${site.fullName}` };
+export const ogImages = [ogImage];
+
 /** Unique title, description, canonical, Open Graph and Twitter metadata for a page. */
 export const pageMetadata = ({
   title,
@@ -45,12 +49,12 @@ export const pageMetadata = ({
   description,
   alternates: { canonical: path },
   ...(noindex ? { robots: { index: false, follow: true } } : {}),
-  openGraph: {
+  openGraph: { images: ogImages,
     type: "website",
     siteName: `${site.name} — ${site.fullName}`,
     title: `${title} | ${site.name}`,
     description,
     url: path,
   },
-  twitter: { card: "summary_large_image", title: `${title} | ${site.name}`, description },
+  twitter: { card: "summary_large_image", images: [ogImage.url], title: `${title} | ${site.name}`, description },
 });

@@ -7,7 +7,7 @@ import { featuredImages } from "@/content/home";
 import { industries } from "@/content/industries";
 import { projects } from "@/content/projects";
 import { site } from "@/content/site";
-import { absoluteUrl, jsonLd } from "@/lib/seo";
+import { absoluteUrl, jsonLd, ogImage, ogImages } from "@/lib/seo";
 
 const description = "Selected UMS projects, by sector.";
 
@@ -15,8 +15,8 @@ export const metadata: Metadata = {
   title: "Projects",
   description,
   alternates: { canonical: "/projects" },
-  openGraph: { type: "website", siteName: `${site.name} — ${site.fullName}`, title: `Projects | ${site.name}`, description, url: "/projects" },
-  twitter: { card: "summary_large_image", title: `Projects | ${site.name}`, description },
+  openGraph: { images: ogImages, type: "website", siteName: `${site.name} — ${site.fullName}`, title: `Projects | ${site.name}`, description, url: "/projects" },
+  twitter: { card: "summary_large_image", images: [ogImage.url], title: `Projects | ${site.name}`, description },
 };
 
 export default function ProjectsPage() {

@@ -9,10 +9,30 @@ import { ServicesSlider } from "@/components/home/ServicesSlider";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { homeFaqs } from "@/content/home";
 import { site } from "@/content/site";
+import { ogImage, ogImages } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: { absolute: `${site.name} — MEP Contracting for Complex Buildings` },
   description: site.description,
+  alternates: { canonical: "/" },
+  openGraph: { images: ogImages, type: "website", siteName: `${site.name} — ${site.fullName}`, title: `${site.name} — MEP Contracting for Complex Buildings`, description: site.description, url: "/" },
+  twitter: { card: "summary_large_image", images: [ogImage.url], title: `${site.name} — MEP Contracting for Complex Buildings`, description: site.description },
+};
+
+const organizationLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: site.fullName,
+  alternateName: site.name,
+  url: site.url,
+  description: site.description,
+};
+
+const websiteLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: `${site.name} — ${site.fullName}`,
+  url: site.url,
 };
 
 const faqLd = {
@@ -36,7 +56,7 @@ export default function Home() {
       <Clients />
       <Credentials />
       <HomeFaq />
-      <JsonLd data={faqLd} />
+      <JsonLd data={[organizationLd, websiteLd, faqLd]} />
     </>
   );
 }

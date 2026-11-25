@@ -4,7 +4,7 @@ import { CenterTitle } from "@/components/ui/CenterTitle";
 import { PageBanner } from "@/components/ui/PageBanner";
 import { careers } from "@/content/careers";
 import { site } from "@/content/site";
-import { breadcrumbLd, jsonLd } from "@/lib/seo";
+import { breadcrumbLd, jsonLd, ogImage, ogImages } from "@/lib/seo";
 
 const description =
   "Careers at UMS — Ultimate Mechanical Solutions. Send your CV with a general application.";
@@ -13,14 +13,14 @@ export const metadata: Metadata = {
   title: "Careers",
   description,
   alternates: { canonical: "/careers" },
-  openGraph: {
+  openGraph: { images: ogImages,
     type: "website",
     siteName: `${site.name} — ${site.fullName}`,
     title: `Careers | ${site.name}`,
     description,
     url: "/careers",
   },
-  twitter: { card: "summary_large_image", title: `Careers | ${site.name}`, description },
+  twitter: { card: "summary_large_image", images: [ogImage.url], title: `Careers | ${site.name}`, description },
 };
 
 export default function CareersPage() {

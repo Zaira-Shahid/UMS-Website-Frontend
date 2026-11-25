@@ -10,6 +10,7 @@ export const metadata = pageMetadata({
   title: "Our Team & Project Controls",
   description: "The project controls behind UMS projects, and the people who lead them.",
   path: "/about/team",
+  noindex: !showTeamPage,
 });
 
 const icons: Record<string, LucideIcon> = { hardhat: HardHat, clipboard: ClipboardCheck, shield: ShieldPlus, compass: Compass, toolbox: Briefcase };
