@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import type { ComponentProps, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 const skew = "[transform:skewX(-18deg)]";
 const unskew = "[transform:skewX(18deg)]";
 
-const shape = "inline-flex items-center justify-center px-8 py-3 font-heading text-[0.9375rem] font-bold transition-colors";
+const shape = "inline-flex items-center justify-center px-8 py-3 font-heading text-[1.0625rem] font-bold transition-colors";
 
 /** Link button: `solid` is blue (Explore Project), `outline` is a blue-bordered white shape (View All Projects). */
 export function SlantedButton({
@@ -44,7 +44,7 @@ export function SlantedTab({
   children,
   className,
   ...rest
-}: { active?: boolean; children: ReactNode } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children">) {
+}: { active?: boolean; children: ReactNode } & Omit<ComponentProps<"button">, "children">) {
   return (
     <button
       type="button"

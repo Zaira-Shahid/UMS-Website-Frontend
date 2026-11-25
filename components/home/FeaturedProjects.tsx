@@ -1,0 +1,146 @@
+"use client";
+
+import Image from "next/image";
+import { MapPin } from "lucide-react";
+import { useId, useRef, useState, type KeyboardEvent } from "react";
+import { SectionTitle } from "@/components/ui/SectionTitle";
+import { SlantedButton, SlantedTab } from "@/components/ui/Slanted";
+import { featuredImages, featuredSectors } from "@/content/home";
+import { projects } from "@/content/projects";
+import { cn } from "@/lib/utils";
+
+/**
+ * H4 Featured Projects (mockup 04). Slanted sector tabs filter the projects. A project shows under a tab only when its
+ * sector is confirmed in the content; the others appear on /projects only. The images are illustrative and labelled.
+ */
+export function FeaturedProjects() {
+  const [sector, setSector] = useState(0);
+  const id = useId();
+  const tabs = useRef<(HTMLButtonElement | null)[]>([]);
+  const industry = featuredSectors[sector].industry;
+  const shown = projects.filter((p) => p.sector === industry && featuredImages[p.slug]).slice(0, 2);
+
+  const onKeyDown = (e: KeyboardEvent) => {
+    const n = featuredSectors.length;
+    let to = sector;
+    if (e.key === "ArrowRight") to = (sector + 1) % n;
+    else if (e.key === "ArrowLeft") to = (sector - 1 + n) % n;
+    else if (e.key === "Home") to = 0;
+    else if (e.key === "End") to = n - 1;
+    else return;
+    e.preventDefault();
+    setSector(to);
+    tabs.current[to]?.focus();
+  };
+
+  return (
+    <section aria-labelledby="featured-title" className="relative overflow-hidden bg-[#f2f7fb] py-10 lg:py-14">
+      <Image
+        src="/images/sections/wireframe-building-projects.png"
+        alt=""
+        width={605}
+        height={305}
+        aria-hidden
+        className="pointer-events-none absolute right-[3%] top-0 hidden w-[38%] max-w-[605px] [clip-path:inset(0_0_6%_0)] lg:block"
+      />
+      <div className="wrap relative">
+        <SectionTitle id="featured-title" lead="Featured Projects" />
+        <p className="mt-2 text-[1.0625rem] text-muted lg:text-xl">Explore our work by sector.</p>
+
+        <div
+          role="tablist"
+          aria-label="Project sectors"
+          onKeyDown={onKeyDown}
+          className="-mx-[var(--wrap-pad)] mt-6 flex overflow-x-auto px-[var(--wrap-pad)] pb-px lg:mx-0 lg:max-w-[60%] lg:overflow-visible lg:border-b lg:border-blue lg:px-0 [&::-webkit-scrollbar]:hidden"
+        >
+          {featuredSectors.map((s, i) => (
+            <SlantedTab
+              key={s.industry}
+              ref={(el) => {
+                tabs.current[i] = el;
+              }}
+              id={`${id}-tab-${i}`}
+              aria-controls={`${id}-panel`}
+              active={i === sector}
+              tabIndex={i === sector ? 0 : -1}
+              onClick={() => setSector(i)}
+              className="shrink-0 whitespace-nowrap px-5 lg:px-9"
+            >
+              {s.label}
+            </SlantedTab>
+          ))}
+        </div>
+
+        <div id={`${id}-panel`} role="tabpanel" aria-labelledby={`${id}-tab-${sector}`} className="mt-8 lg:mt-10">
+          {shown.length === 0 ? (
+            <p className="rounded-card border border-border bg-white px-6 py-10 text-center text-muted">
+              Projects in this sector will be listed here. See all projects below.
+            </p>
+          ) : (
+            <div className="grid gap-5 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:items-end lg:gap-0">
+              {shown.map((p, i) => (
+                <ProjectCard key={p.slug} index={i} slug={p.slug} name={p.name} city={p.city} />
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="mt-8 flex justify-center lg:mt-10">
+          <SlantedButton href="/projects" variant="outline" className="px-14">
+            View All Projects
+          </SlantedButton>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ProjectCard({ index, slug, name, city }: { index: number; slug: string; name: string; city?: string }) {
+  const big = index === 0;
+  const img = featuredImages[slug];
+  return (
+    <article
+      className={cn(
+        "relative isolate overflow-hidden rounded-card lg:rounded-none",
+        big
+          ? "min-h-[22rem] bg-gradient-to-br from-navy-950 via-navy-900 to-[#3f78a8] text-white lg:h-[30.5rem] lg:[clip-path:polygon(70px_0,100%_0,calc(100%-175px)_100%,0_100%,0_43%)]"
+          : "min-h-[20rem] bg-gradient-to-br from-white to-sky-50 text-navy lg:-ml-[157px] lg:h-[26rem] lg:[clip-path:polygon(150px_0,100%_0,100%_100%,0_100%)]",
+      )}
+    >
+      <Image
+        src={img.src}
+        alt=""
+        width={img.width}
+        height={img.height}
+        sizes="(min-width: 1024px) 50vw, 100vw"
+        className={cn(
+          "absolute inset-y-0 right-0 -z-10 h-full object-cover",
+          big ? "w-[44%] [mask-image:linear-gradient(to_right,transparent,black_30%)]" : "w-[42%] [mask-image:linear-gradient(to_right,transparent,black_25%)]",
+        )}
+      />
+      <div className={cn("flex h-full flex-col justify-center p-6", big ? "max-w-[66%] lg:max-w-[78%] lg:pl-[4.5rem]" : "max-w-[62%] lg:max-w-[72%] lg:pl-[10.5rem] lg:pr-4")}>
+        <h3 className={cn("font-extrabold leading-[1.05]", big ? "text-[clamp(1.75rem,1rem+2vw,3rem)] text-white" : "text-[clamp(1.5rem,0.9rem+1.3vw,2.25rem)] text-navy")}>{name}</h3>
+        {city && (
+          <p className={cn("mt-3 flex items-center gap-2 text-lg", big ? "text-white" : "text-navy")}>
+            <MapPin aria-hidden className={cn("size-5 fill-current", big ? "text-cyan" : "text-blue-700")} />
+            {city}
+          </p>
+        )}
+        <span aria-hidden className="mt-5 block h-1 w-14 bg-blue" />
+        <div className="mt-6">
+          <SlantedButton href={`/projects/${slug}`} className="py-2.5">
+            Explore Project
+          </SlantedButton>
+        </div>
+      </div>
+      <p
+        className={cn(
+          "absolute bottom-3 text-sm italic text-white [text-shadow:0_1px_3px_rgb(0_0_0/0.7)]",
+          big ? "left-6 lg:left-8" : "right-6",
+        )}
+      >
+        Illustrative imagery
+      </p>
+    </article>
+  );
+}

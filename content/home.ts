@@ -47,3 +47,9 @@ export const featuredSectors: { label: string; industry: IndustrySlug }[] = [
   { label: "Residential", industry: "residential-mixed-use" },
   { label: "Institutional", industry: "education-institutional" },
 ];
+
+/** Featured Projects imagery. These are illustrative images from the design pack, not UMS project photos. */
+export const featuredImages: Record<string, { src: string; width: number; height: number }> = {
+  "buch-international-hospital": { src: "/images/projects/illustrative-hospital-1.png", width: 325, height: 492 },
+  "lady-reading-hospital": { src: "/images/projects/illustrative-hospital-2.png", width: 253, height: 145 },
+};
