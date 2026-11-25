@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/home/Hero";
+import { HowWeDeliver } from "@/components/home/HowWeDeliver";
 import { ServicesSlider } from "@/components/home/ServicesSlider";
 import { site } from "@/content/site";
 
@@ -14,6 +15,7 @@ export default function Home() {
     <>
       <Hero />
       <ServicesSlider />
+      <HowWeDeliver />
     </>
   );
 }
