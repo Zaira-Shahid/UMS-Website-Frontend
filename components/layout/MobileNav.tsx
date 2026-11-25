@@ -1,21 +1,22 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { ChevronDown, X } from "lucide-react";
+import { ArrowUpRight, ChevronDown, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { BlueprintGrid } from "@/components/ui/BlueprintGrid";
-import { usePathname } from "next/navigation";
 import { mainNav, quoteHrefForPath } from "@/content/navigation";
+import { services } from "@/content/services";
 import { cn } from "@/lib/utils";
 import { Logo } from "./Logo";
+import { ServiceRow } from "./MegaMenu";
 
 const FOCUSABLE =
   'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
 /**
- * Full-screen mobile menu. Accessible dialog: focus moves in on open, Tab is
+ * Full-screen mobile menu with accordions. Accessible dialog: focus moves in on open, Tab is
  * trapped, Esc closes, focus returns to the menu button, background scroll is locked.
  */
 export function MobileNav({
@@ -47,9 +48,7 @@ export function MobileNav({
         return;
       }
       if (e.key !== "Tab" || !panel) return;
-      const items = Array.from(panel.querySelectorAll<HTMLElement>(FOCUSABLE)).filter(
-        (el) => el.offsetParent !== null,
-      );
+      const items = Array.from(panel.querySelectorAll<HTMLElement>(FOCUSABLE)).filter((el) => el.offsetParent !== null);
       if (!items.length) return;
       const first = items[0];
       const last = items[items.length - 1];
@@ -69,7 +68,10 @@ export function MobileNav({
     };
   }, [open, onClose, returnFocusRef]);
 
-  const t = reduce ? { duration: 0 } : { duration: 0.45, ease: [0.76, 0, 0.24, 1] as const };
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
+
+  const t = reduce ? { duration: 0 } : { duration: 0.3, ease: [0.22, 1, 0.36, 1] as const };
 
   return (
     <AnimatePresence>
@@ -80,112 +82,97 @@ export function MobileNav({
           role="dialog"
           aria-modal="true"
           aria-label="Main menu"
-          className="fixed inset-0 z-[60] flex flex-col overflow-hidden bg-navy-950 text-white xl:hidden"
-          initial={{ clipPath: "inset(0 0 100% 0)" }}
-          animate={{ clipPath: "inset(0 0 0% 0)" }}
-          exit={{ clipPath: "inset(0 0 100% 0)" }}
+          className="fixed inset-0 z-[60] flex flex-col overflow-hidden bg-white text-navy xl:hidden"
+          initial={reduce ? false : { opacity: 0, y: -12 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -12 }}
           transition={t}
         >
-          <BlueprintGrid variant="dark" />
-
-          <div className="relative flex h-16 shrink-0 items-center justify-between px-5">
-            <Logo tone="light" onClick={onClose} />
+          <div className="flex h-16 shrink-0 items-center justify-between border-b border-line px-5">
+            <Logo tone="dark" onClick={onClose} />
             <button
               type="button"
               data-autofocus
               onClick={onClose}
               aria-label="Close menu"
-              className="flex size-11 items-center justify-center rounded-ums border border-white/25 hover:border-white"
+              className="flex size-11 items-center justify-center rounded-ums border border-line text-navy hover:border-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan"
             >
               <X className="size-5" aria-hidden />
             </button>
           </div>
 
-          <nav aria-label="Main" className="relative flex-1 overflow-y-auto px-5 pb-6 pt-4">
+          <nav aria-label="Main" className="flex-1 overflow-y-auto px-5 pb-6 pt-2 [scrollbar-width:thin]">
             <ul>
-              {mainNav.map((item, i) => (
-                <motion.li
-                  key={item.label}
-                  className="border-b border-white/10"
-                  initial={reduce ? false : { opacity: 0, y: 28 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={reduce ? { duration: 0 } : { delay: 0.18 + i * 0.06, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  {item.children ? (
-                    <>
-                      <button
-                        type="button"
-                        aria-expanded={expanded === item.label}
-                        aria-controls={`mobile-sub-${item.label}`}
-                        onClick={() => setExpanded(expanded === item.label ? null : item.label)}
-                        className="flex min-h-14 w-full items-center justify-between font-heading text-2xl font-semibold uppercase tracking-[0.04em]"
-                      >
-                        {item.label}
-                        <ChevronDown
-                          aria-hidden
-                          className={cn(
-                            "size-5 text-cyan-300 transition-transform",
-                            expanded === item.label && "rotate-180",
+              {mainNav.map((item) => {
+                const active = isActive(item.href) || (item.children?.some((c) => c.href !== "/" && isActive(c.href)) ?? false);
+                const isOpen = expanded === item.label;
+                const labelClass = cn(
+                  "flex min-h-14 w-full items-center justify-between font-heading text-2xl font-semibold uppercase tracking-[0.04em]",
+                  active ? "text-cyan" : "text-navy",
+                );
+                return (
+                  <li key={item.label} className="border-b border-line">
+                    {item.children ? (
+                      <>
+                        <button
+                          type="button"
+                          aria-expanded={isOpen}
+                          aria-controls={`mobile-sub-${item.label}`}
+                          onClick={() => setExpanded(isOpen ? null : item.label)}
+                          className={labelClass}
+                        >
+                          {item.label}
+                          <ChevronDown aria-hidden className={cn("size-5 text-cyan transition-transform", isOpen && "rotate-180")} />
+                        </button>
+                        <div id={`mobile-sub-${item.label}`} hidden={!isOpen} className="pb-4">
+                          <Link
+                            href={item.href}
+                            onClick={onClose}
+                            className="mb-1 inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-cyan"
+                          >
+                            {item.label === "Services" ? "Services overview" : "About overview"}
+                            <ArrowUpRight aria-hidden className="size-4" />
+                          </Link>
+                          {item.label === "Services" ? (
+                            <ul className="space-y-0.5">
+                              {services.map((s) => (
+                                <li key={s.slug}>
+                                  <ServiceRow slug={s.slug} onNavigate={onClose} />
+                                </li>
+                              ))}
+                            </ul>
+                          ) : (
+                            <ul>
+                              {item.children
+                                .filter((c) => c.href !== item.href)
+                                .map((c) => (
+                                  <li key={c.href}>
+                                    <Link href={c.href} onClick={onClose} className="block min-h-11 rounded-xl px-2.5 py-2.5 hover:bg-offwhite">
+                                      <span className="block font-semibold text-navy">{c.label}</span>
+                                      {c.description && <span className="block text-sm text-muted">{c.description}</span>}
+                                    </Link>
+                                  </li>
+                                ))}
+                            </ul>
                           )}
-                        />
-                      </button>
-                      <div
-                        id={`mobile-sub-${item.label}`}
-                        hidden={expanded !== item.label}
-                        className="pb-3"
-                      >
-                        <ul className="border-l border-cyan/40 pl-4">
-                          <li>
-                            <Link
-                              href={item.href}
-                              onClick={onClose}
-                              className="block min-h-11 py-2.5 text-white/90"
-                            >
-                              {item.label === "Services" ? "All services" : "Overview"}
-                            </Link>
-                          </li>
-                          {item.children
-                            .filter((c) => c.href !== item.href)
-                            .map((c) => (
-                              <li key={c.href}>
-                                <Link
-                                  href={c.href}
-                                  onClick={onClose}
-                                  className="block min-h-11 py-2.5 text-white/75 hover:text-cyan-300"
-                                >
-                                  {c.label}
-                                </Link>
-                              </li>
-                            ))}
-                        </ul>
-                      </div>
-                    </>
-                  ) : (
-                    <Link
-                      href={item.href}
-                      onClick={onClose}
-                      className="flex min-h-14 items-center font-heading text-2xl font-semibold uppercase tracking-[0.04em]"
-                    >
-                      {item.label}
-                    </Link>
-                  )}
-                </motion.li>
-              ))}
+                        </div>
+                      </>
+                    ) : (
+                      <Link href={item.href} onClick={onClose} aria-current={active ? "page" : undefined} className={labelClass}>
+                        {item.label}
+                      </Link>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           </nav>
 
-          <div className="relative shrink-0 border-t border-white/10 bg-navy-900 p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
-            <Button href="/contact" onClick={onClose} variant="outline-light" size="lg" block className="mb-3">
+          <div className="shrink-0 space-y-3 border-t border-line bg-white p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
+            <Button href="/contact" onClick={onClose} variant="outline" size="lg" block>
               Contact us
             </Button>
-            <Button
-              href={quoteHrefForPath(pathname)}
-              onClick={onClose}
-              variant="accent"
-              size="lg"
-              arrow
-              block
-            >
+            <Button href={quoteHrefForPath(pathname)} onClick={onClose} variant="primary" size="lg" arrow block>
               Request a Quote
             </Button>
           </div>

@@ -45,6 +45,8 @@ export function Header() {
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const hoverTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const lastY = useRef(0);
+  const focusFirst = useRef(false);
+  const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     lastY.current = window.scrollY;
@@ -89,6 +91,26 @@ export function Header() {
     return () => document.removeEventListener("keydown", onKey);
   }, [openSearch]);
 
+  // After a keyboard open, move focus to the first row of the panel.
+  useEffect(() => {
+    if (!openMenu || !focusFirst.current) return;
+    focusFirst.current = false;
+    const id = requestAnimationFrame(() =>
+      document.querySelector<HTMLAnchorElement>(`#menu-${openMenu} ul a[href]`)?.focus(),
+    );
+    return () => cancelAnimationFrame(id);
+  }, [openMenu]);
+
+  // Clicking or tapping anywhere outside the nav closes an open dropdown.
+  useEffect(() => {
+    if (!openMenu) return;
+    const onDown = (e: PointerEvent) => {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) setOpenMenu(null);
+    };
+    document.addEventListener("pointerdown", onDown);
+    return () => document.removeEventListener("pointerdown", onDown);
+  }, [openMenu]);
+
   // Esc closes an open mega menu wherever focus is (hover-opened menus have no focus inside).
   useEffect(() => {
     if (!openMenu) return;
@@ -114,6 +136,8 @@ export function Header() {
   const light = darkRoute;
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
+  const itemActive = (item: (typeof mainNav)[number]) =>
+    isActive(item.href) || (item.children?.some((c) => c.href !== "/" && isActive(c.href)) ?? false);
 
   const panelMotion = reduce
     ? { initial: false as const, animate: { opacity: 1 }, exit: { opacity: 0 }, transition: { duration: 0 } }
@@ -150,16 +174,32 @@ export function Header() {
         >
           <Logo tone={light ? "light" : "dark"} />
 
-          <nav aria-label="Main" className="hidden xl:block">
-            <ul className="flex items-center gap-7">
+          <nav ref={navRef} aria-label="Main" className="hidden xl:block">
+            <ul className="flex items-center gap-8">
               {mainNav.map((item) => {
                 const hasMenu = Boolean(item.children);
                 const open = openMenu === item.label;
+                const active = itemActive(item);
+                const itemClass = cn(
+                  "relative inline-flex items-center gap-1 whitespace-nowrap py-2 font-heading text-[0.9375rem] font-semibold uppercase tracking-[0.08em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300",
+                  active || open ? (light ? "text-cyan-300" : "text-cyan") : linkTone,
+                );
+                const underline = active ? (
+                  <svg
+                    aria-hidden
+                    viewBox="0 0 40 8"
+                    className="pointer-events-none absolute -bottom-1 left-1/2 h-2 w-9 -translate-x-1/2"
+                    fill="none"
+                  >
+                    <path d="M3 5.5C12 1.5 28 1.5 37 5.5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+                  </svg>
+                ) : null;
                 return (
                   <li
                     key={item.label}
+                    className="relative"
                     onPointerEnter={hasMenu ? intent(item.label, 110) : undefined}
-                    onPointerLeave={hasMenu ? intent(null, 180) : undefined}
+                    onPointerLeave={hasMenu ? intent(null, 200) : undefined}
                     onBlur={
                       hasMenu
                         ? (e) => {
@@ -167,60 +207,52 @@ export function Header() {
                           }
                         : undefined
                     }
-                    onKeyDown={
-                      hasMenu
-                        ? (e) => {
-                            if (e.key === "Escape" && open) {
-                              setOpenMenu(null);
-                              e.currentTarget.querySelector<HTMLButtonElement>("button[aria-expanded]")?.focus();
-                            }
-                          }
-                        : undefined
-                    }
                   >
-                    <div className="flex items-center">
-                      <Link
-                        href={item.href}
-                        aria-current={isActive(item.href) ? "page" : undefined}
-                        onClick={closeMenus}
-                        className={cn(
-                          "group/link relative whitespace-nowrap py-2 font-heading text-[0.9375rem] font-semibold uppercase tracking-[0.08em] transition-colors",
-                          linkTone,
-                        )}
+                    {hasMenu ? (
+                      <button
+                        type="button"
+                        aria-expanded={open}
+                        aria-controls={`menu-${item.label}`}
+                        aria-current={active ? "page" : undefined}
+                        onClick={(e) => {
+                          clearTimeout(hoverTimer.current);
+                          // detail === 0 means the click came from the keyboard (Enter or Space).
+                          focusFirst.current = !open && e.detail === 0;
+                          setOpenMenu(open ? null : item.label);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "ArrowDown") {
+                            e.preventDefault();
+                            clearTimeout(hoverTimer.current);
+                            focusFirst.current = true;
+                            if (open) {
+                              document.querySelector<HTMLAnchorElement>(`#menu-${item.label} ul a[href]`)?.focus();
+                              focusFirst.current = false;
+                            } else setOpenMenu(item.label);
+                          }
+                        }}
+                        className={itemClass}
                       >
                         {item.label}
-                        <span
-                          aria-hidden
-                          className={cn(
-                            "absolute inset-x-0 -bottom-0.5 h-0.5 origin-left bg-cyan transition-transform duration-300",
-                            isActive(item.href) ? "scale-x-100" : "scale-x-0 group-hover/link:scale-x-100",
-                          )}
-                        />
+                        <ChevronDown aria-hidden className={cn("size-4 transition-transform", open && "rotate-180")} />
+                        {underline}
+                      </button>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        aria-current={active ? "page" : undefined}
+                        onClick={closeMenus}
+                        className={itemClass}
+                      >
+                        {item.label}
+                        {underline}
                       </Link>
-                      {hasMenu && (
-                        <button
-                          type="button"
-                          aria-expanded={open}
-                          aria-controls={`menu-${item.label}`}
-                          aria-label={`${item.label} menu`}
-                          onClick={() => {
-                            clearTimeout(hoverTimer.current);
-                            setOpenMenu(open ? null : item.label);
-                          }}
-                          className={cn("ml-0.5 p-1.5 transition-colors", linkTone)}
-                        >
-                          <ChevronDown aria-hidden className={cn("size-4 transition-transform", open && "rotate-180")} />
-                        </button>
-                      )}
-                    </div>
+                    )}
 
                     <AnimatePresence>
                       {hasMenu && open && (
-                        <motion.div
-                          id={`menu-${item.label}`}
-                          {...panelMotion}
-                          className="absolute inset-x-0 top-full border-t border-white/10 bg-navy-950 text-white shadow-[0_24px_40px_-24px_rgb(0_0_0/0.6)]"
-                        >
+                        // The top padding is a hover bridge: the pointer never leaves the <li> on its way to the panel.
+                        <motion.div id={`menu-${item.label}`} {...panelMotion} className="absolute left-0 top-full z-10 pt-6">
                           {item.label === "Services" ? (
                             <ServicesPanel onNavigate={closeMenus} />
                           ) : (
