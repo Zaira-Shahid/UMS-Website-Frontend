@@ -61,7 +61,7 @@ export default function ServicesPage() {
             <p className="mx-auto mt-5 max-w-2xl text-lg text-navy sm:text-xl">Mechanical, electrical and plumbing services for complex buildings.</p>
           </section>
 
-          <ul className="mx-auto mt-8 grid max-w-[944px] gap-5 md:grid-cols-2 md:gap-6">
+          <ul className="mt-8 grid gap-5 md:grid-cols-2 md:gap-6">
             {order.map((slug, i) => {
               const s = services.find((x) => x.slug === slug)!;
               const page = servicePages[slug];
@@ -73,7 +73,7 @@ export default function ServicesPage() {
                     className="group flex h-full flex-col overflow-hidden rounded-card border border-blue/70 bg-white shadow-card transition duration-200 hover:-translate-y-1 hover:border-blue hover:shadow-[0_18px_36px_-14px_rgb(15_42_74/0.3)] focus-visible:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
                   >
                     <div className="overflow-hidden">
-                      <ServicePhoto asset={image} sizes="(min-width: 768px) 460px, 92vw" priority={i < 2} className="transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none" />
+                      <ServicePhoto asset={image} uncapped ratio="aspect-[29/10]" sizes="(min-width: 768px) 660px, 92vw" priority={i < 2} className="transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none" />
                     </div>
                     <div className="flex flex-1 flex-col px-5 pb-5 pt-3">
                       <h2 className="text-[1.5rem] font-bold leading-tight text-navy sm:text-[1.75rem]">{cardTitle(slug, s.name)}</h2>
@@ -115,7 +115,7 @@ export default function ServicesPage() {
             <p className="mt-3 text-sm italic text-muted">Illustrative imagery</p>
           </section>
 
-          <div className="mx-auto mt-10 max-w-[944px]">
+          <div className="mt-10">
             <CtaBar title="Let’s Discuss Your Project" href={quoteHref()} />
           </div>
         </div>

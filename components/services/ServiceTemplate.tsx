@@ -70,7 +70,7 @@ export function ServiceTemplate({ service }: { service: Service }) {
 
       <div className="bg-white pb-12 pt-[calc(var(--header-h)+1.5rem)] md:pb-16">
         <div className="wrap">
-         <div className="mx-auto max-w-[948px]">
+         <div>
           <ServicesIntro />
 
           <header className="mx-auto mt-6 max-w-4xl text-center">
@@ -81,7 +81,7 @@ export function ServiceTemplate({ service }: { service: Service }) {
 
           {/* Hero photo */}
           <figure className="mt-8">
-            <ServicePhoto asset={heroImage} ratio="aspect-[16/7] md:aspect-[16/6]" priority sizes="(min-width: 960px) 948px, 96vw" className="overflow-hidden rounded-2xl" />
+            <ServicePhoto asset={heroImage} ratio="aspect-[16/7] md:aspect-[4/1]" priority sizes="(min-width: 1400px) 1330px, 96vw" className="overflow-hidden rounded-2xl" />
             <figcaption className="mt-2 text-center text-sm italic text-navy">
               {page.caption} · Illustrative imagery
             </figcaption>
@@ -89,7 +89,7 @@ export function ServiceTemplate({ service }: { service: Service }) {
 
           {/* Photo + What's Included */}
           <section aria-labelledby="included-title" className={`mt-10 grid items-center gap-6 md:gap-10 ${includedImage ? "md:grid-cols-2" : "mx-auto max-w-xl"}`}>
-            {includedImage && <ServicePhoto asset={includedImage} ratio="aspect-[4/3] md:aspect-[5/4]" sizes="(min-width: 768px) 460px, 96vw" className="overflow-hidden rounded-2xl" />}
+            {includedImage && <ServicePhoto asset={includedImage} ratio="aspect-[4/3] md:aspect-[460/245]" sizes="(min-width: 768px) 660px, 96vw" className="overflow-hidden rounded-2xl" />}
             <div>
               <Title id="included-title">What’s Included</Title>
               <ul className="mt-5">
@@ -128,7 +128,7 @@ export function ServiceTemplate({ service }: { service: Service }) {
                 const img = serviceImage(service.slug, i === 0 ? "app-1" : "app-2", a.photo, a.position);
                 return (
                   <li key={a.title} className="overflow-hidden rounded-card border border-blue/70 bg-white shadow-card">
-                    <ServicePhoto asset={img} ratio="aspect-[16/7]" sizes="(min-width: 768px) 460px, 92vw" />
+                    <ServicePhoto asset={img} ratio="aspect-[16/5]" sizes="(min-width: 768px) 660px, 92vw" />
                     <div className="p-5">
                       <h3 className="text-[1.375rem] font-bold text-navy sm:text-2xl">{a.title}</h3>
                       <p className="mt-1 text-base leading-snug text-navy">{a.text}</p>
