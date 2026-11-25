@@ -5,8 +5,9 @@
    ------------------------------------------------------------------ */
 :root {
   /* Colours (3.1) */
-  --navy-950: #071b33; /* footer, darkest */
-  --navy-900: #0b2545; /* hero and dark sections */
+  /* Navy values sampled from the approved mockups (footer #032139, hero and CTA about #03294a) */
+  --navy-950: #032139; /* footer, darkest */
+  --navy-900: #03294a; /* hero and dark sections */
   --navy-800: #10305a;
   --navy: #0f2a4a; /* headings on light, dark pill buttons */
   --blue: #1ba6e8; /* primary: buttons, accents, active states */
@@ -48,7 +49,7 @@
   --radius-ums: 10px; /* buttons */
   --radius-card: 16px; /* cards */
   --shadow-card: 0 10px 30px -12px rgb(15 42 74 / 0.18), 0 2px 6px -2px rgb(15 42 74 / 0.08);
-  --header-h: 76px;
+  --header-h: 84px;
 }
 
 @theme inline {
@@ -166,6 +167,14 @@
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+/* Wide page wrapper used by the header, the footer and the homepage sections (the mockups use about 3% side margins) */
+.wrap {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1600px;
+  padding-inline: clamp(1.25rem, 3.2vw, 3rem);
 }
 
 /* Short blue accent bar above section titles (about 70 x 5px) */

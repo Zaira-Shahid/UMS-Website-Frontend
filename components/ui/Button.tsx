@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
  * fire         solid red (Fire Fighting only)
  */
 const buttonStyles = cva(
-  "group inline-flex items-center justify-center gap-2 rounded-ums border-2 border-transparent font-heading font-bold transition-colors duration-200 disabled:pointer-events-none disabled:opacity-50",
+  "group inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-ums border-2 border-transparent font-heading font-bold transition-colors duration-200 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
@@ -54,7 +54,7 @@ export function Button(props: ButtonProps) {
   const { variant, size, className, arrow, block, children, ...rest } = props;
   const inner = (
     <>
-      <span>{children}</span>
+      <span className="inline-flex items-center gap-2">{children}</span>
       {arrow && (
         <ArrowUpRight aria-hidden className="size-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
       )}

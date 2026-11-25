@@ -1,213 +1,71 @@
 # Content to verify
 
-Audit of the content currently in the repo (Phase A of the visual overhaul). Nothing listed here has been
-confirmed by UMS. Every item is treated as **unverified**: it must not be presented as fact until the owner
-supplies a source. Items are only listed in this phase; each one is removed or replaced in the phase that
-rebuilds the section that shows it.
+Everything the owner still has to supply, confirm or replace before launch. Nothing below is shown as fact on the
+site until it is confirmed. Updated at the end of each phase (last update: Phase F1).
 
-Source of truth for most values: `content/dummy.ts` (its own header says "realistic but invented").
-Other files read from it or add their own copy. File and line references are to the repo at `8e14d37`.
+## 1. Contact details (one file: `content/site.ts`, the `contact` object)
 
-Legend for **Planned action**: *Remove* = omit from the UI until verified · *Config* = keep as a single
-configurable value that renders nothing while empty · *Rewrite* = replace with factual, non-claim copy
-· *Keep* = verified-by-nature (generic engineering content or the real project name only).
+All values are empty. A field renders only when it has a value; the WhatsApp button in the header and every social
+icon in the footer stay hidden until filled.
 
-## Status after Phase C (read this first)
-
-Sections 1 to 10 below are the original Phase A audit. Since then the following was **removed from the site**
-(not just hidden), so it no longer appears anywhere:
-
-- All office addresses, phone numbers, emails, opening hours, the WhatsApp number and the social profile links.
-- The statistics band, the clients strip, the testimonials, the ISO/PEC badges and certification cards.
-- The six fictional projects and every invented project detail (only the six confirmed names remain).
-- The Team & Organization and Credentials pages (invented people, PEC and ISO numbers), the About timeline,
-  and the "Founded in 2009" and PEC lines.
-- The "within 48 hours" response promise, the placeholder company profile download, and the newsletter form.
-- The Insights and Privacy Policy links (pages come in Phase E).
-
-**Phase D:** the Careers page no longer shows the four invented listings, the culture text or the benefits; it says
-"No open positions right now" and offers the general application form. Real roles go in `content/careers.ts`. The
-homepage below the hero now uses only service and industry content, the six confirmed project names, and general
-descriptions of the delivery stages and of quality and safety practice (no figures, certifications or client names).
-
-Still on the site and still unverified (rebuilt in Phase E): the Mission & Values wording, the Quality, Safety &
-Delivery page procedures in `content/quality.ts`, the service and industry copy (generic descriptions, owner to
-confirm all six disciplines are offered), and all stock photography (service thumbnails, industry pictures).
-
-### Phase E: wording that still needs the owner's approval
-
-- **Mission, vision and the six values** (`content/dummy.ts`, shown on `/about/mission-values`). The wording is now
-  deliberately general, but it is still drafted by us, not supplied by UMS. Approve or replace it.
-- **Quality, Safety & Delivery** (`content/quality.ts`). The page now only describes, in general terms, what each stage
-  typically involves on an MEP package. The earlier "How UMS runs it" paragraphs (invented procedures, ISO claims) were
-  removed. If UMS wants to state its own procedures, supply them.
-- **Service pages** (`content/services.ts`): the technical diagrams and their explanations are generic engineering
-  descriptions. Confirm that all six disciplines are real UMS offerings.
-- The "How it works" diagrams and every line drawing are illustrations, not drawings of any UMS project.
-
-- **Privacy policy** (`content/legal.ts`, `/privacy-policy`): written in neutral general language from how the site
-  actually works. The retention, rights and security statements are general and **need the owner's confirmation and a
-  legal review** before launch. No policy date is shown because no real date exists.
-- **Insights articles** (`content/articles.ts`): rewritten in the third person as general technical knowledge, with no
-  authors and no dates, attributed only to "UMS Engineering Team". The owner should confirm they are happy to publish
-  under that name and that the technical content is acceptable.
-
-### Contact details to supply
-
-Everything lives in one place: **`content/site.ts`, the `contact` object.** All values are empty today. Fill a value
-in and it appears automatically in the footer, the Contact page and the quote page. A field that is empty renders
-nothing. Until then the site shows only "Offices in Islamabad & Lahore", a "Contact us" button and a
-"Request a Quote" button.
-
-| Field in `contact` | What to supply | Shown on |
-| --- | --- | --- |
-| `offices[Islamabad].address` | Street address, one line | Footer, Contact, Quote page |
-| `offices[Islamabad].phone` | Phone number | same |
-| `offices[Islamabad].email` | Office email | same |
-| `offices[Islamabad].hours` | Opening hours text | same |
-| `offices[Islamabad].mapUrl` | Map link (makes the address a link) | same |
-| `offices[Lahore].*` | The same five fields for Lahore | same |
-| `phone` | Main phone number, if separate from the offices | Footer, Contact, Quote page |
-| `whatsapp` | International format, e.g. `+92 3xx xxxxxxx` | Footer, Contact, Quote page |
-| `email.general` | General enquiries mailbox | Footer, Contact, Quote page |
-| `email.tenders` | Tender desk mailbox | Footer, Contact, Quote page |
-| `email.careers` | Careers mailbox (not displayed yet) | reserved |
-| `social.linkedin / facebook / instagram / youtube` | Full profile URLs | Footer icons (each appears only when set) |
-| `companyProfileUrl` | Path or URL of a real company profile PDF | reserved (no button until a file exists) |
-
-Separate from the display fields above, the **forms deliver mail** through environment variables (see
-`.env.example`): `RESEND_API_KEY`, `MAIL_FROM`, `RFQ_TO_EMAIL`, `CONTACT_TO_EMAIL`, `CAREERS_TO_EMAIL`. In
-production, if any is missing the forms return an error instead of pretending to send.
-
-Also needed: the real **domain** (`NEXT_PUBLIC_SITE_URL`, currently defaulting to `https://umss.pk`).
-
-## 1. Company identity
-
-| Item | Where | Value now | Planned action |
-| --- | --- | --- | --- |
-| Founding year | `dummy.ts` `company.founded`; About page ("Founded in 2009"); timeline | 2009 | Remove until confirmed |
-| PEC registration number | `dummy.ts` `company.pecRegistration`, `dummyPec`, `dummyCertifications`; About page row; Credentials page | "C-6/ME-2047", category "C-6", valid until 30 Jun 2027 | Remove |
-| NTN | `dummy.ts` `company.ntn` | "4219876-3" | Remove |
-| Domain / site URL | `content/site.ts`, `.env.example` | `umss.pk` (default `NEXT_PUBLIC_SITE_URL`) | Config: confirm real domain |
-| Tagline | `dummy.ts` `company.tagline` | "MEP Contracting for Complex Buildings" | Owner to approve |
-| "Offices in Islamabad and Lahore" | `site.ts` description, About, Contact, Footer, RFQ aside, OrgDiagram, search index, metadata | Two cities asserted in ~12 places | Config: confirm cities |
-
-## 2. Offices and contact details
-
-| Item | Where | Value now |
-| --- | --- | --- |
-| Islamabad "Head Office" address | `dummyOffices[0]` | "Office 12, 3rd Floor, Plot 21, Sector I-9/3, Islamabad 44000" |
-| Islamabad phone | `dummyOffices[0]` | "+92 51 4567 890" |
-| Lahore "Regional Office" address | `dummyOffices[1]` | "45-B, Main Boulevard, Gulberg III, Lahore 54660" |
-| Lahore phone | `dummyOffices[1]` | "+92 42 3578 1200" |
-| Opening hours | both offices | "Mon–Sat, 9:00 AM – 6:00 PM" |
-| Map queries and coordinates | both offices (`mapQuery`, `geo`) | sector/area centroids, not the offices |
-| Email addresses | `dummy.ts` `emails` | info@, tenders@, careers@, support@, lahore@ `umss.pk` |
-| WhatsApp number | `dummy.ts` `whatsapp`; Footer link `wa.me` | "+92 300 1234567" (also used as the form example in `RfqForm.tsx:326` and `schemas.ts:110`) |
-| Social profiles | `dummy.ts` `social`; Footer | linkedin.com/company/umss, facebook.com/umss.pk, instagram.com/umss.pk, youtube.com/@umss (not confirmed to exist or to be UMS) |
-
-Planned action: *Config*, with each field rendering nothing when empty. Footer, Contact, RFQ aside, OrgDiagram and
-the mobile nav call buttons all read these.
-
-## 3. Statistics and performance claims
-
-| Item | Where | Value now |
-| --- | --- | --- |
-| Years of delivery | `dummyStats`; StatsBand | "15+" |
-| Projects delivered | `dummyStats`; timeline 2025 entry | "37+" |
-| Engineers & technicians | `dummyStats` | "250+" |
-| Building area serviced | `dummyStats` | "2.4M sq ft" |
-| Lost-time incidents | `dummyStats`; QualitySafetyTeaser.tsx:69; quality.ts (HSE text); testimonials; articles | "0 in 2025" |
-| On-time handover rate | `dummyStats` | "98%" |
-| Response time | `dummy.ts` `rfqResponseTime`; `RfqAside.tsx:35` | "within 48 hours" |
-
-Planned action: *Remove* the StatsBand and every numeric claim until sourced.
-
-## 4. Certifications and quality claims
-
-| Item | Where | Value now |
-| --- | --- | --- |
-| ISO 9001:2015, ISO 45001:2018, ISO 14001:2015 | `dummyCertifications`; Credentials page; `QualitySafetyTeaser.tsx:68`; `quality.ts` | certificate numbers QMS-PK-20418, OHS-PK-11273, EMS-PK-09865, valid until March 2028 |
-| "NFPA-aligned practices" / "Internal audit FP-2025" | `dummyCertifications` | invented audit reference |
-| "Our quality system is certified to ISO 9001:2015" and the equivalent ISO 45001 sentence | `content/quality.ts` `umsProcedure` (lines 28, 47) | claims in first person |
-| `umsProcedure` on every quality stage | `content/quality.ts` | invented UMS procedures ("no pipework is concealed until its inspection request is closed", named QA/QC manager, daily toolbox talks, etc.) |
-| Company profile PDF | `public/downloads/ums-company-profile.pdf` (35 lines, placeholder); linked from CTABand and CredentialCards | not a real document |
-
-Planned action: *Remove* badges and `umsProcedure`; *Keep* the generic QA/HSE checklists (they describe
-typical practice, not UMS claims) but rewrite wording where it says "UMS does". Remove the PDF link.
-
-## 5. People
-
-Six invented leaders in `dummyLeadership`, shown on About, Team (OrgDiagram) and as article authors:
-Engr. Ahmed Raza (CEO), Engr. Sana Malik (Director, Projects), Engr. Bilal Chaudhry (Head of HVAC),
-Engr. Usman Tariq (Head of Fire Protection), Engr. Ayesha Khan (QA/QC Manager), Engr. Hamza Iqbal (HSE
-Manager). Bios assert biography ("Founded UMS in 2009 after a decade…", "led the integrated MEP package on
-UMS's first large hospital project").
-
-Planned action: *Remove* names, roles and bios; the Team page becomes disciplines and structure without people
-until real names are supplied.
-
-## 6. Clients, testimonials, projects
-
-**Clients** (`dummyClients`, ClientsMarquee): Crescent Developers, Indus Builders, Margalla Estates, Ravi
-Construct, Karakoram Infra, Summit Healthcare Group, Jinnah Retail Holdings, Pak Steel Structures, Capital
-Smart Towers, Northern Hospitality. All invented. *Remove.*
-
-**Testimonials** (`dummyTestimonials`, four quotes with names, roles and companies): Dr. Imran Qureshi,
-Farah Nadeem, Tariq Mehmood, Nadia Siddiqui. Fabricated quotes. *Remove.*
-
-**Projects** (`confirmedProjects` in `content/dummy.ts`): **resolved in Phase B.** The six fictional projects and
-every invented field were deleted. What remains is the name of six projects the owner confirmed: Lady Reading
-Hospital, Buch International Hospital, Elanza Mall, Pakistan Cricket Board House, CGGC Head Office at Eighteen,
-Jazz Destiny. The site shows names only (no city, year, sector, scope, client, photos or outcomes).
-
-**Needed from the owner to expand any project:** UMS's role and scope, city, year, status, and approved photographs.
-
-## 7. Company story
-
-| Item | Where |
+| Field | What to supply |
 | --- | --- |
-| Six milestones (2009 founding, 2012 first hospital package, 2015 Lahore office, 2018 fire division, 2021 integrated delivery, 2025 "37+ projects") | `dummyTimeline` |
-| Mission and vision statements | `dummyMission` |
-| Six values with claims ("on-time handover… is a promise we measure and report") | `dummyValues` |
-| Careers culture, benefits (health cover, annual bonus, transport allowance, PEC support) | `dummyCulture`, `dummyBenefits` |
-| Four open positions with locations and experience bands | `dummyCareers` (HVAC engineer, Fire supervisor, Electrical design engineer, QA/QC inspector) |
+| `offices[Islamabad]` / `offices[Lahore]`: `address`, `phone`, `email`, `hours`, `mapUrl` | Street address (one line), phone, office email, hours, map link. The footer shows "Head Office Location" and "Get Directions" only when the Islamabad address or map link is set |
+| `phone`, `email.general`, `email.tenders`, `email.careers` | Company-wide numbers and mailboxes |
+| `whatsapp` | International format, e.g. `+92 3xx xxxxxxx`. Shows the green WhatsApp button (header, mobile header) and the footer icon |
+| `social.linkedin / facebook / instagram / youtube / x / tiktok` | Full profile URLs. Each footer icon appears only when its URL is set |
+| `companyProfileUrl` | A real company-profile PDF (reserved; no button until a file exists) |
+| `NEXT_PUBLIC_SITE_URL` | The real domain (defaults to `https://umss.pk`) |
 
-Planned action: *Remove* timeline, benefits and the job listings (the Careers form itself stays, as an open
-application). Mission and values: *Rewrite* only if the owner approves wording.
+Forms deliver mail only when `RESEND_API_KEY`, `MAIL_FROM`, `RFQ_TO_EMAIL`, `CONTACT_TO_EMAIL` and
+`CAREERS_TO_EMAIL` are set; otherwise the forms answer with an honest error in production.
 
-## 8. Insights articles
+## 2. Brand and artwork
 
-Six articles in `content/dummy-articles.ts`, each attributed to one of the invented leaders with invented
-publish dates (2026-04-22 to 2026-09-18): site safety planning, fire protection inspection records, VRF and
-chilled water, coordinating shop drawings, HVAC maintenance planning, MEP handover documentation. The text is
-generic engineering explanation, but the attribution, dates and "we/UMS" statements are not real.
+- **Official logo SVG.** The header and footer use a logo rebuilt as an SVG from the mockup (gear, speed lines, italic
+  "UMS" in Montserrat). Replace it with the official artwork (`components/layout/Logo.tsx`). The low-resolution
+  `public/images/brand/ums-logo-from-mockup.png` is not used.
+- **High-resolution replacements needed** for the crops in `public/images/` (all are low resolution):
+  `hero/hero-building-desktop.png`, `hero/hero-building-mobile.png`, `services/hvac.png`, `services/fire-fighting.png`,
+  `delivery/01 to 05`, `projects/illustrative-hospital-1.png`, `projects/illustrative-hospital-2.png`,
+  `sections/*` (five files) and `sections/footer-building.png` (used now).
+- **Known flaws in the supplied crops:** `hero/hero-building-mobile.png` has a stray blue bar cropped in at its
+  top-left; `projects/illustrative-hospital-2.png` is only about 256 x 145 px; `sections/wireframe-building-projects.png`
+  has a small stray artefact at its bottom-left. Please supply clean files.
+- **Missing illustrations:** Plumbing, Electrical & ELV, Integrated MEP and Pools & Fountains have no artwork yet
+  (needed for the services slider in Phase F2).
+- **Colours.** The spec's navy values were adjusted to the values sampled from the mockups: footer `#032139`, hero
+  and dark sections `#03294a`. The bright blue `#1BA6E8` is kept as specified; white text on it is about 2.9:1, so
+  buttons use bold, 16px or larger text. Confirm the brand blue and navy.
 
-There are no `/insights` or `/insights/[slug]` routes at all, so the articles cannot be read anywhere (see the
-Phase A report, broken links).
+## 3. Projects
 
-Planned action: *Rewrite* authorship to "UMS" without a person or date, or hold the section back; decide in
-Phase D.
+Only the six project names are confirmed: Lady Reading Hospital, Buch International Hospital, Elanza Mall, Pakistan
+Cricket Board House, CGGC Head Office at Eighteen, Jazz Destiny. The spec states Buch International Hospital is in
+Multan and Lady Reading Hospital in Peshawar (both Healthcare). Please confirm those and supply sector and city for
+the others, UMS's role, and approved photographs. The two "Illustrative imagery" pictures are not real project photos.
 
-## 9. Service pages
+## 4. Clients and partners (Phase F3)
 
-`content/services.ts` (608 lines) and `content/industries.ts` are mostly generic descriptions of MEP
-disciplines and read as factual about the discipline, not about UMS. Spot-checked, not line-audited:
+`content/clients.ts` will list BNP, Venture Engineering, Banu Mukhtar, Mecatech and Gold Roof as `verified: false` with
+no logo files. Confirm each client relationship and supply the logo files; the section stays hidden until at least one
+entry is verified.
 
-- One reference to NFPA as an example standard (`services.ts:299`), worded as "commonly a recognised code".
-- "Pools & Fountains" is presented as a UMS service (also the Elanza and Ravi projects).
+## 5. Wording the owner must approve
 
-Planned action: *Keep* discipline content; confirm with the owner that all six disciplines are real UMS
-offerings. Line-by-line review happens in Phase E.
+- Mission, vision and values (`content/dummy.ts`, shown on `/about/mission-values`).
+- Quality, Safety & Delivery (`content/quality.ts`): general descriptions only.
+- Service and industry copy (`content/services.ts`, `content/industries.ts`): confirm all six disciplines are real
+  UMS offerings. The service "How it works" diagrams are generic illustrations, not UMS projects.
+- Insights articles (`content/articles.ts`): general technical articles, third person, attributed only to
+  "UMS Engineering Team", no dates. Confirm UMS is happy to publish them under that name.
+- Privacy policy (`content/legal.ts`): neutral template. The retention, rights and security statements need the
+  owner's confirmation and a legal review.
+- Careers: no listings are shown; add real roles in `content/careers.ts`.
 
-## 10. Other
+## 6. Statements in the supplied mockups that are NOT used
 
-| Item | Where |
-| --- | --- |
-| Privacy policy | Footer link hidden until `/privacy-policy` is built in Phase E from a neutral template. `content/legal.ts` is unused until then and needs legal review |
-| Insights | All Insights links hidden until `/insights` is built in Phase E. Articles will be attributed to "UMS Engineering Team" with no dates |
-| Newsletter form in the footer | **Removed in Phase B** (it had no backend and showed a fake success) |
-| Form delivery | **Fixed in Phase B:** in production, if `RESEND_API_KEY`, `MAIL_FROM` or the recipient (`RFQ_TO_EMAIL`, `CONTACT_TO_EMAIL`, `CAREERS_TO_EMAIL`) is missing, the form returns an error asking the visitor to contact UMS directly. Console output is development-only. **Owner must supply the sender and recipient addresses before launch** |
-| Stock photography (all hero, service, project, article images) | `content/images.ts`, `next.config.ts` allows `images.unsplash.com`; 1 TODO per image |
-| "AI assistant" / `AI_API_KEY` placeholder | `.env.example` (no code uses it) |
-| `TODO.md` | duplicates this list for the previous spec and describes the site as shipping "dummy data"; to be replaced by this file |
+The mockups contain wording and details that are not verified, so they are not on the site: the Credentials section
+text ("We maintain the essential professional qualifications..."), "operating since 2009", the street addresses,
+phone numbers and email addresses on the contact mockup, "WhatsApp: To be confirmed", and the people shown as UMS
+staff. Supply real facts and they can be used.

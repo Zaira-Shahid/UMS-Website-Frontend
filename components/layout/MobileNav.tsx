@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { ArrowUpRight, ChevronDown, X } from "lucide-react";
+import { ArrowUpRight, ChevronDown, Search, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { mainNav, quoteHrefForPath } from "@/content/navigation";
 import { services } from "@/content/services";
@@ -23,10 +23,12 @@ export function MobileNav({
   open,
   onClose,
   returnFocusRef,
+  onSearch,
 }: {
   open: boolean;
   onClose: () => void;
   returnFocusRef: RefObject<HTMLButtonElement | null>;
+  onSearch: () => void;
 }) {
   const pathname = usePathname();
   const reduce = useReducedMotion();
@@ -89,7 +91,7 @@ export function MobileNav({
           transition={t}
         >
           <div className="flex h-16 shrink-0 items-center justify-between border-b border-line px-5">
-            <Logo tone="dark" onClick={onClose} />
+            <Logo onClick={onClose} />
             <button
               type="button"
               data-autofocus
@@ -107,7 +109,7 @@ export function MobileNav({
                 const active = isActive(item.href) || (item.children?.some((c) => c.href !== "/" && isActive(c.href)) ?? false);
                 const isOpen = expanded === item.label;
                 const labelClass = cn(
-                  "flex min-h-14 w-full items-center justify-between font-heading text-2xl font-semibold uppercase tracking-[0.04em]",
+                  "flex min-h-14 w-full items-center justify-between font-heading text-xl font-bold",
                   active ? "text-blue" : "text-navy",
                 );
                 return (
@@ -169,6 +171,14 @@ export function MobileNav({
           </nav>
 
           <div className="shrink-0 space-y-3 border-t border-line bg-white p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
+            <button
+              type="button"
+              onClick={onSearch}
+              className="flex min-h-11 w-full items-center justify-center gap-2 rounded-ums text-[0.9375rem] font-semibold text-navy hover:text-blue"
+            >
+              <Search aria-hidden className="size-5" />
+              Search the site
+            </button>
             <Button href="/contact" onClick={onClose} variant="outline" size="lg" block>
               Contact us
             </Button>

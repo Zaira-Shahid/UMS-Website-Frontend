@@ -63,7 +63,7 @@ export default function NotFound() {
           The page you were looking for has moved, or never existed. Here are three runs that do connect.
         </p>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <Button href="/" variant="accent" size="lg" arrow>
+          <Button href="/" variant="primary" size="lg" arrow>
             Back to home
           </Button>
           <Button href="/services" variant="outline-light" size="lg">

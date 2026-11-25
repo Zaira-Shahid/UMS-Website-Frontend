@@ -3,16 +3,15 @@
 Corporate website frontend for UMS, a Pakistani MEP contractor (HVAC, fire fighting, electrical & ELV,
 plumbing, integrated MEP, pools & fountains) with offices in Islamabad and Lahore.
 
-`PROJECT_SPEC.md` (the Visual Overhaul spec) is the single source of truth for design, content rules and the
+`PROJECT_SPEC.md` (the final design spec, with the approved mockups in `docs/reference/mockups/`) is the single source of truth for design, content rules and the
 build phases. `CONTENT_TO_VERIFY.md` lists every company fact in the repo that the owner has not yet confirmed;
 nothing on it may be presented as fact until it is verified.
 
 ## Stack
 
-Next.js 15 (App Router) · React 19 · TypeScript (strict) · Tailwind CSS v4 · GSAP + ScrollTrigger · Motion
-(Framer Motion) · Lenis · lucide-react · react-hook-form + zod · Fuse.js · ESLint + Prettier
+Next.js 15 (App Router) · React 19 · TypeScript (strict) · Tailwind CSS v4 · Motion (Framer Motion) ·
+lucide-react · react-hook-form + zod · Fuse.js · ESLint + Prettier
 
-(`three`, `@react-three/*` and `flubber` are still installed but unused; they are removed in the cleanup phase.)
 
 ## Setup
 
@@ -35,9 +34,9 @@ npm run dev                  # http://localhost:3000
 ## Folder structure
 
 ```
-app/          routes (App Router); app/dev/ui and app/dev/shapes are internal showcases (to be removed)
-components/   ui/ primitives, home/ hero and homepage sections, layout/ shell, shapes/ legacy shape library
-lib/motion/   GSAP + ScrollTrigger registration, Lenis store, reduced-motion hooks
+app/          routes (App Router)
+components/   ui/ primitives (buttons, chips, cards, icons), home/ homepage sections, layout/ header and footer
+lib/motion/   reduced-motion hooks
 content/      typed company content — edit here, not in components
 lib/          utilities
 types/        shared TypeScript types
@@ -54,7 +53,7 @@ removed section by section as the pages are rebuilt; see `CONTENT_TO_VERIFY.md`.
 - Commits follow Conventional Commits: `type(scope): short imperative summary`
   (types: feat, fix, style, refactor, perf, docs, chore, test).
 - Before each push run lint, typecheck and a build (`NEXT_DIST_DIR=.next-test npm run build`).
-- The end of each phase is tagged `overhaul-phase-X` and pushed with `--follow-tags`.
+- The end of each phase is tagged `final-phase-FX` and pushed with `--follow-tags`.
 
 ## Forms and email
 

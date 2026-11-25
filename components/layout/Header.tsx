@@ -5,9 +5,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { ChevronDown, Menu, Search } from "lucide-react";
+import { ChevronDown, FileText, Menu, Search } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { WhatsappIcon } from "@/components/ui/SocialIcons";
 import { mainNav, quoteHrefForPath } from "@/content/navigation";
+import { contact } from "@/content/site";
 import { cn } from "@/lib/utils";
 import { Logo } from "./Logo";
 import { AboutPanel, ServicesPanel } from "./MegaMenu";
@@ -16,48 +18,43 @@ import { MobileNav } from "./MobileNav";
 /** Lazy: the palette and its Fuse index load only when first opened. */
 const SearchPalette = dynamic(() => import("@/components/search/SearchPalette"), { ssr: false });
 
-/** Only the homepage opens on a dark hero: light header text over a transparent bar. */
-const hasDarkHero = (pathname: string) => pathname === "/";
+/** The WhatsApp button exists only once a number is configured in content/site.ts. */
+const whatsappHref = contact.whatsapp ? `https://wa.me/${contact.whatsapp.replace(/\D/g, "")}` : "";
+
+function WhatsappButton({ className }: { className?: string }) {
+  if (!whatsappHref) return null;
+  return (
+    <a
+      href={whatsappHref}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Chat on WhatsApp (opens in a new tab)"
+      className={cn("flex size-11 shrink-0 items-center justify-center rounded-full bg-[#dff6e7] text-[#128c4a] transition-colors hover:bg-[#c9f0d7]", className)}
+    >
+      <WhatsappIcon className="size-6" />
+    </a>
+  );
+}
 
 /**
- * Site header (spec §7). Transparent over dark heroes, glass (backdrop blur) once scrolled; hides
- * when scrolling down and returns when scrolling up (or when focus enters it). Mega menus open on
- * hover with intent delay, on click and from the keyboard; Esc closes them.
+ * Site header (PROJECT_SPEC.md 4.1): white, sticky, with a soft shadow. The active item is blue with a thick rounded
+ * underline. Services and About open the light dropdown panels on hover (with intent delay), click and keyboard;
+ * Esc and an outside click close them.
  */
 export function Header() {
   const pathname = usePathname();
   const reduce = useReducedMotion();
-  const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchMounted, setSearchMounted] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const hoverTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-  const lastY = useRef(0);
   const focusFirst = useRef(false);
   const navRef = useRef<HTMLElement>(null);
 
+  // A new page starts with every menu closed.
   useEffect(() => {
-    lastY.current = window.scrollY;
-    const onScroll = () => {
-      const y = window.scrollY;
-      setScrolled(y > 40);
-      const dy = y - lastY.current;
-      if (Math.abs(dy) > 6) {
-        setHidden(dy > 0 && y > 240);
-        lastY.current = y;
-      }
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // A new page always starts with the header visible.
-  useEffect(() => {
-    setHidden(false);
     setOpenMenu(null);
   }, [pathname]);
 
@@ -70,7 +67,7 @@ export function Header() {
   const closeMobile = useCallback(() => setMobileOpen(false), []);
   const closeMenus = useCallback(() => setOpenMenu(null), []);
 
-  // ⌘K / Ctrl+K
+  // Ctrl+K / Cmd+K
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
@@ -86,9 +83,7 @@ export function Header() {
   useEffect(() => {
     if (!openMenu || !focusFirst.current) return;
     focusFirst.current = false;
-    const id = requestAnimationFrame(() =>
-      document.querySelector<HTMLAnchorElement>(`#menu-${openMenu} ul a[href]`)?.focus(),
-    );
+    const id = requestAnimationFrame(() => document.querySelector<HTMLAnchorElement>(`#menu-${openMenu} ul a[href]`)?.focus());
     return () => cancelAnimationFrame(id);
   }, [openMenu]);
 
@@ -102,7 +97,7 @@ export function Header() {
     return () => document.removeEventListener("pointerdown", onDown);
   }, [openMenu]);
 
-  // Esc closes an open mega menu wherever focus is (hover-opened menus have no focus inside).
+  // Esc closes an open dropdown wherever focus is, and returns focus to its trigger.
   useEffect(() => {
     if (!openMenu) return;
     const onKey = (e: KeyboardEvent) => {
@@ -120,13 +115,7 @@ export function Header() {
     hoverTimer.current = setTimeout(() => setOpenMenu(label), delay);
   };
 
-  const darkRoute = hasDarkHero(pathname);
-  const menuOpen = openMenu !== null;
-  const glass = scrolled || menuOpen || mobileOpen;
-  // Text is light on dark routes (transparent or dark glass) and navy on light routes.
-  const light = darkRoute;
-  const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
+  const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`));
   const itemActive = (item: (typeof mainNav)[number]) =>
     isActive(item.href) || (item.children?.some((c) => c.href !== "/" && isActive(c.href)) ?? false);
 
@@ -139,51 +128,26 @@ export function Header() {
         transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] as const },
       };
 
-  const linkTone = light ? "text-white hover:text-cyan-300" : "text-navy hover:text-blue";
+  const quoteLink = quoteHrefForPath(pathname);
 
   return (
     <>
-      <header
-        onFocusCapture={() => setHidden(false)}
-        className={cn(
-          "fixed inset-x-0 top-0 z-50 transition-[transform,background-color,box-shadow,backdrop-filter] duration-300",
-          hidden && !menuOpen && !mobileOpen && !searchOpen ? "-translate-y-full" : "translate-y-0",
-          glass
-            ? light
-              ? "border-b border-white/10 bg-navy-950/75 backdrop-blur-xl"
-              : "border-b border-line bg-white/85 backdrop-blur-xl"
-            : light
-              ? "bg-transparent"
-              : "bg-white",
-        )}
-      >
-        <div
-          className={cn(
-            "mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 2xl:gap-6 transition-[height] duration-300 sm:px-8",
-            scrolled ? "h-16" : "h-[var(--header-h)]",
-          )}
-        >
-          <Logo tone={light ? "light" : "dark"} />
+      <header className="fixed inset-x-0 top-0 z-50 bg-white shadow-[0_2px_16px_-6px_rgb(15_42_74/0.2)]">
+        <div className="wrap flex h-16 items-center justify-between gap-4 xl:h-[var(--header-h)] 2xl:gap-6">
+          <Logo />
 
           <nav ref={navRef} aria-label="Main" className="hidden xl:block">
-            <ul className="flex items-center gap-5 2xl:gap-8">
+            <ul className="flex items-center gap-3 min-[1400px]:gap-6 2xl:gap-8">
               {mainNav.map((item) => {
                 const hasMenu = Boolean(item.children);
                 const open = openMenu === item.label;
                 const active = itemActive(item);
                 const itemClass = cn(
-                  "relative inline-flex items-center gap-1 whitespace-nowrap py-2 font-heading text-[0.9375rem] font-semibold uppercase tracking-[0.08em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300",
-                  active || open ? (light ? "text-cyan-300" : "text-blue") : linkTone,
+                  "relative inline-flex items-center gap-1 py-2 text-[1.0625rem] transition-colors min-[1400px]:text-[1.125rem] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue",
+                  active || open ? "font-semibold text-blue" : "font-medium text-navy hover:text-blue",
                 );
                 const underline = active ? (
-                  <svg
-                    aria-hidden
-                    viewBox="0 0 40 8"
-                    className="pointer-events-none absolute -bottom-1 left-1/2 h-2 w-9 -translate-x-1/2"
-                    fill="none"
-                  >
-                    <path d="M3 5.5C12 1.5 28 1.5 37 5.5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
-                  </svg>
+                  <span aria-hidden className="pointer-events-none absolute inset-x-0 -bottom-1 h-1 rounded-full bg-blue" />
                 ) : null;
                 return (
                   <li
@@ -229,12 +193,7 @@ export function Header() {
                         {underline}
                       </button>
                     ) : (
-                      <Link
-                        href={item.href}
-                        aria-current={active ? "page" : undefined}
-                        onClick={closeMenus}
-                        className={itemClass}
-                      >
+                      <Link href={item.href} aria-current={active ? "page" : undefined} onClick={closeMenus} className={itemClass}>
                         {item.label}
                         {underline}
                       </Link>
@@ -243,7 +202,7 @@ export function Header() {
                     <AnimatePresence>
                       {hasMenu && open && (
                         // The top padding is a hover bridge: the pointer never leaves the <li> on its way to the panel.
-                        <motion.div id={`menu-${item.label}`} {...panelMotion} className="absolute left-0 top-full z-10 pt-6">
+                        <motion.div id={`menu-${item.label}`} {...panelMotion} className="absolute left-0 top-full z-10 pt-5">
                           {item.label === "Services" ? (
                             <ServicesPanel onNavigate={closeMenus} />
                           ) : (
@@ -258,21 +217,31 @@ export function Header() {
             </ul>
           </nav>
 
-          <div className="flex items-center gap-2 sm:gap-3">
+          {/* Desktop actions */}
+          <div className="hidden items-center gap-3 xl:flex">
             <button
               type="button"
               onClick={openSearch}
               aria-label="Search (Ctrl+K)"
               aria-keyshortcuts="Control+K Meta+K"
-              className={cn("flex size-11 items-center justify-center transition-colors", linkTone)}
+              className="flex size-11 items-center justify-center rounded-full bg-[#e4f2fb] text-navy transition-colors hover:bg-[#d2eaf8]"
             >
               <Search className="size-5" aria-hidden />
             </button>
-            <div className="hidden xl:block">
-              <Button href={quoteHrefForPath(pathname)} variant={"primary"} size="md">
-                Request a Quote
-              </Button>
-            </div>
+            <Button href={quoteLink} variant="navy" className="rounded-full pl-4 pr-5 xl:px-4 min-[1400px]:pl-4 min-[1400px]:pr-5">
+              <FileText aria-hidden className="size-5 text-blue" />
+              Request a Quote
+            </Button>
+            <WhatsappButton />
+          </div>
+
+          {/* Mobile and tablet actions */}
+          <div className="flex items-center gap-1.5 min-[420px]:gap-2 xl:hidden">
+            <Button href={quoteLink} variant="navy" size="sm" className="rounded-full pl-3 pr-3.5 max-[419px]:text-[0.8125rem] min-[420px]:pr-4">
+              <FileText aria-hidden className="size-4 text-blue max-[399px]:hidden" />
+              Get a Quote
+            </Button>
+            <WhatsappButton className="size-10 max-[419px]:size-9" />
             <button
               ref={menuButtonRef}
               type="button"
@@ -280,18 +249,23 @@ export function Header() {
               aria-label="Open menu"
               aria-expanded={mobileOpen}
               aria-controls="mobile-menu"
-              className={cn(
-                "flex size-11 items-center justify-center border transition-colors xl:hidden",
-                light ? "border-white/40 text-white hover:border-white" : "border-line text-navy hover:border-navy",
-              )}
+              className="flex size-10 items-center justify-center text-navy min-[420px]:size-11"
             >
-              <Menu className="size-5" aria-hidden />
+              <Menu className="size-7" aria-hidden />
             </button>
           </div>
         </div>
       </header>
 
-      <MobileNav open={mobileOpen} onClose={closeMobile} returnFocusRef={menuButtonRef} />
+      <MobileNav
+        open={mobileOpen}
+        onClose={closeMobile}
+        returnFocusRef={menuButtonRef}
+        onSearch={() => {
+          closeMobile();
+          openSearch();
+        }}
+      />
       {searchMounted && <SearchPalette open={searchOpen} onClose={closeSearch} />}
     </>
   );

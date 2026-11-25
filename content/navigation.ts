@@ -5,7 +5,7 @@ import { services } from "./services";
 export const mainNav: NavItem[] = [
   { label: "Home", href: "/" },
   {
-    label: "About UMS",
+    label: "About",
     href: "/about",
     children: [
       { label: "Overview", href: "/about", description: "Who we are and where we work." },
