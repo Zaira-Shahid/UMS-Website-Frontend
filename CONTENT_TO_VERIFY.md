@@ -43,6 +43,28 @@ Forms deliver mail only when `RESEND_API_KEY`, `MAIL_FROM`, `RFQ_TO_EMAIL`, `CON
   and dark sections `#03294a`. The bright blue `#1BA6E8` is kept as specified; white text on it is about 2.9:1, so
   buttons use bold, 16px or larger text. Confirm the brand blue and navy.
 
+## 2b. Services page photographs (Section 13.3)
+
+The Services pages currently use stand-in Unsplash photos already in `content/images.ts` (plant-room valves, red pipes,
+a breaker, a pool, building exteriors). Several do not match their service well (for example the HVAC card shows a
+plant room with water pipework, and Integrated MEP shows a concrete ceiling). Automated downloading of new photos was
+blocked in this environment, so please supply (or approve) free-licence, commercial-use photos with no visible brand
+names or logos. Save them as `public/images/services/<slug>/<role>.jpg` (roles: `card`, `hero`, `included`, `app-1`,
+`app-2`) and they replace the stand-ins automatically (see `lib/service-images.ts`). Record each file's source URL and
+photographer here.
+
+| Service | card / hero | included | app-1 / app-2 |
+|---|---|---|---|
+| Integrated MEP | coordinated ceiling services (ducts, pipes, trays) | engineers reviewing a BIM model | commercial building / industrial facility exteriors |
+| HVAC | rooftop air handling unit and ductwork | plant room with chillers | hospital / hotel exteriors |
+| Fire Fighting | red sprinkler pipework or fire pump room | pump room | commercial building / residential tower exteriors |
+| Plumbing | blue water pipework and valves | pump and tank room | residential building / school or university exteriors |
+| Electrical & ELV | LT panels and cable trays | cable containment | commercial building / industrial facility exteriors |
+| Pools & Fountains | pool with fountain jets | pool plant room | hotel / residential development exteriors |
+
+The three circles on `/services` ("Explore Our Project Experience") also use stand-in building photos labelled
+"Illustrative imagery".
+
 ## 3. Projects
 
 Only the six project names are confirmed: Lady Reading Hospital, Buch International Hospital, Elanza Mall, Pakistan

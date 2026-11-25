@@ -214,19 +214,7 @@ label[for],
   background-size: 24px 24px;
 }
 
-/* Flowing dashes: service diagrams use dg-flow, the 404 page uses pipe-fluid */
-@keyframes ums-flow {
-  to {
-    stroke-dashoffset: -24;
-  }
-}
-.dg-flow {
-  stroke-dasharray: 2 12;
-  animation: ums-flow 1.8s linear infinite;
-}
-.dg-flow-rev {
-  animation-direction: reverse;
-}
+/* 404 page: flowing dashes */
 @keyframes ums-fluid {
   to {
     stroke-dashoffset: -48;
@@ -235,17 +223,6 @@ label[for],
 .pipe-fluid {
   stroke-dasharray: 6 10;
   animation: ums-fluid 1.4s linear infinite;
-}
-
-/* On phones the service diagrams are small, so numbered badges are drawn larger */
-.sec-badge {
-  transform-box: fill-box;
-  transform-origin: center;
-}
-@media (max-width: 767px) {
-  .sec-badge {
-    transform: scale(1.9);
-  }
 }
 
 /* 404 pipe leak */
@@ -290,8 +267,7 @@ label[for],
 @media (prefers-reduced-motion: reduce) {
   .nf-drip,
   .nf-puddle,
-  .pipe-fluid,
-  .dg-flow {
+  .pipe-fluid {
     animation: none !important;
   }
   *,
