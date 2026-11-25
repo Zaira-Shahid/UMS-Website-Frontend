@@ -1,6 +1,6 @@
 import { projects } from "@/content/projects";
 import { fieldErrors, rfqSchema, RFQ_UPLOAD_RULES } from "@/lib/forms/schemas";
-import { deliverMail, parseRecipients } from "@/lib/server/mail";
+import { deliverMail, MAIL_UNAVAILABLE_MESSAGE, MailNotConfiguredError, parseRecipients } from "@/lib/server/mail";
 import { guard, honeypotTripped, json, logServerError, makeReference, readUploads } from "@/lib/server/http";
 import { rfqTeamEmail, rfqVisitorEmail } from "@/lib/server/templates";
 
@@ -62,6 +62,7 @@ export async function POST(req: Request) {
     await deliverMail(rfqTeamEmail(data, ref, team, related?.name, attachments));
   } catch (err) {
     logServerError("rfq", err);
+    if (err instanceof MailNotConfiguredError) return json({ ok: false, error: MAIL_UNAVAILABLE_MESSAGE }, 503);
     return json({ ok: false, error: "We could not send your request just now. Please try again in a few minutes." }, 502);
   }
   // The visitor confirmation is a courtesy: if it fails, the request itself still succeeded.

@@ -1,6 +1,6 @@
 import { careers } from "@/content/careers";
 import { careersSchema, CV_UPLOAD_RULES, fieldErrors, GENERAL_APPLICATION } from "@/lib/forms/schemas";
-import { deliverMail, parseRecipients } from "@/lib/server/mail";
+import { deliverMail, MAIL_UNAVAILABLE_MESSAGE, MailNotConfiguredError, parseRecipients } from "@/lib/server/mail";
 import { guard, honeypotTripped, json, logServerError, makeReference, readUploads } from "@/lib/server/http";
 import { careersTeamEmail, careersVisitorEmail } from "@/lib/server/templates";
 
@@ -56,6 +56,7 @@ export async function POST(req: Request) {
     await deliverMail(careersTeamEmail(parsed.data, ref, team, files));
   } catch (err) {
     logServerError("careers", err);
+    if (err instanceof MailNotConfiguredError) return json({ ok: false, error: MAIL_UNAVAILABLE_MESSAGE }, 503);
     return json({ ok: false, error: "We could not send your application just now. Please try again in a few minutes." }, 502);
   }
   try {

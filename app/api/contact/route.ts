@@ -1,5 +1,5 @@
 import { contactSchema, fieldErrors } from "@/lib/forms/schemas";
-import { deliverMail, parseRecipients } from "@/lib/server/mail";
+import { deliverMail, MAIL_UNAVAILABLE_MESSAGE, MailNotConfiguredError, parseRecipients } from "@/lib/server/mail";
 import { guard, honeypotTripped, json, logServerError, makeReference } from "@/lib/server/http";
 import { contactTeamEmail, contactVisitorEmail } from "@/lib/server/templates";
 
@@ -36,6 +36,7 @@ export async function POST(req: Request) {
     await deliverMail(contactTeamEmail(parsed.data, ref, team));
   } catch (err) {
     logServerError("contact", err);
+    if (err instanceof MailNotConfiguredError) return json({ ok: false, error: MAIL_UNAVAILABLE_MESSAGE }, 503);
     return json({ ok: false, error: "We could not send your message just now. Please try again in a few minutes." }, 502);
   }
   try {

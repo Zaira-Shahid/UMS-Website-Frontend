@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { FacebookIcon, InstagramIcon, LinkedinIcon, YoutubeIcon } from "@/components/ui/SocialIcons";
-import { NewsletterForm } from "@/components/ui/NewsletterForm";
 import { emails } from "@/content/dummy";
 import { industries } from "@/content/industries";
 import { quoteHref } from "@/content/navigation";
@@ -97,7 +96,6 @@ export function Footer() {
                   </li>
                 ))}
               </ul>
-              <NewsletterForm className="mt-8 max-w-sm" />
             </div>
 
             <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-4 lg:col-span-8">

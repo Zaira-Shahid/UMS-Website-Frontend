@@ -1,9 +1,11 @@
 /**
  * Mail delivery via the Resend HTTP API (plain fetch — no SDK needed).
  *
- * If RESEND_API_KEY or MAIL_FROM is missing, or a message has no recipient, the
- * message is printed to the server console instead so forms still work in
- * development. Secrets are never logged: only the *reason* a fallback happened.
+ * In development, if RESEND_API_KEY or MAIL_FROM is missing, or a message has no recipient, the
+ * message is printed to the server console so forms still work locally. In production the same
+ * situation throws MailNotConfiguredError and the routes answer with an honest error: a visitor is
+ * never told a submission succeeded when nothing was sent. Secrets are never logged: only the
+ * *reason* is.
  * Server-only — import from route handlers, never from client components.
  */
 
@@ -23,6 +25,13 @@ export interface MailMessage {
 
 export type MailResult = { mode: "resend" | "console" };
 
+/** Thrown in production when email delivery is not configured (missing key, sender or recipient). */
+export class MailNotConfiguredError extends Error {}
+
+/** What the visitor sees when delivery is not configured. */
+export const MAIL_UNAVAILABLE_MESSAGE =
+  "Online submissions are not available right now. Please email or call us directly instead.";
+
 /** Split a comma/semicolon separated env value into trimmed, non-empty addresses. */
 export const parseRecipients = (value: string | undefined): string[] =>
   (value ?? "")
@@ -35,6 +44,7 @@ export const oneLine = (value: string, max = 150) =>
   value.replace(/[\u0000-\u001f\u007f]+/g, " ").replace(/\s+/g, " ").trim().slice(0, max);
 
 function consoleFallback(msg: MailMessage, reason: string): MailResult {
+  if (process.env.NODE_ENV === "production") throw new MailNotConfiguredError(reason);
   console.info(
     [
       `\n[mail:console] ${reason} — message not sent, printed instead.`,
