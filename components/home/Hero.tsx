@@ -12,8 +12,8 @@ import { chipOrder, serviceLabel } from "@/content/service-labels";
  */
 export function Hero() {
   const common = { alt: "Cutaway of a multi-storey building showing the HVAC, fire, plumbing, electrical and pool systems inside it" };
-  const { props: desktop } = getImageProps({ ...common, src: "/images/hero/hero-building-desktop.png", width: 855, height: 512, sizes: "(min-width: 1024px) 860px, 100vw" });
-  const { props: mobile } = getImageProps({ ...common, src: "/images/hero/hero-building-mobile.png", width: 980, height: 590, sizes: "100vw" });
+  const { props: desktop } = getImageProps({ ...common, src: "/images/hero/hero-building-desktop.png", width: 855, height: 512, priority: true, sizes: "(min-width: 1024px) 860px, 100vw" });
+  const { props: mobile } = getImageProps({ ...common, src: "/images/hero/hero-building-mobile.png", width: 980, height: 590, priority: true, sizes: "100vw" });
   const { srcSet: desktopSet } = desktop;
   const { srcSet: mobileSet, ...img } = mobile;
 

@@ -63,7 +63,8 @@ export function Button(props: ButtonProps) {
   const classes = cn(buttonStyles({ variant, size }), block && "w-full", className);
 
   return "href" in rest && rest.href !== undefined ? (
-    <Link {...(rest as ComponentProps<typeof Link>)} className={classes}>
+    // The quote page carries the whole multi-step form, so it is not prefetched from every page's buttons.
+    <Link prefetch={typeof rest.href === "string" && rest.href.startsWith("/request-a-quote") ? false : undefined} {...(rest as ComponentProps<typeof Link>)} className={classes}>
       {inner}
     </Link>
   ) : (

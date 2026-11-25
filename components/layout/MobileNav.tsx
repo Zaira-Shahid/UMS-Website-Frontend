@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type RefObject } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ArrowUpRight, ChevronDown, Search, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { mainNav, quoteHrefForPath } from "@/content/navigation";
@@ -31,7 +30,6 @@ export function MobileNav({
   onSearch: () => void;
 }) {
   const pathname = usePathname();
-  const reduce = useReducedMotion();
   const panelRef = useRef<HTMLDivElement>(null);
   const [expanded, setExpanded] = useState<string | null>(null);
 
@@ -73,22 +71,18 @@ export function MobileNav({
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
 
-  const t = reduce ? { duration: 0 } : { duration: 0.3, ease: [0.22, 1, 0.36, 1] as const };
+  if (!open) return null;
 
   return (
-    <AnimatePresence>
+    <>
       {open && (
-        <motion.div
+        <div
           ref={panelRef}
           id="mobile-menu"
           role="dialog"
           aria-modal="true"
           aria-label="Main menu"
-          className="fixed inset-0 z-[60] flex flex-col overflow-hidden bg-white text-navy xl:hidden"
-          initial={reduce ? false : { opacity: 0, y: -12 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -12 }}
-          transition={t}
+          className="animate-menu-in fixed inset-0 z-[60] flex flex-col overflow-hidden bg-white text-navy xl:hidden"
         >
           <div className="flex h-16 shrink-0 items-center justify-between border-b border-line px-5">
             <Logo onClick={onClose} />
@@ -186,8 +180,8 @@ export function MobileNav({
               Request a Quote
             </Button>
           </div>
-        </motion.div>
+        </div>
       )}
-    </AnimatePresence>
+    </>
   );
 }

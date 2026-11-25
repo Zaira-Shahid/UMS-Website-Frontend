@@ -4,7 +4,6 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ChevronDown, FileText, Menu, Search } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { WhatsappIcon } from "@/components/ui/SocialIcons";
@@ -43,7 +42,6 @@ function WhatsappButton({ className }: { className?: string }) {
  */
 export function Header() {
   const pathname = usePathname();
-  const reduce = useReducedMotion();
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -119,15 +117,6 @@ export function Header() {
   const itemActive = (item: (typeof mainNav)[number]) =>
     isActive(item.href) || (item.children?.some((c) => c.href !== "/" && isActive(c.href)) ?? false);
 
-  const panelMotion = reduce
-    ? { initial: false as const, animate: { opacity: 1 }, exit: { opacity: 0 }, transition: { duration: 0 } }
-    : {
-        initial: { opacity: 0, y: -8 },
-        animate: { opacity: 1, y: 0 },
-        exit: { opacity: 0, y: -8 },
-        transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] as const },
-      };
-
   const quoteLink = quoteHrefForPath(pathname);
 
   return (
@@ -199,18 +188,16 @@ export function Header() {
                       </Link>
                     )}
 
-                    <AnimatePresence>
-                      {hasMenu && open && (
+                    {hasMenu && open && (
                         // The top padding is a hover bridge: the pointer never leaves the <li> on its way to the panel.
-                        <motion.div id={`menu-${item.label}`} {...panelMotion} className="absolute left-0 top-full z-10 pt-5">
+                        <div id={`menu-${item.label}`} className="animate-menu-in absolute left-0 top-full z-10 pt-5">
                           {item.label === "Services" ? (
                             <ServicesPanel onNavigate={closeMenus} />
                           ) : (
                             <AboutPanel links={item.children ?? []} onNavigate={closeMenus} />
                           )}
-                        </motion.div>
+                        </div>
                       )}
-                    </AnimatePresence>
                   </li>
                 );
               })}
