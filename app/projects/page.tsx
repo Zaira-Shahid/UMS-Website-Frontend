@@ -49,14 +49,15 @@ export default function ProjectsPage() {
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(d) }} />
       ))}
       <PageHero
+        sketch="integrated-mep"
         eyebrow="Our Projects"
         title="Projects"
         crumbs={[{ label: "Home", href: "/" }, { label: "Projects" }]}
         titleId="projects-title"
       />
-      <section aria-label="Project list" className="relative bg-navy-900 pb-20 text-white md:pb-28">
+      <section aria-label="Project list" className="bg-white py-14 md:py-20">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <ProjectList />
+          <ProjectList tone="light" large />
         </div>
       </section>
     </>

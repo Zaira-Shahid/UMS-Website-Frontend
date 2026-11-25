@@ -8,7 +8,7 @@ import { breadcrumbLd, pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Industries",
   description:
-    "The sectors UMS serves — healthcare, commercial and retail, residential and mixed-use, hospitality, education and institutional, industrial and warehousing — and the MEP services each typically needs.",
+    "Healthcare, commercial and retail, residential and mixed-use, hospitality, education and institutional, industrial and warehousing: the MEP services each sector typically needs.",
   path: "/industries",
 });
 
@@ -19,9 +19,10 @@ export default function IndustriesPage() {
     <>
       <JsonLd data={breadcrumbLd([{ name: "Home", path: "/" }, { name: "Industries", path: "/industries" }])} />
       <PageHero
+        sketch="integrated-mep"
         eyebrow="Industries"
         title="Buildings that depend on their services"
-        intro="Six sectors, each with its own demands. See the services each typically needs and where UMS has worked."
+        intro="Six sectors, each with its own demands, and the services each typically needs."
         crumbs={[{ label: "Home", href: "/" }, { label: "Industries" }]}
         titleId="industries-title"
       />

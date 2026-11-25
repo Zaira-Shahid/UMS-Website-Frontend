@@ -58,6 +58,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(structuredData) }} />
       <PageHero
+        sketch="integrated-mep"
         eyebrow="Project"
         title={p.name}
         crumbs={[{ label: "Home", href: "/" }, { label: "Projects", href: "/projects" }, { label: p.name }]}
