@@ -11,7 +11,7 @@ export function Hero() {
         </h1>
         <p className="mt-5 text-xl text-white/85">Six disciplines. One coordinated delivery.</p>
         <div className="mt-8 flex flex-wrap gap-3">
-          <Button href="/projects" variant="accent" size="lg">
+          <Button href="/projects" variant="primary" size="lg">
             Explore Projects
           </Button>
           <Button href={quoteHref()} variant="outline-light" size="lg">

@@ -45,7 +45,6 @@ export function SectorSection({ industry: i, index }: { industry: Industry; inde
                 href={quoteHref({ sector: i.slug, service: i.services.join(",") })}
                 variant="primary"
                 size="lg"
-                magnetic
                 arrow
                 className="h-auto min-h-14 w-full whitespace-normal py-3 text-center sm:w-auto"
               >

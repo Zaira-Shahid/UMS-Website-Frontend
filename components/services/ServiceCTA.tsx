@@ -43,7 +43,6 @@ export function ServiceCTA({ service }: { service: Service }) {
             href={quoteHref({ service: service.slug })}
             variant={a.button}
             size="lg"
-            magnetic
             arrow
             className="h-auto min-h-14 w-full whitespace-normal py-3 text-center sm:w-auto"
           >

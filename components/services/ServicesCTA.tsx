@@ -28,7 +28,7 @@ export function ServicesCTA() {
               several, or ask us to recommend the scope.
             </p>
             <div className="mt-8">
-              <Button href={quoteHref()} variant="accent" size="lg" magnetic arrow>
+              <Button href={quoteHref()} variant="primary" size="lg" arrow>
                 Request a Quote
               </Button>
             </div>

@@ -16,7 +16,7 @@ export const accents = {
     rule: "bg-cyan-300",
     hoverBg: "hover:bg-blue",
     badge: "cyan" as const,
-    button: "accent" as const,
+    button: "primary" as const,
     buttonOnLight: "primary" as const,
   },
   fire: {

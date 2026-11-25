@@ -31,7 +31,7 @@ export const contact = {
   /** International format, e.g. "+92 300 0000000". Used for the wa.me link. */
   whatsapp: "",
   /** Full profile URLs. */
-  social: { linkedin: "", facebook: "", instagram: "", youtube: "" },
+  social: { linkedin: "", facebook: "", instagram: "", youtube: "", x: "", tiktok: "" },
   /** Path or URL of a real company profile PDF. Leave empty until one exists. */
   companyProfileUrl: "",
 };

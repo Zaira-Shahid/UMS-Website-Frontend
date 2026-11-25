@@ -495,7 +495,7 @@ export function RfqForm({ preselect }: { preselect: RfqPreselect }) {
                 <span className="inline-flex items-center gap-2">Next <ArrowRight aria-hidden className="size-4" /></span>
               </Button>
             ) : (
-              <Button type="submit" variant="accent" disabled={submitting} aria-busy={submitting}>
+              <Button type="submit" variant="primary" disabled={submitting} aria-busy={submitting}>
                 {submitting ? "Sending…" : "Submit request"}
               </Button>
             )}

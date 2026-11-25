@@ -39,7 +39,7 @@ export function ServiceHero({ service }: { service: Service }) {
             </p>
 
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Button href={quoteHref({ service: service.slug })} variant={a.buttonOnLight} size="lg" magnetic arrow className="h-auto min-h-14 w-full whitespace-normal py-3 text-center sm:w-auto">
+              <Button href={quoteHref({ service: service.slug })} variant={a.buttonOnLight} size="lg" arrow className="h-auto min-h-14 w-full whitespace-normal py-3 text-center sm:w-auto">
                 Request a Quote for {service.shortName}
               </Button>
               <Button href="/services" variant="outline" size="lg" className="h-auto min-h-14 w-full whitespace-normal py-3 text-center sm:w-auto">

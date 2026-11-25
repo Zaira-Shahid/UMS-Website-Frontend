@@ -147,7 +147,7 @@ export function CareersForm() {
 
         <div className="mt-8 flex flex-col gap-4 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-muted">We use your details only to consider your application.</p>
-          <Button type="submit" variant="accent" disabled={submitting} aria-busy={submitting}>
+          <Button type="submit" variant="primary" disabled={submitting} aria-busy={submitting}>
             {submitting ? "Sending…" : "Submit application"}
           </Button>
         </div>

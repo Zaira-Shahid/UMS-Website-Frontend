@@ -69,7 +69,7 @@ export function Footer() {
                 <Button href="/contact" variant="outline-light" size="sm">
                   Contact us
                 </Button>
-                <Button href={quoteHref()} variant="accent" size="sm">
+                <Button href={quoteHref()} variant="primary" size="sm">
                   Request a Quote
                 </Button>
               </div>

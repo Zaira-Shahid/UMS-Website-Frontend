@@ -36,3 +36,30 @@ export function YoutubeIcon({ className }: { className?: string }) {
     </svg>
   );
 }
+
+export function XIcon({ className }: { className?: string }) {
+  return (
+    <svg {...common} className={className}>
+      <path d="M4.5 4.5h3.2l11.8 15h-3.2z" />
+      <path d="M19 4.5l-6.2 6.9M5 19.5l6.2-6.9" />
+    </svg>
+  );
+}
+
+export function TiktokIcon({ className }: { className?: string }) {
+  return (
+    <svg {...common} className={className}>
+      <path d="M14 4v10.2a3.4 3.4 0 1 1-3.4-3.4" />
+      <path d="M14 4c.4 2.4 2 3.9 4.6 4.1" />
+    </svg>
+  );
+}
+
+export function WhatsappIcon({ className }: { className?: string }) {
+  return (
+    <svg {...common} className={className}>
+      <path d="M3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 8 19.5z" />
+      <path d="M9.2 8.8c.2 2.6 2.4 5 5.3 5.9l1.2-1.3-1.9-1-.9.7c-.9-.4-1.7-1.3-2.1-2.2l.7-.9-1-1.9z" />
+    </svg>
+  );
+}

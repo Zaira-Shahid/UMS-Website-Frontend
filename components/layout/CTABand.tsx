@@ -21,7 +21,7 @@ export function CTABand() {
           </p>
         </div>
         <div className="flex flex-col gap-3 sm:flex-row">
-          <Button href={quoteHref()} variant="accent" size="lg" magnetic arrow>
+          <Button href={quoteHref()} variant="primary" size="lg" arrow>
             Request a Quote
           </Button>
           <Button href="/contact" variant="outline-light" size="lg">

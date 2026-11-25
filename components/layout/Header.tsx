@@ -269,7 +269,7 @@ export function Header() {
               <Search className="size-5" aria-hidden />
             </button>
             <div className="hidden xl:block">
-              <Button href={quoteHrefForPath(pathname)} variant={light ? "accent" : "primary"} size="md" magnetic>
+              <Button href={quoteHrefForPath(pathname)} variant={"primary"} size="md">
                 Request a Quote
               </Button>
             </div>

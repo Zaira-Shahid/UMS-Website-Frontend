@@ -81,9 +81,8 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
           </div>
           <Button
             href={quoteHref({ project: p.slug })}
-            variant="accent"
+            variant="primary"
             size="lg"
-            magnetic
             arrow
             className="w-full sm:w-auto"
           >
