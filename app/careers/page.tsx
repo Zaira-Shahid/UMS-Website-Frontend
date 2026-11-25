@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import { CareersForm } from "@/components/forms/CareersForm";
 import { PageHero } from "@/components/layout/PageHero";
-import { Badge } from "@/components/ui/Badge";
 import { careers } from "@/content/careers";
 import { site } from "@/content/site";
 import { breadcrumbLd, jsonLd } from "@/lib/seo";
 
 const description =
-  "Careers at UMS — Ultimate Mechanical Solutions. See open positions and apply with your CV, or send a general application.";
+  "Careers at UMS — Ultimate Mechanical Solutions. Send your CV with a general application.";
 
 export const metadata: Metadata = {
   title: "Careers",
@@ -23,7 +22,6 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title: `Careers | ${site.name}`, description },
 };
 
-/** Minimal Phase 6 page: open positions and the application form. The full design follows in Phase 7. */
 export default function CareersPage() {
   return (
     <>
@@ -41,7 +39,7 @@ export default function CareersPage() {
       <PageHero
         eyebrow="Careers"
         title="Work with UMS"
-        intro="Interested in building mechanical, electrical and plumbing systems with us? Apply below."
+        intro="Interested in building mechanical, electrical and plumbing systems with us? Send us your CV."
         crumbs={[{ label: "Home", href: "/" }, { label: "Careers" }]}
       />
 
@@ -51,17 +49,13 @@ export default function CareersPage() {
             Open positions
           </h2>
           {careers.length === 0 ? (
-            <div className="mt-6 max-w-2xl border border-dashed border-line bg-offwhite p-6">
-              <Badge tone="outline">No openings right now</Badge>
-              <p className="mt-3 text-ink">
-                There are no open positions at the moment. Send us your CV using the form below and we
-                will keep it on file.
-              </p>
-            </div>
+            <p className="mt-4 max-w-2xl text-lg text-ink">
+              No open positions right now — send us your CV using the form below and we will keep it on file.
+            </p>
           ) : (
-            <ul className="mt-6 grid gap-4 md:grid-cols-2">
+            <ul className="mt-6 divide-y divide-line border-y border-line">
               {careers.map((c) => (
-                <li key={c.slug} className="border border-line p-5">
+                <li key={c.slug} className="py-5">
                   <h3 className="font-heading text-lg font-semibold uppercase text-navy">{c.title}</h3>
                   <p className="mt-1 text-sm text-muted">
                     {c.department} · {c.location} · {c.type} · {c.experience}
