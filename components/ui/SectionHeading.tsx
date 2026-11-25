@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import { PipeLine } from "./PipeLine";
 
 /** Uppercase cyan eyebrow with a short leading rule (§3.2). */
 export function Eyebrow({
@@ -43,8 +42,7 @@ export function Eyebrow({
 }
 
 /**
- * Section heading: index number ("01 / Services"), title, optional intro and
- * a pipe line that draws itself under the heading.
+ * Section heading: index number ("01 / Services"), title and optional intro.
  */
 export function SectionHeading({
   index,
@@ -75,15 +73,8 @@ export function SectionHeading({
         {label}
       </Eyebrow>
       <Tag className={cn("mt-5", light && "text-white")}>{title}</Tag>
-      <PipeLine
-        className="mt-6 max-w-[14rem]"
-        tone={light ? "light" : "cyan"}
-        color={accent === "fire" ? (light ? "#ff6a60" : "#d9342b") : undefined}
-        nodes="ends"
-        height={12}
-      />
       {description && (
-        <p className={cn("mt-6 text-balance", light ? "text-white/75" : "text-muted")}>
+        <p className={cn("mt-5 text-balance", light ? "text-white/75" : "text-muted")}>
           {description}
         </p>
       )}

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
-import { CornerBrackets } from "@/components/ui/CornerBrackets";
 import { Reveal } from "@/components/ui/Reveal";
 import { SiteImage } from "@/components/ui/SiteImage";
 import { quoteHref } from "@/content/navigation";
@@ -62,12 +61,10 @@ export function SectorSection({ industry: i, index }: { industry: Industry; inde
         </Reveal>
 
         <Reveal className={cn("lg:col-span-6", flip && "lg:order-1")}>
-          <CornerBrackets>
             <div className="relative aspect-[4/3] overflow-hidden bg-navy-900 lg:aspect-[4/5]">
               <SiteImage asset={i.image} fill sizes="(min-width:1024px) 45vw, 100vw" className="object-cover" />
               <span aria-hidden className="absolute inset-0 bg-gradient-to-t from-navy-900/40 via-transparent to-transparent" />
             </div>
-          </CornerBrackets>
         </Reveal>
       </div>
     </section>

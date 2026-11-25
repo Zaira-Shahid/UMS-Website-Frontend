@@ -2,7 +2,6 @@ import { AboutSubnav } from "@/components/about/AboutSubnav";
 import { ValueCards } from "@/components/about/ValueCards";
 import { PageHero } from "@/components/layout/PageHero";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { BlueprintGrid } from "@/components/ui/BlueprintGrid";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { mission } from "@/content/about";
@@ -35,8 +34,7 @@ export default function MissionValuesPage() {
 
       {/* Mission — dark */}
       <section aria-labelledby="mission-title" className="relative isolate overflow-hidden bg-navy-900 py-20 text-white md:py-28">
-        <BlueprintGrid variant="dark" />
-        <div className="relative mx-auto max-w-5xl px-5 sm:px-8">
+          <div className="relative mx-auto max-w-5xl px-5 sm:px-8">
           <div id="mission-title">
             <SectionHeading tone="light" index="01" label="Our mission" title="Mission statement" />
           </div>

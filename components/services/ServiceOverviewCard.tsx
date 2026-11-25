@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { CornerBrackets } from "@/components/ui/CornerBrackets";
 import { accents } from "@/lib/accent";
 import { cn } from "@/lib/utils";
 import type { Service } from "@/types";
@@ -21,7 +20,6 @@ export function ServiceOverviewCard({
   const fire = service.accent === "fire";
   return (
     <article className="group relative">
-      <CornerBrackets>
         <div className="relative aspect-[4/3] overflow-hidden bg-navy-900">
           <ServiceVisual
             service={service}
@@ -46,7 +44,6 @@ export function ServiceOverviewCard({
             {String(index + 1).padStart(2, "0")}
           </span>
         </div>
-      </CornerBrackets>
 
       <div className="mt-6">
         <h2 className="text-[clamp(1.75rem,1.4rem+1.2vw,2.5rem)] uppercase leading-[1.02]">

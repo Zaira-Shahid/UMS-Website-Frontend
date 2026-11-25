@@ -80,7 +80,7 @@ export function MobileNav({
           role="dialog"
           aria-modal="true"
           aria-label="Main menu"
-          className="bg-grain fixed inset-0 z-[60] flex flex-col overflow-hidden bg-navy-950 text-white xl:hidden"
+          className="fixed inset-0 z-[60] flex flex-col overflow-hidden bg-navy-950 text-white xl:hidden"
           initial={{ clipPath: "inset(0 0 100% 0)" }}
           animate={{ clipPath: "inset(0 0 0% 0)" }}
           exit={{ clipPath: "inset(0 0 100% 0)" }}

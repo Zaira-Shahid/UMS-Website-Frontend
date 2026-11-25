@@ -1,6 +1,5 @@
 import { ClipboardCheck, HardHat } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { CornerBrackets } from "@/components/ui/CornerBrackets";
 import { Reveal, RevealItem } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SiteImage } from "@/components/ui/SiteImage";
@@ -23,7 +22,6 @@ export function QualitySafetyTeaser() {
     <section aria-labelledby="quality-title" className="bg-white py-20 md:py-28">
       <div className="mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-12 lg:gap-16">
         <Reveal className="lg:col-span-5">
-          <CornerBrackets>
             <div className="relative aspect-[4/5] overflow-hidden bg-navy-900 lg:aspect-[3/4]">
               <SiteImage
                 asset={image}
@@ -33,7 +31,6 @@ export function QualitySafetyTeaser() {
               />
               <span aria-hidden className="absolute inset-0 bg-navy-900/25" />
             </div>
-          </CornerBrackets>
         </Reveal>
 
         <div className="flex flex-col justify-center lg:col-span-7">

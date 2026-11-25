@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { BlueprintGrid } from "@/components/ui/BlueprintGrid";
 import { Button } from "@/components/ui/Button";
 import { quoteHref } from "@/content/navigation";
 import { services } from "@/content/services";
@@ -15,7 +14,6 @@ export function ServicesCTA() {
       aria-labelledby="services-cta-title"
       className="relative isolate overflow-hidden bg-navy-900 py-16 text-white md:py-20"
     >
-      <BlueprintGrid variant="dark" />
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid items-end gap-10 lg:grid-cols-12">
           <div className="lg:col-span-6">

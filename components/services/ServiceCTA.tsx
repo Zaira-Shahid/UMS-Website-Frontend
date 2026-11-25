@@ -1,4 +1,3 @@
-import { BlueprintGrid } from "@/components/ui/BlueprintGrid";
 import { Button } from "@/components/ui/Button";
 import { quoteHref } from "@/content/navigation";
 import { accents } from "@/lib/accent";
@@ -14,7 +13,6 @@ export function ServiceCTA({ service }: { service: Service }) {
       aria-labelledby="service-cta-title"
       className="relative isolate overflow-hidden bg-navy py-16 text-white md:py-20"
     >
-      <BlueprintGrid variant="dark" />
       {service.accent === "fire" && (
         <div
           aria-hidden

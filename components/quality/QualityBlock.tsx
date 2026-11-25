@@ -1,5 +1,4 @@
 import { Check, ClipboardCheck, Files, Gauge, HardHat, Search, type LucideIcon } from "lucide-react";
-import { CornerBrackets } from "@/components/ui/CornerBrackets";
 import { Reveal } from "@/components/ui/Reveal";
 import { SiteImage } from "@/components/ui/SiteImage";
 import type { QualitySection } from "@/content/quality";
@@ -28,12 +27,10 @@ export function QualityBlock({ section: s, index }: { section: QualitySection; i
     >
       <Reveal className="grid gap-8 xl:grid-cols-12 xl:gap-10">
         <div className={cn("xl:col-span-5", flip && "xl:order-2")}>
-          <CornerBrackets>
             <div className="relative aspect-[4/3] overflow-hidden bg-navy-900">
               <SiteImage asset={s.image} fill sizes="(min-width:1280px) 28rem, (min-width:768px) 50vw, 100vw" className="object-cover" />
               <span aria-hidden className="absolute inset-0 bg-gradient-to-t from-navy-900/50 via-transparent to-transparent" />
             </div>
-          </CornerBrackets>
         </div>
         <div className={cn("xl:col-span-7", flip && "xl:order-1")}>
           <p className="flex items-center gap-3 font-heading text-[0.8125rem] font-semibold uppercase tracking-[0.14em] text-[#00608c]">

@@ -1,4 +1,3 @@
-import { BlueprintGrid } from "@/components/ui/BlueprintGrid";
 import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/SectionHeading";
 import { quoteHref } from "@/content/navigation";
@@ -10,7 +9,6 @@ export function CTABand() {
       aria-labelledby="cta-band-title"
       className="relative isolate overflow-hidden bg-navy"
     >
-      <BlueprintGrid variant="dark" />
       <div className="relative mx-auto flex max-w-7xl flex-col gap-8 px-5 py-16 sm:px-8 md:flex-row md:items-end md:justify-between md:py-20">
         <div className="max-w-2xl">
           <Eyebrow tone="light">Start a conversation</Eyebrow>

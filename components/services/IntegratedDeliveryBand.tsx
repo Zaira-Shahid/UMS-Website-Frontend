@@ -1,9 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { ServiceIcon } from "@/components/home/ServiceIcons";
-import { BlueprintGrid } from "@/components/ui/BlueprintGrid";
 import { Button } from "@/components/ui/Button";
-import { PipeLine } from "@/components/ui/PipeLine";
 import { Reveal, RevealItem } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { services } from "@/content/services";
@@ -36,7 +34,6 @@ export function IntegratedDeliveryBand() {
       aria-labelledby="integrated-title"
       className="relative isolate overflow-hidden bg-navy py-20 text-white md:py-28"
     >
-      <BlueprintGrid variant="dark" />
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         <div id="integrated-title">
           <SectionHeading
@@ -67,9 +64,6 @@ export function IntegratedDeliveryBand() {
                         {s.shortName}
                       </span>
                     </Link>
-                    <div className="hidden flex-1 sm:block">
-                      <PipeLine tone="light" nodes="ends" height={10} />
-                    </div>
                   </li>
                 );
               })}

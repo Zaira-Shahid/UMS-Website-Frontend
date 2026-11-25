@@ -3,7 +3,6 @@ import { ArrowUpRight, ClipboardCheck, Target } from "lucide-react";
 import { AboutSubnav } from "@/components/about/AboutSubnav";
 import { PageHero } from "@/components/layout/PageHero";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { BlueprintGrid } from "@/components/ui/BlueprintGrid";
 import { Reveal, RevealItem } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
@@ -69,8 +68,7 @@ export default function AboutPage() {
 
       {/* What we do — dark */}
       <section aria-labelledby="do-title" className="relative isolate overflow-hidden bg-navy-900 py-20 text-white md:py-28">
-        <BlueprintGrid variant="dark" />
-        <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
+          <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
           <div id="do-title">
             <SectionHeading
               tone="light"

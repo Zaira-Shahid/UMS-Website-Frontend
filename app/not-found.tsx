@@ -54,7 +54,7 @@ function PipeLeak() {
 
 export default function NotFound() {
   return (
-    <section className="bg-grain bg-blueprint-dark relative isolate flex min-h-[100svh] items-center overflow-hidden bg-navy-950 pb-16 pt-[calc(var(--header-h)+2rem)] text-white">
+    <section className="bg-blueprint-dark relative isolate flex min-h-[100svh] items-center overflow-hidden bg-navy-950 pb-16 pt-[calc(var(--header-h)+2rem)] text-white">
       <div className="mx-auto w-full max-w-5xl px-5 text-center sm:px-8">
         <PipeLeak />
         <p className="mono-label mt-8 text-cyan-300">[ Error 404 / Page not found ]</p>

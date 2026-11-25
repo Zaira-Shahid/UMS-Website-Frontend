@@ -1,7 +1,6 @@
 import { BlueprintGrid } from "@/components/ui/BlueprintGrid";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Button } from "@/components/ui/Button";
-import { CornerBrackets } from "@/components/ui/CornerBrackets";
 import { quoteHref } from "@/content/navigation";
 import { accents } from "@/lib/accent";
 import { cn } from "@/lib/utils";
@@ -92,7 +91,6 @@ export function ServiceHero({ service }: { service: Service }) {
           </div>
 
           <div className="lg:col-span-5">
-            <CornerBrackets tone="light">
               <div className="relative aspect-[4/3] overflow-hidden bg-navy lg:aspect-[4/5]">
                 <ServiceVisual
                   service={service}
@@ -107,7 +105,6 @@ export function ServiceHero({ service }: { service: Service }) {
                   )}
                 />
               </div>
-            </CornerBrackets>
           </div>
         </div>
       </div>

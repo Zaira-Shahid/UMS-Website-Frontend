@@ -3,7 +3,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { PageHero } from "@/components/layout/PageHero";
-import { BlueprintGrid } from "@/components/ui/BlueprintGrid";
 import { Button } from "@/components/ui/Button";
 import { quoteHref } from "@/content/navigation";
 import { projects } from "@/content/projects";
@@ -69,8 +68,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
         aria-labelledby="similar-title"
         className="relative isolate overflow-hidden bg-navy py-16 text-white md:py-20"
       >
-        <BlueprintGrid variant="dark" />
-        <div className="relative mx-auto flex max-w-7xl flex-col gap-8 px-5 sm:px-8 md:flex-row md:items-end md:justify-between">
+          <div className="relative mx-auto flex max-w-7xl flex-col gap-8 px-5 sm:px-8 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
             <h2 id="similar-title" className="text-white">
               Need similar work?
