@@ -37,8 +37,12 @@ export interface ServicePage {
   applications: [ApplicationCard, ApplicationCard];
   /** Short name used in "Discuss Your ___ Project". */
   ctaName: string;
-  /** Stand-in photos (Unsplash). Files dropped into public/images/services/<slug>/ replace them, see lib/service-images.ts. */
-  photos: { card: PhotoKey; cardPosition?: string; hero: PhotoKey; heroPosition?: string; included: PhotoKey; includedPosition?: string };
+  /**
+   * Photo for the "What's Included" column when the service has no included.jpg of its own: a stand-in photo that
+   * fits the service, or null to show the list on its own. Files in public/images/services/<slug>/ win.
+   * See lib/service-images.ts.
+   */
+  includedPhoto: PhotoKey | null;
 }
 
 export const servicePages: Record<ServiceSlug, ServicePage> = {
@@ -69,7 +73,7 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
       },
     ],
     ctaName: "MEP",
-    photos: { card: "ceilingServices", cardPosition: "center 30%", hero: "ceilingServices", heroPosition: "center 45%", included: "glassReflection" },
+    includedPhoto: null,
   },
   hvac: {
     cardLine: "Ventilation, cooling and climate control.",
@@ -99,7 +103,7 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
       },
     ],
     ctaName: "HVAC",
-    photos: { card: "pumpRoom", cardPosition: "center 25%", hero: "pumpRoom", heroPosition: "center 40%", included: "ceilingServices" },
+    includedPhoto: null,
   },
   "fire-fighting": {
     cardLine: "Fire protection and suppression.",
@@ -129,7 +133,7 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
       },
     ],
     ctaName: "Fire Protection",
-    photos: { card: "redPipes", hero: "redPipes", heroPosition: "center 50%", included: "pumpRoom", includedPosition: "center 70%" },
+    includedPhoto: null,
   },
   plumbing: {
     cardLine: "Water supply and drainage.",
@@ -159,7 +163,7 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
       },
     ],
     ctaName: "Plumbing",
-    photos: { card: "pumpRoom", cardPosition: "center 85%", hero: "pumpRoom", heroPosition: "center 80%", included: "ceilingServices", includedPosition: "center 60%" },
+    includedPhoto: "pumpRoom",
   },
   "electrical-elv": {
     cardLine: "Power distribution and low-voltage systems.",
@@ -190,7 +194,7 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
       },
     ],
     ctaName: "Electrical & ELV",
-    photos: { card: "breakerPanel", hero: "breakerPanel", heroPosition: "center 50%", included: "ceilingServices", includedPosition: "center 20%" },
+    includedPhoto: "breakerPanel",
   },
   "pools-fountains": {
     cardLine: "Water circulation and fountain systems.",
@@ -221,6 +225,6 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
       },
     ],
     ctaName: "Pools & Fountains",
-    photos: { card: "poolFountain", hero: "poolFountain", heroPosition: "center 55%", included: "glassReflection" },
+    includedPhoto: "poolFountain",
   },
 };

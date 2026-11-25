@@ -1,5 +1,4 @@
 import type { ScopeItem, Service, ServiceSlug } from "@/types";
-import { photo } from "./images";
 
 /**
  * Service copy is general engineering description.
@@ -99,7 +98,6 @@ export const services: Service[] = [
       { label: "Handover", detail: "As-built drawings, manuals and test records issued." },
       { label: "Maintenance", detail: "Planned maintenance after handover." },
     ],
-    image: photo("ceilingServices", "center 30%"),
     faqs: [
       {
         question: "Why procure MEP services as one integrated package?",
@@ -195,7 +193,6 @@ export const services: Service[] = [
         "Pressure tests, air and water balancing, and performance testing with records.",
       maintain: "Planned preventive maintenance after handover.",
     }),
-    image: photo("pumpRoom", "center 30%"),
     faqs: [
       {
         question: "What is the difference between a VRF and a chilled-water system?",
@@ -291,7 +288,6 @@ export const services: Service[] = [
         "Hydrostatic and flow testing, pump performance tests and inspection records.",
       maintain: "Periodic inspection and servicing after handover.",
     }),
-    image: photo("redPipes"),
     faqs: [
       {
         question: "Which standards apply to fire protection systems?",
@@ -399,8 +395,6 @@ export const services: Service[] = [
         "Pressure testing, flushing, disinfection where required, and commissioning of pumps.",
       maintain: "Planned servicing of pumps and treatment plant after handover.",
     }),
-    image: photo("pumpRoom", "center 85%"),
-    illustration: "plumbing",
     faqs: [
       {
         question: "Why do tall buildings use tanks and booster pumps?",
@@ -490,7 +484,6 @@ export const services: Service[] = [
         "Insulation and earth-continuity tests, loop and functional tests, and witnessed commissioning.",
       maintain: "Planned inspection and servicing after handover.",
     }),
-    image: photo("breakerPanel"),
     faqs: [
       {
         question: "What does LT mean, and how is it different from HT?",
@@ -568,7 +561,6 @@ export const services: Service[] = [
       { label: "Testing & commissioning", detail: "Leak testing, flow checks and water-quality start-up." },
       { label: "Maintenance", detail: "Routine servicing after handover." },
     ],
-    image: photo("poolFountain"),
     faqs: [
       {
         question: "What equipment keeps a swimming pool clean?",

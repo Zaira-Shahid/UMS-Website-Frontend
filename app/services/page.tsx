@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { ServicesIntro } from "@/components/services/ServicesIntro";
 import { CtaBar } from "@/components/ui/CtaBar";
-import { SiteImage } from "@/components/ui/SiteImage";
-import { photo } from "@/content/images";
+import { ServicePhoto } from "@/components/services/ServicePhoto";
 import { quoteHref } from "@/content/navigation";
 import { servicePages } from "@/content/service-pages";
 import { services } from "@/content/services";
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 const order = ["integrated-mep", "hvac", "fire-fighting", "plumbing", "electrical-elv", "pools-fountains"] as const;
 const cardTitle = (slug: string, name: string) => (slug === "integrated-mep" ? "Integrated MEP" : name);
 
-const circles = [photo("glassTower", "center 40%"), photo("facade"), photo("glassReflection")];
+const circles = ["/images/projects/circles/circle-1.jpg", "/images/projects/circles/circle-2.jpg", "/images/projects/circles/circle-3.jpg"];
 
 export default function ServicesPage() {
   const structuredData = {
@@ -61,19 +61,19 @@ export default function ServicesPage() {
             <p className="mx-auto mt-5 max-w-2xl text-lg text-navy sm:text-xl">Mechanical, electrical and plumbing services for complex buildings.</p>
           </section>
 
-          <ul className="mt-8 grid gap-5 md:grid-cols-2 md:gap-6">
+          <ul className="mx-auto mt-8 grid max-w-[944px] gap-5 md:grid-cols-2 md:gap-6">
             {order.map((slug, i) => {
               const s = services.find((x) => x.slug === slug)!;
               const page = servicePages[slug];
-              const image = serviceImage(slug, "card", page.photos.card, page.photos.cardPosition, "");
+              const image = serviceImage(slug, "card", "card");
               return (
                 <li key={slug}>
                   <Link
                     href={`/services/${slug}`}
                     className="group flex h-full flex-col overflow-hidden rounded-card border border-blue/70 bg-white shadow-card transition duration-200 hover:-translate-y-1 hover:border-blue hover:shadow-[0_18px_36px_-14px_rgb(15_42_74/0.3)] focus-visible:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
                   >
-                    <div className="relative aspect-[16/6] overflow-hidden bg-sky-50">
-                      <SiteImage asset={image} fill sizes="(min-width: 768px) 46vw, 92vw" priority={i < 2} className="object-cover transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none" />
+                    <div className="overflow-hidden">
+                      <ServicePhoto asset={image} sizes="(min-width: 768px) 460px, 92vw" priority={i < 2} className="transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none" />
                     </div>
                     <div className="flex flex-1 flex-col px-5 pb-5 pt-3">
                       <h2 className="text-[1.5rem] font-bold leading-tight text-navy sm:text-[1.75rem]">{cardTitle(slug, s.name)}</h2>
@@ -96,9 +96,9 @@ export default function ServicesPage() {
             <span aria-hidden className="mx-auto mt-2 block h-1 w-[4.5rem] rounded bg-blue" />
             <div className="mx-auto mt-6 flex max-w-4xl items-center justify-center gap-3 sm:gap-8">
               <ul className="flex shrink items-center justify-center gap-3 sm:gap-8">
-                {circles.map((c, i) => (
-                  <li key={i} className="relative size-[clamp(5rem,24vw,8.5rem)] shrink-0 overflow-hidden rounded-full border-2 border-blue/70">
-                    <SiteImage asset={{ ...c, alt: "" }} fill sizes="140px" className="object-cover" />
+                {circles.map((src) => (
+                  <li key={src} className="relative size-[clamp(5rem,24vw,8.125rem)] shrink-0 overflow-hidden rounded-full border-2 border-blue/70">
+                    <Image src={src} alt="" fill sizes="130px" className="object-cover" />
                   </li>
                 ))}
               </ul>
@@ -115,7 +115,7 @@ export default function ServicesPage() {
             <p className="mt-3 text-sm italic text-muted">Illustrative imagery</p>
           </section>
 
-          <div className="mt-10">
+          <div className="mx-auto mt-10 max-w-[944px]">
             <CtaBar title="Let’s Discuss Your Project" href={quoteHref()} />
           </div>
         </div>

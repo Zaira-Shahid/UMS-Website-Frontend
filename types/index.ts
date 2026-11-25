@@ -75,9 +75,6 @@ export interface Service {
   systems: ServiceSystem[];
   applications: ServiceApplication[];
   scope: ScopeItem[];
-  image: ImageAsset;
-  /** Draw a blueprint illustration instead of a photo (no suitable stock photo yet). */
-  illustration?: "plumbing";
   faqs: FaqItem[];
 }
 

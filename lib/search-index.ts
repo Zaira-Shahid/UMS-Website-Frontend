@@ -38,8 +38,7 @@ export const searchItems: SearchItem[] = [
     description: s.tagline,
     href: `/services/${s.slug}`,
     keywords: [s.shortName, ...s.systems.map((x) => x.name)],
-    // Illustrated services have no photo to thumbnail (the palette falls back to an icon).
-    image: s.illustration ? undefined : s.image,
+    image: { src: `/images/services/${s.slug}/card.jpg`, alt: "", width: 460, height: 159, isPlaceholder: false },
     color: disciplineColor[s.slug],
   })),
   ...projects.map<SearchItem>((p) => ({

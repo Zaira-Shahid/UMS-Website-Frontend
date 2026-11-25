@@ -3,13 +3,13 @@ import { ArrowRight, Target } from "lucide-react";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { CtaBar } from "@/components/ui/CtaBar";
 import { FaqAccordion } from "@/components/ui/FaqAccordion";
-import { SiteImage } from "@/components/ui/SiteImage";
 import { quoteHref } from "@/content/navigation";
 import { servicePages } from "@/content/service-pages";
-import { serviceImage } from "@/lib/service-images";
+import { optionalServiceImage, serviceImage } from "@/lib/service-images";
 import { absoluteUrl, jsonLd, organizationRef } from "@/lib/seo";
 import type { Service } from "@/types";
 import { IncludedIcon } from "./IncludedIcon";
+import { ServicePhoto } from "./ServicePhoto";
 import { ServicesIntro } from "./ServicesIntro";
 
 /** Section title with the short blue underline used on the Services pages. */
@@ -28,8 +28,8 @@ function Title({ id, children, center }: { id: string; children: string; center?
 export function ServiceTemplate({ service }: { service: Service }) {
   const url = absoluteUrl(`/services/${service.slug}`);
   const page = servicePages[service.slug];
-  const heroImage = serviceImage(service.slug, "hero", page.photos.hero, page.photos.heroPosition, "");
-  const includedImage = serviceImage(service.slug, "included", page.photos.included, page.photos.includedPosition, "");
+  const heroImage = serviceImage(service.slug, "hero", "card");
+  const includedImage = optionalServiceImage(service.slug, "included", page.includedPhoto);
   const title = service.slug === "integrated-mep" ? "Integrated MEP" : service.name;
 
   const structuredData = [
@@ -70,6 +70,7 @@ export function ServiceTemplate({ service }: { service: Service }) {
 
       <div className="bg-white pb-12 pt-[calc(var(--header-h)+1.5rem)] md:pb-16">
         <div className="wrap">
+         <div className="mx-auto max-w-[948px]">
           <ServicesIntro />
 
           <header className="mx-auto mt-6 max-w-4xl text-center">
@@ -80,19 +81,15 @@ export function ServiceTemplate({ service }: { service: Service }) {
 
           {/* Hero photo */}
           <figure className="mt-8">
-            <div className="relative aspect-[16/7] overflow-hidden rounded-2xl bg-sky-50 md:aspect-[16/6]">
-              <SiteImage asset={heroImage} fill priority sizes="(min-width: 1600px) 1500px, 96vw" className="object-cover" />
-            </div>
+            <ServicePhoto asset={heroImage} ratio="aspect-[16/7] md:aspect-[16/6]" priority sizes="(min-width: 960px) 948px, 96vw" className="overflow-hidden rounded-2xl" />
             <figcaption className="mt-2 text-center text-sm italic text-navy">
               {page.caption} · Illustrative imagery
             </figcaption>
           </figure>
 
           {/* Photo + What's Included */}
-          <section aria-labelledby="included-title" className="mt-10 grid items-center gap-6 md:grid-cols-2 md:gap-10">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-sky-50 md:aspect-[5/4]">
-              <SiteImage asset={includedImage} fill sizes="(min-width: 768px) 48vw, 96vw" className="object-cover" />
-            </div>
+          <section aria-labelledby="included-title" className={`mt-10 grid items-center gap-6 md:gap-10 ${includedImage ? "md:grid-cols-2" : "mx-auto max-w-xl"}`}>
+            {includedImage && <ServicePhoto asset={includedImage} ratio="aspect-[4/3] md:aspect-[5/4]" sizes="(min-width: 768px) 460px, 96vw" className="overflow-hidden rounded-2xl" />}
             <div>
               <Title id="included-title">What’s Included</Title>
               <ul className="mt-5">
@@ -128,12 +125,10 @@ export function ServiceTemplate({ service }: { service: Service }) {
             <Title id="apps-title" center>{`${title} Typical Applications`}</Title>
             <ul className="mt-6 grid gap-5 md:grid-cols-2 md:gap-6">
               {page.applications.map((a, i) => {
-                const img = serviceImage(service.slug, i === 0 ? "app-1" : "app-2", a.photo, a.position, "");
+                const img = serviceImage(service.slug, i === 0 ? "app-1" : "app-2", a.photo, a.position);
                 return (
                   <li key={a.title} className="overflow-hidden rounded-card border border-blue/70 bg-white shadow-card">
-                    <div className="relative aspect-[16/7] bg-sky-50">
-                      <SiteImage asset={img} fill sizes="(min-width: 768px) 46vw, 92vw" className="object-cover" />
-                    </div>
+                    <ServicePhoto asset={img} ratio="aspect-[16/7]" sizes="(min-width: 768px) 460px, 92vw" />
                     <div className="p-5">
                       <h3 className="text-[1.375rem] font-bold text-navy sm:text-2xl">{a.title}</h3>
                       <p className="mt-1 text-base leading-snug text-navy">{a.text}</p>
@@ -158,6 +153,7 @@ export function ServiceTemplate({ service }: { service: Service }) {
             <Title id="service-faq-title" center>Frequently Asked Questions</Title>
             <FaqAccordion faqs={service.faqs} className="mx-auto mt-6 max-w-4xl" />
           </section>
+         </div>
         </div>
       </div>
     </>

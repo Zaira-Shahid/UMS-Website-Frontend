@@ -45,25 +45,28 @@ Forms deliver mail only when `RESEND_API_KEY`, `MAIL_FROM`, `RFQ_TO_EMAIL`, `CON
 
 ## 2b. Services page photographs (Section 13.3)
 
-The Services pages currently use stand-in Unsplash photos already in `content/images.ts` (plant-room valves, red pipes,
-a breaker, a pool, building exteriors). Several do not match their service well (for example the HVAC card shows a
-plant room with water pipework, and Integrated MEP shows a concrete ceiling). Automated downloading of new photos was
-blocked in this environment, so please supply (or approve) free-licence, commercial-use photos with no visible brand
-names or logos. Save them as `public/images/services/<slug>/<role>.jpg` (roles: `card`, `hero`, `included`, `app-1`,
-`app-2`) and they replace the stand-ins automatically (see `lib/service-images.ts`). Record each file's source URL and
-photographer here.
+**Source: the owner's own approved mockups.** The photos in `public/images/services/<slug>/card.jpg` (all six),
+`public/images/services/integrated-mep/{hero,included,app-1,app-2}.jpg` and `public/images/projects/circles/circle-1..3.jpg`
+are crops of mockups 10 and 11, so they are only about 460 px wide (the hero is 948 px). They are shown at no more than
+their natural width (never upscaled), so the Services pages are laid out in a narrow column. They are not licensed
+stock photos and their original photographers are unknown; please confirm UMS may use them. **High-resolution
+replacements are still wanted.** Save a larger file under the same name (`<role>.jpg`) and it takes over.
 
-| Service | card / hero | included | app-1 / app-2 |
-|---|---|---|---|
-| Integrated MEP | coordinated ceiling services (ducts, pipes, trays) | engineers reviewing a BIM model | commercial building / industrial facility exteriors |
-| HVAC | rooftop air handling unit and ductwork | plant room with chillers | hospital / hotel exteriors |
-| Fire Fighting | red sprinkler pipework or fire pump room | pump room | commercial building / residential tower exteriors |
-| Plumbing | blue water pipework and valves | pump and tank room | residential building / school or university exteriors |
-| Electrical & ELV | LT panels and cable trays | cable containment | commercial building / industrial facility exteriors |
-| Pools & Fountains | pool with fountain jets | pool plant room | hotel / residential development exteriors |
+Where a service has no `hero`, `included` or `app-*` file yet:
+- the hero reuses that service's `card.jpg` at its natural size;
+- "What's Included" shows the list without a photo for HVAC and Fire Fighting (no photo that fits), and a stand-in
+  Unsplash photo that fits the service for Plumbing (plant-room pump and valves), Electrical (breaker) and Pools (fountain
+  pool); Integrated MEP has its own;
+- the two application cards use stand-in Unsplash building exteriors labelled "Illustrative previews".
 
-The three circles on `/services` ("Explore Our Project Experience") also use stand-in building photos labelled
-"Illustrative imagery".
+Still needed for the five services other than Integrated MEP: `hero`, `included`, `app-1`, `app-2`. Suggested
+subjects: HVAC (air handling unit, ductwork; hospital and hotel exteriors), Fire Fighting (sprinkler pipework or fire
+pump room; commercial and residential tower exteriors), Plumbing (water pipework and valves; residential and school
+exteriors), Electrical & ELV (LT panels, cable trays; commercial and industrial exteriors), Pools & Fountains (pool with
+fountain; hotel and residential exteriors). No visible brand names or logos.
+
+Stock photos that are still used (Unsplash, free licence; credits are in `content/images.ts`): the industry pages, and
+the application cards and plumbing, electrical and pools "included" photos described above.
 
 ## 3. Projects
 

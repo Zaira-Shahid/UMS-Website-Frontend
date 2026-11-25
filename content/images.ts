@@ -71,13 +71,6 @@ const photos = {
     width: 1600,
     height: 1200,
   },
-  // TODO: replace with approved UMS photography — Yahir Espinosa
-  ceilingServices: {
-    id: "1677530490433-af4adc792030",
-    alt: "Concrete soffit with a surface-mounted conduit run and pendant lights",
-    width: 1200,
-    height: 1800,
-  },
 } as const;
 
 export type PhotoKey = keyof typeof photos;
