@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
  */
 export function DeliveryProcess() {
   return (
-    <section aria-labelledby="delivery-title" className="bg-white py-20 md:py-28">
+    <section aria-labelledby="delivery-title" className="bg-offwhite py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div id="delivery-title">
           <SectionHeading

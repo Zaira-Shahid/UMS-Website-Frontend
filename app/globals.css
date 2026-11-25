@@ -535,3 +535,39 @@ label[for],
     animation: none !important;
   }
 }
+
+/* ------------------------------------------------------------------
+   "Inside a building" section drawing (components/home/BuildingSection.tsx)
+   ------------------------------------------------------------------ */
+.sec-sys {
+  transition: opacity 0.3s ease;
+}
+/* The selected system keeps its colour; the others recede. */
+.building-section[data-active] .sec-sys {
+  opacity: 0.13;
+}
+.building-section[data-active="hvac"] .sec-sys-hvac,
+.building-section[data-active="fire"] .sec-sys-fire,
+.building-section[data-active="elec"] .sec-sys-elec,
+.building-section[data-active="plumb"] .sec-sys-plumb {
+  opacity: 1;
+}
+/* On phones the drawing is small, so badges and level names are drawn larger. */
+.sec-badge,
+.sec-lvl {
+  transform-box: fill-box;
+}
+.sec-badge {
+  transform-origin: center;
+}
+.sec-lvl {
+  transform-origin: left center;
+}
+@media (max-width: 767px) {
+  .sec-badge {
+    transform: scale(1.9);
+  }
+  .sec-lvl {
+    transform: scale(1.7);
+  }
+}

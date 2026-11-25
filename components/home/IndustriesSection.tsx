@@ -20,7 +20,7 @@ export function IndustriesSection() {
   const [active, setActive] = useState<IndustrySlug>(industries[0].slug);
 
   return (
-    <section aria-labelledby="industries-title" className="bg-offwhite py-20 md:py-28">
+    <section aria-labelledby="industries-title" className="bg-white py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div id="industries-title">
           <SectionHeading
