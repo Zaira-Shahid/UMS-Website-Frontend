@@ -3,11 +3,10 @@
 import Link from "next/link";
 import type { ComponentType, KeyboardEvent } from "react";
 import { ArrowUpRight, Building2, ShieldCheck, Target } from "lucide-react";
-import Image from "next/image";
 import { ServiceIcon, serviceColor } from "@/components/ui/ServiceIcon";
 import { services } from "@/content/services";
 import { cn } from "@/lib/utils";
-import type { NavLink, ServiceSlug } from "@/types";
+import type { NavLink } from "@/types";
 
 const aboutIcons: Record<string, ComponentType<{ className?: string }>> = {
   "/about": Building2,
@@ -33,29 +32,18 @@ export function onPanelKeyDown(e: KeyboardEvent<HTMLElement>) {
 const rowClass =
   "group flex items-center gap-4 rounded-xl p-2.5 transition-colors hover:bg-offwhite focus-visible:bg-offwhite focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-blue";
 
-/** Illustrations from the design pack. The other services show a clean icon tile until artwork is supplied. */
-const artwork: Partial<Record<ServiceSlug, string>> = {
-  hvac: "/images/services/hvac.png",
-  "fire-fighting": "/images/services/fire-fighting.png",
-};
-
-/** One service: rounded thumbnail, semibold name, one-line description. Used by the desktop panel and the mobile menu. */
+/** One service: its coloured icon in a rounded light tile, the name and a one-line description. Used by the desktop panel and the mobile menu. */
 export function ServiceRow({ slug, onNavigate, className }: { slug: string; onNavigate: () => void; className?: string }) {
   const s = services.find((x) => x.slug === slug);
   if (!s) return null;
-  const src = artwork[s.slug];
   const color = serviceColor(s.slug);
   return (
     <Link href={`/services/${s.slug}`} onClick={onNavigate} className={cn(rowClass, className)}>
       <span
-        className="relative flex h-14 w-[72px] shrink-0 items-center justify-center overflow-hidden rounded-lg"
-        style={{ background: src ? "var(--sky-50)" : `color-mix(in srgb, ${color} 14%, white)`, color }}
+        className="flex size-14 shrink-0 items-center justify-center rounded-xl"
+        style={{ background: `color-mix(in srgb, ${color} 14%, white)`, color }}
       >
-        {src ? (
-          <Image src={src} alt="" fill sizes="72px" className="object-contain p-1" />
-        ) : (
-          <ServiceIcon slug={s.slug} className="size-8" />
-        )}
+        <ServiceIcon slug={s.slug} className="size-8" />
       </span>
       <span className="min-w-0">
         <span className="block truncate font-semibold text-navy">{s.name}</span>
