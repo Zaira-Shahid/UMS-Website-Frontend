@@ -21,7 +21,7 @@ export function Logo({
       href="/"
       onClick={onClick}
       aria-label={`${site.name} — ${site.fullName}, home`}
-      className={cn("inline-flex items-center gap-3", className)}
+      className={cn("inline-flex shrink-0 items-center gap-3", className)}
     >
       {site.logo ? (
         <Image src={site.logo} alt="" width={120} height={40} priority className="h-9 w-auto" />

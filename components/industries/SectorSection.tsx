@@ -19,7 +19,7 @@ export function SectorSection({ industry: i, index }: { industry: Industry; inde
       // Clears the fixed header (64px) and the sticky sector switcher (~57px).
       className={cn("scroll-mt-32 py-16 md:py-24", index % 2 === 0 ? "bg-white" : "bg-offwhite")}
     >
-      <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:px-8 lg:grid-cols-12 lg:gap-16">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-5 sm:px-8 lg:grid-cols-12 lg:gap-16">
         <Reveal className={cn("lg:col-span-6", flip && "lg:order-2")}>
           <p className="flex items-center gap-3 font-heading text-[0.8125rem] font-semibold uppercase tracking-[0.14em] text-[#00608c]">
             <span aria-hidden className="h-px w-8 bg-cyan" />
@@ -53,7 +53,7 @@ export function SectorSection({ industry: i, index }: { industry: Industry; inde
               size="lg"
               magnetic
               arrow
-              className="w-full sm:w-auto"
+              className="h-auto min-h-14 w-full whitespace-normal py-3 text-center sm:w-auto"
             >
               Request a quote for {i.name}
             </Button>
