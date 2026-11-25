@@ -38,9 +38,8 @@ export interface RfqPreselect {
 
 /**
  * Resolve ?service=<slug>[,<slug>], ?project=<slug> and ?sector=<slug>. Invalid values are ignored.
- * From a project we only take CONFIRMED data (sector, services) — never guesses. The
- * project's name and city are deliberately not copied into the form: the visitor's own
- * project is usually a different one ("Need similar work?").
+ * A project only contributes its name for the "related to" note: the visitor's own project is usually a
+ * different one ("Need similar work?"), so nothing else is copied into the form.
  */
 export function resolveQuotePreselect(params: {
   service?: string | string[];
@@ -54,13 +53,11 @@ export function resolveQuotePreselect(params: {
     : undefined;
   const project = projects.find((p) => p.slug === projectSlug);
   const fromParam = parseServiceParam(params.service);
-  const fromProject = project?.services ?? [];
-  const services = [...new Set([...fromParam, ...fromProject])] as ServiceSlug[];
+  const services = [...new Set(fromParam)] as ServiceSlug[];
   return {
     services,
     project: project ? { slug: project.slug, name: project.name } : null,
-    // A confirmed project sector wins; otherwise a valid ?sector= (from an industry page) is used.
-    sector: project?.sector ?? sectorFromParam,
+    sector: sectorFromParam,
   };
 }
 

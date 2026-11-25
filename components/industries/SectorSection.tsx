@@ -1,18 +1,15 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { CornerBrackets } from "@/components/ui/CornerBrackets";
 import { Reveal } from "@/components/ui/Reveal";
 import { SiteImage } from "@/components/ui/SiteImage";
 import { quoteHref } from "@/content/navigation";
 import { serviceBySlug } from "@/content/services";
-import { projects } from "@/content/projects";
 import { cn } from "@/lib/utils";
 import type { Industry } from "@/types";
 
-/** One anchored sector section (/industries#<slug>) with the sector's related projects. */
+/** One anchored sector section (/industries#<slug>)  */
 export function SectorSection({ industry: i, index }: { industry: Industry; index: number }) {
-  const related = projects.filter((p) => p.sector === i.slug);
   const flip = index % 2 === 1;
   const serviceList = i.services.map((s) => serviceBySlug(s)).filter((s) => !!s);
 
@@ -45,23 +42,6 @@ export function SectorSection({ industry: i, index }: { industry: Industry; inde
                   className="inline-flex rounded-full border border-navy/30 px-3.5 py-1.5 text-sm font-medium text-navy transition-colors hover:border-cyan hover:bg-cyan hover:text-white"
                 >
                   {s.shortName}
-                </Link>
-              </li>
-            ))}
-          </ul>
-
-          <h3 className="mt-8 font-heading text-sm font-semibold uppercase tracking-[0.12em] text-navy">
-            Related projects
-          </h3>
-          <ul className="mt-3 divide-y divide-line border-y border-line">
-            {related.map((p) => (
-              <li key={p.slug}>
-                <Link
-                  href={`/projects/${p.slug}`}
-                  className="group flex items-center justify-between gap-4 py-3 text-navy transition-colors hover:text-cyan"
-                >
-                  <span className="font-medium">{p.name}</span>
-                  <ArrowRight aria-hidden className="size-4 text-muted transition-all group-hover:translate-x-1 group-hover:text-cyan" />
                 </Link>
               </li>
             ))}

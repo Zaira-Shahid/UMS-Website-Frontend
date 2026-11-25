@@ -47,10 +47,8 @@ export const searchItems: SearchItem[] = [
     id: `pr-${p.slug}`,
     group: "Projects",
     title: p.name,
-    description: `${p.location} · ${p.status === "ongoing" ? "Ongoing" : "Completed"} · ${p.summary}`,
+    description: "Project",
     href: `/projects/${p.slug}`,
-    image: p.image,
-    color: p.services[0] ? disciplineColor[p.services[0]] : undefined,
   })),
   ...pages,
 ];

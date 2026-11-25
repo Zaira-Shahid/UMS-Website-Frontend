@@ -19,8 +19,6 @@ export type IndustrySlug =
   | "education-institutional"
   | "industrial-warehousing";
 
-export type ProjectStatus = "completed" | "ongoing";
-
 export interface ImageAsset {
   src: string;
   alt: string;
@@ -91,34 +89,13 @@ export interface Industry {
   image: ImageAsset;
 }
 
+/**
+ * A project the owner has confirmed by name. Nothing else about a project (city, year, size, client, package,
+ * outcome) is stored until the owner supplies verified details.
+ */
 export interface Project {
   slug: string;
   name: string;
-  featured: boolean;
-  status: ProjectStatus;
-  sector: IndustrySlug;
-  /** Services UMS delivered. */
-  services: ServiceSlug[];
-  /** City. */
-  location: string;
-  year: number;
-  /** Built area in square feet. */
-  areaSqFt: number;
-  client: string;
-  mainContractor: string;
-  consultant: string;
-  /** UMS package: what UMS was appointed to deliver. */
-  umsRole: string;
-  timeline: string;
-  durationMonths: number;
-  teamSize: number;
-  summary: string;
-  challenge: string;
-  solution: string;
-  outcome: string;
-  image: ImageAsset;
-  /** Gallery for the case study. */
-  gallery: ImageAsset[];
 }
 
 export type InsightCategory = "safety-compliance" | "mep-systems" | "maintenance-operations";

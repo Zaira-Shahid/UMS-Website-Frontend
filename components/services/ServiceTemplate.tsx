@@ -3,7 +3,6 @@ import { absoluteUrl, jsonLd, organizationRef } from "@/lib/seo";
 import type { Service } from "@/types";
 import { ApplicationsList } from "./ApplicationsList";
 import { FaqSection } from "./FaqSection";
-import { RelatedProjects } from "./RelatedProjects";
 import { ScopeChecklist } from "./ScopeChecklist";
 import { SectionNav, type NavSection } from "./SectionNav";
 import { ServiceCTA } from "./ServiceCTA";
@@ -18,7 +17,6 @@ export function ServiceTemplate({ service }: { service: Service }) {
     { id: "systems", label: "Systems" },
     { id: "applications", label: "Applications" },
     { id: "scope", label: "Scope" },
-    { id: "projects", label: "Projects" },
     { id: "faq", label: "FAQ" },
   ];
 
@@ -71,7 +69,6 @@ export function ServiceTemplate({ service }: { service: Service }) {
       <SystemsGrid service={service} />
       <ApplicationsList service={service} />
       <ScopeChecklist service={service} />
-      <RelatedProjects service={service} />
       <FaqSection
         faqs={service.faqs}
         accent={service.accent}

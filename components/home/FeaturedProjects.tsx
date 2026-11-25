@@ -1,44 +1,10 @@
-"use client";
-
-import { useCallback, useEffect, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { BlueprintGrid } from "@/components/ui/BlueprintGrid";
 import { Button } from "@/components/ui/Button";
-import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { ProjectCard } from "@/components/projects/ProjectCard";
-import { featuredProjects } from "@/lib/projects";
+import { ProjectList } from "@/components/projects/ProjectList";
 
-/** Horizontal scroll-snap carousel of the six featured case studies. */
+/** Homepage project index. Names only: no details are shown until the owner confirms them. */
 export function FeaturedProjects() {
-  const trackRef = useRef<HTMLUListElement>(null);
-  const [progress, setProgress] = useState(0);
-  const [canPrev, setCanPrev] = useState(false);
-  const [canNext, setCanNext] = useState(true);
-
-  const update = useCallback(() => {
-    const el = trackRef.current;
-    if (!el) return;
-    const max = el.scrollWidth - el.clientWidth;
-    setProgress(max > 0 ? el.scrollLeft / max : 0);
-    setCanPrev(el.scrollLeft > 4);
-    setCanNext(el.scrollLeft < max - 4);
-  }, []);
-
-  useEffect(() => {
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, [update]);
-
-  const scrollByCard = (dir: 1 | -1) => {
-    const el = trackRef.current;
-    if (!el) return;
-    const card = el.querySelector("li");
-    const step = (card?.clientWidth ?? 360) + 24;
-    el.scrollBy({ left: dir * step, behavior: "smooth" });
-  };
-
   return (
     <section
       aria-labelledby="projects-title"
@@ -48,76 +14,16 @@ export function FeaturedProjects() {
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div id="projects-title">
-            <SectionHeading
-              tone="light"
-              index="02"
-              label="Projects"
-              title="Buildings that depend on their services"
-              description="Hospitals, malls, headquarters and developments, each with the exact package UMS delivered."
-            />
+            <SectionHeading tone="light" index="02" label="Projects" title="Selected projects" />
           </div>
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => scrollByCard(-1)}
-              disabled={!canPrev}
-              aria-label="Previous projects"
-              className="flex size-12 items-center justify-center rounded-ums border border-white/30 transition-colors hover:border-white hover:bg-white hover:text-navy disabled:pointer-events-none disabled:opacity-30"
-            >
-              <ChevronLeft className="size-5" aria-hidden />
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollByCard(1)}
-              disabled={!canNext}
-              aria-label="Next projects"
-              className="flex size-12 items-center justify-center rounded-ums border border-white/30 transition-colors hover:border-white hover:bg-white hover:text-navy disabled:pointer-events-none disabled:opacity-30"
-            >
-              <ChevronRight className="size-5" aria-hidden />
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <Reveal className="relative mt-12">
-        <ul
-          ref={trackRef}
-          onScroll={update}
-          tabIndex={0}
-          aria-label="Featured projects, scroll horizontally"
-          className="flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-5 pb-6 [scrollbar-width:none] sm:px-8 [&::-webkit-scrollbar]:hidden"
-          style={{
-            paddingLeft: "max(1.25rem, calc((100vw - 80rem) / 2 + 2rem))",
-            paddingRight: "max(1.25rem, calc((100vw - 80rem) / 2 + 2rem))",
-            scrollPaddingLeft: "max(1.25rem, calc((100vw - 80rem) / 2 + 2rem))",
-          }}
-        >
-          {featuredProjects().map((p, i) => (
-            <li key={p.slug} className="w-[82vw] shrink-0 snap-start sm:w-[24rem] lg:w-[26rem]">
-              <ProjectCard project={p} index={i} />
-            </li>
-          ))}
-        </ul>
-
-        <div className="mx-auto mt-4 flex max-w-7xl items-center gap-6 px-5 sm:px-8">
-          <div
-            role="progressbar"
-            aria-label="Scroll position"
-            aria-valuemin={0}
-            aria-valuemax={100}
-            aria-valuenow={Math.round(progress * 100)}
-            className="h-px flex-1 bg-white/20"
-          >
-            <div
-              className="h-full origin-left bg-cyan-300 transition-transform duration-200"
-              style={{ transform: `scaleX(${Math.max(0.12, progress)})` }}
-            />
-          </div>
-          <Button href="/projects" variant="outline-light" size="sm" arrow>
+          <Button href="/projects" variant="outline-light" size="lg" arrow>
             All projects
           </Button>
         </div>
-      </Reveal>
+        <div className="mt-12">
+          <ProjectList />
+        </div>
+      </div>
     </section>
   );
 }

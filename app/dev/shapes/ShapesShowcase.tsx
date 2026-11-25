@@ -113,11 +113,10 @@ export function ShapesShowcase() {
 
   const trackPanels = projects.slice(0, 6).map((p, i) => (
     <article key={p.slug} className="relative h-[60svh] w-[78vw] overflow-hidden border border-white/15 bg-navy sm:w-[46vw] lg:w-[34vw]">
-      <SiteImage asset={p.image} fill sizes="(min-width:1024px) 34vw, 78vw" className="object-cover opacity-80" />
       <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/30 to-transparent" />
       <div className="absolute inset-x-0 bottom-0 p-6">
         <p className="mono-label text-cyan-300">
-          0{i + 1} · {p.location} · {p.year}
+          0{i + 1}
         </p>
         <h3 className="text-outline mt-2 text-[clamp(1.75rem,1.2rem+2vw,3rem)] uppercase text-white">{p.name}</h3>
       </div>

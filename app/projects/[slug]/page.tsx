@@ -2,13 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { CaseStudyHero } from "@/components/projects/CaseStudyHero";
-import { Gallery } from "@/components/projects/Gallery";
-import { KeyFacts } from "@/components/projects/KeyFacts";
-import { ScopeAndStory } from "@/components/projects/ScopeAndStory";
+import { PageHero } from "@/components/layout/PageHero";
 import { BlueprintGrid } from "@/components/ui/BlueprintGrid";
 import { Button } from "@/components/ui/Button";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 import { quoteHref } from "@/content/navigation";
 import { projects } from "@/content/projects";
 import { site } from "@/content/site";
@@ -26,7 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const p = projectBySlug(slug);
   if (!p) return {};
   const path = `/projects/${p.slug}`;
-  const description = `${p.name}, ${p.location}: ${p.summary}`;
+  const description = `${p.name}, a UMS project.`;
   return {
     title: p.name,
     description,
@@ -62,34 +58,12 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(structuredData) }} />
-      <CaseStudyHero project={p} />
-
-      <section aria-label="Project details" className="bg-white py-20 md:py-28">
-        <div className="mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-4">
-            <KeyFacts project={p} />
-          </div>
-          <div className="lg:col-span-8">
-            <ScopeAndStory project={p} />
-          </div>
-        </div>
-      </section>
-
-      <section aria-labelledby="gallery-title" className="bg-offwhite py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div id="gallery-title">
-            <SectionHeading
-              index="01"
-              label="Gallery"
-              title="Project images"
-              description="Photographs from the project."
-            />
-          </div>
-          <div className="mt-12">
-            <Gallery images={p.gallery} projectName={p.name} />
-          </div>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Project"
+        title={p.name}
+        crumbs={[{ label: "Home", href: "/" }, { label: "Projects", href: "/projects" }, { label: p.name }]}
+        titleId="project-title"
+      />
 
       <section
         aria-labelledby="similar-title"
@@ -107,7 +81,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<Params
             </p>
           </div>
           <Button
-            href={quoteHref({ service: p.services[0], project: p.slug })}
+            href={quoteHref({ project: p.slug })}
             variant="accent"
             size="lg"
             magnetic
