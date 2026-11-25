@@ -11,30 +11,30 @@ export function PageBanner({
   intro,
   crumbs,
   titleId = "page-title",
-  art = false,
+  image,
   children,
 }: {
   title: string;
   intro?: ReactNode;
   crumbs: Crumb[];
   titleId?: string;
-  /** Show the building illustration on the right (large screens). */
-  art?: boolean;
+  /** Photo faded into the right-hand side of the banner (large screens). */
+  image?: { src: string; width: number; height: number };
   children?: ReactNode;
 }) {
   return (
     <section aria-labelledby={titleId} className="relative isolate overflow-hidden bg-navy-900 pb-10 pt-[calc(var(--header-h)+1.25rem)] text-white md:pb-14">
       <div aria-hidden className="absolute inset-0 -z-10 bg-[radial-gradient(45%_90%_at_78%_50%,rgb(27_166_232/0.18),transparent_72%)]" />
-      {art && (
+      {image && (
         <Image
-          src="/images/hero/hero-building-desktop.png"
+          src={image.src}
           alt=""
-          width={855}
-          height={512}
+          width={image.width}
+          height={image.height}
           aria-hidden
           priority
-          sizes="50vw"
-          className="pointer-events-none absolute -right-[4%] top-1/2 -z-10 hidden w-[48%] max-w-[760px] -translate-y-1/2 opacity-90 [mask-image:radial-gradient(ellipse_70%_74%_at_52%_50%,black_55%,transparent_100%)] lg:block"
+          sizes="55vw"
+          className="pointer-events-none absolute inset-y-0 right-0 -z-10 hidden h-full w-[56%] object-cover [mask-image:linear-gradient(to_right,transparent,black_38%)] lg:block"
         />
       )}
       <div className="wrap">

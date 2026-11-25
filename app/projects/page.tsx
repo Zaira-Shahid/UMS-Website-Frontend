@@ -49,7 +49,7 @@ export default function ProjectsPage() {
       {structuredData.map((d, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(d) }} />
       ))}
-      <PageBanner title="Projects" intro="Selected projects, by sector." crumbs={[{ label: "Home", href: "/" }, { label: "Projects" }]} titleId="projects-title" art />
+      <PageBanner title="Projects" intro="Selected projects, by sector." crumbs={[{ label: "Home", href: "/" }, { label: "Projects" }]} titleId="projects-title" />
       <section aria-labelledby="projects-list-title" className="bg-white py-12 md:py-16">
         <div className="wrap">
           <CenterTitle id="projects-list-title" lead="Our" accent="Projects" />

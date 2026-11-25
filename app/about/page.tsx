@@ -29,7 +29,7 @@ export default function AboutPage() {
   return (
     <>
       <JsonLd data={breadcrumbLd([{ name: "Home", path: "/" }, { name: "About UMS", path: "/about" }])} />
-      <PageBanner title="About UMS" intro="MEP contracting for complex buildings." crumbs={[{ label: "Home", href: "/" }, { label: "About UMS" }]} titleId="about-title" art>
+      <PageBanner title="About UMS" intro="MEP contracting for complex buildings." crumbs={[{ label: "Home", href: "/" }, { label: "About UMS" }]} titleId="about-title" image={{ src: "/images/services/integrated-mep/hero.jpg", width: 948, height: 233 }}>
         <Button href="/projects" size="lg">
           Explore Projects
         </Button>
