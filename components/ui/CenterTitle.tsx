@@ -27,7 +27,7 @@ export function CenterTitle({
         {accent && (
           <>
             {" "}
-            <span className="text-blue">{accent}</span>
+            <span className={tone === "dark" ? "text-blue" : "text-blue-600"}>{accent}</span>
           </>
         )}
       </Tag>

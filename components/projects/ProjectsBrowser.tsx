@@ -64,7 +64,8 @@ export function ProjectsBrowser({ projects }: { projects: BrowserProject[] }) {
         </div>
       ) : null}
 
-      <ul id={`${base}-panel`} role="tabpanel" aria-labelledby={`${base}-tab-${active}`} className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div id={`${base}-panel`} role="tabpanel" aria-labelledby={`${base}-tab-${active}`} className="mt-8">
+        <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {shown.map((p) => (
           <li key={p.slug}>
             <Link
@@ -97,7 +98,8 @@ export function ProjectsBrowser({ projects }: { projects: BrowserProject[] }) {
             </Link>
           </li>
         ))}
-      </ul>
+        </ul>
+      </div>
     </div>
   );
 }

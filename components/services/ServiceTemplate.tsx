@@ -133,7 +133,7 @@ export function ServiceTemplate({ service }: { service: Service }) {
                       <h3 className="text-[1.375rem] font-bold text-navy sm:text-2xl">{a.title}</h3>
                       <p className="mt-1 text-base leading-snug text-navy">{a.text}</p>
                       <Link href={`/industries#${a.industry}`} className="group mt-3 inline-flex items-center gap-2 font-heading font-bold text-blue-700">
-                        Learn more
+                        Learn more about {a.title}
                         <ArrowRight aria-hidden className="size-5 transition-transform group-hover:translate-x-1 motion-reduce:transition-none" />
                       </Link>
                     </div>

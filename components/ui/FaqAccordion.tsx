@@ -42,7 +42,7 @@ export function FaqAccordion({ faqs, className }: { faqs: readonly FaqItem[]; cl
                     className="flex w-full items-center justify-between gap-4 rounded-card px-5 py-5 text-left font-heading text-[1.0625rem] font-bold text-navy lg:px-7 lg:py-6 lg:text-[1.625rem]"
                   >
                     {f.question}
-                    {isOpen ? <Minus aria-hidden strokeWidth={2.5} className="size-6 shrink-0 text-blue" /> : <Plus aria-hidden strokeWidth={2.5} className="size-6 shrink-0 text-blue" />}
+                    {isOpen ? <Minus aria-hidden strokeWidth={2.5} className="size-6 shrink-0 text-blue-600" /> : <Plus aria-hidden strokeWidth={2.5} className="size-6 shrink-0 text-blue-600" />}
                   </button>
                 </h3>
                 <div

@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { RfqAside } from "@/components/forms/RfqAside";
-import { RfqForm } from "@/components/forms/RfqForm";
+import { RfqFromUrl } from "@/components/forms/RfqFromUrl";
 import { PageBanner } from "@/components/ui/PageBanner";
 import { site } from "@/content/site";
-import { resolveQuotePreselect } from "@/lib/forms/rfq";
-import { breadcrumbLd, jsonLd } from "@/lib/seo";
+import { breadcrumbLd, jsonLd, ogImage, ogImages } from "@/lib/seo";
 
 const description =
   "Send UMS a tender or project brief in five short steps — HVAC, fire fighting, electrical and ELV, plumbing, pools and fountains, or the full integrated MEP package.";
@@ -13,30 +13,18 @@ export const metadata: Metadata = {
   title: "Request a Quote",
   description,
   alternates: { canonical: "/request-a-quote" },
-  openGraph: {
+  openGraph: { images: ogImages,
     type: "website",
     siteName: `${site.name} — ${site.fullName}`,
     title: `Request a Quote | ${site.name}`,
     description,
     url: "/request-a-quote",
   },
-  twitter: { card: "summary_large_image", title: `Request a Quote | ${site.name}`, description },
+  twitter: { card: "summary_large_image", images: [ogImage.url], title: `Request a Quote | ${site.name}`, description },
 };
 
-type SearchParams = Promise<{
-  service?: string | string[];
-  project?: string | string[];
-  sector?: string | string[];
-}>;
-
-/**
- * Query params are resolved on the server, so the form arrives pre-selected without a flash:
- *   ?service=hvac,fire-fighting   ?project=<case-study slug>   ?sector=<industry slug>
- * Invalid values are ignored.
- */
-export default async function RequestQuotePage({ searchParams }: { searchParams: SearchParams }) {
-  const preselect = resolveQuotePreselect(await searchParams);
-
+/** Static page: the URL parameters (?service, ?project, ?sector) are read in the browser by RfqFromUrl. */
+export default function RequestQuotePage() {
   return (
     <>
       <script
@@ -59,11 +47,9 @@ export default async function RequestQuotePage({ searchParams }: { searchParams:
       <section aria-label="Quote request" className="bg-[#f2f7fb] py-12 md:py-16">
         <div className="wrap grid gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-8">
-            {/* key: a different preselection (new URL) remounts the form with fresh defaults */}
-            <RfqForm
-              key={`${preselect.services.join(",")}|${preselect.project?.slug ?? ""}|${preselect.sector ?? ""}`}
-              preselect={preselect}
-            />
+            <Suspense fallback={<div className="min-h-[40rem]" aria-hidden />}>
+              <RfqFromUrl />
+            </Suspense>
           </div>
           <div className="lg:col-span-4">
             <RfqAside />

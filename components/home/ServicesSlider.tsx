@@ -110,7 +110,7 @@ export function ServicesSlider() {
                 onClick={!active ? () => go(i) : undefined}
                 className={cn(
                   "flex w-[74%] shrink-0 items-center gap-[3%] transition-opacity duration-500 motion-reduce:transition-none",
-                  !active && "cursor-pointer opacity-70",
+                  !active && "cursor-pointer",
                   i > index && "border-l border-border pl-8",
                 )}
               >

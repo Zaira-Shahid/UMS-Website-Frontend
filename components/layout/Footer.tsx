@@ -63,8 +63,8 @@ export function Footer() {
           <div className="grid grid-cols-2 gap-x-5 gap-y-7 lg:grid-cols-4 lg:gap-6 xl:grid-cols-[1.35fr_1fr_1.1fr_1fr_1.1fr]">
             {/* Brand */}
             <div className="col-span-2 min-w-0 lg:col-span-4 xl:col-span-1">
-              <Link href="/" aria-label={`${site.fullName}, home`} className="inline-block rounded-lg bg-white px-2.5 py-2">
-                <LogoMark className="h-11 w-auto" />
+              <Link href="/" aria-label={`${site.name} — ${site.fullName}, home`} className="inline-block rounded-lg bg-white px-2.5 py-2">
+                <LogoMark decorative className="h-11 w-auto" />
               </Link>
               <p className="mt-3 font-heading text-[1.75rem] font-bold leading-[1.12] text-white">{site.fullName}</p>
               <span aria-hidden className="mt-2 block h-1 w-20 rounded-full bg-cyan" />

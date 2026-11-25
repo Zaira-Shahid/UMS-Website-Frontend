@@ -15,7 +15,7 @@ export function Clients() {
     <section aria-labelledby="clients-title" className="bg-[#f2f7fb] py-12 lg:py-16">
       <div className="wrap text-center">
         <h2 id="clients-title" className="text-[clamp(1.75rem,1rem+2.4vw,3rem)] font-extrabold text-navy">
-          Clients &amp; <span className="text-blue">Project Partners</span>
+          Clients &amp; <span className="text-blue-600">Project Partners</span>
         </h2>
         <span aria-hidden className="mx-auto mt-3 block h-[3px] w-full max-w-[34rem] bg-cyan" />
       </div>

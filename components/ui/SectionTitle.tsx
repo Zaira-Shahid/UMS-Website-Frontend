@@ -23,12 +23,12 @@ export function SectionTitle({
   return (
     <div className={className}>
       <span aria-hidden className="accent-bar" />
-      <Tag id={id} className={cn("heading-two-tone mt-4 font-extrabold", tone === "dark" && "text-white")}>
+      <Tag id={id} className={cn("mt-4 font-extrabold", tone === "dark" && "text-white")}>
         {lead}
         {accent && (
           <>
             {" "}
-            <span className="text-blue">{accent}</span>
+            <span className={tone === "dark" ? "text-blue" : "text-blue-600"}>{accent}</span>
           </>
         )}
       </Tag>

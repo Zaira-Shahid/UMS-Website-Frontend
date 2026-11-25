@@ -191,11 +191,6 @@
   background: var(--blue);
 }
 
-/* Two-tone headings: the second part in blue ("How We <span class="text-blue">Deliver</span>") */
-.heading-two-tone .text-blue {
-  color: var(--blue);
-}
-
 /* Standard system cursors: pointer on anything clickable (Tailwind's reset makes buttons an arrow) */
 a[href],
 button:not(:disabled),
@@ -207,6 +202,16 @@ label[for],
 }
 
 /* Blueprint grid: used by the 404 page until Phase F5 restyles it */
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+.animate-menu-in {
+  animation: menu-in 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
 
 /* Clients row: the list is duplicated, so moving it by half its width loops seamlessly */
 @keyframes clients-scroll {

@@ -25,9 +25,10 @@ function gearPath() {
 
 const GEAR = gearPath();
 
-export function LogoMark({ className }: { className?: string }) {
+/** The logo artwork. Inside a link that already has a label, pass `decorative` so it is hidden from assistive technology. */
+export function LogoMark({ className, decorative = false }: { className?: string; decorative?: boolean }) {
   return (
-    <svg viewBox="0 0 330 76" role="img" aria-label={`${site.name} logo`} className={className}>
+    <svg viewBox="0 0 330 76" {...(decorative ? { "aria-hidden": true } : { role: "img", "aria-label": `${site.name} logo` })} className={className}>
       <defs>
         <linearGradient id="logo-blue" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor="#33b8f2" />
@@ -76,7 +77,7 @@ export function Logo({ className, onClick }: { className?: string; onClick?: () 
       aria-label={`${site.name} — ${site.fullName}, home`}
       className={cn("inline-flex shrink-0 items-center", className)}
     >
-      <LogoMark className="h-6 w-auto min-[380px]:h-8 min-[420px]:h-10 xl:h-11 min-[1400px]:h-14" />
+      <LogoMark decorative className="h-6 w-auto min-[380px]:h-8 min-[420px]:h-10 xl:h-11 min-[1400px]:h-14" />
     </Link>
   );
 }
