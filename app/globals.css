@@ -178,7 +178,8 @@
   margin-inline: auto;
   width: 100%;
   max-width: 1600px;
-  padding-inline: clamp(1.25rem, 3.2vw, 3rem);
+  --wrap-pad: clamp(1.25rem, 3.2vw, 3rem);
+  padding-inline: var(--wrap-pad);
 }
 
 /* Short blue accent bar above section titles (about 70 x 5px) */

@@ -39,9 +39,9 @@ export const dummyValues = [
  * Project names confirmed by the owner. Only the name is stored; every other detail that used to be
  * here (sector, city, year, area, package, challenge/solution/outcome, photos) was invented and removed.
  */
-export const confirmedProjects = [
-  { slug: "lady-reading-hospital", name: "Lady Reading Hospital" },
-  { slug: "buch-international-hospital", name: "Buch International Hospital" },
+export const confirmedProjects: readonly { slug: string; name: string; sector?: "healthcare"; city?: string }[] = [
+  { slug: "buch-international-hospital", name: "Buch International Hospital", sector: "healthcare", city: "Multan" },
+  { slug: "lady-reading-hospital", name: "Lady Reading Hospital", sector: "healthcare", city: "Peshawar" },
   { slug: "elanza-mall", name: "Elanza Mall" },
   { slug: "pakistan-cricket-board-house", name: "Pakistan Cricket Board House" },
   { slug: "cggc-head-office-eighteen", name: "CGGC Head Office at Eighteen" },

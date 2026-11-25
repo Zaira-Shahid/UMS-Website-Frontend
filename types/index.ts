@@ -96,6 +96,10 @@ export interface Industry {
 export interface Project {
   slug: string;
   name: string;
+  /** Only set when the owner has confirmed it. */
+  sector?: IndustrySlug;
+  /** Only set when the owner has confirmed it. */
+  city?: string;
 }
 
 export type InsightCategory = "safety-compliance" | "mep-systems" | "maintenance-operations";
