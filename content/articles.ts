@@ -60,7 +60,7 @@ export const articles: Article[] = [
         heading: "Record, review and close out",
         body: [
           "Toolbox talks, inspections, permits and incident reports are only useful when they are kept and reviewed. A short weekly review that looks at near-misses, repeated observations and overdue actions will catch a recurring problem long before it becomes an injury. Near-miss reporting in particular is a measure of site culture. A site that reports many near-misses and acts on them is usually safer than a site that reports none.",
-          "At the end of each phase, close out the plan. Confirm that temporary works have been removed, that isolations have been lifted and recorded, and that lessons from the phase are carried into the next. That discipline, repeated across a long programme, is what sits behind a lost-time-incident figure of zero.",
+          "At the end of each phase, close out the plan. Confirm that temporary works have been removed, that isolations have been lifted and recorded, and that lessons from the phase are carried into the next. That discipline, repeated across a long programme, is what sits behind a good safety record.",
         ],
       },
     ],

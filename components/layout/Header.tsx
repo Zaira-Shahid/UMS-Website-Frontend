@@ -159,14 +159,14 @@ export function Header() {
       >
         <div
           className={cn(
-            "mx-auto flex max-w-7xl items-center justify-between gap-6 px-5 transition-[height] duration-300 sm:px-8",
+            "mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 2xl:gap-6 transition-[height] duration-300 sm:px-8",
             scrolled ? "h-16" : "h-[var(--header-h)]",
           )}
         >
           <Logo tone={light ? "light" : "dark"} />
 
           <nav ref={navRef} aria-label="Main" className="hidden xl:block">
-            <ul className="flex items-center gap-8">
+            <ul className="flex items-center gap-5 2xl:gap-8">
               {mainNav.map((item) => {
                 const hasMenu = Boolean(item.children);
                 const open = openMenu === item.label;
