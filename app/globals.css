@@ -280,6 +280,13 @@ label[for],
   animation: ums-puddle 3s ease-in-out infinite;
 }
 
+/* Clients row: the list is duplicated, so moving it by half its width loops seamlessly */
+@keyframes clients-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .nf-drip,
   .nf-puddle,

@@ -58,6 +58,14 @@ entry is verified.
 
 ## 5. Wording the owner must approve
 
+- Homepage Credentials & Milestones (`components/home/Credentials.tsx`): the three lines are general wording written
+  for the site ("Qualifications and approvals relevant to your project are confirmed on request", milestones planned
+  and tracked, quality and safety practices built into delivery). The mockup's own sentences were not used because
+  they state facts that are not verified. Approve, or supply real credentials and a credentials page.
+- Homepage FAQ answers (`content/home.ts`, `homeFaqs`) describe how the site works only. Approve or edit.
+- Enquiry band (`components/layout/CTABand.tsx`): "Tell us about your requirements and explore the right MEP
+  engineering solution with UMS." is the mockup's sentence. Approve.
+
 - Mission, vision and values (`content/dummy.ts`, shown on `/about/mission-values`).
 - Quality, Safety & Delivery (`content/quality.ts`): general descriptions only.
 - Service and industry copy (`content/services.ts`, `content/industries.ts`): confirm all six disciplines are real

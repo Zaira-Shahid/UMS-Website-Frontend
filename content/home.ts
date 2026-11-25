@@ -53,3 +53,11 @@ export const featuredImages: Record<string, { src: string; width: number; height
   "buch-international-hospital": { src: "/images/projects/illustrative-hospital-1.png", width: 325, height: 492 },
   "lady-reading-hospital": { src: "/images/projects/illustrative-hospital-2.png", width: 253, height: 145 },
 };
+
+/** Homepage FAQ (mockup 07). The answers describe how the site works and make no claims about UMS. */
+export const homeFaqs = [
+  { question: "What services does UMS provide?", answer: "UMS provides integrated MEP, HVAC, fire protection, plumbing, electrical & ELV, and pools & fountains services." },
+  { question: "How do I request a project quote?", answer: "Use the Request a Quote page. Choose the service, describe the building and your timeline, and attach drawings if you have them." },
+  { question: "Can I review projects by sector?", answer: "Yes. The Featured Projects section and the Projects page group work by sector, and the Industries page explains the sectors we serve." },
+  { question: "What should I include in my project brief?", answer: "The building type and location, the services you need, your target timeline, and any drawings or specifications you already have." },
+] as const;
