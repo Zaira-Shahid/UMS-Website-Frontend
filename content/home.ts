@@ -29,22 +29,26 @@ export const deliverySteps = [
 
 /* ------------------------------------------------------------- quality */
 
-/** Topics covered by /quality-safety-delivery. */
-export const qualityTopics = {
-  qa: {
+/** The approach to quality and safety in general terms. No certifications, figures or incident claims. */
+export const qualityPrinciples = [
+  {
+    id: "qa",
     title: "Quality assurance & control",
-    points: [
-      "Inspection and test plans agreed before installation",
-      "Material submittals and approvals",
-      "Pressure and performance testing records",
-    ],
+    text: "Inspection and test plans agreed before installation, material submittals approved before ordering, and non-conformances tracked until they are closed.",
   },
-  hse: {
+  {
+    id: "hse",
     title: "Health, safety & environment",
-    points: [
-      "Method statements and risk assessments per activity",
-      "Permit-to-work coordination with other trades",
-      "Toolbox talks and incident reporting",
-    ],
+    text: "Method statements and risk assessments for each activity, permit-to-work coordination with the other trades, and regular toolbox talks.",
   },
-} as const;
+  {
+    id: "testing",
+    title: "Inspection & testing",
+    text: "Pressure, flow and performance tests witnessed and recorded against the design criteria before systems are concealed or handed over.",
+  },
+  {
+    id: "records",
+    title: "Documentation",
+    text: "As-built drawings, operating manuals and test records issued at handover, so the people who run the building can maintain it.",
+  },
+] as const;
