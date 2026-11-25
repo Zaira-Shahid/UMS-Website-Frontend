@@ -25,9 +25,14 @@ Sections 1 to 10 below are the original Phase A audit. Since then the following 
 - The "within 48 hours" response promise, the placeholder company profile download, and the newsletter form.
 - The Insights and Privacy Policy links (pages come in Phase E).
 
-Still on the site and still unverified (rebuilt in Phase E): the Careers page (four invented job listings, culture
-text and benefits such as "PEC registration support"), the Mission & Values wording, the Quality, Safety &
-Delivery procedures in `content/quality.ts`, the service and industry copy, and all stock photography.
+**Phase D:** the Careers page no longer shows the four invented listings, the culture text or the benefits; it says
+"No open positions right now" and offers the general application form. Real roles go in `content/careers.ts`. The
+homepage below the hero now uses only service and industry content, the six confirmed project names, and general
+descriptions of the delivery stages and of quality and safety practice (no figures, certifications or client names).
+
+Still on the site and still unverified (rebuilt in Phase E): the Mission & Values wording, the Quality, Safety &
+Delivery page procedures in `content/quality.ts`, the service and industry copy (generic descriptions, owner to
+confirm all six disciplines are offered), and all stock photography (service thumbnails, industry pictures).
 
 ### Contact details to supply
 
