@@ -19,20 +19,21 @@ export const company = {
   tagline: "MEP Contracting for Complex Buildings",
 } as const;
 
+/* Mission and values: deliberately general wording. The owner still has to approve or replace it (CONTENT_TO_VERIFY.md). */
+
 export const dummyMission = {
   statement:
-    "To deliver the hidden systems inside Pakistan's buildings — air, water, power and life safety — with engineering precision, honest coordination and a safe site.",
-  vision:
-    "To be the contractor that owners and consultants trust first with complex buildings: hospitals, towers, malls and campuses where every system must work on the first day and for decades after.",
+    "To deliver the systems inside buildings (air, water, power and life safety) so that they work from the first day and keep working.",
+  vision: "To be a contractor that clients and consultants can rely on for complex buildings.",
 };
 
 export const dummyValues = [
-  { title: "Precision", description: "We draw it, check it and measure it before we build it. Details are where complex buildings succeed or fail." },
-  { title: "Safety first", description: "Nothing on a programme is worth an injury. Safe methods are planned, briefed and enforced on every site, every day." },
-  { title: "Integrity", description: "We say what we will do, price it plainly and report progress honestly, including when it is not good news." },
-  { title: "Collaboration", description: "Building services share every ceiling and shaft. We work openly with consultants, contractors and trades." },
-  { title: "Reliability", description: "On-time handover with complete records is a promise we measure and report, not a slogan." },
-  { title: "Craft", description: "We invest in our engineers and technicians, because well-trained people install systems that last." },
+  { title: "Precision", description: "Services are drawn, checked and measured before they are built, because details decide whether a complex building works." },
+  { title: "Safety", description: "Safe methods are planned, briefed and followed on every site." },
+  { title: "Integrity", description: "Say what will be done, price it plainly and report progress honestly." },
+  { title: "Collaboration", description: "Building services share every ceiling and shaft, so the trades need to work openly with each other and with consultants." },
+  { title: "Reliability", description: "Complete records and a clean handover matter as much as the installation." },
+  { title: "Craft", description: "Well-trained people install systems that last." },
 ];
 
 /* ------------------------------------------------------------ projects */

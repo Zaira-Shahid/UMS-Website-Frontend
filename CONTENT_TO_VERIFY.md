@@ -34,6 +34,17 @@ Still on the site and still unverified (rebuilt in Phase E): the Mission & Value
 Delivery page procedures in `content/quality.ts`, the service and industry copy (generic descriptions, owner to
 confirm all six disciplines are offered), and all stock photography (service thumbnails, industry pictures).
 
+### Phase E: wording that still needs the owner's approval
+
+- **Mission, vision and the six values** (`content/dummy.ts`, shown on `/about/mission-values`). The wording is now
+  deliberately general, but it is still drafted by us, not supplied by UMS. Approve or replace it.
+- **Quality, Safety & Delivery** (`content/quality.ts`). The page now only describes, in general terms, what each stage
+  typically involves on an MEP package. The earlier "How UMS runs it" paragraphs (invented procedures, ISO claims) were
+  removed. If UMS wants to state its own procedures, supply them.
+- **Service pages** (`content/services.ts`): the technical diagrams and their explanations are generic engineering
+  descriptions. Confirm that all six disciplines are real UMS offerings.
+- The "How it works" diagrams and every line drawing are illustrations, not drawings of any UMS project.
+
 ### Contact details to supply
 
 Everything lives in one place: **`content/site.ts`, the `contact` object.** All values are empty today. Fill a value

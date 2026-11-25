@@ -16,15 +16,8 @@ import { MobileNav } from "./MobileNav";
 /** Lazy: the palette and its Fuse index load only when first opened. */
 const SearchPalette = dynamic(() => import("@/components/search/SearchPalette"), { ssr: false });
 
-/** Routes whose first screen is a dark hero: light header text over a transparent bar. */
-const hasDarkHero = (pathname: string) =>
-  pathname === "/" ||
-  pathname === "/projects" ||
-  pathname.startsWith("/projects/") ||
-  pathname === "/request-a-quote" ||
-  pathname === "/contact" ||
-  pathname === "/careers" ||
-  pathname === "/search";
+/** Only the homepage opens on a dark hero: light header text over a transparent bar. */
+const hasDarkHero = (pathname: string) => pathname === "/";
 
 /**
  * Site header (spec §7). Transparent over dark heroes, glass (backdrop blur) once scrolled; hides
