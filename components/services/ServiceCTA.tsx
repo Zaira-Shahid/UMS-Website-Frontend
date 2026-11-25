@@ -45,7 +45,7 @@ export function ServiceCTA({ service }: { service: Service }) {
             size="lg"
             magnetic
             arrow
-            className="w-full sm:w-auto"
+            className="h-auto min-h-14 w-full whitespace-normal py-3 text-center sm:w-auto"
           >
             Request a Quote for {service.shortName}
           </Button>
@@ -53,7 +53,7 @@ export function ServiceCTA({ service }: { service: Service }) {
             href={isIntegrated ? "/services" : "/services/integrated-mep"}
             variant="outline-light"
             size="lg"
-            className="w-full sm:w-auto"
+            className="h-auto min-h-14 w-full whitespace-normal py-3 text-center sm:w-auto"
           >
             {isIntegrated ? "All services" : "See Integrated MEP"}
           </Button>

@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { quoteHref } from "@/content/navigation";
 import { services } from "@/content/services";
-import { cn } from "@/lib/utils";
 
 /**
  * Service-aware enquiry band for the overview: one quick link per service,
@@ -35,20 +34,15 @@ export function ServicesCTA() {
             </div>
           </div>
 
-          <ul className="grid gap-3 sm:grid-cols-2 lg:col-span-6">
+          <ul className="divide-y divide-white/15 border-y border-white/15 lg:col-span-6">
             {services.map((s) => (
               <li key={s.slug}>
                 <Link
                   href={quoteHref({ service: s.slug })}
-                  className={cn(
-                    "flex items-center justify-between gap-4 border px-4 py-3.5 text-sm font-medium transition-colors",
-                    s.accent === "fire"
-                      ? "border-fire/50 hover:border-fire hover:bg-fire"
-                      : "border-white/20 hover:border-cyan hover:bg-cyan",
-                  )}
+                  className="group flex items-center justify-between gap-4 py-3.5 text-sm font-medium transition-colors hover:text-cyan-300"
                 >
                   {s.shortName}
-                  <span aria-hidden className="text-white/50">
+                  <span aria-hidden className="text-white/50 transition-transform group-hover:translate-x-1">
                     →
                   </span>
                 </Link>

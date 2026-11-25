@@ -19,8 +19,6 @@ const SearchPalette = dynamic(() => import("@/components/search/SearchPalette"),
 /** Routes whose first screen is a dark hero: light header text over a transparent bar. */
 const hasDarkHero = (pathname: string) =>
   pathname === "/" ||
-  pathname === "/services" ||
-  pathname.startsWith("/services/") ||
   pathname === "/projects" ||
   pathname.startsWith("/projects/") ||
   pathname === "/request-a-quote" ||

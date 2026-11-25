@@ -19,7 +19,7 @@ export function ApplicationsList({ service }: { service: Service }) {
           <div id="applications-title" className="lg:sticky lg:top-40">
             <SectionHeading
               accent={service.accent}
-              index="02"
+              index="03"
               label="Applications"
               title="Typical applications"
               description={`Where ${service.shortName} matters most. Each sector links to its own section on the Industries page.`}

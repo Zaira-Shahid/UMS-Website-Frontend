@@ -571,3 +571,17 @@ label[for],
     transform: scale(1.7);
   }
 }
+
+/* Service page diagrams: flowing dashes along the main runs */
+.dg-flow {
+  stroke-dasharray: 2 12;
+  animation: ums-flow 1.8s linear infinite;
+}
+.dg-flow-rev {
+  animation-direction: reverse;
+}
+@media (prefers-reduced-motion: reduce) {
+  .dg-flow {
+    animation: none !important;
+  }
+}

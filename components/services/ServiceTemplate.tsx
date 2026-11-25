@@ -3,11 +3,12 @@ import { absoluteUrl, jsonLd, organizationRef } from "@/lib/seo";
 import type { Service } from "@/types";
 import { ApplicationsList } from "./ApplicationsList";
 import { FaqSection } from "./FaqSection";
-import { ScopeChecklist } from "./ScopeChecklist";
+import { ScopeStages } from "./ScopeStages";
 import { SectionNav, type NavSection } from "./SectionNav";
 import { ServiceCTA } from "./ServiceCTA";
 import { ServiceHero } from "./ServiceHero";
-import { SystemsGrid } from "./SystemsGrid";
+import { ServiceDiagramSection } from "./ServiceDiagramSection";
+import { SystemsList } from "./SystemsList";
 
 /** The one shared template behind all six /services/[slug] pages. */
 export function ServiceTemplate({ service }: { service: Service }) {
@@ -15,6 +16,7 @@ export function ServiceTemplate({ service }: { service: Service }) {
 
   const sections: NavSection[] = [
     { id: "systems", label: "Systems" },
+    { id: "how", label: "How it works" },
     { id: "applications", label: "Applications" },
     { id: "scope", label: "Scope" },
     { id: "faq", label: "FAQ" },
@@ -66,13 +68,14 @@ export function ServiceTemplate({ service }: { service: Service }) {
         quoteHref={quoteHref({ service: service.slug })}
         quoteLabel={`Quote for ${service.shortName}`}
       />
-      <SystemsGrid service={service} />
+      <SystemsList service={service} />
+      <ServiceDiagramSection service={service} />
       <ApplicationsList service={service} />
-      <ScopeChecklist service={service} />
+      <ScopeStages service={service} />
       <FaqSection
         faqs={service.faqs}
         accent={service.accent}
-        index="06"
+        index="05"
         description={`Straight answers on ${service.shortName} — written in general engineering terms, not as UMS commitments.`}
       />
       <ServiceCTA service={service} />
