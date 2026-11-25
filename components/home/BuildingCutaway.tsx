@@ -200,9 +200,12 @@ export function BuildingCutaway({
   active,
   onHover,
   className,
+  showLabels = true,
 }: {
   /** The system to keep bright; the others dim (see `.cutaway` in globals.css). */
   active?: SystemKey | null;
+  /** Callout labels with leader lines. The explainer section labels the systems with tabs instead. */
+  showLabels?: boolean;
   onHover?: (k: SystemKey | null) => void;
   className?: string;
 }) {
@@ -373,7 +376,7 @@ export function BuildingCutaway({
       </g>
 
       {/* Callouts (desktop only) */}
-      <g className="max-md:hidden">
+      <g className={showLabels ? "max-md:hidden" : "hidden"}>
         <Leader label="ELECTRICAL & ELV" color={COL.elec.left} tx={p(0.3, 0.3, TOP + 0.4)[0]} ty={p(0.3, 0.3, TOP + 0.4)[1]} lx={PAD} ly={PAD + 22} side="left" />
         <Leader label="HVAC" color={COL.hvac.left} tx={p(3.5, 0.95, TOP + 0.45)[0]} ty={p(3.5, 0.95, TOP + 0.45)[1]} lx={VW - PAD} ly={PAD + 22} side="right" />
         <Leader label="PLUMBING" color={COL.plumb.left} tx={p(W - 0.45, 0.5, 2.5 * H)[0]} ty={p(W - 0.45, 0.5, 2.5 * H)[1]} lx={VW - PAD} ly={p(W - 0.45, 0.5, 2.5 * H)[1] - 40} side="right" />
