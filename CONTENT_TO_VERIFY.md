@@ -111,6 +111,33 @@ With no API key it uses a rule-based responder; set `ANTHROPIC_API_KEY` or `OPEN
 have a model write the answers (still restricted to the same content). Please approve the wording of the greeting and
 of the replies for pricing, certifications and "I don't know".
 
+## 5c. Inner pages (Phase F5): facts in mockups 12 to 18 that were left out
+
+The inner pages follow the mockups' layout and style only. These details from the mockups are NOT on the site until
+you confirm them:
+
+- **About (12):** "Islamabad-based", "operating since 2009", the two street addresses (Abdullah Plaza, Ghouri Garden;
+  MI Tower Phase 1, Khayaban-e-Jinnah Road), and the industrial plant photograph. The office cards show only the city
+  and a "Contact this office" link until an address and map link are set in `content/site.ts`.
+- **Contact (17):** "Office #1, 1st Floor, Abdullah Plaza...", "Suite #7, Second Floor, MI Tower Phase-1...",
+  "Call 0333 1811113", "ums.isb@gmail.com", "info@umss.pk", "WhatsApp: To be confirmed", the social icons, and the map
+  picture. Addresses, phones, emails, WhatsApp and directions appear only when filled in `content/site.ts`. The
+  "Find Our Offices" section appears only when an office has a map link. The mockup's "Office Location" dropdown is not
+  in the form (the form logic is unchanged).
+- **Mission, vision and values (13, 14):** the mockup's sentences and its six values (Trust, Honesty, Integrity, Hard
+  Work, Excellence, Transparency) were not used. The pages use the existing general wording in `content/dummy.ts`
+  (Precision, Safety, Integrity, Collaboration, Reliability, Craft). Approve or replace.
+- **Capabilities (15):** the four photographs of people in "UMS" vests and helmets were not used (they show staff who are
+  not verified). Each card has an icon instead. The four descriptions are general wording about process.
+- **Team (16):** the page `/about/team` exists but is hidden (404) and unlinked. Set `showTeamPage = true` in
+  `content/team.ts` and add real names, roles and photos to show it. The project-control roles in the chart
+  (Site Engineering, QA/QC, HSE, Drafting, Site Delivery) are general and need confirming before the page is shown.
+- **Projects (18):** the four circular building photographs in the mockup are not used; the site uses your cropped
+  circles, labelled "Illustrative imagery". The mockup's text "across commercial, residential and industrial sectors"
+  was replaced with "by sector".
+- **Insights:** articles are attributed to "UMS Engineering Team" with no dates. Confirm this.
+- **Privacy policy:** neutral template; needs legal review.
+
 ## 6. Statements in the supplied mockups that are NOT used
 
 The mockups contain wording and details that are not verified, so they are not on the site: the Credentials section

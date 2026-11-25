@@ -124,7 +124,7 @@ export default function ChatWidget() {
     list.current?.scrollTo({ top: list.current.scrollHeight, behavior: reducedMotion() ? "auto" : "smooth" });
   }, [messages, typing]);
 
-  // On phones, step aside while the launcher would sit on top of a "Request a Quote" button (or the quote link bar).
+  // On phones, step aside while the launcher would sit on top of a "Request a Quote" button, a form field or a footer link.
   useEffect(() => {
     let frame = 0;
     const check = () => {
@@ -140,7 +140,7 @@ export default function ChatWidget() {
       const l = launcher.current?.getBoundingClientRect();
       if (open || !l || window.innerWidth >= 768) return setCovering(false);
       const pad = 8;
-      const hit = [...document.querySelectorAll<HTMLElement>('a[href^="/request-a-quote"], button[type="submit"]')].some((el) => {
+      const hit = [...document.querySelectorAll<HTMLElement>('a[href^="/request-a-quote"], button[type="submit"], input, textarea, select, footer a')].some((el) => {
         if (el.closest("[role=dialog]")) return false;
         const b = el.getBoundingClientRect();
         return b.width > 0 && b.right > l.left - pad && b.left < l.right + pad && b.bottom > l.top - pad && b.top < l.bottom + pad;
