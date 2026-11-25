@@ -90,14 +90,3 @@ export function photo(key: PhotoKey, position?: string): ImageAsset {
     isPlaceholder: true,
   };
 }
-
-/** Local fallback used where no suitable stock photo exists yet. */
-export function placeholderImage(alt: string): ImageAsset {
-  return {
-    src: "/images/placeholder-blueprint.svg",
-    alt,
-    width: 1600,
-    height: 1000,
-    isPlaceholder: true,
-  };
-}

@@ -133,22 +133,6 @@ export interface Career {
   requirements: string[];
 }
 
-export interface Testimonial {
-  quote: string;
-  name: string;
-  role: string;
-  company: string;
-  /** Project the quote relates to (a slug from content/projects). */
-  project: string;
-}
-
-export interface Stat {
-  value: number;
-  suffix?: string;
-  label: string;
-  note?: string;
-}
-
 export interface NavLink {
   label: string;
   href: string;

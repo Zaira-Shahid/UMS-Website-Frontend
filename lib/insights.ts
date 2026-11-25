@@ -7,13 +7,6 @@ export const categoryBySlug = (slug: string) => insightCategories.find((c) => c.
 
 export const insightsInCategory = (category: InsightCategory): Insight[] => insights.filter((i) => i.category === category);
 
-/** Articles tagged with a service, most specific first (fewer tags means more specifically about it). */
-export const insightsForService = (slug: ServiceSlug, max = 3): Insight[] =>
-  insights
-    .filter((i) => i.services.includes(slug))
-    .sort((a, b) => a.services.length - b.services.length)
-    .slice(0, max);
-
 /** Other articles that share the category or a service with this one. */
 export function relatedInsights(a: Insight, max = 2): Insight[] {
   return insights

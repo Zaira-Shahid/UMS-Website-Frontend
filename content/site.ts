@@ -32,19 +32,7 @@ export const contact = {
   whatsapp: "",
   /** Full profile URLs. */
   social: { linkedin: "", facebook: "", instagram: "", youtube: "", x: "", tiktok: "" },
-  /** Path or URL of a real company profile PDF. Leave empty until one exists. */
-  companyProfileUrl: "",
 };
-
-/** True when at least one visitor-facing contact value is filled in. */
-export const hasContactDetails = () =>
-  !!(
-    contact.phone ||
-    contact.whatsapp ||
-    contact.email.general ||
-    contact.email.tenders ||
-    contact.offices.some((o) => o.address || o.phone || o.email || o.hours)
-  );
 
 export const site = {
   name: "UMS",
@@ -53,6 +41,4 @@ export const site = {
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://umss.pk",
   description:
     "UMS delivers MEP contracting for complex buildings: HVAC, fire fighting, electrical and ELV, plumbing and public health, and pools and fountains, with offices in Islamabad and Lahore.",
-  /** Logo file at /public/brand/ums-logo.svg once supplied; a typographic wordmark stands in. */
-  logo: undefined as string | undefined,
 } as const;
