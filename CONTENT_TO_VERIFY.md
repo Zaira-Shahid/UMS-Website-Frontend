@@ -10,8 +10,10 @@ details to the developer, or edit the named file yourself. (Last updated: final 
 
 All of these are empty today and appear on the site only once filled.
 
-- [ ] **Islamabad office:** street address, phone, email, opening hours, map link
-- [ ] **Lahore office:** street address, phone, email, opening hours, map link
+- [x] **Islamabad and Lahore offices:** the street addresses, the phone number (0333) 1811113 and the emails (info@umss.pk for
+      both, plus ums.isb@gmail.com for Islamabad) were taken from the company's website https://umss.pk ("Get in Touch").
+      Please confirm they are still current
+- [ ] **Both offices:** opening hours and a map link (Google Maps "share" link)
 - [ ] **Company phone and emails:** `phone`, `email.general`, `email.tenders`, `email.careers`
 - [ ] **WhatsApp number** in international format (shows the green header button and footer icon)
 - [ ] **Social profiles:** LinkedIn, Facebook, Instagram, YouTube, X, TikTok (each icon appears when its URL is set)

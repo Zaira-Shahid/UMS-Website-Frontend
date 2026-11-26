@@ -56,6 +56,13 @@ export function ContactDetails({ tone = "light", className }: { tone?: "light" |
                 </a>
               </p>
             )}
+            {o.email2 && (
+              <p>
+                <a href={`mailto:${o.email2}`} className={link}>
+                  {o.email2}
+                </a>
+              </p>
+            )}
             {o.hours && <p>{o.hours}</p>}
           </div>
         </address>

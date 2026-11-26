@@ -164,7 +164,7 @@ export function ruleBasedReply(message: string): ChatReply {
   if (has(t, ["office", "offices", "address", "location", "located", "where are you", "visit", "phone", "call", "number", "email", "mail", "whatsapp", "hours", "reach you", "contact"])) {
     const filled = contact.offices.filter((o) => o.address || o.phone || o.email);
     if (filled.length > 0) {
-      const lines = filled.map((o) => [o.city, o.address, o.phone, o.email].filter(Boolean).join(" · ")).join("\n");
+      const lines = filled.map((o) => [o.city, o.address, o.phone, o.email, o.email2].filter(Boolean).join(" · ")).join("\n");
       return { text: `Our offices:\n${lines}`, links: [{ label: "Contact us", href: "/contact" }] };
     }
     return {

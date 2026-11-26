@@ -1,10 +1,10 @@
 /**
  * Company-wide configuration.
  *
- * CONTACT DETAILS: every value in `contact` is intentionally empty. None of the company's phone numbers,
- * emails, street addresses, hours, WhatsApp number or social profiles have been verified, so none are
- * shown. Fill a value in here and it appears everywhere it is used (footer, contact page, mobile menu,
- * quote page); a field with no value renders nothing. See CONTENT_TO_VERIFY.md.
+ * CONTACT DETAILS: the two office addresses, the office phone number and the email addresses below are the ones published on
+ * the company's own website (https://umss.pk, "Get in Touch"). Hours, a map link, a WhatsApp number and social profiles are
+ * still empty because none has been supplied. Fill a value in here and it appears everywhere it is used (footer, contact
+ * page, mobile menu, quote page); a field with no value renders nothing. See CONTENT_TO_VERIFY.md.
  */
 
 export interface OfficeConfig {
@@ -13,6 +13,8 @@ export interface OfficeConfig {
   address: string;
   phone: string;
   email: string;
+  /** A second mailbox for the same office, if it has one. */
+  email2?: string;
   /** Opening hours as plain text, e.g. "Mon–Sat, 9:00 AM – 6:00 PM". */
   hours: string;
   /** Link that opens the office in a map app. */
@@ -21,8 +23,23 @@ export interface OfficeConfig {
 
 export const contact = {
   offices: [
-    { city: "Islamabad", address: "", phone: "", email: "", hours: "", mapUrl: "" },
-    { city: "Lahore", address: "", phone: "", email: "", hours: "", mapUrl: "" },
+    {
+      city: "Islamabad",
+      address: "Office # 1, 1st Floor, Abdullah Plaza, Main Road, Ghouri Garden, Islamabad.",
+      phone: "(0333) 1811113",
+      email: "info@umss.pk",
+      email2: "ums.isb@gmail.com",
+      hours: "",
+      mapUrl: "",
+    },
+    {
+      city: "Lahore",
+      address: "Suite # 7, Second Floor, MI Tower Phase-1, Khyaban-e-Jinnah Road, Nasheman-e-Iqbal Lahore.",
+      phone: "(0333) 1811113",
+      email: "info@umss.pk",
+      hours: "",
+      mapUrl: "",
+    },
   ] satisfies OfficeConfig[],
   /** Company-wide mailboxes. */
   email: { general: "", tenders: "", careers: "" },

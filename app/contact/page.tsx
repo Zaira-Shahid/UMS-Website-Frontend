@@ -31,6 +31,7 @@ function Office({ o }: { o: OfficeConfig }) {
     o.address && { Icon: MapPin, text: o.address, href: "" },
     o.phone && { Icon: Phone, text: o.phone, href: tel(o.phone) },
     o.email && { Icon: Mail, text: o.email, href: `mailto:${o.email}` },
+    o.email2 && { Icon: Mail, text: o.email2, href: `mailto:${o.email2}` },
   ].filter(isRow);
   return (
     <address className="not-italic">

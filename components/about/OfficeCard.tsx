@@ -21,6 +21,7 @@ export function OfficeCard({ office }: { office: OfficeConfig }) {
         {office.address && <p className="mt-1 text-base text-navy">{office.address}</p>}
         {office.phone && <p className="mt-1 text-base text-navy">{office.phone}</p>}
         {office.email && <p className="mt-1 break-words text-base text-navy">{office.email}</p>}
+        {office.email2 && <p className="mt-1 break-words text-base text-navy">{office.email2}</p>}
         {link.external ? (
           <a href={link.href} target="_blank" rel="noopener noreferrer" className={cls}>
             {link.label}
