@@ -248,6 +248,96 @@ label[for],
   }
 }
 
+/* Hero text: it fades up once on load, part by part (--d is each part's delay). The headline starts at 1% opacity so it is
+   never hidden from the browser's first paint. A soft ping on the badge's dot, a faint blueprint grid that fades out toward
+   the right, and the rotating word with its self-drawing underline. With reduced motion none of it moves. */
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+.hero-in {
+  animation: hero-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0s) both;
+}
+.hero-in--head {
+  animation-name: hero-in-head;
+}
+@keyframes hero-in-head {
+  from {
+    opacity: 0.01;
+    transform: translateY(8px);
+  }
+}
+@keyframes hero-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  75%,
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+.hero-ping {
+  animation: hero-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+.hero-grid {
+  background-image: linear-gradient(rgb(255 255 255 / 0.045) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+  background-size: 52px 52px;
+  -webkit-mask-image: linear-gradient(to right, black 0%, black 18%, transparent 62%);
+  mask-image: linear-gradient(to right, black 0%, black 18%, transparent 62%);
+}
+/* Rotating word: the current word slides up into place, the previous one slides up and out, the others wait below. */
+.rw-word {
+  opacity: 0;
+  transform: translateY(55%);
+}
+.rw-word[data-state="in"] {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.5s ease-out,
+    transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.rw-word[data-state="out"] {
+  opacity: 0;
+  transform: translateY(-55%);
+  transition:
+    opacity 0.4s ease-in,
+    transform 0.5s ease-in;
+}
+@keyframes rw-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.rw-underline path {
+  stroke-dasharray: 1;
+  animation: rw-draw 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-in,
+  .hero-in--head {
+    animation: none;
+  }
+  .hero-ping {
+    animation: none;
+    display: none;
+  }
+  .rw-word {
+    transition: none !important;
+  }
+  .rw-underline path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
+
 /* Hero building: living systems (HeroFx). Only transform and opacity animate.
    Each flowing system is a layer shaped by its pre-cut mask (mobile artwork by default, desktop artwork from 1024px, like the
    <picture> in HeroStage). A tile of light twice the layer's width slides by exactly one layer width, so the loop is seamless. */
