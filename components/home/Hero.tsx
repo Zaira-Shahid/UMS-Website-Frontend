@@ -25,7 +25,7 @@ export function Hero() {
       />
       <div className="wrap pt-[calc(4rem+1.5rem)] xl:pt-[calc(var(--header-h)+2rem)]">
         {/* Stacked below 1024px. From 1024px the text column has a capped width and a 48px gap before the image, so the headline never runs under it. */}
-        <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,min(40rem,52%))_minmax(0,1fr)] lg:gap-12">
+        <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,min(40rem,56%))_minmax(0,1fr)] lg:gap-12">
           <div>
             <p className="flex items-center gap-3 text-[13px] font-semibold uppercase tracking-[0.14em] text-[#5CC4EE]">
               <span aria-hidden className="h-0.5 w-8 shrink-0 rounded bg-blue" />
@@ -35,7 +35,7 @@ export function Hero() {
               <span className="lg:block lg:whitespace-nowrap">MEP Contracting for</span>{" "}
               <span className="text-blue lg:block lg:whitespace-nowrap">Complex Buildings</span>
             </h1>
-            <p className="mt-5 text-base leading-relaxed text-white/80 lg:text-lg">
+            <p className="mt-5 text-base leading-relaxed text-white/80 lg:text-base xl:text-lg">
               Integrated MEP, HVAC, fire fighting, plumbing and electrical services — planned, installed and commissioned as one coordinated scope.
             </p>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
