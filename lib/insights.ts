@@ -1,5 +1,5 @@
 import { insightCategories, insights } from "@/content/insights";
-import type { Insight, InsightCategory, ServiceSlug } from "@/types";
+import type { Insight, InsightCategory } from "@/types";
 
 export const insightBySlug = (slug: string): Insight | undefined => insights.find((i) => i.slug === slug);
 

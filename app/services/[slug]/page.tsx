@@ -34,6 +34,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
+      images: [ogImage.url],
       title: `${service.name} | ${site.name}`,
       description: service.metaDescription,
     },
