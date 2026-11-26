@@ -1,16 +1,16 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Montserrat } from "next/font/google";
+import { Barlow_Semi_Condensed, Inter } from "next/font/google";
 import { ChatLoader } from "@/components/chat/ChatLoader";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { site } from "@/content/site";
 import "./globals.css";
 
-/** Headings (PROJECT_SPEC.md 3.2): bold geometric Montserrat. */
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
+/** Headings (client proposal): Barlow Semi Condensed. */
+const barlow = Barlow_Semi_Condensed({
+  variable: "--font-barlow",
   subsets: ["latin"],
-  weight: ["600", "700", "800"],
+  weight: ["600", "700"],
   display: "swap",
 });
 
@@ -39,7 +39,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${montserrat.variable} ${inter.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${barlow.variable} ${inter.variable}`} suppressHydrationWarning>
       <body>
         <a href="#main" className="skip-link">
           Skip to main content

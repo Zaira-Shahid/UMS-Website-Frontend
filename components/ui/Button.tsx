@@ -27,9 +27,9 @@ const buttonStyles = cva(
         ghost: "text-navy hover:text-blue-700",
       },
       size: {
-        sm: "h-10 px-4 text-sm",
-        md: "h-12 px-6 text-[0.9375rem]",
-        lg: "h-14 px-8 text-base",
+        sm: "h-10 px-4 text-base",
+        md: "h-12 px-6 text-[1.0625rem]",
+        lg: "h-14 px-8 text-[1.1875rem]",
       },
     },
     defaultVariants: { variant: "primary", size: "md" },

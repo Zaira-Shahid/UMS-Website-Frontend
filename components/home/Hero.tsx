@@ -31,7 +31,7 @@ export function Hero() {
               <span aria-hidden className="h-0.5 w-8 shrink-0 rounded bg-blue" />
               MEP Contractors · Islamabad &amp; Lahore
             </p>
-            <h1 id="home-title" className="mt-5 text-balance text-[2.25rem] font-extrabold leading-[1.1] text-white lg:text-[clamp(40px,4.2vw,60px)]">
+            <h1 id="home-title" className="mt-5 text-balance text-[2.5rem] font-extrabold leading-[1.05] text-white lg:text-[clamp(46px,5vw,76px)]">
               <span className="lg:block lg:whitespace-nowrap">MEP Contracting for</span>{" "}
               <span className="text-blue lg:block lg:whitespace-nowrap">Complex Buildings</span>
             </h1>
@@ -39,7 +39,7 @@ export function Hero() {
               Integrated MEP, HVAC, fire fighting, plumbing and electrical services — planned, installed and commissioned as one coordinated scope.
             </p>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <Button href={quoteHref()} arrow className="h-[52px] rounded-lg px-6 text-base font-semibold max-sm:w-full">
+              <Button href={quoteHref()} arrow className="h-[52px] rounded-lg px-6 text-[1.125rem] font-semibold max-sm:w-full">
                 Request a Quote
               </Button>
               <Button href="/projects" variant="outline-light" className="h-[52px] rounded-lg bg-transparent px-6 text-base font-semibold max-sm:w-full">

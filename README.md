@@ -11,7 +11,7 @@ integrated MEP, pools and fountains) with offices in Islamabad and Lahore.
 ## Stack
 
 Next.js 15 (App Router) · React 19 · TypeScript (strict) · Tailwind CSS v4 · lucide-react · react-hook-form + zod ·
-Fuse.js (search) · class-variance-authority · ESLint. Fonts: Montserrat (headings) and Inter (body) through `next/font`.
+Fuse.js (search) · class-variance-authority · ESLint. Fonts: Barlow Semi Condensed (headings) and Inter (body) through `next/font`.
 Deployed on Vercel from `main`.
 
 ## Setup

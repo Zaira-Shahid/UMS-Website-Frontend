@@ -89,7 +89,7 @@ These crops are low resolution. Use `next/image` with correct `sizes`, never ups
 Sample exact values from the mockups with an eyedropper-style check (read the images) and adjust if needed. Keep WCAG AA contrast.
 
 ### 3.2 Typography
-- Headings: **Montserrat** 700/800 (bold geometric, as in "MEP Contracting for Complex Buildings", "How We Deliver"). Two-tone headings where the mockup does it: "How We **Deliver**", "Clients & **Project Partners**" (second part in `--blue`).
+- Headings: **Barlow Semi Condensed** 600/700 (per the client proposal; the mockups were drawn with Montserrat, as in "MEP Contracting for Complex Buildings", "How We Deliver"). Two-tone headings where the mockup does it: "How We **Deliver**", "Clients & **Project Partners**" (second part in `--blue`).
 - Body/UI: **Inter** 400/500/600.
 - Short accent bar (about 70×5px, `--blue`, rounded) above section titles, as in the mockups.
 
