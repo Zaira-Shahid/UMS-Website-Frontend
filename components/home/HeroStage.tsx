@@ -157,7 +157,7 @@ export function HeroStage({
 
       {/* Service chips: left-aligned with the text, grouped, wrapping on small screens. The label card follows them in the DOM. */}
       <div ref={chipsWrap} className="relative mt-6 pb-8 md:pb-10">
-        <ul aria-label="Highlight a building system" className="flex flex-wrap justify-center gap-[10px]">
+        <ul aria-label="Highlight a building system" className="flex flex-wrap justify-center gap-2">
           {chipOrder.map((slug) => (
             <li key={slug}>
               <ServiceChip
