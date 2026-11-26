@@ -248,6 +248,21 @@ label[for],
   }
 }
 
+/* Services slider: the progress bar fills over the slide time (set inline); its end moves the slider on. */
+@keyframes slider-fill {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+.slider-progress {
+  animation-name: slider-fill;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
 /* Clients row: the list is duplicated, so moving it by half its width loops seamlessly */
 @keyframes clients-scroll {
   to {
