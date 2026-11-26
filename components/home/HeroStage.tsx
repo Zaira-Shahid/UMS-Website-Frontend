@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { useCallback, useEffect, useRef, useState, type ImgHTMLAttributes, type ReactNode } from "react";
 import { ServiceChip } from "@/components/ui/ServiceChip";
 import { serviceColor } from "@/components/ui/ServiceIcon";
+import { HeroFx } from "./HeroFx";
 import { chipOrder, serviceLabel } from "@/content/service-labels";
 import type { ServiceSlug } from "@/types";
 
@@ -45,6 +46,11 @@ export function HeroStage({
   const imageCol = useRef<HTMLDivElement>(null);
   const chipsWrap = useRef<HTMLDivElement>(null);
   const hideTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  // The living effects load after the page has finished loading (so they never compete with the first paint), and every
+  // animation pauses while the hero is off-screen or the tab is hidden.
+  const [fxReady, setFxReady] = useState(false);
+  const [inView, setInView] = useState(true);
+  const [tabVisible, setTabVisible] = useState(true);
 
   const select = useCallback((slug: ServiceSlug | null) => {
     clearTimeout(hideTimer.current);
@@ -59,6 +65,38 @@ export function HeroStage({
   }, []);
 
   useEffect(() => () => clearTimeout(hideTimer.current), []);
+
+  useEffect(() => {
+    let cancelled = false;
+    const mount = () => !cancelled && setFxReady(true);
+    const start = () => {
+      if (cancelled) return;
+      // A short pause after the load event, then the browser's next idle moment.
+      setTimeout(() => {
+        if ("requestIdleCallback" in window) window.requestIdleCallback(mount, { timeout: 2500 });
+        else mount();
+      }, 1500);
+    };
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start, { once: true });
+    return () => {
+      cancelled = true;
+      window.removeEventListener("load", start);
+    };
+  }, []);
+
+  useEffect(() => {
+    const el = imageCol.current;
+    if (!el || !("IntersectionObserver" in window)) return;
+    const io = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), { threshold: 0.05 });
+    io.observe(el);
+    const onVis = () => setTabVisible(!document.hidden);
+    document.addEventListener("visibilitychange", onVis);
+    return () => {
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVis);
+    };
+  }, []);
 
   // Esc or a press outside the building, chips and label resets the view.
   useEffect(() => {
@@ -85,31 +123,34 @@ export function HeroStage({
       <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,min(40rem,56%))_minmax(0,1fr)] lg:gap-12">
         {children}
 
-        <div ref={imageCol} className="-mx-[var(--wrap-pad)] lg:mx-0 lg:-mr-[var(--wrap-pad)]">
+        <div ref={imageCol} data-fx-paused={!inView || !tabVisible} className="-mx-[var(--wrap-pad)] lg:mx-0 lg:-mr-[var(--wrap-pad)]">
           <div className="relative w-full max-w-[855px] [clip-path:inset(1.5%_0.5%_0_0.5%)] [mask-image:radial-gradient(ellipse_70%_74%_at_52%_50%,black_58%,transparent_100%)] lg:ml-auto">
-            <picture className="block">
-              <source media="(min-width: 1024px)" srcSet={desktopSet} />
-              <source media="(max-width: 1023px)" srcSet={mobileSet} />
-              <img
-                {...img}
-                alt={img.alt}
-                fetchPriority="high"
-                className="block h-auto w-full transition-[filter] duration-[350ms] ease-out motion-reduce:transition-none"
-                style={{ filter: active ? "brightness(0.45)" : "brightness(1)" }}
-              />
-            </picture>
-            {shown && (
-              <picture key={shown} className="pointer-events-none absolute inset-0 block">
-                <source media="(min-width: 1024px)" srcSet={maskSrc(shown, false)} />
+            <div className="hero-float">
+              <picture className="block">
+                <source media="(min-width: 1024px)" srcSet={desktopSet} />
+                <source media="(max-width: 1023px)" srcSet={mobileSet} />
                 <img
-                  src={maskSrc(shown, true)}
-                  alt=""
-                  aria-hidden
-                  className="hero-overlay size-full"
-                  style={{ ["--glow" as string]: color, opacity: active ? 1 : 0 }}
+                  {...img}
+                  alt={img.alt}
+                  fetchPriority="high"
+                  className="block h-auto w-full transition-[filter] duration-[350ms] ease-out motion-reduce:transition-none"
+                  style={{ filter: active ? "brightness(0.45)" : "brightness(1)" }}
                 />
               </picture>
-            )}
+              {fxReady && <HeroFx active={active} />}
+              {shown && (
+                <picture key={shown} className="pointer-events-none absolute inset-0 block">
+                  <source media="(min-width: 1024px)" srcSet={maskSrc(shown, false)} />
+                  <img
+                    src={maskSrc(shown, true)}
+                    alt=""
+                    aria-hidden
+                    className="hero-overlay size-full"
+                    style={{ ["--glow" as string]: color, opacity: active ? 1 : 0 }}
+                  />
+                </picture>
+              )}
+            </div>
           </div>
         </div>
       </div>

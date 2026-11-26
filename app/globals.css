@@ -248,6 +248,217 @@ label[for],
   }
 }
 
+/* Hero building: living systems (HeroFx). Only transform and opacity animate.
+   Each flowing system is a layer shaped by its pre-cut mask (mobile artwork by default, desktop artwork from 1024px, like the
+   <picture> in HeroStage). A tile of light twice the layer's width slides by exactly one layer width, so the loop is seamless. */
+.hero-flow {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0.5;
+  transition: opacity 0.35s ease-out;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+.hero-flow__band {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent 0, transparent 30%, var(--c) 50%, transparent 70%, transparent 100%) 0 0 / 50% 100% repeat-x;
+  animation: hero-flow-x var(--dur) linear infinite;
+  animation-delay: var(--delay, 0s);
+  will-change: transform;
+}
+.hero-flow--y .hero-flow__band {
+  width: 100%;
+  height: 200%;
+  background: linear-gradient(180deg, transparent 0, transparent 30%, var(--c) 50%, transparent 70%, transparent 100%) 0 0 / 100% 50% repeat-y;
+  animation-name: hero-flow-y;
+}
+@keyframes hero-flow-x {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes hero-flow-y {
+  from {
+    transform: translateY(-50%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.hero-flow--hvac {
+  -webkit-mask-image: url(/images/hero/masks/hvac-mobile.png);
+  mask-image: url(/images/hero/masks/hvac-mobile.png);
+}
+.hero-flow--plumbing {
+  -webkit-mask-image: url(/images/hero/masks/plumbing-mobile.png);
+  mask-image: url(/images/hero/masks/plumbing-mobile.png);
+}
+.hero-flow--fire {
+  -webkit-mask-image: url(/images/hero/masks/fire-fighting-mobile.png);
+  mask-image: url(/images/hero/masks/fire-fighting-mobile.png);
+}
+.hero-flow--electrical {
+  -webkit-mask-image: url(/images/hero/masks/electrical-elv-mobile.png);
+  mask-image: url(/images/hero/masks/electrical-elv-mobile.png);
+}
+.hero-flow--mep {
+  -webkit-mask-image: url(/images/hero/masks/integrated-mep-mobile.png);
+  mask-image: url(/images/hero/masks/integrated-mep-mobile.png);
+}
+@media (min-width: 1024px) {
+  .hero-flow--hvac {
+    -webkit-mask-image: url(/images/hero/masks/hvac.png);
+    mask-image: url(/images/hero/masks/hvac.png);
+  }
+  .hero-flow--plumbing {
+    -webkit-mask-image: url(/images/hero/masks/plumbing.png);
+    mask-image: url(/images/hero/masks/plumbing.png);
+  }
+  .hero-flow--fire {
+    -webkit-mask-image: url(/images/hero/masks/fire-fighting.png);
+    mask-image: url(/images/hero/masks/fire-fighting.png);
+  }
+  .hero-flow--electrical {
+    -webkit-mask-image: url(/images/hero/masks/electrical-elv.png);
+    mask-image: url(/images/hero/masks/electrical-elv.png);
+  }
+  .hero-flow--mep {
+    -webkit-mask-image: url(/images/hero/masks/integrated-mep.png);
+    mask-image: url(/images/hero/masks/integrated-mep.png);
+  }
+}
+/* A chip is pressed: the other systems stop and fade, the chosen one is brighter and faster. */
+.hero-flow--off,
+.hero-fx--off {
+  opacity: 0.08;
+}
+.hero-flow--off .hero-flow__band,
+.hero-fx--off,
+.hero-fx--off *,
+.hero-node.hero-fx--off::after {
+  animation-play-state: paused;
+}
+.hero-flow--boost {
+  opacity: 0.95;
+}
+.hero-flow--boost .hero-flow__band {
+  animation-duration: calc(var(--dur) * 0.55);
+}
+/* Purple junction circles: a dot and a ring that grows and fades. */
+.hero-node {
+  position: absolute;
+  width: 2.4%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.35s ease-out;
+}
+.hero-node::before {
+  content: "";
+  position: absolute;
+  inset: 32%;
+  border-radius: 9999px;
+  background: #e2c9ff;
+  opacity: 0.85;
+}
+.hero-node::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 2px solid #c58bff;
+  animation: hero-ring 2.4s ease-out infinite;
+  animation-delay: inherit;
+}
+.hero-node.hero-fx--boost::after {
+  animation-duration: 1.4s;
+}
+@keyframes hero-ring {
+  from {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  to {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+/* Fountain: droplets rise through the jets box and fade. The droplet is a full-height strip with its dot at the top, so
+   translateY in percent moves it through the whole box. */
+.hero-drop {
+  position: absolute;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  margin-left: -2px;
+  background: radial-gradient(circle at 50% 3px, rgb(255 255 255 / 0.95) 0 1.4px, rgb(160 235 255 / 0.5) 2.2px, transparent 3px);
+  opacity: 0;
+  animation: hero-drop 2s ease-out infinite;
+}
+@keyframes hero-drop {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  18% {
+    opacity: 0.95;
+  }
+  100% {
+    transform: translateY(-4%);
+    opacity: 0;
+  }
+}
+.hero-fx--boost .hero-drop {
+  animation-duration: 1.2s;
+}
+/* Rooftop units: a very faint glint. */
+.hero-glint {
+  position: absolute;
+  overflow: hidden;
+  opacity: 0.16;
+}
+.hero-glint .hero-flow__band {
+  animation-delay: var(--delay, 0s);
+}
+.hero-glint.hero-fx--boost {
+  opacity: 0.3;
+}
+/* The whole picture floats gently. */
+.hero-float {
+  animation: hero-float 6s ease-in-out infinite;
+  will-change: transform;
+}
+@keyframes hero-float {
+  50% {
+    transform: translateY(-6px);
+  }
+}
+/* Off-screen or in a hidden tab: every effect is paused. */
+[data-fx-paused="true"] .hero-float,
+[data-fx-paused="true"] .hero-fx *,
+[data-fx-paused="true"] .hero-fx,
+[data-fx-paused="true"] .hero-node::after {
+  animation-play-state: paused !important;
+}
+/* Reduced motion: the picture is static; only the chip highlight remains. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-fx {
+    display: none;
+  }
+  .hero-float {
+    animation: none;
+  }
+}
+
 /* Services slider: the progress bar fills over the slide time (set inline); its end moves the slider on. */
 @keyframes slider-fill {
   from {
