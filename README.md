@@ -79,6 +79,12 @@ docs/reference/mockups/   the approved design mockups
   chat and structured data list real projects only. Set `showIllustrativeProjects = false` to hide all samples. Real
   projects with no confirmed sector appear under "More Projects". Photos for the real projects: `featuredImages` in
   `content/home.ts`; sample photos: `public/images/projects/illustrative/`.
+- **Hero building highlight:** the six chips under the hero highlight a system inside the building (`components/home/HeroStage.tsx`).
+  The overlays are pre-cut transparent PNGs in `public/images/hero/masks/` (`<service>.png` for the desktop artwork and
+  `<service>-mobile.png` for the mobile artwork), cut by colour from the two hero images. If the hero artwork is replaced, the
+  masks must be cut again from the new artwork.
+- **Services slider:** `components/home/ServicesSlider.tsx` advances every 4 seconds (`SLIDE_MS`), pauses on hover, focus and
+  swiping, resumes 3 seconds later, and never autoplays with reduced motion. Slider pictures: `sliderArt` in `content/home.ts`.
 - **Clients:** `content/clients.ts`. An entry shows only with `verified: true` and a logo file in `public/images/clients/`.
   With no verified clients the whole homepage section is hidden.
 - **Team page:** `content/team.ts`. Set `showTeamPage = true` and add people (name, role, photo). Until then the page
