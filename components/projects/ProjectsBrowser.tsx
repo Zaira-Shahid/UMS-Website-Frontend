@@ -1,105 +1,88 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Building2, MapPin } from "lucide-react";
-import { useId, useRef, useState, type KeyboardEvent } from "react";
-import { SlantedTab } from "@/components/ui/Slanted";
+import { useSearchParams } from "next/navigation";
+import { projectSectors } from "@/content/projects";
+import { cn } from "@/lib/utils";
+import type { ServiceSlug } from "@/types";
+import { MoreProjects } from "./MoreProjects";
+import { ProjectCard } from "./ProjectCard";
 
 export interface BrowserProject {
   slug: string;
   name: string;
   city?: string;
-  /** Industry slug, only when confirmed. */
-  sector?: string;
-  sectorName?: string;
+  /** The ?sector= value of the project's sector, only when its sector is set. */
+  sectorParam?: string;
+  description?: string;
+  services: ServiceSlug[];
   image?: { src: string; width: number; height: number };
+  /** Badge on the photo: "Illustrative" for samples, "Illustrative imagery" for the design-pack pictures. */
+  imageLabel?: string;
+  illustrative: boolean;
 }
 
 /**
- * Projects grid with sector tabs. Only sectors that have at least one confirmed project get a tab, so there are no
- * empty tabs. Projects with no confirmed sector appear under "All" only. Images are illustrative and labelled.
+ * Filter pills and the project sections (mockup 19). "All Projects" lists each sector as its own section; a pill filters
+ * to one sector through ?sector=… so the back button works. Projects without a confirmed sector are listed under
+ * "More Projects" on the All view only. `ProjectsView` is the plain view; `ProjectsBrowser` reads the URL.
  */
-export function ProjectsBrowser({ projects }: { projects: BrowserProject[] }) {
-  const base = useId();
-  const sectors = [...new Map(projects.filter((p) => p.sector).map((p) => [p.sector!, p.sectorName ?? p.sector!])).entries()];
-  const tabs = [{ key: "all", label: "All" }, ...sectors.map(([key, label]) => ({ key, label }))];
-  const [active, setActive] = useState("all");
-  const refs = useRef<(HTMLButtonElement | null)[]>([]);
-  const shown = active === "all" ? projects : projects.filter((p) => p.sector === active);
+export function ProjectsView({ projects, sector }: { projects: BrowserProject[]; sector: string }) {
+  const sectors = projectSectors.filter((s) => projects.some((p) => p.sectorParam === s.param));
+  const active = sectors.some((s) => s.param === sector) ? sector : "all";
+  const shownSectors = active === "all" ? sectors : sectors.filter((s) => s.param === active);
+  const more = projects.filter((p) => !p.sectorParam);
+  const hasSamples = projects.some((p) => p.illustrative);
 
-  const onKeyDown = (e: KeyboardEvent) => {
-    const i = tabs.findIndex((t) => t.key === active);
-    let to = i;
-    if (e.key === "ArrowRight") to = (i + 1) % tabs.length;
-    else if (e.key === "ArrowLeft") to = (i - 1 + tabs.length) % tabs.length;
-    else if (e.key === "Home") to = 0;
-    else if (e.key === "End") to = tabs.length - 1;
-    else return;
-    e.preventDefault();
-    setActive(tabs[to].key);
-    refs.current[to]?.focus();
-  };
+  const pill = "inline-flex h-11 shrink-0 items-center justify-center whitespace-nowrap rounded-lg border-2 px-5 font-heading text-[0.9375rem] font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue lg:min-w-[10rem]";
 
   return (
-    <div>
-      {tabs.length > 2 || (tabs.length === 2 && projects.some((p) => !p.sector)) ? (
-        <div role="tablist" aria-label="Project sectors" onKeyDown={onKeyDown} className="-mx-[var(--wrap-pad)] flex overflow-x-auto border-b border-blue px-[var(--wrap-pad)] pb-px lg:mx-0 lg:px-0 [&::-webkit-scrollbar]:hidden">
-          {tabs.map((t, i) => (
-            <SlantedTab
-              key={t.key}
-              ref={(el) => {
-                refs.current[i] = el;
-              }}
-              id={`${base}-tab-${t.key}`}
-              aria-controls={`${base}-panel`}
-              active={t.key === active}
-              tabIndex={t.key === active ? 0 : -1}
-              onClick={() => setActive(t.key)}
-              className="shrink-0 whitespace-nowrap px-5 lg:px-9"
-            >
-              {t.label}
-            </SlantedTab>
-          ))}
-        </div>
-      ) : null}
-
-      <div id={`${base}-panel`} role="tabpanel" aria-labelledby={`${base}-tab-${active}`} className="mt-8">
-        <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {shown.map((p) => (
-          <li key={p.slug}>
-            <Link
-              href={`/projects/${p.slug}`}
-              className="group flex h-full flex-col overflow-hidden rounded-card border border-blue/70 bg-white shadow-card transition duration-200 hover:-translate-y-1 hover:border-blue motion-reduce:transition-none motion-reduce:hover:translate-y-0"
-            >
-              <div className="relative aspect-[16/9] overflow-hidden bg-gradient-to-br from-navy-950 via-navy-900 to-[#3f78a8]">
-                {p.image ? (
-                  <>
-                    <Image src={p.image.src} alt="" fill sizes="(min-width: 1024px) 30vw, 90vw" className="object-cover object-[center_30%]" />
-                    <span className="absolute bottom-2 left-3 text-sm italic text-white [text-shadow:0_1px_3px_rgb(0_0_0/0.7)]">Illustrative imagery</span>
-                  </>
-                ) : (
-                  <Building2 aria-hidden strokeWidth={1.2} className="absolute left-1/2 top-1/2 size-16 -translate-x-1/2 -translate-y-1/2 text-white/60" />
-                )}
-              </div>
-              <div className="flex flex-1 flex-col p-5">
-                <h2 className="text-[1.375rem] font-bold leading-tight text-navy">{p.name}</h2>
-                {(p.city || p.sectorName) && (
-                  <p className="mt-2 flex items-center gap-2 text-base text-navy">
-                    {p.city && <MapPin aria-hidden className="size-4 shrink-0 text-blue-700" />}
-                    {[p.city, p.sectorName].filter(Boolean).join(" · ")}
-                  </p>
-                )}
-                <span className="mt-auto inline-flex items-center gap-2 pt-4 font-heading font-bold text-blue-700">
-                  Explore Project
-                  <ArrowRight aria-hidden className="size-5 transition-transform group-hover:translate-x-1 motion-reduce:transition-none" />
-                </span>
-              </div>
-            </Link>
-          </li>
-        ))}
+    <>
+      <nav aria-label="Filter projects by sector" className="-mx-[var(--wrap-pad)] overflow-x-auto px-[var(--wrap-pad)] pb-2 [scrollbar-width:none] lg:mx-0 lg:px-0 [&::-webkit-scrollbar]:hidden">
+        <ul className="flex gap-3 lg:gap-4">
+          {[{ param: "all", label: "All Projects" }, ...sectors].map((s) => {
+            const on = s.param === active;
+            return (
+              <li key={s.param} className="shrink-0">
+                <Link
+                  href={s.param === "all" ? "/projects" : `/projects?sector=${s.param}`}
+                  scroll={false}
+                  aria-current={on ? "true" : undefined}
+                  className={cn(pill, on ? "border-navy bg-navy text-white" : "border-navy/70 bg-white text-navy hover:border-navy hover:bg-sky-50")}
+                >
+                  {s.label}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
-      </div>
-    </div>
+      </nav>
+      {hasSamples && <p className="mt-2 text-sm italic text-muted">Illustrative projects</p>}
+
+      {shownSectors.map((s) => (
+        <section key={s.param} aria-labelledby={`sector-${s.param}`} className="mt-8 first:mt-6 md:mt-10">
+          <h2 id={`sector-${s.param}`} className="text-[clamp(1.5rem,1.1rem+1.3vw,2.125rem)] font-extrabold text-navy">
+            {s.heading}
+          </h2>
+          <span aria-hidden className="accent-bar mt-2 block" />
+          <ul className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {projects
+              .filter((p) => p.sectorParam === s.param)
+              .map((p) => (
+                <li key={p.slug} className="relative">
+                  <ProjectCard p={p} />
+                </li>
+              ))}
+          </ul>
+        </section>
+      ))}
+
+      {active === "all" && more.length > 0 && <MoreProjects projects={more} />}
+    </>
   );
+}
+
+export function ProjectsBrowser({ projects }: { projects: BrowserProject[] }) {
+  const sector = useSearchParams().get("sector") ?? "all";
+  return <ProjectsView projects={projects} sector={sector} />;
 }

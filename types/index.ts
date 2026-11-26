@@ -97,6 +97,13 @@ export interface Project {
   sector?: IndustrySlug;
   /** Only set when the owner has confirmed it. */
   city?: string;
+  /** One line shown on the card. Sample projects only; real projects show confirmed fields only. */
+  description?: string;
+  /** Services delivered. Empty for real projects until the owner confirms them. */
+  services: ServiceSlug[];
+  image?: { src: string; width: number; height: number };
+  /** True for the sample projects that show the layout; they are labelled "Illustrative" and are not UMS work. */
+  illustrative: boolean;
 }
 
 export type InsightCategory = "safety-compliance" | "mep-systems" | "maintenance-operations";
