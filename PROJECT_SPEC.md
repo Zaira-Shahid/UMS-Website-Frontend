@@ -356,8 +356,34 @@ New mockups: docs/reference/mockups/19-projects-page.jpg (desktop) and 20-projec
 - For now it lists the real projects without a confirmed sector (Elanza Mall, Pakistan Cricket Board House, CGGC Head
   Office at Eighteen, Jazz Destiny) with a neutral building icon instead of a photo and no sector tag.
 
-### 14.6 "More Details" → /projects/[slug]
-- Same style: banner with the project photo and name, sector + service chips, an overview paragraph, a "Services
-  delivered" list with icons, a gallery only if images exist, the "Illustrative" note for sample projects, and the navy
-  "Discuss a similar project" CTA bar → /request-a-quote?service=<first service>.
-- Real projects show only confirmed fields.
+### 14.6 Project detail page (mockup 21), one template for every project
+- Top: the same sector pills as /projects (All Projects / Healthcare / Commercial & Retail / Residential / Institutional),
+  with the project's sector highlighted. Each pill links back to /projects?sector=….
+- Breadcrumb: Projects / <Sector> / <Project name>.
+- Title block: project name (large Montserrat), a one-line subtitle (e.g. "Coordinated building services for a healthcare
+  facility"), the blue accent bar, and an italic "Illustrative project" note on the right for sample projects.
+- Image gallery: one large image on the left (project exterior) and two stacked images on the right with small italic
+  captions (e.g. "HVAC Installation", "Mechanical Pipework"). Use the project card photo for the large one and the matching
+  service photos we already have (public/images/services/<slug>/…) for the two small ones, chosen from the project's
+  services. Rounded corners, light caption bar. Clicking an image opens a simple lightbox (Esc closes, arrow keys switch).
+- Two columns: "Project Overview" (2 short paragraphs) on the left, then a vertical divider, then "Project Snapshot" on the
+  right: a light card with rows Sector and Scope (the services list), plus Location only when confirmed.
+- "Services Delivered": centred heading + 3 cards (icon + service name + 2-line description), one per service of the
+  project; each card links to its service page.
+- "Delivery Approach": centred heading + a light-blue band with 4 outlined steps Coordination → Installation → Testing →
+  Handover, with blue arrows (wraps on mobile).
+- Bottom buttons: "Back to Projects" (outline) and "Request a Quote" (solid blue, links to
+  /request-a-quote?service=<first service>&project=<slug>).
+- Then the standard navy CTA band and footer.
+
+Honesty rules:
+- Illustrative (sample) projects: write the overview in neutral, typical-approach wording ("Building services are routed
+  around clinical and support spaces…"), NOT "We planned/We delivered", so it isn't presented as UMS's real work. Keep the
+  "Illustrative project" note visible.
+- Real projects (Buch International Hospital, Lady Reading Hospital, etc.): show only confirmed fields; hide Overview,
+  Services Delivered and Scope until confirmed, and show a short line: "Project details will be published soon."
+- Add the overview text and subtitle to content/projects.ts for all 12 sample projects (sector-appropriate wording).
+
+Mobile: pills scroll horizontally, the gallery stacks (large image, then the two small side by side), the columns stack
+(Overview, then Snapshot), the service cards go full width, the delivery steps form a 2×2 grid, and the buttons are full
+width and stacked.
