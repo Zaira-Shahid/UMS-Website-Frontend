@@ -3,12 +3,12 @@ import Image from "next/image";
 import { Suspense } from "react";
 import { ProjectsBrowser, ProjectsView, type BrowserProject } from "@/components/projects/ProjectsBrowser";
 import { ProjectBand } from "@/components/ui/ProjectBand";
-import { allProjects, projects } from "@/content/projects";
+import { projects } from "@/content/projects";
 import { site } from "@/content/site";
-import { projectPhoto, sectorOf } from "@/lib/projects";
+import { placeOf, sectorOf } from "@/lib/projects";
 import { absoluteUrl, jsonLd, ogImage, ogImages } from "@/lib/seo";
 
-const description = "Explore UMS work by sector: healthcare, commercial and retail, residential and institutional.";
+const description = "Projects from the UMS company profile, by sector: hospitals, malls and offices, apartments, and institutional buildings such as courts and embassies.";
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -22,10 +22,7 @@ export const metadata: Metadata = {
 const banner = { src: "/images/projects/projects-banner.jpg", position: "center" };
 
 export default function ProjectsPage() {
-  const items: BrowserProject[] = allProjects.map((p) => {
-    const { image, label } = projectPhoto(p);
-    return { slug: p.slug, name: p.name, city: p.city, sectorParam: sectorOf(p)?.param, description: p.description, services: p.services, image, imageLabel: label, illustrative: p.illustrative };
-  });
+  const items: BrowserProject[] = projects.map((p) => ({ slug: p.slug, name: p.name, place: placeOf(p) || undefined, client: p.client, sectorParam: sectorOf(p)?.param, image: p.image }));
   const structuredData = [
     {
       "@context": "https://schema.org",
@@ -36,7 +33,6 @@ export default function ProjectsPage() {
       ],
     },
     {
-      // Only the real projects are listed as structured data; the illustrative samples are not UMS work.
       "@context": "https://schema.org",
       "@type": "ItemList",
       itemListElement: projects.map((p, i) => ({ "@type": "ListItem", position: i + 1, name: p.name, url: absoluteUrl(`/projects/${p.slug}`) })),

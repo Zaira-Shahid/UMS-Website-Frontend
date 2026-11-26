@@ -93,21 +93,21 @@ export interface Industry {
 export interface Project {
   slug: string;
   name: string;
-  /** Only set when the owner has confirmed it. */
+  /** The sector, set only when the project's name says what kind of building it is. */
   sector?: IndustrySlug;
-  /** Only set when the owner has confirmed it. */
+  /** The city, where the company profile gives one. */
   city?: string;
-  /** One line shown on the card. Sample projects only; real projects show confirmed fields only. */
-  description?: string;
-  /** One-line subtitle on the detail page. Sample projects only. */
-  subtitle?: string;
-  /** Two short paragraphs for the detail page, in neutral "typical approach" wording. Sample projects only. */
-  overview?: [string, string];
-  /** Services delivered. Empty for real projects until the owner confirms them. */
-  services: ServiceSlug[];
-  image?: { src: string; width: number; height: number };
-  /** True for the sample projects that show the layout; they are labelled "Illustrative" and are not UMS work. */
-  illustrative: boolean;
+  /** A more exact place (a district, a road or an enclave), where the company profile gives one. */
+  area?: string;
+  /** The people and companies named for this project in the company profile. */
+  client?: string;
+  consultant?: string;
+  civilContractor?: string;
+  mepContractor?: string;
+  /** A contractor the profile names without saying which kind. */
+  contractor?: string;
+  /** The project's picture from the company profile, at its real pixel size. */
+  image: { src: string; width: number; height: number };
 }
 
 export type InsightCategory = "safety-compliance" | "mep-systems" | "maintenance-operations";

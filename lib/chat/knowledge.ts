@@ -177,15 +177,27 @@ export function ruleBasedReply(message: string): ChatReply {
   const named = projects.find((p) => t.includes(` ${p.name.toLowerCase().split(" ")[0]} `) && t.includes(` ${p.name.toLowerCase().split(" ").slice(-1)[0]} `));
   if (named) {
     const sector = named.sector ? industries.find((i) => i.slug === named.sector)?.name : null;
-    const detail = [sector, named.city].filter(Boolean).join(", ");
+    const place = [named.area, named.city].filter(Boolean).join(", ");
+    const facts = [
+      sector && `Sector: ${sector}`,
+      place && `Location: ${place}`,
+      named.client && `Client: ${named.client}`,
+      named.consultant && `Consultant: ${named.consultant}`,
+      named.civilContractor && `Civil contractor: ${named.civilContractor}`,
+      named.mepContractor && `MEP contractor: ${named.mepContractor}`,
+      named.contractor && `Contractor: ${named.contractor}`,
+    ].filter(Boolean);
     return {
-      text: `${named.name} is one of the projects UMS lists${detail ? ` (${detail})` : ""}. I don't have further project details to share, such as scope, dates or values.`,
+      text: `${named.name} is in the UMS project list.\n${facts.map((f) => `• ${f}`).join("\n")}\n\nI don't have more project details to share, such as scope, dates or values.`,
       links: [{ label: named.name, href: `/projects/${named.slug}` }, { label: "All projects", href: "/projects" }],
     };
   }
   if (has(t, ["project", "projects", "portfolio", "work you", "experience", "past work", "clients"])) {
-    const names = projects.map((p) => `• ${p.name}`).join("\n");
-    return { text: `Projects we list on the site:\n${names}\n\nYou can browse them by sector on the Projects page.`, links: [{ label: "View projects", href: "/projects" }] };
+    const some = projects.slice(0, 6).map((p) => `• ${p.name}`).join("\n");
+    return {
+      text: `UMS lists ${projects.length} projects, such as:\n${some}\n\nYou can browse them all, by sector, on the Projects page.`,
+      links: [{ label: "View projects", href: "/projects" }],
+    };
   }
 
   // A specific service

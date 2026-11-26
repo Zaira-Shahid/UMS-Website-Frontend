@@ -33,26 +33,30 @@ Until these are set, the forms tell visitors to contact UMS directly instead of 
   from the site's content. Approve the wording of its replies for prices, certifications and "I don't know"
   (`lib/chat/knowledge.ts`).
 
-## 4. Projects (`content/dummy.ts`)
+## 4. Projects (`content/projects.ts`)
 
-Only six names are confirmed: Lady Reading Hospital, Buch International Hospital, Elanza Mall, Pakistan Cricket Board House,
-CGGC Head Office at Eighteen, Jazz Destiny.
+The 37 projects, their pictures, places, clients, consultants and contractors come from the company profile (UMS Profile.pdf,
+"Our Projects"). Each project's sector was set from what its name says (a hospital, a mall, apartments, an embassy, a school, a
+court); six projects whose names do not say (SEE 3, BEE 3 and SEE 2 Development, Trust One Diplomatic Enclave, Grand Hyat Towers,
+Jazz Destiny) are listed under "More Projects".
 
-- [ ] Confirm Buch International Hospital (Multan) and Lady Reading Hospital (Peshawar) are Healthcare
-- [ ] For the other four: sector and city, UMS's role, and approved photographs
-- [ ] **Real project photos wanted:** the Featured Projects cards and the Projects pages show sharp architectural stock photos labelled
-      "Illustrative imagery" (cut from the stock photos credited in `content/images.ts`). Send two or three high-resolution photos
-      (at least 1200 px wide, with permission to publish) of each real project, starting with Buch International Hospital and Lady
-      Reading Hospital, and they will replace the stock photos and crossfade on the cards
-- [ ] **Sample projects:** the Projects page also shows 12 sample projects (Specialist Hospital, Medical Centre, and so on) so the
-      page looks like the approved design. They are labelled "Illustrative", are not UMS work, and are kept out of the sitemap,
-      search and chat. Set `showIllustrativeProjects = false` in `content/projects.ts` to hide all of them, or replace them
-      with real projects (name, sector, services, photo) as they are confirmed.
-- [ ] Project detail pages show "Project details will be published soon." for real projects. Send the overview, scope (services),
-      sector, city and photos for each real project to publish its Overview, Services Delivered and gallery
-- [ ] The sample photos were cropped from the approved mockup and are small (about 300px wide); real photos will be sharper
+- [ ] **Please check the sectors** and tell the developer which to change (for example Grand Hyat Towers, Jazz Destiny, Trust One)
+- [ ] **UMS's role and scope on each project** (the profile does not say which services UMS delivered): send them and each
+      project page can show its scope, dates and values
+- [ ] **Wording to confirm from the profile:** "Capital Builder" / "Contr. Venture Enginring" on Mall of Sargodha (shown as client
+      "Capital Builder" and contractor "Venture Engineering"); "Khybabn-e Khair ud Din" (shown as "Khayaban-e-Khair ud Din");
+      "Fuji" / "Fauji Foundation" (shown as "Fauji Foundation"); "Grand Hyat Towers" (kept as written)
+- [ ] **Where some projects are:** the profile gives no city for SEE 3 / BEE 3 / SEE 2 Development, Gulberg Mall and Signature
+      Living, Trust One, the Fauji Foundation buildings, the Garden Residencia or the Children's Heart Hospital
+- [ ] **Better pictures:** the profile's pictures are small (about 270 to 330 px wide, and many are artist's renderings), so they look
+      soft on large cards. Send the original photos or renderings (at least 1200 px wide) for each project
+- [ ] **Home page Featured Projects cards** still use stock architecture photos labelled "Illustrative imagery", because the profile
+      pictures are too small for those tall cards. Send two or three large photos of Buch International Hospital and Lady Reading
+      Hospital to replace them
 - [ ] Projects page banner photo (`public/images/projects/projects-banner.jpg`): stock photo by Declan Sun (Unsplash). Replace it
       with a UMS project photo
+- [ ] The profile has a PEC certificate page (page 27). It was not copied onto the site; send the certificate details if it should
+      appear under Credentials
 
 ## 5. Clients and partners (`content/clients.ts`)
 

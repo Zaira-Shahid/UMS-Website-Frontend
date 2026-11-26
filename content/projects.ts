@@ -1,11 +1,4 @@
-import type { IndustrySlug, Project, ServiceSlug } from "@/types";
-import { confirmedProjects } from "./dummy";
-
-/**
- * Show the 12 sample ("illustrative") projects from the approved Projects mockup. They exist so the page looks like the
- * design before real project photos and scope are supplied. Set to false to hide every sample card and page.
- */
-export const showIllustrativeProjects = true;
+import type { IndustrySlug, Project } from "@/types";
 
 /** The four sector filters on /projects. `param` is the ?sector= value; `industry` is the matching sector in the data. */
 export const projectSectors: { param: string; industry: IndustrySlug; label: string; heading: string }[] = [
@@ -15,129 +8,66 @@ export const projectSectors: { param: string; industry: IndustrySlug; label: str
   { param: "institutional", industry: "education-institutional", label: "Institutional", heading: "Institutional Projects" },
 ];
 
-/** Projects the owner has confirmed by name. Used by search, chat, the quote form and the homepage. */
-export const projects: Project[] = confirmedProjects.map((p) => ({ ...p, services: [], illustrative: false }));
+/** A project's picture from the company profile (public/images/projects/real/). The pixel size is the real size of the picture. */
+const img = (slug: string, width: number, height: number) => ({ src: `/images/projects/real/${slug}.jpg`, width, height });
 
-type Sample = [slug: string, name: string, industry: IndustrySlug, description: string, services: ServiceSlug[], size: [number, number]];
-const [HVAC, FIRE, PLUMBING, ELECTRICAL]: ServiceSlug[] = ["hvac", "fire-fighting", "plumbing", "electrical-elv"];
-
-const samples: Sample[] = [
-  ["specialist-hospital", "Specialist Hospital", "healthcare", "A contemporary hospital facility with modern infrastructure.", [HVAC, FIRE, PLUMBING], [307, 123]],
-  ["medical-centre", "Medical Centre", "healthcare", "A multi-specialty medical centre in a modern setting.", [HVAC, ELECTRICAL, PLUMBING], [299, 123]],
-  ["diagnostic-clinic", "Diagnostic Clinic", "healthcare", "A purpose-built diagnostic clinic with modern services.", [HVAC, FIRE, ELECTRICAL], [309, 123]],
-  ["office-tower", "Office Tower", "commercial-retail", "A modern office tower with a high-quality building environment.", [HVAC, ELECTRICAL, FIRE], [307, 123]],
-  ["retail-centre", "Retail Centre", "commercial-retail", "A contemporary retail centre with a modern layout.", [HVAC, FIRE, PLUMBING], [299, 123]],
-  ["business-park", "Business Park", "commercial-retail", "A modern business park with multiple office buildings.", [HVAC, ELECTRICAL, PLUMBING], [309, 123]],
-  ["residential-towers", "Residential Towers", "residential-mixed-use", "A modern residential tower development with quality living spaces.", [HVAC, ELECTRICAL, PLUMBING], [307, 118]],
-  ["apartment-community", "Apartment Community", "residential-mixed-use", "A well-planned apartment community with modern amenities.", [HVAC, FIRE, ELECTRICAL], [299, 118]],
-  ["serviced-apartments", "Serviced Apartments", "residential-mixed-use", "A contemporary serviced apartment building for extended stays.", [HVAC, PLUMBING, ELECTRICAL], [309, 118]],
-  ["university-campus", "University Campus", "education-institutional", "A modern university campus with academic and support facilities.", [HVAC, FIRE, ELECTRICAL], [307, 100]],
-  ["training-centre", "Training Centre", "education-institutional", "A purpose-built training centre with modern facilities.", [HVAC, ELECTRICAL, PLUMBING], [299, 100]],
-  ["research-facility", "Research Facility", "education-institutional", "A contemporary research facility for academic and applied use.", [HVAC, FIRE, PLUMBING], [309, 100]],
-];
+const H: IndustrySlug = "healthcare";
+const C: IndustrySlug = "commercial-retail";
+const R: IndustrySlug = "residential-mixed-use";
+const I: IndustrySlug = "education-institutional";
 
 /**
- * Detail-page text for the sample projects. It describes a typical approach for this kind of building in neutral wording
- * ("are routed", "are coordinated"), never "we planned" or "we delivered", because these are not UMS projects.
+ * The projects in the company profile (UMS Profile.pdf, "Our Projects"): name, place, client, consultant and contractors exactly
+ * as the profile gives them, with each project's picture from the profile. A project has a sector only when its name says what
+ * kind of building it is (a hospital, a mall, apartments, an embassy, a school, a court). The others are listed under "More
+ * Projects". Nothing else is stated about any project: no scope, dates, values or UMS's own role.
+ * The order is the order shown on the Projects page within each sector.
  */
-const sampleCopy: Record<string, { subtitle: string; overview: [string, string] }> = {
-  "specialist-hospital": {
-    subtitle: "Coordinated building services for a healthcare facility",
-    overview: [
-      "In a hospital, building services are routed around clinical and support spaces so that air, water, power and life-safety systems can be installed and maintained with as little disruption as possible.",
-      "A typical scope is drawn and coordinated on shared drawings before installation, then tested system by system and handed over with complete records.",
-    ],
-  },
-  "medical-centre": {
-    subtitle: "Building services for a multi-specialty medical centre",
-    overview: [
-      "A medical centre mixes consulting rooms, diagnostics and waiting areas, so ventilation, power and water services are zoned to suit each use and kept accessible for maintenance.",
-      "Services are normally coordinated above the ceilings and in shafts before work starts, then commissioned and documented room by room.",
-    ],
-  },
-  "diagnostic-clinic": {
-    subtitle: "Building services for a diagnostic clinic",
-    overview: [
-      "Diagnostic spaces depend on stable power, controlled air and reliable water, so these services are planned together with the equipment rooms they serve.",
-      "A typical scope is coordinated early, installed in a clear sequence, and tested and handed over with the records the operator needs.",
-    ],
-  },
-  "office-tower": {
-    subtitle: "Coordinated building services for a commercial office tower",
-    overview: [
-      "In an office tower, services run through risers, plant rooms and ceiling voids shared by many trades, so routes and levels are agreed on coordinated drawings before installation.",
-      "Systems are then tested floor by floor and in operation together, and handed over with operating and maintenance information.",
-    ],
-  },
-  "retail-centre": {
-    subtitle: "Building services for a retail centre",
-    overview: [
-      "Retail centres have large open areas, many tenant units and long service routes, so main distribution is planned to leave room for later fit-outs.",
-      "A typical scope is coordinated with the building design, installed in phases that suit the opening programme, and tested before handover.",
-    ],
-  },
-  "business-park": {
-    subtitle: "Building services for a multi-building business park",
-    overview: [
-      "A business park shares plant and distribution across several buildings, so external routes and each building's services are planned as one system.",
-      "Typical work is sequenced building by building, tested individually and together, and handed over with consistent records.",
-    ],
-  },
-  "residential-towers": {
-    subtitle: "Coordinated building services for residential towers",
-    overview: [
-      "In residential towers, shared services such as water supply, fire protection and power distribution serve many apartments, so vertical routes and plant rooms are planned carefully.",
-      "A typical scope is coordinated floor by floor, tested before occupation, and handed over with clear maintenance records.",
-    ],
-  },
-  "apartment-community": {
-    subtitle: "Building services for an apartment community",
-    overview: [
-      "An apartment community has several blocks and shared amenities, so services are planned for each block and for the common areas between them.",
-      "Work is usually repeated block by block with the same checks, then tested and handed over with records for each.",
-    ],
-  },
-  "serviced-apartments": {
-    subtitle: "Building services for serviced apartments",
-    overview: [
-      "Serviced apartments combine home-like units with hotel-style shared areas, so comfort, hot water and quiet running matter as much as capacity.",
-      "A typical scope is coordinated with the interior layout, tested unit by unit, and handed over with operating guidance.",
-    ],
-  },
-  "university-campus": {
-    subtitle: "Building services for a university campus",
-    overview: [
-      "A campus has buildings of different ages and uses, so services are planned building by building and connected through shared distribution where it suits.",
-      "Typical work is phased around the academic calendar, tested in each building, and handed over with records for the facilities team.",
-    ],
-  },
-  "training-centre": {
-    subtitle: "Building services for a training centre",
-    overview: [
-      "Training rooms, workshops and offices have different needs, so ventilation, power and water services are zoned for each space.",
-      "A typical scope is coordinated early, installed in a clear sequence, then tested and handed over with the records the operator needs.",
-    ],
-  },
-  "research-facility": {
-    subtitle: "Building services for a research facility",
-    overview: [
-      "Research buildings often need controlled air, dependable power and clean water, so services are planned around laboratories and equipment rooms.",
-      "A typical scope is coordinated with the users' requirements, tested carefully, and handed over with detailed records.",
-    ],
-  },
-};
+export const projects: Project[] = [
+  // Healthcare
+  { slug: "buch-international-hospital", name: "Buch International Hospital", sector: H, city: "Multan", client: "Buch Villas", consultant: "Simod", civilContractor: "Pro-Health", image: img("buch-international-hospital", 275, 150) },
+  { slug: "lady-reading-hospital", name: "Lady Reading Hospital", sector: H, city: "Peshawar", client: "C&W", consultant: "Allied Consultant", civilContractor: "Sarhad Construction", image: img("lady-reading-hospital", 270, 150) },
+  { slug: "peshawar-general-hospital", name: "Peshawar General Hospital", sector: H, city: "Peshawar", client: "PGH", consultant: "Simode", image: img("peshawar-general-hospital", 300, 268) },
+  { slug: "mukhtar-a-sheikh-memorial-welfare-hospital", name: "500 Bed Mukhtar A. Sheikh Memorial Welfare Hospital", sector: H, city: "Multan", client: "MASWMH", consultant: "NESPAK", civilContractor: "Banu Mukhtar Constructor Private Limited", image: img("mukhtar-a-sheikh-memorial-welfare-hospital", 276, 151) },
+  { slug: "sahiwal-international-hospital", name: "Sahiwal International Hospital", sector: H, city: "Sahiwal", client: "Sahiwal International Hospital", image: img("sahiwal-international-hospital", 278, 191) },
+  { slug: "ajwa-city-hospital-sahiwal", name: "Ajwa City Hospital", sector: H, city: "Sahiwal", client: "Ajwa City", image: img("ajwa-city-hospital-sahiwal", 269, 148) },
+  { slug: "pakistan-childrens-heart-hospital", name: "Pakistan Children's Heart Hospital & Research Institute", sector: H, client: "PCHF", consultant: "Global Hi-Tech", image: img("pakistan-childrens-heart-hospital", 336, 189) },
+  { slug: "fauji-foundation-nursing-hospital", name: "Fauji Foundation Nursing Hospital", sector: H, client: "Pro Health", consultant: "Global Hi-Tech", image: img("fauji-foundation-nursing-hospital", 269, 148) },
+  { slug: "fauji-foundation-private-hospital", name: "Fauji Foundation Private Hospital", sector: H, client: "Pro Health", consultant: "Global Hi-Tech", image: img("fauji-foundation-private-hospital", 336, 165) },
+  { slug: "fauji-foundation-artificial-limb-centre", name: "Fauji Foundation Artificial Limb Centre", sector: H, client: "Pro Health", consultant: "Global Hi-Tech", image: img("fauji-foundation-artificial-limb-centre", 327, 179) },
 
-export const illustrativeProjects: Project[] = samples.map(([slug, name, sector, description, services, [width, height]]) => ({
-  slug,
-  name,
-  sector,
-  description,
-  subtitle: sampleCopy[slug].subtitle,
-  overview: sampleCopy[slug].overview,
-  services,
-  image: { src: `/images/projects/illustrative/${slug}.jpg`, width, height },
-  illustrative: true,
-}));
+  // Commercial & Retail
+  { slug: "elanza-mall", name: "Elanza Mall", sector: C, city: "Islamabad", area: "Gulberg", client: "Elanza Mall", consultant: "UPDL", image: img("elanza-mall", 280, 200) },
+  { slug: "mall-of-sargodha", name: "Mall of Sargodha", sector: C, city: "Sargodha", client: "Capital Builder", consultant: "Rahim Associate", contractor: "Venture Engineering", image: img("mall-of-sargodha", 270, 283) },
+  { slug: "d8-mall-gulberg", name: "D8 Mall Gulberg", sector: C, city: "Islamabad", area: "Gulberg", client: "D8 Mall", consultant: "HM Consultant", image: img("d8-mall-gulberg-islamabad", 278, 190) },
+  { slug: "gulberg-mall-and-signature-living", name: "Gulberg Mall and Signature Living", sector: C, client: "GMSL", consultant: "Sohail Ahmed Associates", image: img("gulberg-mall-and-signature-living", 279, 199) },
+  { slug: "centro-commercial-eighteen", name: "Centro Commercial Eighteen", sector: C, city: "Islamabad", area: "Eighteen", client: "Elite Estates", consultant: "Promag", image: img("centro-commercial-eighteen-islamabad", 276, 267) },
+  { slug: "cggc-head-office-eighteen", name: "CGGC Head Office at Eighteen", sector: C, city: "Islamabad", area: "Eighteen", client: "CGGC (China Energy)", consultant: "Promag", image: img("cggc-head-office-eighteen", 273, 147) },
+  { slug: "ubl-tower-karachi", name: "UBL Tower", sector: C, city: "Karachi", client: "UBL", consultant: "S. Mehboob & Company", mepContractor: "Mecatech (Pvt.) Ltd", image: img("ubl-tower-karachi", 221, 280) },
+  { slug: "eobi-house-g-10-4", name: "EOBI House", sector: C, city: "Islamabad", area: "G-10/4", client: "EOBI", consultant: "NESPAK", civilContractor: "Builder Associate (Pvt.) Ltd.", image: img("eobi-house-g-10-4-islamabad", 277, 155) },
+  { slug: "ptet-tele-house-g-10-4", name: "PTET Tele House", sector: C, city: "Islamabad", area: "G-10/4", client: "EOBI", consultant: "Naqvi and Siddique", mepContractor: "Builder Associate (Pvt.) Ltd.", image: img("ptet-tele-house-g-10-4-islamabad", 221, 274) },
 
-/** Everything the Projects pages list: real projects first, then the samples (unless switched off). */
-export const allProjects: Project[] = [...projects, ...(showIllustrativeProjects ? illustrativeProjects : [])];
+  // Residential
+  { slug: "the-garden-residencia", name: "The Garden Residencia", sector: R, client: "Arctec Design Consultant", consultant: "Sohail Associate", image: img("the-garden-residencia", 297, 352) },
+  { slug: "cggc-apartment-building-eighteen", name: "CGGC Apartment Building at Eighteen", sector: R, city: "Islamabad", area: "Eighteen", client: "CGGC (China Energy)", consultant: "Promag", image: img("cggc-apartment-building-eighteen", 327, 178) },
+  { slug: "mint-properties-apartments-lahore", name: "Mint Properties Apartments", sector: R, city: "Lahore", client: "60L Apartment (Pvt.) Ltd", consultant: "Innovative Engineering Services", image: img("mint-properties-apartments-lahore", 294, 188) },
+  { slug: "rhodium-apartment-building", name: "Rhodium Apartment Building", sector: R, city: "Islamabad", client: "Potohar Builders", consultant: "S. Mehboob & Company", image: img("rhodium-apartment-building-islamabad", 279, 194) },
+
+  // Institutional
+  { slug: "islamabad-high-court", name: "Islamabad High Court", sector: I, city: "Islamabad", area: "G-5", client: "PWD", consultant: "Matrix Design", civilContractor: "HRL", image: img("islamabad-high-court", 271, 150) },
+  { slug: "pakistan-cricket-board-house", name: "Pakistan Cricket Board House", sector: I, city: "Lahore", area: "Jail Road", client: "PCB", consultant: "NESPAK", civilContractor: "Shahzaman", image: img("pakistan-cricket-board-house", 273, 210) },
+  { slug: "prime-minister-house-conference-hall-and-office-block", name: "Conference Hall and Office Block at Prime Minister House", sector: I, city: "Islamabad", client: "PWD", consultant: "NESPAK", civilContractor: "Ch. Mubarak", image: img("prime-minister-house-conference-hall-and-office-block", 268, 149) },
+  { slug: "philippine-embassy", name: "Philippine Embassy", sector: I, city: "Islamabad", area: "Diplomatic Enclave", client: "Philippine Embassy", consultant: "SEM Engineers", civilContractor: "Gold Roof", image: img("philippine-embassy", 270, 156) },
+  { slug: "turkish-embassy-staff-lodges", name: "Turkish Embassy Staff Lodges", sector: I, city: "Islamabad", area: "Diplomatic Enclave", client: "Ministry of Foreign Affairs", consultant: "Gürmen Mühendislik Ltd. Şti.", civilContractor: "Siyah Kalem", mepContractor: "Cozmuler", image: img("turkish-embassy-staff-lodges", 270, 150) },
+  { slug: "jordan-ambassador-residence", name: "Jordan Ambassador Residence", sector: I, city: "Islamabad", area: "Diplomatic Enclave", client: "Jordan Embassy", consultant: "Design Advisor", civilContractor: "Gold Roof", image: img("jordan-ambassador-residence", 278, 188) },
+  { slug: "lecole-school-lahore", name: "Lecole School Khayaban-e-Khair ud Din", sector: I, city: "Lahore", client: "Lecole School", consultant: "Suhail Ahmed Associates", civilContractor: "EMC", image: img("lecole-school-lahore", 310, 152) },
+  { slug: "fauji-foundation-nursing-college", name: "Fauji Foundation Nursing College", sector: I, client: "Pro Health", consultant: "Global Hi-Tech", image: img("fauji-foundation-nursing-college", 271, 147) },
+
+  // The name does not say what kind of building these are: listed under "More Projects"
+  { slug: "see-3-development", name: "SEE 3 Development", client: "Arctec Design Consultant", consultant: "Sohail Associate", image: img("see-3-development", 270, 284) },
+  { slug: "bee-3-development", name: "BEE 3 Development", client: "Arctec Design Consultant", consultant: "Sohail Associate", image: img("bee-3-development", 270, 284) },
+  { slug: "see-2-development", name: "SEE 2 Development", client: "Arctec Design Consultant", consultant: "Sohail Associate", image: img("see-2-development", 270, 284) },
+  { slug: "trust-one-diplomatic-enclave", name: "Trust One Diplomatic Enclave", client: "Trust One Diplomatic Enclave", consultant: "Sohail Associate", image: img("trust-one-diplomatic-enclave", 270, 150) },
+  { slug: "grand-hyat-towers", name: "Grand Hyat Towers", city: "Islamabad", area: "One Constitution Avenue", client: "BNP (Pvt.) Ltd", civilContractor: "S. Mehboob & Company", image: img("grand-hyat-towers-islamabad", 1121, 544) },
+  { slug: "jazz-destiny", name: "Jazz Destiny", city: "Islamabad", client: "Mobilink Jazz", consultant: "SRDW Design Works", image: img("jazz-destiny", 272, 335) },
+];

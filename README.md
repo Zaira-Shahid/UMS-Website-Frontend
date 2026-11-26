@@ -73,12 +73,11 @@ docs/reference/mockups/   the approved design mockups
   filled: office address, phone, email, hours and map link (`contact.offices`), company phone and emails, WhatsApp
   (the green header button is always shown and links to `/contact` until a number is set; the footer icon appears once set), and the six social profile URLs. The footer, Contact page, About
   office cards and the chatbot all read from this file.
-- **Projects:** real projects are in `content/dummy.ts` (`confirmedProjects`): only confirmed facts (name, and `sector` and
-  `city` when confirmed). `content/projects.ts` also holds 12 sample projects that make `/projects` look like the
-  approved design. They are labelled "Illustrative", their detail pages are `noindex` and not in the sitemap, and search,
-  chat and structured data list real projects only. Set `showIllustrativeProjects = false` to hide all samples. Real
-  projects with no confirmed sector appear under "More Projects". Photos for the real projects: `featuredImages` in
-  `content/home.ts`; sample photos: `public/images/projects/illustrative/`.
+- **Projects:** `content/projects.ts` lists the 37 projects from the company profile (name, place, client, consultant,
+  contractors, and the picture in `public/images/projects/real/`). A project has a sector only when its name says what kind
+  of building it is; the others appear under "More Projects". Nothing else is stated about a project (no scope, dates or
+  values). The sitemap, search, chat and structured data all read this one list. The home page Featured Projects cards use
+  their own stock photos (`featuredGallery` in `content/home.ts`), labelled "Illustrative imagery".
 - **Hero building highlight:** the six chips under the hero highlight a system inside the building (`components/home/HeroStage.tsx`).
   The overlays are pre-cut transparent PNGs in `public/images/hero/masks/` (`<service>.png` for the desktop artwork and
   `<service>-mobile.png` for the mobile artwork), cut by colour from the two hero images. If the hero artwork is replaced, the

@@ -2,22 +2,20 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight, ChevronRight } from "lucide-react";
-import { ProjectGallery, type GalleryImage } from "@/components/projects/ProjectGallery";
+import { ChevronRight } from "lucide-react";
+import { ProjectCard } from "@/components/projects/ProjectCard";
 import { SectorPills } from "@/components/projects/SectorPills";
 import { Button } from "@/components/ui/Button";
-import { ServiceIcon, serviceColor } from "@/components/ui/ServiceIcon";
-import { allProjects, projectSectors } from "@/content/projects";
+import { projects, projectSectors } from "@/content/projects";
 import { quoteHref } from "@/content/navigation";
-import { services } from "@/content/services";
 import { site } from "@/content/site";
-import { deliveredInfo, projectBySlug, projectPhoto, sectorOf, serviceGalleryPhoto } from "@/lib/projects";
+import { placeOf, projectBySlug, sectorOf } from "@/lib/projects";
 import { absoluteUrl, jsonLd, ogImage, ogImages } from "@/lib/seo";
 
 type Params = { slug: string };
 
 export function generateStaticParams(): Params[] {
-  return allProjects.map((p) => ({ slug: p.slug }));
+  return projects.map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
@@ -25,20 +23,16 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const p = projectBySlug(slug);
   if (!p) return {};
   const path = `/projects/${p.slug}`;
-  const description = p.subtitle ?? p.description ?? `${p.name}, a UMS project.`;
+  const place = placeOf(p);
+  const description = `${p.name}${place ? `, ${place}` : ""}${p.client ? `. Client: ${p.client}` : ""}. A project from the UMS company profile.`;
   return {
     title: p.name,
     description,
     alternates: { canonical: path },
-    // Sample projects are not UMS work, so search engines are asked to leave them out.
-    ...(p.illustrative && { robots: { index: false, follow: true } }),
     openGraph: { images: ogImages, type: "article", siteName: `${site.name} — ${site.fullName}`, title: `${p.name} | ${site.name}`, description, url: path },
     twitter: { card: "summary_large_image", images: [ogImage.url], title: `${p.name} | ${site.name}`, description },
   };
 }
-
-/** The four steps of the "Delivery Approach" band. Generic; shown for sample projects only. */
-const approach = ["Coordination", "Installation", "Testing", "Handover"];
 
 export default async function ProjectDetailPage({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
@@ -46,19 +40,8 @@ export default async function ProjectDetailPage({ params }: { params: Promise<Pa
   if (!p) notFound();
 
   const sector = sectorOf(p);
-  const { image, label } = projectPhoto(p);
-  const delivered = p.services.map((s) => services.find((x) => x.slug === s)).filter((s): s is NonNullable<typeof s> => !!s);
-  const hasDetails = Boolean(p.overview) && delivered.length > 0;
-  const pillSectors = projectSectors.filter((s) => allProjects.some((x) => x.sector === s.industry));
-
-  // Sample projects: the project photo as the large image, photos of the project's first two services as the small ones.
-  const gallery: GalleryImage[] = hasDetails
-    ? [
-        ...(image ? [{ src: image.src, caption: `${p.name} exterior` }] : []),
-        ...delivered.slice(0, 2).map((s) => serviceGalleryPhoto[s.slug]),
-      ]
-    : [];
-
+  const place = placeOf(p);
+  const pillSectors = projectSectors.filter((s) => projects.some((x) => x.sector === s.industry));
   const crumbs = [
     { label: "Projects", href: "/projects" },
     ...(sector ? [{ label: sector.label, href: `/projects?sector=${sector.param}` }] : []),
@@ -73,18 +56,25 @@ export default async function ProjectDetailPage({ params }: { params: Promise<Pa
       ...crumbs.map((c, i) => ({ "@type": "ListItem", position: i + 2, name: c.label, item: i === crumbs.length - 1 ? url : absoluteUrl(c.href ?? "/projects") })),
     ],
   };
-  const quoteLink = quoteHref({ service: delivered[0]?.slug, project: p.slug });
-  const snapshot = [
+
+  // Only what the company profile states about this project.
+  const rows = [
     sector && { label: "Sector", value: sector.label },
-    delivered.length > 0 && { label: "Scope", value: delivered.map((s) => deliveredInfo[s.slug].name).join(", ") },
-    p.city && { label: "Location", value: p.city },
+    place && { label: "Location", value: place },
+    p.client && { label: "Client", value: p.client },
+    p.consultant && { label: "Consultant", value: p.consultant },
+    p.civilContractor && { label: "Civil contractor", value: p.civilContractor },
+    p.mepContractor && { label: "MEP contractor", value: p.mepContractor },
+    p.contractor && { label: "Contractor", value: p.contractor },
   ].filter((r): r is { label: string; value: string } => !!r);
+
+  const related = sector ? projects.filter((x) => x.sector === p.sector && x.slug !== p.slug).slice(0, 3) : [];
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(structuredData) }} />
 
-      <div className="bg-white pb-8 pt-[calc(4rem+1.25rem)] xl:pt-[calc(var(--header-h)+1.75rem)]">
+      <div className="bg-white pb-10 pt-[calc(4rem+1.25rem)] xl:pt-[calc(var(--header-h)+1.75rem)]">
         <div className="wrap">
           <SectorPills sectors={pillSectors.map((s) => ({ param: s.param, label: s.label }))} active={sector?.param ?? null} />
 
@@ -110,111 +100,53 @@ export default async function ProjectDetailPage({ params }: { params: Promise<Pa
             </ol>
           </nav>
 
-          <header className="mt-4 flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
-            <div>
-              <h1 className="text-[clamp(1.875rem,1.3rem+2vw,2.875rem)] font-extrabold leading-tight text-navy">{p.name}</h1>
-              {p.subtitle && <p className="mt-1 text-lg text-navy md:text-xl">{p.subtitle}</p>}
-              <span aria-hidden className="accent-bar mt-3" />
-            </div>
-            {p.illustrative && <p className="text-sm italic text-muted md:pt-3">Illustrative project</p>}
+          <header className="mt-4">
+            <h1 className="text-[clamp(1.875rem,1.3rem+2vw,2.875rem)] font-extrabold leading-tight text-navy">{p.name}</h1>
+            {place && <p className="mt-1 text-lg text-navy md:text-xl">{place}</p>}
+            <span aria-hidden className="accent-bar mt-3" />
           </header>
 
-          {hasDetails && gallery.length > 0 && (
-            <div className="mt-6">
-              <ProjectGallery images={gallery} />
-            </div>
-          )}
-
-          {hasDetails && p.overview ? (
-            <div className="mt-10 grid gap-8 lg:grid-cols-[1.4fr_auto_1fr] lg:gap-10">
-              <section aria-labelledby="overview-title">
-                <h2 id="overview-title" className="text-[1.625rem] font-extrabold text-navy md:text-3xl">
-                  Project Overview
-                </h2>
-                <span aria-hidden className="accent-bar mt-2" />
-                <div className="mt-5 space-y-4 text-base leading-relaxed text-navy md:text-lg">
-                  {p.overview.map((t) => (
-                    <p key={t}>{t}</p>
-                  ))}
-                </div>
-              </section>
-              <div aria-hidden className="hidden w-px bg-[#c5d8e8] lg:block" />
-              <SnapshotCard rows={snapshot} />
-            </div>
-          ) : (
-            // Real projects: only confirmed facts. The photo is a small low-resolution illustration, so it is shown framed at a
-            // safe size beside the text instead of being stretched into a banner.
-            <div className="mt-8 grid items-start gap-8 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-10">
-              {image && (
-                <figure className="max-w-[22rem]">
-                  <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-sky-50">
-                    <Image src={image.src} alt="" fill sizes="(min-width: 1024px) 22rem, 90vw" className="object-cover object-[center_35%]" />
-                    {label && <span className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-navy">{label}</span>}
-                  </div>
-                  <figcaption className="mt-2 text-sm italic text-muted">Illustrative imagery</figcaption>
-                </figure>
-              )}
-              <div className="space-y-6">
-                <p className="text-base leading-relaxed text-navy md:text-lg">Project details will be published soon.</p>
-                {snapshot.length > 0 && <SnapshotCard rows={snapshot} />}
+          {/* The picture from the company profile, shown at about its real size, beside the facts the profile gives */}
+          <div className="mt-8 grid items-start gap-8 lg:grid-cols-[minmax(0,26rem)_1fr] lg:gap-12">
+            <figure className="max-w-[26rem]">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-[#e4eef7]">
+                <Image src={p.image.src} alt={`${p.name}`} fill sizes="(min-width: 1024px) 26rem, 94vw" priority className="object-cover object-[center_35%]" />
               </div>
-            </div>
-          )}
+            </figure>
+            <section aria-labelledby="snapshot-title">
+              <h2 id="snapshot-title" className="text-[1.625rem] font-extrabold text-navy md:text-3xl">
+                Project Snapshot
+              </h2>
+              <span aria-hidden className="accent-bar mt-2" />
+              <dl className="mt-5 divide-y divide-line rounded-xl border border-line bg-white px-5 py-1">
+                {rows.map((r) => (
+                  <div key={r.label} className="grid grid-cols-[8.5rem_1fr] gap-3 py-3.5">
+                    <dt className="font-bold text-navy">{r.label}:</dt>
+                    <dd className="text-navy">{r.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
+          </div>
         </div>
       </div>
 
-      {hasDetails && (
-        <>
-          <section aria-labelledby="delivered-title" className="bg-white pb-10 md:pb-12">
-            <div className="wrap">
-              <div className="border-t border-line pt-8 md:pt-10">
-              <h2 id="delivered-title" className="text-center text-[1.625rem] font-extrabold text-navy md:text-3xl">
-                Services Delivered
-              </h2>
-              <span aria-hidden className="accent-bar mx-auto mt-2" />
-              <ul className="mt-7 grid gap-4 md:grid-cols-3">
-                {delivered.map((s) => (
-                  <li key={s.slug}>
-                    <Link
-                      href={`/services/${s.slug}`}
-                      className="group flex h-full flex-col gap-2 rounded-xl border border-line bg-white p-5 transition duration-200 hover:-translate-y-0.5 hover:border-blue hover:shadow-card focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue motion-reduce:transition-none motion-reduce:hover:translate-y-0"
-                    >
-                      <span className="flex items-center gap-3">
-                        <span style={{ color: serviceColor(s.slug) }} className="flex">
-                          <ServiceIcon slug={s.slug} className="size-9" />
-                        </span>
-                        <span className="font-heading text-xl font-bold text-navy">{deliveredInfo[s.slug].name}</span>
-                      </span>
-                      <span className="text-base leading-snug text-navy/85">{deliveredInfo[s.slug].line}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-              </div>
-            </div>
-          </section>
-
-          <section aria-labelledby="approach-title" className="bg-white pb-10 md:pb-12">
-            <div className="wrap">
-              <div className="border-t border-line pt-8 md:pt-10">
-              <h2 id="approach-title" className="text-center text-[1.625rem] font-extrabold text-navy md:text-3xl">
-                Delivery Approach
-              </h2>
-              <span aria-hidden className="accent-bar mx-auto mt-2" />
-              <ol className="mt-7 grid grid-cols-2 gap-3 rounded-xl bg-[#e8f3fb] p-4 md:flex md:items-center md:justify-between md:gap-3 md:px-6 md:py-5">
-                {approach.map((step, i) => (
-                  <li key={step} className="contents">
-                    <span className="flex h-12 items-center justify-center rounded-lg border border-[#c5d8e8] bg-white px-4 text-center font-heading text-base font-bold text-navy md:flex-1 md:text-lg">
-                      {step}
-                    </span>
-                    {i < approach.length - 1 && <ArrowRight aria-hidden className="hidden size-6 shrink-0 text-cyan md:block" />}
-                  </li>
-                ))}
-              </ol>
-              </div>
-            </div>
-          </section>
-        </>
+      {related.length > 0 && sector && (
+        <section aria-labelledby="related-title" className="bg-[#f2f7fb] py-10 md:py-12">
+          <div className="wrap">
+            <h2 id="related-title" className="text-[1.625rem] font-extrabold text-navy md:text-3xl">
+              More {sector.label} Projects
+            </h2>
+            <span aria-hidden className="accent-bar mt-2" />
+            <ul className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {related.map((r) => (
+                <li key={r.slug} className="relative">
+                  <ProjectCard p={{ slug: r.slug, name: r.name, place: placeOf(r) || undefined, client: r.client, image: r.image }} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
       )}
 
       <div className="bg-[#e8f3fb] py-6 md:py-7">
@@ -222,31 +154,11 @@ export default async function ProjectDetailPage({ params }: { params: Promise<Pa
           <Button href="/projects" variant="outline" size="lg" className="border-[#c5d8e8] bg-white max-sm:w-full sm:min-w-[16rem]">
             Back to Projects
           </Button>
-          <Button href={quoteLink} size="lg" className="max-sm:w-full sm:min-w-[16rem]">
+          <Button href={quoteHref({ project: p.slug })} size="lg" className="max-sm:w-full sm:min-w-[16rem]">
             Request a Quote
           </Button>
         </div>
       </div>
     </>
-  );
-}
-
-/** "Project Snapshot": the confirmed facts of the project in a white bordered card (mockup 21). */
-function SnapshotCard({ rows }: { rows: { label: string; value: string }[] }) {
-  return (
-    <section aria-labelledby="snapshot-title" className="self-start">
-      <h2 id="snapshot-title" className="text-[1.625rem] font-extrabold text-navy md:text-3xl">
-        Project Snapshot
-      </h2>
-      <span aria-hidden className="accent-bar mt-2" />
-      <dl className="mt-5 divide-y divide-line rounded-xl border border-line bg-white px-5 py-1">
-        {rows.map((r) => (
-          <div key={r.label} className="grid grid-cols-[6rem_1fr] gap-3 py-3.5">
-            <dt className="font-bold text-navy">{r.label}:</dt>
-            <dd className="text-navy">{r.value}</dd>
-          </div>
-        ))}
-      </dl>
-    </section>
   );
 }

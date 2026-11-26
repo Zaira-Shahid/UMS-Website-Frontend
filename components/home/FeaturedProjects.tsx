@@ -12,7 +12,8 @@ import { cn } from "@/lib/utils";
 
 /**
  * H4 Featured Projects (mockup 04). Slanted sector tabs filter the projects. A project shows under a tab only when its
- * sector is confirmed in the content; the others appear on /projects only. The images are illustrative and labelled.
+ * sector is set in the content and it has a card photo here; every project is on /projects. These card photos are stock architecture
+ * photos and are labelled "Illustrative imagery"; the real project pictures are on /projects.
  */
 export function FeaturedProjects() {
   const [sector, setSector] = useState(0);

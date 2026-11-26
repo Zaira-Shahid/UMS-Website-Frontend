@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { projectSectors } from "@/content/projects";
-import type { ServiceSlug } from "@/types";
 import { MoreProjects } from "./MoreProjects";
 import { ProjectCard } from "./ProjectCard";
 import { SectorPills } from "./SectorPills";
@@ -12,15 +11,12 @@ import { SectorPills } from "./SectorPills";
 export interface BrowserProject {
   slug: string;
   name: string;
-  city?: string;
+  /** "Gulberg, Islamabad" or "Multan", where the company profile gives a place. */
+  place?: string;
+  client?: string;
   /** The ?sector= value of the project's sector, only when its sector is set. */
   sectorParam?: string;
-  description?: string;
-  services: ServiceSlug[];
-  image?: { src: string; width: number; height: number };
-  /** Badge on the photo: "Illustrative" for samples, "Illustrative imagery" for the design-pack pictures. */
-  imageLabel?: string;
-  illustrative: boolean;
+  image: { src: string; width: number; height: number };
 }
 
 /**
@@ -33,16 +29,14 @@ export function ProjectsView({ projects, sector }: { projects: BrowserProject[];
   const active = sectors.some((s) => s.param === sector) ? sector : "all";
   const shownSectors = active === "all" ? sectors : sectors.filter((s) => s.param === active);
   const more = projects.filter((p) => !p.sectorParam);
-  const hasSamples = projects.some((p) => p.illustrative);
 
   return (
     <>
       <SectorPills sectors={sectors} active={active} />
-      {hasSamples && <p className="mt-2 text-sm italic text-muted">Illustrative projects</p>}
 
       {shownSectors.map((s) => {
         const inSector = projects.filter((p) => p.sectorParam === s.param);
-        // The All view shows three cards per category (real projects first); a sector's own view shows them all.
+        // The All view shows three cards per category (in the order of the company profile); a sector's own view shows them all.
         const cards = active === "all" ? inSector.slice(0, 3) : inSector;
         return (
           <section key={s.param} aria-labelledby={`sector-${s.param}`} className="mt-8 first:mt-6 md:mt-10">

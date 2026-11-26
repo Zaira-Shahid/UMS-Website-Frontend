@@ -2,10 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Building2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
-import { ServiceChips } from "./ServiceChips";
 import type { BrowserProject } from "./ProjectsBrowser";
 
 const STEP = 4;
@@ -30,13 +29,13 @@ export function MoreProjects({ projects }: { projects: BrowserProject[] }) {
               href={`/projects/${p.slug}`}
               className="group flex items-center gap-4 rounded-xl border border-line bg-white p-3 transition duration-200 hover:border-blue hover:shadow-card focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue motion-reduce:transition-none"
             >
-              <span className="relative flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-navy-950 via-navy-900 to-[#3f78a8] md:size-[4.5rem]">
-                {p.image ? <Image src={p.image.src} alt="" fill sizes="72px" className="object-cover" /> : <Building2 aria-hidden strokeWidth={1.4} className="size-7 text-white/70" />}
+              <span className="relative size-16 shrink-0 overflow-hidden rounded-lg bg-[#e4eef7] md:size-[4.5rem]">
+                <Image src={p.image.src} alt="" fill sizes="72px" className="object-cover" />
               </span>
               <span className="min-w-0 flex-1">
                 <span className="block font-heading text-lg font-bold leading-tight text-navy">{p.name}</span>
-                {p.city && <span className="mt-0.5 block text-sm text-muted">{p.city}</span>}
-                <ServiceChips services={p.services} className="mt-2" />
+                {p.place && <span className="mt-0.5 block text-sm text-muted">{p.place}</span>}
+                {p.client && <span className="mt-0.5 block truncate text-sm text-muted">Client: {p.client}</span>}
               </span>
               <ArrowRight aria-hidden className="size-5 shrink-0 text-blue-700 transition-transform group-hover:translate-x-1 motion-reduce:transition-none" />
             </Link>

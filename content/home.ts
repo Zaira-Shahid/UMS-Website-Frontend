@@ -58,11 +58,6 @@ export const featuredGallery: Record<string, { src: string; width: number; heigh
   ],
 };
 
-/** The first photo of each project: used wherever a single picture is needed (the Projects pages). */
-export const featuredImages: Record<string, { src: string; width: number; height: number }> = Object.fromEntries(
-  Object.entries(featuredGallery).map(([slug, list]) => [slug, list[0]]),
-);
-
 /** Homepage FAQ (mockup 07). The answers describe how the site works and make no claims about UMS. */
 export const homeFaqs = [
   { question: "What services does UMS provide?", answer: "UMS provides integrated MEP, HVAC, fire protection, plumbing, electrical & ELV, and pools & fountains services." },
