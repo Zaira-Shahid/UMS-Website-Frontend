@@ -27,7 +27,7 @@ function WhatsappButton({ className }: { className?: string }) {
       href={whatsappHref}
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       aria-label="Chat on WhatsApp"
-      className={cn("flex size-11 shrink-0 items-center justify-center rounded-full bg-[#128c4a] text-white transition-colors hover:bg-[#0e7a40]", className)}
+      className={cn("flex size-11 shrink-0 items-center justify-center rounded-full bg-[#dcf8e8] text-[#25d366] transition-colors hover:bg-[#c6f2d8] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#25d366]", className)}
     >
       <WhatsappIcon className="size-6" />
     </a>
