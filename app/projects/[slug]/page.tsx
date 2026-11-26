@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { ProjectGallery, type GalleryImage } from "@/components/projects/ProjectGallery";
 import { SectorPills } from "@/components/projects/SectorPills";
@@ -51,11 +52,13 @@ export default async function ProjectDetailPage({ params }: { params: Promise<Pa
   const hasDetails = Boolean(p.overview) && delivered.length > 0;
   const pillSectors = projectSectors.filter((s) => allProjects.some((x) => x.sector === s.industry));
 
-  // Large image: the project photo. Small images: photos of the project's first two services.
-  const gallery: GalleryImage[] = [
-    ...(image ? [{ src: image.src, caption: p.illustrative ? "Illustrative exterior" : "Illustrative imagery" }] : []),
-    ...(hasDetails ? delivered.slice(0, 2).map((s) => serviceGalleryPhoto[s.slug]) : []),
-  ];
+  // Sample projects: the project photo as the large image, photos of the project's first two services as the small ones.
+  const gallery: GalleryImage[] = hasDetails
+    ? [
+        ...(image ? [{ src: image.src, caption: "Illustrative exterior" }] : []),
+        ...delivered.slice(0, 2).map((s) => serviceGalleryPhoto[s.slug]),
+      ]
+    : [];
 
   const crumbs = [
     { label: "Projects", href: "/projects" },
@@ -96,7 +99,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<Pa
             {p.illustrative && <p className="text-sm italic text-muted">Illustrative project</p>}
           </header>
 
-          {gallery.length > 0 && (
+          {hasDetails && gallery.length > 0 && (
             <div className="mt-6">
               <ProjectGallery images={gallery} badge={label} />
             </div>
@@ -119,10 +122,22 @@ export default async function ProjectDetailPage({ params }: { params: Promise<Pa
               <SnapshotCard rows={snapshot} />
             </div>
           ) : (
-            <div className="mt-10 grid gap-8 lg:grid-cols-[1.4fr_auto_1fr] lg:gap-10">
-              <p className="text-base leading-relaxed text-navy md:text-lg">Project details will be published soon.</p>
-              <div aria-hidden className="hidden w-px bg-[#c5d8e8] lg:block" />
-              {snapshot.length > 0 && <SnapshotCard rows={snapshot} />}
+            // Real projects: only confirmed facts. The photo is a small low-resolution illustration, so it is shown framed at a
+            // safe size beside the text instead of being stretched into a banner.
+            <div className="mt-8 grid items-start gap-8 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-10">
+              {image && (
+                <figure className="max-w-[22rem]">
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-sky-50">
+                    <Image src={image.src} alt="" fill sizes="(min-width: 1024px) 22rem, 90vw" className="object-cover object-[center_35%]" />
+                    {label && <span className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-navy">{label}</span>}
+                  </div>
+                  <figcaption className="mt-2 text-sm italic text-muted">Illustrative imagery</figcaption>
+                </figure>
+              )}
+              <div className="space-y-6">
+                <p className="text-base leading-relaxed text-navy md:text-lg">Project details will be published soon.</p>
+                {snapshot.length > 0 && <SnapshotCard rows={snapshot} />}
+              </div>
             </div>
           )}
         </div>
