@@ -514,39 +514,10 @@ label[for],
   }
 }
 
-/* Services ticker (ServicesTicker): the copies of the list slide left by one copy's width, so the loop is seamless. */
-@keyframes ticker-move {
-  to {
-    transform: translateX(var(--ticker-shift, -50%));
-  }
-}
-@media (min-width: 1700px) {
-  .ticker-track {
-    --ticker-shift: -33.3333%;
-  }
-}
-.ticker-track {
-  animation: ticker-move var(--ticker-dur, 40s) linear infinite;
-  will-change: transform;
-}
-.ticker[data-paused="true"] .ticker-track,
-.ticker:focus-within .ticker-track {
-  animation-play-state: paused;
-}
-@media (hover: hover) {
-  .ticker:hover .ticker-track {
-    animation-play-state: paused;
-  }
-}
-/* Reduced motion: no ticker. The cards are an ordinary row that can be scrolled by hand, shown once. */
-@media (prefers-reduced-motion: reduce) {
-  .ticker-track {
-    animation: none;
-  }
-  .ticker-dup,
-  .ticker-ctl {
-    display: none;
-  }
+/* Services ticker (ServicesTicker): the row is moved by script; while it is being dragged the cursor is a closed hand. */
+.ticker[data-dragging="true"],
+.ticker[data-dragging="true"] * {
+  cursor: grabbing !important;
 }
 
 /* Clients row: the list is duplicated, so moving it by half its width loops seamlessly */

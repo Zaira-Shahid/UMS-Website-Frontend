@@ -25,12 +25,6 @@ export const sliderTitle: Record<ServiceSlug, string> = {
   "integrated-mep": "Integrated MEP Solutions",
 };
 
-/** Slider illustrations from the design pack. The other services show their icon large until artwork is supplied. */
-export const sliderArt: Partial<Record<ServiceSlug, { src: string; width: number; height: number }>> = {
-  hvac: { src: "/images/services/hvac.png", width: 620, height: 265 },
-  "fire-fighting": { src: "/images/services/fire-fighting.png", width: 175, height: 185 },
-};
-
 /** How We Deliver (mockup 03). */
 export const deliverySteps = [
   { id: "planning", title: "Planning", text: "Define requirements and develop the system design.", image: "/images/delivery/01-planning.png", width: 310, height: 192 },
