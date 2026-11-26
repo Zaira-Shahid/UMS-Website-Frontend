@@ -99,6 +99,10 @@ export interface Project {
   city?: string;
   /** One line shown on the card. Sample projects only; real projects show confirmed fields only. */
   description?: string;
+  /** One-line subtitle on the detail page. Sample projects only. */
+  subtitle?: string;
+  /** Two short paragraphs for the detail page, in neutral "typical approach" wording. Sample projects only. */
+  overview?: [string, string];
   /** Services delivered. Empty for real projects until the owner confirms them. */
   services: ServiceSlug[];
   image?: { src: string; width: number; height: number };

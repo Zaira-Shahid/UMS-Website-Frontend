@@ -1,19 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import Image from "next/image";
-import { ServiceChips } from "@/components/projects/ServiceChips";
+import { ArrowRight } from "lucide-react";
+import { ProjectGallery, type GalleryImage } from "@/components/projects/ProjectGallery";
+import { SectorPills } from "@/components/projects/SectorPills";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Button } from "@/components/ui/Button";
-import { CenterTitle } from "@/components/ui/CenterTitle";
 import { ServiceIcon, serviceColor } from "@/components/ui/ServiceIcon";
-import { PageBanner } from "@/components/ui/PageBanner";
-import { industries } from "@/content/industries";
+import { allProjects, projectSectors } from "@/content/projects";
 import { quoteHref } from "@/content/navigation";
-import { allProjects } from "@/content/projects";
 import { services } from "@/content/services";
 import { site } from "@/content/site";
-import { adjacentProjects, projectBySlug, projectPhoto } from "@/lib/projects";
+import { projectBySlug, projectPhoto, sectorOf, serviceGalleryPhoto } from "@/lib/projects";
 import { absoluteUrl, jsonLd, ogImage, ogImages } from "@/lib/seo";
 
 type Params = { slug: string };
@@ -27,152 +25,185 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const p = projectBySlug(slug);
   if (!p) return {};
   const path = `/projects/${p.slug}`;
-  const description = p.description ?? `${p.name}, a UMS project.`;
+  const description = p.subtitle ?? p.description ?? `${p.name}, a UMS project.`;
   return {
     title: p.name,
     description,
+    alternates: { canonical: path },
     // Sample projects are not UMS work, so search engines are asked to leave them out.
     ...(p.illustrative && { robots: { index: false, follow: true } }),
-    alternates: { canonical: path },
-    openGraph: { images: ogImages,
-      type: "article",
-      siteName: `${site.name} — ${site.fullName}`,
-      title: `${p.name} | ${site.name}`,
-      description,
-      url: path,
-    },
+    openGraph: { images: ogImages, type: "article", siteName: `${site.name} — ${site.fullName}`, title: `${p.name} | ${site.name}`, description, url: path },
     twitter: { card: "summary_large_image", images: [ogImage.url], title: `${p.name} | ${site.name}`, description },
   };
 }
 
-export default async function CaseStudyPage({ params }: { params: Promise<Params> }) {
+/** The four steps of the "Delivery Approach" band. Generic; shown for sample projects only. */
+const approach = ["Coordination", "Installation", "Testing", "Handover"];
+
+export default async function ProjectDetailPage({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
   const p = projectBySlug(slug);
   if (!p) notFound();
 
-  const adjacent = adjacentProjects(p.slug);
+  const sector = sectorOf(p);
+  const { image, label } = projectPhoto(p);
+  const delivered = p.services.map((s) => services.find((x) => x.slug === s)).filter((s): s is NonNullable<typeof s> => !!s);
+  const hasDetails = Boolean(p.overview) && delivered.length > 0;
+  const pillSectors = projectSectors.filter((s) => allProjects.some((x) => x.sector === s.industry));
+
+  // Large image: the project photo. Small images: photos of the project's first two services.
+  const gallery: GalleryImage[] = [
+    ...(image ? [{ src: image.src, caption: p.illustrative ? "Illustrative exterior" : "Illustrative imagery" }] : []),
+    ...(hasDetails ? delivered.slice(0, 2).map((s) => serviceGalleryPhoto[s.slug]) : []),
+  ];
+
+  const crumbs = [
+    { label: "Projects", href: "/projects" },
+    ...(sector ? [{ label: sector.label, href: `/projects?sector=${sector.param}` }] : []),
+    { label: p.name },
+  ];
   const url = absoluteUrl(`/projects/${p.slug}`);
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
-      { "@type": "ListItem", position: 2, name: "Projects", item: absoluteUrl("/projects") },
-      { "@type": "ListItem", position: 3, name: p.name, item: url },
+      ...crumbs.map((c, i) => ({ "@type": "ListItem", position: i + 2, name: c.label, item: i === crumbs.length - 1 ? url : absoluteUrl(c.href ?? "/projects") })),
     ],
   };
-
-  const sectorName = industries.find((i) => i.slug === p.sector)?.name;
-  const { image, label } = projectPhoto(p);
-  const delivered = p.services.map((slug) => services.find((s) => s.slug === slug)).filter((s): s is NonNullable<typeof s> => !!s);
-  const facts = [sectorName && { label: "Sector", value: sectorName }, p.city && { label: "Location", value: p.city }].filter(
-    (f): f is { label: string; value: string } => !!f,
-  );
-  const quoteLink = delivered[0] ? quoteHref({ service: delivered[0].slug }) : quoteHref({ project: p.slug });
+  const quoteLink = quoteHref({ service: delivered[0]?.slug, project: p.slug });
+  const snapshot = [
+    sector && { label: "Sector", value: sector.label },
+    delivered.length > 0 && { label: "Scope", value: delivered.map((s) => s.name).join(", ") },
+    p.city && { label: "Location", value: p.city },
+  ].filter((r): r is { label: string; value: string } => !!r);
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(structuredData) }} />
-      <PageBanner
-        title={p.name}
-        intro={[p.city, sectorName].filter(Boolean).join(" · ") || undefined}
-        crumbs={[{ label: "Home", href: "/" }, { label: "Projects", href: "/projects" }, { label: p.name }]}
-        titleId="project-title"
-      >
-        {(sectorName || delivered.length > 0) && (
-          <div className="flex flex-wrap items-center gap-3">
-            {sectorName && <span className="rounded-lg border border-white/70 px-3 py-1.5 text-sm font-semibold text-white">{sectorName}</span>}
-            <ServiceChips services={p.services} />
-          </div>
-        )}
-      </PageBanner>
 
-      <section aria-labelledby="project-about-title" className="bg-white py-12 md:py-16">
-        <div className="wrap grid items-start gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-12">
-          {image ? (
-            <figure>
-              <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-sky-50">
-                <Image src={image.src} alt="" fill sizes="(min-width: 1024px) 55vw, 96vw" className="object-cover" />
-                {label && <span className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-navy">{label}</span>}
-              </div>
-              {p.illustrative && <figcaption className="mt-2 text-sm italic text-muted">Illustrative project: a sample that shows how UMS projects are presented.</figcaption>}
-            </figure>
-          ) : null}
-          <div className={image ? undefined : "lg:col-span-2 lg:max-w-3xl"}>
-            <CenterTitle id="project-about-title" lead="Project" accent="Overview" className="text-left [&>span]:mx-0" />
-            {facts.length > 0 && (
-              <dl className="mt-6 divide-y divide-border border-y border-border">
-                {facts.map((f) => (
-                  <div key={f.label} className="flex justify-between gap-4 py-3">
-                    <dt className="text-muted">{f.label}</dt>
-                    <dd className="font-semibold text-navy">{f.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            )}
-            <p className="mt-6 text-base leading-relaxed text-navy md:text-lg">
-              {p.illustrative
-                ? `${p.description} The services shown are examples of the scope typically delivered on this type of building.`
-                : "More details about this project, such as scope and photographs, will be shared here once they are confirmed."}
-            </p>
-          </div>
+      <div className="bg-white pb-6 pt-[calc(4rem+1.25rem)] xl:pt-[calc(var(--header-h)+1.75rem)]">
+        <div className="wrap">
+          <SectorPills sectors={pillSectors.map((s) => ({ param: s.param, label: s.label }))} active={sector?.param ?? null} />
+          <Breadcrumbs items={crumbs} className="mt-5" />
+
+          <header className="mt-5 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <h1 className="text-[clamp(2rem,1.3rem+2.6vw,3.25rem)] font-extrabold leading-tight text-navy">{p.name}</h1>
+              {p.subtitle && <p className="mt-2 text-lg text-muted md:text-xl">{p.subtitle}</p>}
+              <span aria-hidden className="accent-bar mt-3" />
+            </div>
+            {p.illustrative && <p className="text-sm italic text-muted">Illustrative project</p>}
+          </header>
+
+          {gallery.length > 0 && (
+            <div className="mt-6">
+              <ProjectGallery images={gallery} badge={label} />
+            </div>
+          )}
+
+          {hasDetails && p.overview ? (
+            <div className="mt-10 grid gap-8 lg:grid-cols-[1.4fr_auto_1fr] lg:gap-10">
+              <section aria-labelledby="overview-title">
+                <h2 id="overview-title" className="text-[1.625rem] font-extrabold text-navy md:text-3xl">
+                  Project Overview
+                </h2>
+                <span aria-hidden className="accent-bar mt-2" />
+                <div className="mt-5 space-y-4 text-base leading-relaxed text-navy md:text-lg">
+                  {p.overview.map((t) => (
+                    <p key={t}>{t}</p>
+                  ))}
+                </div>
+              </section>
+              <div aria-hidden className="hidden w-px bg-[#c5d8e8] lg:block" />
+              <SnapshotCard rows={snapshot} />
+            </div>
+          ) : (
+            <div className="mt-10 grid gap-8 lg:grid-cols-[1.4fr_auto_1fr] lg:gap-10">
+              <p className="text-base leading-relaxed text-navy md:text-lg">Project details will be published soon.</p>
+              <div aria-hidden className="hidden w-px bg-[#c5d8e8] lg:block" />
+              {snapshot.length > 0 && <SnapshotCard rows={snapshot} />}
+            </div>
+          )}
         </div>
-      </section>
+      </div>
 
-      {delivered.length > 0 && (
-        <section aria-labelledby="delivered-title" className="bg-[#f2f7fb] py-12 md:py-16">
-          <div className="wrap">
-            <CenterTitle id="delivered-title" lead="Services" accent="Delivered" />
-            <ul className="mx-auto mt-8 grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {delivered.map((s) => (
-                <li key={s.slug}>
-                  <Link href={`/services/${s.slug}`} className="flex h-full items-start gap-3 rounded-card border border-border bg-white p-4 transition-colors hover:border-blue focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue">
-                    <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-sky-50" style={{ color: serviceColor(s.slug) }}>
-                      <ServiceIcon slug={s.slug} className="size-6" />
-                    </span>
-                    <span>
-                      <span className="block font-heading font-bold text-navy">{s.name}</span>
-                      <span className="mt-0.5 block text-sm text-muted">{s.tagline}</span>
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
+      {hasDetails && (
+        <>
+          <section aria-labelledby="delivered-title" className="bg-white pb-12 pt-6 md:pb-16">
+            <div className="wrap">
+              <h2 id="delivered-title" className="text-center text-[1.625rem] font-extrabold text-navy md:text-3xl">
+                Services Delivered
+              </h2>
+              <span aria-hidden className="accent-bar mx-auto mt-2" />
+              <ul className="mt-8 grid gap-4 md:grid-cols-3">
+                {delivered.map((s) => (
+                  <li key={s.slug}>
+                    <Link
+                      href={`/services/${s.slug}`}
+                      className="group flex h-full flex-col gap-3 rounded-card border border-border bg-white p-5 shadow-card transition duration-200 hover:-translate-y-1 hover:border-blue focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+                    >
+                      <span className="flex size-12 items-center justify-center rounded-xl bg-sky-50" style={{ color: serviceColor(s.slug) }}>
+                        <ServiceIcon slug={s.slug} className="size-7" />
+                      </span>
+                      <span className="font-heading text-xl font-bold text-navy">{s.name}</span>
+                      <span className="text-[0.9375rem] leading-snug text-muted">{s.tagline}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+
+          <section aria-labelledby="approach-title" className="bg-white pb-12 md:pb-16">
+            <div className="wrap">
+              <h2 id="approach-title" className="text-center text-[1.625rem] font-extrabold text-navy md:text-3xl">
+                Delivery Approach
+              </h2>
+              <span aria-hidden className="accent-bar mx-auto mt-2" />
+              <ol className="mt-8 grid grid-cols-2 gap-3 rounded-2xl bg-[#e8f3fb] p-4 md:flex md:items-center md:justify-between md:gap-2 md:p-6">
+                {approach.map((step, i) => (
+                  <li key={step} className="contents">
+                    <span className="flex h-14 items-center justify-center rounded-xl border-2 border-blue bg-white px-4 text-center font-heading text-base font-bold text-navy md:flex-1 md:text-lg">{step}</span>
+                    {i < approach.length - 1 && <ArrowRight aria-hidden className="hidden size-6 shrink-0 text-blue md:block" />}
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </section>
+        </>
       )}
 
-      <section aria-labelledby="project-cta-title" className="wrap py-10 md:py-14">
-        <div className="flex flex-col items-start justify-between gap-5 rounded-3xl bg-navy-950 px-6 py-8 text-white md:flex-row md:items-center md:px-12">
-          <h2 id="project-cta-title" className="text-[clamp(1.5rem,1rem+1.8vw,2.25rem)] font-extrabold text-white">
-            Discuss a similar project
-          </h2>
-          <Button href={quoteLink} size="lg" className="max-md:w-full">
+      <div className="wrap pb-12 md:pb-16">
+        <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
+          <Button href="/projects" variant="outline" size="lg" className="max-sm:w-full">
+            Back to Projects
+          </Button>
+          <Button href={quoteLink} size="lg" className="max-sm:w-full">
             Request a Quote
           </Button>
         </div>
-      </section>
-
-      {adjacent && (
-        <nav aria-label="More projects" className="border-t border-border bg-[#f2f7fb]">
-          <div className="wrap grid gap-4 py-6 sm:grid-cols-2">
-            <Link href={`/projects/${adjacent.prev.slug}`} rel="prev" className="group flex items-center gap-4 rounded-card border border-blue/70 bg-white p-5 transition-colors hover:border-blue">
-              <ArrowLeft aria-hidden className="size-5 shrink-0 text-blue-700 transition-transform group-hover:-translate-x-1" />
-              <span>
-                <span className="block text-sm text-muted">Previous project</span>
-                <span className="mt-1 block font-heading text-lg font-bold text-navy">{adjacent.prev.name}</span>
-              </span>
-            </Link>
-            <Link href={`/projects/${adjacent.next.slug}`} rel="next" className="group flex items-center justify-end gap-4 rounded-card border border-blue/70 bg-white p-5 text-right transition-colors hover:border-blue">
-              <span>
-                <span className="block text-sm text-muted">Next project</span>
-                <span className="mt-1 block font-heading text-lg font-bold text-navy">{adjacent.next.name}</span>
-              </span>
-              <ArrowRight aria-hidden className="size-5 shrink-0 text-blue-700 transition-transform group-hover:translate-x-1" />
-            </Link>
-          </div>
-        </nav>
-      )}
+      </div>
     </>
+  );
+}
+
+/** "Project Snapshot": a light card with the confirmed facts of the project. */
+function SnapshotCard({ rows }: { rows: { label: string; value: string }[] }) {
+  return (
+    <section aria-labelledby="snapshot-title" className="self-start rounded-card bg-[#f2f7fb] p-5 md:p-6">
+      <h2 id="snapshot-title" className="text-[1.625rem] font-extrabold text-navy md:text-3xl">
+        Project Snapshot
+      </h2>
+      <span aria-hidden className="accent-bar mt-2" />
+      <dl className="mt-4 divide-y divide-border">
+        {rows.map((r) => (
+          <div key={r.label} className="grid grid-cols-[6rem_1fr] gap-3 py-3">
+            <dt className="text-muted">{r.label}</dt>
+            <dd className="font-semibold text-navy">{r.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
   );
 }

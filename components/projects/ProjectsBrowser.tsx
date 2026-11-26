@@ -1,12 +1,11 @@
 "use client";
 
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { projectSectors } from "@/content/projects";
-import { cn } from "@/lib/utils";
 import type { ServiceSlug } from "@/types";
 import { MoreProjects } from "./MoreProjects";
 import { ProjectCard } from "./ProjectCard";
+import { SectorPills } from "./SectorPills";
 
 export interface BrowserProject {
   slug: string;
@@ -34,29 +33,9 @@ export function ProjectsView({ projects, sector }: { projects: BrowserProject[];
   const more = projects.filter((p) => !p.sectorParam);
   const hasSamples = projects.some((p) => p.illustrative);
 
-  const pill = "inline-flex h-11 shrink-0 items-center justify-center whitespace-nowrap rounded-lg border-2 px-5 font-heading text-[0.9375rem] font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue lg:min-w-[10rem]";
-
   return (
     <>
-      <nav aria-label="Filter projects by sector" className="-mx-[var(--wrap-pad)] overflow-x-auto px-[var(--wrap-pad)] pb-2 [scrollbar-width:none] lg:mx-0 lg:px-0 [&::-webkit-scrollbar]:hidden">
-        <ul className="flex gap-3 lg:gap-4">
-          {[{ param: "all", label: "All Projects" }, ...sectors].map((s) => {
-            const on = s.param === active;
-            return (
-              <li key={s.param} className="shrink-0">
-                <Link
-                  href={s.param === "all" ? "/projects" : `/projects?sector=${s.param}`}
-                  scroll={false}
-                  aria-current={on ? "true" : undefined}
-                  className={cn(pill, on ? "border-navy bg-navy text-white" : "border-navy/70 bg-white text-navy hover:border-navy hover:bg-sky-50")}
-                >
-                  {s.label}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
+      <SectorPills sectors={sectors} active={active} />
       {hasSamples && <p className="mt-2 text-sm italic text-muted">Illustrative projects</p>}
 
       {shownSectors.map((s) => (
