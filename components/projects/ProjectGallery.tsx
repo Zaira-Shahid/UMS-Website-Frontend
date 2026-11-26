@@ -19,7 +19,7 @@ const roundBtn =
  * bar. Clicking an image opens a simple lightbox: Esc closes, the arrow keys (or the buttons) switch images, and Tab
  * stays inside it.
  */
-export function ProjectGallery({ images, badge }: { images: GalleryImage[]; badge?: string }) {
+export function ProjectGallery({ images }: { images: GalleryImage[] }) {
   const [open, setOpen] = useState<number | null>(null);
   const opener = useRef<HTMLElement | null>(null);
   const dialog = useRef<HTMLDivElement>(null);
@@ -62,8 +62,9 @@ export function ProjectGallery({ images, badge }: { images: GalleryImage[]; badg
     };
   }, [isOpen, close, step]);
 
+  // Each tile is a rounded card: the image fills it, with the caption on a light strip underneath (mockup 21).
   const tile = (img: GalleryImage, i: number, className: string, sizes: string) => (
-    <figure key={img.src} className={cn("relative overflow-hidden rounded-2xl bg-sky-50", className)}>
+    <figure key={img.src} className={cn("flex flex-col overflow-hidden rounded-2xl bg-[#e8f3fb]", className)}>
       <button
         type="button"
         onClick={(e) => {
@@ -71,7 +72,7 @@ export function ProjectGallery({ images, badge }: { images: GalleryImage[]; badg
           setOpen(i);
         }}
         aria-label={`View larger: ${img.caption}`}
-        className="group absolute inset-0 block size-full focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-blue"
+        className="group relative block min-h-0 flex-1 overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-blue"
       >
         <Image
           src={img.src}
@@ -81,19 +82,18 @@ export function ProjectGallery({ images, badge }: { images: GalleryImage[]; badg
           className="object-cover transition-transform duration-300 group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
         />
       </button>
-      {i === 0 && badge && <span className="pointer-events-none absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-navy">{badge}</span>}
-      <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 bg-white/85 px-3 py-1.5 text-sm italic text-navy">{img.caption}</figcaption>
+      <figcaption className="px-3 py-1.5 text-sm italic text-navy">{img.caption}</figcaption>
     </figure>
   );
 
   const [main, ...side] = images;
   return (
     <>
-      <div className="grid gap-4 lg:grid-cols-[1.7fr_1fr]">
-        {tile(main, 0, "aspect-[16/10] lg:aspect-auto lg:min-h-[22rem]", "(min-width: 1024px) 60vw, 96vw")}
+      <div className="grid gap-4 lg:h-[29rem] lg:grid-cols-[1.75fr_1fr]">
+        {tile(main, 0, "h-72 sm:h-96 lg:h-auto", "(min-width: 1024px) 60vw, 96vw")}
         {side.length > 0 && (
           <div className="grid grid-cols-2 gap-4 lg:grid-cols-1 lg:grid-rows-2">
-            {side.map((img, i) => tile(img, i + 1, "aspect-[4/3] lg:aspect-auto", "(min-width: 1024px) 34vw, 48vw"))}
+            {side.map((img, i) => tile(img, i + 1, "h-44 sm:h-56 lg:h-auto lg:min-h-0", "(min-width: 1024px) 34vw, 48vw"))}
           </div>
         )}
       </div>

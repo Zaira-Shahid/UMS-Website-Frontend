@@ -18,7 +18,7 @@ export function ServiceChips({ services, className }: { services: ServiceSlug[];
   return (
     <ul aria-label="Services" className={cn("flex flex-wrap gap-2", className)}>
       {services.map((s) => (
-        <li key={s} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-border bg-white px-2.5 text-sm font-semibold text-navy">
+        <li key={s} className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-line bg-white px-2.5 text-sm font-semibold text-navy">
           <span style={{ color: serviceColor(s) }} className="flex">
             <ServiceIcon slug={s} className="size-4" />
           </span>

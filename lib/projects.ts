@@ -17,6 +17,16 @@ export function projectPhoto(p: Project): { image?: { src: string; width: number
   return image ? { image, label: "Illustrative imagery" } : {};
 }
 
+/** Short name and a neutral two-line description for the "Services Delivered" cards (mockup 21). Not specific to any one project. */
+export const deliveredInfo: Record<ServiceSlug, { name: string; line: string }> = {
+  "integrated-mep": { name: "Integrated MEP", line: "One coordinated package for every building service, planned on shared drawings." },
+  hvac: { name: "HVAC Systems", line: "Air handling, ductwork and ventilation, coordinated with the other building services." },
+  "fire-fighting": { name: "Fire Protection", line: "Sprinkler pipework and life-safety systems, coordinated with the other building services." },
+  plumbing: { name: "Plumbing", line: "Water supply and drainage installation for the occupied and support spaces of the building." },
+  "electrical-elv": { name: "Electrical & ELV", line: "Power distribution and low-voltage systems, coordinated with the other trades." },
+  "pools-fountains": { name: "Pools & Fountains", line: "Water features and circulation systems built to run reliably." },
+};
+
 /** Caption and photo for a service on a project gallery (the service photos already in public/images/services). */
 export const serviceGalleryPhoto: Record<ServiceSlug, { src: string; caption: string }> = {
   "integrated-mep": { src: "/images/services/integrated-mep/card.jpg", caption: "Coordinated Services" },

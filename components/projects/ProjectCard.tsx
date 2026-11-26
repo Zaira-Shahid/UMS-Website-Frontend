@@ -7,7 +7,7 @@ import type { BrowserProject } from "./ProjectsBrowser";
 /** Project card (mockup 19): photo with a small badge, title, one line, service chips and "More Details". */
 export function ProjectCard({ p }: { p: BrowserProject }) {
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-card border border-border bg-white shadow-card transition duration-200 hover:-translate-y-1 hover:border-blue hover:shadow-lg motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+    <article className="group flex h-full flex-col overflow-hidden rounded-card border border-line bg-white shadow-card transition duration-200 hover:-translate-y-1 hover:border-blue hover:shadow-lg motion-reduce:transition-none motion-reduce:hover:translate-y-0">
       <div className="relative aspect-[5/2] overflow-hidden bg-gradient-to-br from-navy-950 via-navy-900 to-[#3f78a8]">
         {p.image ? (
           <>

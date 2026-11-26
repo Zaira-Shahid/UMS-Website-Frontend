@@ -16,7 +16,7 @@ export function MoreProjects({ projects }: { projects: BrowserProject[] }) {
   const shown = projects.slice(0, count);
 
   return (
-    <section aria-labelledby="more-projects-title" className="mt-12 border-t border-border pt-10 md:mt-14">
+    <section aria-labelledby="more-projects-title" className="mt-12 border-t border-line pt-10 md:mt-14">
       <h2 id="more-projects-title" className="text-[clamp(1.5rem,1.1rem+1.3vw,2.125rem)] font-extrabold text-navy">
         More Projects
       </h2>
@@ -28,7 +28,7 @@ export function MoreProjects({ projects }: { projects: BrowserProject[] }) {
           <li key={p.slug}>
             <Link
               href={`/projects/${p.slug}`}
-              className="group flex items-center gap-4 rounded-xl border border-border bg-white p-3 transition duration-200 hover:border-blue hover:shadow-card focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue motion-reduce:transition-none"
+              className="group flex items-center gap-4 rounded-xl border border-line bg-white p-3 transition duration-200 hover:border-blue hover:shadow-card focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue motion-reduce:transition-none"
             >
               <span className="relative flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-navy-950 via-navy-900 to-[#3f78a8] md:size-[4.5rem]">
                 {p.image ? <Image src={p.image.src} alt="" fill sizes="72px" className="object-cover" /> : <Building2 aria-hidden strokeWidth={1.4} className="size-7 text-white/70" />}
