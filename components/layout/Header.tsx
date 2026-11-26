@@ -152,34 +152,55 @@ export function Header() {
                     }
                   >
                     {hasMenu ? (
-                      <button
-                        type="button"
-                        aria-expanded={open}
-                        aria-controls={`menu-${item.label}`}
-                        aria-current={active ? "page" : undefined}
-                        onClick={(e) => {
-                          clearTimeout(hoverTimer.current);
-                          // detail === 0 means the click came from the keyboard (Enter or Space).
-                          focusFirst.current = !open && e.detail === 0;
-                          setOpenMenu(open ? null : item.label);
-                        }}
-                        onKeyDown={(e) => {
-                          if (e.key === "ArrowDown") {
-                            e.preventDefault();
+                      // The label is a link to the section page; the chevron is a separate button that toggles the dropdown.
+                      <div className="flex items-center gap-0.5">
+                        <Link
+                          href={item.href}
+                          aria-current={active ? "page" : undefined}
+                          onClick={closeMenus}
+                          onKeyDown={(e) => {
+                            if (e.key === "ArrowDown") {
+                              e.preventDefault();
+                              clearTimeout(hoverTimer.current);
+                              focusFirst.current = true;
+                              setOpenMenu(item.label);
+                            }
+                          }}
+                          className={itemClass}
+                        >
+                          {item.label}
+                          {underline}
+                        </Link>
+                        <button
+                          type="button"
+                          aria-label={`${item.label} menu`}
+                          aria-expanded={open}
+                          aria-controls={`menu-${item.label}`}
+                          onClick={(e) => {
                             clearTimeout(hoverTimer.current);
-                            focusFirst.current = true;
-                            if (open) {
-                              document.querySelector<HTMLAnchorElement>(`#menu-${item.label} ul a[href]`)?.focus();
-                              focusFirst.current = false;
-                            } else setOpenMenu(item.label);
-                          }
-                        }}
-                        className={itemClass}
-                      >
-                        {item.label}
-                        <ChevronDown aria-hidden className={cn("size-4 transition-transform", open && "rotate-180")} />
-                        {underline}
-                      </button>
+                            // detail === 0 means the click came from the keyboard (Enter or Space).
+                            focusFirst.current = !open && e.detail === 0;
+                            setOpenMenu(open ? null : item.label);
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.key === "ArrowDown") {
+                              e.preventDefault();
+                              clearTimeout(hoverTimer.current);
+                              focusFirst.current = true;
+                              if (open) {
+                                document.querySelector<HTMLAnchorElement>(`#menu-${item.label} ul a[href]`)?.focus();
+                                focusFirst.current = false;
+                              } else setOpenMenu(item.label);
+                            }
+                          }}
+                          className={cn(
+                            "flex size-7 items-center justify-center rounded-full transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue",
+                            active || open ? "text-blue-700" : "text-navy hover:text-blue-700",
+                          )}
+                        >
+                          <ChevronDown aria-hidden className={cn("size-4 transition-transform", open && "rotate-180")} />
+                        </button>
+                      </div>
                     ) : (
                       <Link href={item.href} aria-current={active ? "page" : undefined} onClick={closeMenus} className={itemClass}>
                         {item.label}

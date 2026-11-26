@@ -110,16 +110,21 @@ export function MobileNav({
                   <li key={item.label} className="border-b border-line">
                     {item.children ? (
                       <>
-                        <button
-                          type="button"
-                          aria-expanded={isOpen}
-                          aria-controls={`mobile-sub-${item.label}`}
-                          onClick={() => setExpanded(isOpen ? null : item.label)}
-                          className={labelClass}
-                        >
-                          {item.label}
-                          <ChevronDown aria-hidden className={cn("size-5 text-blue-700 transition-transform", isOpen && "rotate-180")} />
-                        </button>
+                        <div className="flex items-center">
+                          <Link href={item.href} onClick={onClose} aria-current={active ? "page" : undefined} className={cn(labelClass, "flex-1")}>
+                            {item.label}
+                          </Link>
+                          <button
+                            type="button"
+                            aria-label={`${item.label} menu`}
+                            aria-expanded={isOpen}
+                            aria-controls={`mobile-sub-${item.label}`}
+                            onClick={() => setExpanded(isOpen ? null : item.label)}
+                            className="flex size-14 shrink-0 items-center justify-center text-blue-700 focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-blue"
+                          >
+                            <ChevronDown aria-hidden className={cn("size-5 transition-transform", isOpen && "rotate-180")} />
+                          </button>
+                        </div>
                         <div id={`mobile-sub-${item.label}`} hidden={!isOpen} className="pb-4">
                           <Link
                             href={item.href}
