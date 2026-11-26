@@ -24,30 +24,38 @@ export function Hero() {
         className="absolute inset-0 -z-10 bg-[radial-gradient(48%_62%_at_70%_44%,rgb(27_166_232/0.2),transparent_72%)]"
       />
       <div className="wrap pt-[calc(4rem+1.5rem)] xl:pt-[calc(var(--header-h)+2rem)]">
-        <div className="relative lg:min-h-[31rem]">
-          <div className="relative z-10 max-w-[40rem] lg:pt-10">
-            <h1 id="home-title" className="text-[clamp(1.75rem,1rem+2.9vw,3.4rem)] font-extrabold leading-[1.08] text-white">
-              MEP Contracting for Complex Buildings
+        {/* Stacked below 1024px. From 1024px the text column has a capped width and a 48px gap before the image, so the headline never runs under it. */}
+        <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,min(40rem,52%))_minmax(0,1fr)] lg:gap-12">
+          <div>
+            <p className="flex items-center gap-3 text-[13px] font-semibold uppercase tracking-[0.14em] text-[#5CC4EE]">
+              <span aria-hidden className="h-0.5 w-8 shrink-0 rounded bg-blue" />
+              MEP Contractors · Islamabad &amp; Lahore
+            </p>
+            <h1 id="home-title" className="mt-5 text-balance text-[2.25rem] font-extrabold leading-[1.1] text-white lg:text-[clamp(40px,4.2vw,60px)]">
+              <span className="lg:block lg:whitespace-nowrap">MEP Contracting for</span>{" "}
+              <span className="text-blue lg:block lg:whitespace-nowrap">Complex Buildings</span>
             </h1>
-            <p className="mt-4 text-[clamp(1.0625rem,0.9rem+0.8vw,1.625rem)] leading-snug text-white">Six disciplines. One coordinated delivery.</p>
-            <div className="mt-7 flex gap-3 lg:mt-9">
-              <Button href="/projects" size="lg" className="flex-1 px-3 text-base sm:text-lg lg:flex-none lg:px-6">
-                Explore Projects
-              </Button>
-              <Button href={quoteHref()} variant="outline-light" size="lg" className="flex-1 px-3 text-base sm:text-lg lg:flex-none lg:px-6">
+            <p className="mt-5 text-base leading-relaxed text-white/80 lg:text-lg">
+              Integrated MEP, HVAC, fire fighting, plumbing and electrical services — planned, installed and commissioned as one coordinated scope.
+            </p>
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+              <Button href={quoteHref()} arrow className="h-[52px] rounded-lg px-6 text-base font-semibold max-sm:w-full">
                 Request a Quote
+              </Button>
+              <Button href="/projects" variant="outline-light" className="h-[52px] rounded-lg bg-transparent px-6 text-base font-semibold max-sm:w-full">
+                Explore Projects
               </Button>
             </div>
             <Link
               href="/services"
-              className="group mt-5 inline-flex items-center gap-2 border-b-4 border-blue pb-1.5 text-base sm:text-lg font-medium text-white transition-colors hover:text-cyan"
+              className="group relative mt-6 inline-flex items-center gap-2 pb-1 text-[15px] text-white/85 transition-colors after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/50 before:absolute before:bottom-0 before:left-0 before:z-10 before:h-px before:w-0 before:bg-blue before:transition-[width] before:duration-300 hover:text-white hover:before:w-full motion-reduce:before:transition-none"
             >
               Explore Building Systems
-              <ArrowRight aria-hidden className="size-5 transition-transform group-hover:translate-x-1" />
+              <ArrowRight aria-hidden className="size-4 transition-transform group-hover:translate-x-1 motion-reduce:transition-none" />
             </Link>
           </div>
 
-          <div className="-mx-[var(--wrap-pad)] mt-6 lg:absolute lg:inset-y-0 lg:-right-[2%] lg:mx-0 lg:mt-0 lg:flex lg:w-[62%] lg:items-center">
+          <div className="-mx-[var(--wrap-pad)] lg:mx-0 lg:-mr-[var(--wrap-pad)]">
             <picture className="block w-full [clip-path:inset(1.5%_0.5%_0_0.5%)]">
               <source media="(min-width: 1024px)" srcSet={desktopSet} />
               <source media="(max-width: 1023px)" srcSet={mobileSet} />
@@ -62,7 +70,7 @@ export function Hero() {
         </div>
 
         {/* Service chips (desktop and tablet). Mobile gets the "Our Services" grid below instead. */}
-        <ul aria-label="Services" className="mt-8 hidden grid-cols-3 gap-3 pb-10 md:grid lg:mt-4 xl:flex xl:justify-between">
+        <ul aria-label="Services" className="mt-8 hidden grid-cols-3 gap-3 pb-10 md:grid lg:mt-6 xl:flex xl:justify-between">
           {chipOrder.map((slug) => (
             <li key={slug}>
               <ServiceChip slug={slug} label={serviceLabel[slug]} />
