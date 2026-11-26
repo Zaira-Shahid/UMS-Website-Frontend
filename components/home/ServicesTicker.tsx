@@ -337,7 +337,7 @@ export function ServicesTicker() {
         </div>
         <Link
           href="/services"
-          className="group inline-flex items-center gap-1.5 self-start font-heading text-[1.0625rem] font-bold text-blue-700 transition-colors hover:text-blue-800 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue md:self-auto md:pb-1"
+          className="group inline-flex items-center gap-1.5 self-start font-heading text-[1.0625rem] font-bold text-blue-800 transition-colors hover:text-navy focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue md:self-auto md:pb-1"
         >
           View all services
           <ArrowRight aria-hidden className="size-4 transition-transform group-hover:translate-x-1 motion-reduce:transition-none" />
