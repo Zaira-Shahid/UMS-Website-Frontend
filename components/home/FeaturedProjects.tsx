@@ -7,6 +7,7 @@ import { SectionTitle } from "@/components/ui/SectionTitle";
 import { SlantedButton, SlantedTab } from "@/components/ui/Slanted";
 import { featuredGallery, featuredSectors } from "@/content/home";
 import { projects } from "@/content/projects";
+import { useScrollRow } from "@/lib/use-scroll-row";
 import { cn } from "@/lib/utils";
 
 /**
@@ -18,6 +19,9 @@ export function FeaturedProjects() {
   const id = useId();
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
   const sectionRef = useRef<HTMLElement>(null);
+  const tabList = useRef<HTMLDivElement>(null);
+  // On phones the tabs stay on one row and scroll sideways: the chosen tab is centred and a fade hints at more on the right.
+  const moreTabs = useScrollRow(tabList, sector);
   const [inView, setInView] = useState(true);
   // The card backgrounds move slowly (Ken Burns and a crossfade); they pause while the section is off-screen.
   useEffect(() => {
@@ -58,10 +62,14 @@ export function FeaturedProjects() {
         <p className="mt-2 text-[1.0625rem] text-muted lg:text-xl">Explore our work by sector.</p>
 
         <div
+          ref={tabList}
           role="tablist"
           aria-label="Project sectors"
           onKeyDown={onKeyDown}
-          className="-mx-[var(--wrap-pad)] mt-6 flex overflow-x-auto px-[var(--wrap-pad)] pb-px lg:mx-0 lg:max-w-[60%] lg:overflow-visible lg:border-b lg:border-blue lg:px-0 [&::-webkit-scrollbar]:hidden"
+          className={cn(
+            "-mx-[var(--wrap-pad)] mt-6 flex snap-x snap-proximity overflow-x-auto px-[var(--wrap-pad)] pb-px [scrollbar-width:none] lg:mx-0 lg:max-w-[60%] lg:overflow-visible lg:border-b lg:border-blue lg:px-0 [&::-webkit-scrollbar]:hidden",
+            moreTabs && "max-md:[mask-image:linear-gradient(to_right,black_86%,transparent)]",
+          )}
         >
           {featuredSectors.map((s, i) => (
             <SlantedTab
@@ -74,11 +82,13 @@ export function FeaturedProjects() {
               active={i === sector}
               tabIndex={i === sector ? 0 : -1}
               onClick={() => setSector(i)}
-              className="shrink-0 whitespace-nowrap px-5 lg:px-9"
+              className="shrink-0 snap-center whitespace-nowrap px-5 lg:px-9"
             >
               {s.label}
             </SlantedTab>
           ))}
+          {/* End spacer so the last tab keeps the page margin when the row is scrolled to the end on phones */}
+          <span aria-hidden className="w-[var(--wrap-pad)] shrink-0 lg:hidden" />
         </div>
 
         <div id={`${id}-panel`} role="tabpanel" aria-labelledby={`${id}-tab-${sector}`} className="mt-8 lg:mt-10">

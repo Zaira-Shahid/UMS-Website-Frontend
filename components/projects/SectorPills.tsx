@@ -1,4 +1,8 @@
+"use client";
+
 import Link from "next/link";
+import { useRef } from "react";
+import { useScrollRow } from "@/lib/use-scroll-row";
 import { cn } from "@/lib/utils";
 
 const pill =
@@ -6,13 +10,23 @@ const pill =
 
 /** The "All Projects / Healthcare / …" pills (mockups 19 and 21). Links to /projects?sector=…; `active` is "all", a sector value, or null for none. */
 export function SectorPills({ sectors, active }: { sectors: { param: string; label: string }[]; active: string | null }) {
+  const row = useRef<HTMLElement>(null);
+  // On phones the pills stay on one row and scroll sideways: the active one is centred and a fade hints at more on the right.
+  const more = useScrollRow(row, active);
   return (
-    <nav aria-label="Filter projects by sector" className="-mx-[var(--wrap-pad)] overflow-x-auto px-[var(--wrap-pad)] pb-2 [scrollbar-width:none] lg:mx-0 lg:px-0 [&::-webkit-scrollbar]:hidden">
-      <ul className="flex gap-3 lg:justify-center lg:gap-4">
+    <nav
+      ref={row}
+      aria-label="Filter projects by sector"
+      className={cn(
+        "-mx-[var(--wrap-pad)] snap-x snap-proximity overflow-x-auto px-[var(--wrap-pad)] pb-2 [scrollbar-width:none] lg:mx-0 lg:px-0 [&::-webkit-scrollbar]:hidden",
+        more && "max-md:[mask-image:linear-gradient(to_right,black_86%,transparent)]",
+      )}
+    >
+      <ul className="flex w-max gap-3 lg:w-full lg:justify-center lg:gap-4">
         {[{ param: "all", label: "All Projects" }, ...sectors].map((s) => {
           const on = s.param === active;
           return (
-            <li key={s.param} className="shrink-0">
+            <li key={s.param} className="shrink-0 snap-center">
               <Link
                 href={s.param === "all" ? "/projects" : `/projects?sector=${s.param}`}
                 scroll={false}
