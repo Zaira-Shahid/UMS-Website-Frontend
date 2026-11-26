@@ -64,7 +64,7 @@ export function Footer() {
             {/* Brand */}
             <div className="col-span-2 min-w-0 lg:col-span-4 xl:col-span-1">
               <Link href="/" aria-label={`${site.name} — ${site.fullName}, home`} className="inline-block rounded-lg bg-white px-2.5 py-2">
-                <LogoMark decorative className="h-12" />
+                <LogoMark className="h-12" />
               </Link>
               <p className="mt-3 font-heading text-[1.75rem] font-bold leading-[1.12] text-white">{site.fullName}</p>
               <span aria-hidden className="mt-2 block h-1 w-20 rounded-full bg-cyan" />

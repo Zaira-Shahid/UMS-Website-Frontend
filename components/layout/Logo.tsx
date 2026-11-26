@@ -21,7 +21,7 @@ export function LogoMark({ className, decorative = false, priority = false }: { 
 export function Logo({ className, onClick }: { className?: string; onClick?: () => void }) {
   return (
     <Link href="/" onClick={onClick} aria-label={`${site.fullName}, home`} className={cn("inline-flex shrink-0 items-center", className)}>
-      <LogoMark decorative priority className="h-8 min-[380px]:h-9 xl:h-11" />
+      <LogoMark priority className="h-8 min-[380px]:h-9 xl:h-11" />
     </Link>
   );
 }
