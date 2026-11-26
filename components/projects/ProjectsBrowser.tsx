@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { ArrowRight } from "lucide-react";
 import { projectSectors } from "@/content/projects";
 import type { ServiceSlug } from "@/types";
 import { MoreProjects } from "./MoreProjects";
@@ -38,23 +40,38 @@ export function ProjectsView({ projects, sector }: { projects: BrowserProject[];
       <SectorPills sectors={sectors} active={active} />
       {hasSamples && <p className="mt-2 text-sm italic text-muted">Illustrative projects</p>}
 
-      {shownSectors.map((s) => (
-        <section key={s.param} aria-labelledby={`sector-${s.param}`} className="mt-8 first:mt-6 md:mt-10">
-          <h2 id={`sector-${s.param}`} className="text-[clamp(1.5rem,1.1rem+1.3vw,2.125rem)] font-extrabold text-navy">
-            {s.heading}
-          </h2>
-          <span aria-hidden className="accent-bar mt-2 block" />
-          <ul className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {projects
-              .filter((p) => p.sectorParam === s.param)
-              .map((p) => (
+      {shownSectors.map((s) => {
+        const inSector = projects.filter((p) => p.sectorParam === s.param);
+        // The All view shows three cards per category (real projects first); a sector's own view shows them all.
+        const cards = active === "all" ? inSector.slice(0, 3) : inSector;
+        return (
+          <section key={s.param} aria-labelledby={`sector-${s.param}`} className="mt-8 first:mt-6 md:mt-10">
+            <h2 id={`sector-${s.param}`} className="text-[clamp(1.5rem,1.1rem+1.3vw,2.125rem)] font-extrabold text-navy">
+              {s.heading}
+            </h2>
+            <span aria-hidden className="accent-bar mt-2 block" />
+            <ul className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {cards.map((p) => (
                 <li key={p.slug} className="relative">
                   <ProjectCard p={p} />
                 </li>
               ))}
-          </ul>
-        </section>
-      ))}
+            </ul>
+            {cards.length < inSector.length && (
+              <p className="mt-4 text-right">
+                <Link
+                  href={`/projects?sector=${s.param}`}
+                  scroll={false}
+                  className="inline-flex min-h-11 items-center gap-1.5 font-heading text-[0.9375rem] font-bold text-blue-700 hover:text-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
+                >
+                  View all {s.label} projects
+                  <ArrowRight aria-hidden className="size-4" />
+                </Link>
+              </p>
+            )}
+          </section>
+        );
+      })}
 
       {active === "all" && more.length > 0 && <MoreProjects projects={more} />}
     </>
