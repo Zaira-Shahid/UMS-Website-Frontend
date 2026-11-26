@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useCallback, useEffect, useRef, type FocusEvent as ReactFocusEvent, type KeyboardEvent, type PointerEvent as ReactPointerEvent } from "react";
-import { Button } from "@/components/ui/Button";
+import { SectionTitle } from "@/components/ui/SectionTitle";
 import { sliderLine, sliderOrder, sliderTitle } from "@/content/home";
 import { cn } from "@/lib/utils";
 import type { ServiceSlug } from "@/types";
@@ -328,20 +328,28 @@ export function ServicesTicker() {
   const step = (dir: 1 | -1) => tweenBy(dir * m.current.pitch);
 
   return (
-    <section aria-labelledby="services-title" className="bg-sky-50 pb-9 pt-7 md:py-10">
-      <div className="wrap md:sr-only">
-        <h2 id="services-title" className="text-[1.375rem] font-extrabold text-navy">
-          Our Services
-        </h2>
+    <section aria-labelledby="services-title" className="bg-sky-50 pb-9 pt-14 md:pb-10">
+      {/* Section heading, in the style of the other homepage sections: accent bar, two-tone title, a short line and one link. */}
+      <div className="wrap flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+        <div>
+          <SectionTitle id="services-title" lead="Our" accent="Services" />
+          <p className="mt-2 text-[1.0625rem] text-muted">Six MEP disciplines, delivered as one coordinated scope.</p>
+        </div>
+        <Link
+          href="/services"
+          className="group inline-flex items-center gap-1.5 self-start font-heading text-[1.0625rem] font-bold text-blue-700 transition-colors hover:text-blue-800 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue md:self-auto md:pb-1"
+        >
+          View all services
+          <ArrowRight aria-hidden className="size-4 transition-transform group-hover:translate-x-1 motion-reduce:transition-none" />
+        </Link>
       </div>
-      <h2 className="sr-only max-md:hidden">Our Services</h2>
 
-      <div className="relative mt-4 md:mt-0">
+      <div className="relative mt-8">
         <div
           ref={box}
           role="region"
           aria-roledescription="carousel"
-          aria-label="Our services"
+          aria-labelledby="services-title"
           onPointerDown={onPointerDown}
           onClickCapture={(e) => {
             // A drag must never open a card: swallow the click that follows it.
@@ -399,13 +407,6 @@ export function ServicesTicker() {
         >
           <ChevronRight aria-hidden className="size-5" />
         </button>
-      </div>
-
-      <div className="wrap mt-5 flex justify-center">
-        <Button href="/services" variant="outline" size="md">
-          View All Services
-          <ArrowRight aria-hidden className="size-5" />
-        </Button>
       </div>
     </section>
   );
