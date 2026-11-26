@@ -22,7 +22,7 @@ export function Clients() {
       <div className="group/row mt-10 overflow-x-auto [&::-webkit-scrollbar]:hidden">
         <ul
           className={cn(
-            "flex w-max gap-5 px-5 py-3",
+            "flex w-max py-3 pl-5",
             loop ? "animate-[clients-scroll_40s_linear_infinite] group-hover/row:[animation-play-state:paused] group-focus-within/row:[animation-play-state:paused] motion-reduce:animate-none" : "mx-auto",
           )}
         >
@@ -30,9 +30,9 @@ export function Clients() {
             <li
               key={`${c.name}-${i}`}
               aria-hidden={i >= verifiedClients.length ? true : undefined}
-              className="flex h-36 w-64 shrink-0 items-center justify-center rounded-card border-2 border-transparent bg-white p-6 shadow-card transition-colors hover:border-cyan sm:w-72"
+              className="flex h-36 w-64 mr-5 shrink-0 items-center justify-center rounded-card border-2 border-transparent bg-white p-6 shadow-card transition-colors hover:border-cyan sm:w-72"
             >
-              <Image src={c.logo} alt={c.name} width={220} height={90} className="max-h-full w-auto object-contain" />
+              <Image src={c.logo} alt={c.name} width={220} height={90} className="h-auto max-h-full w-auto max-w-full object-contain" />
             </li>
           ))}
         </ul>

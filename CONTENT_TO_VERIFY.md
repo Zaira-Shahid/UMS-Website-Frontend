@@ -128,3 +128,6 @@ These appear in the design mockups but are unverified, so they are not used unti
 - The mockup's own mission, vision and six values (Trust, Honesty, Integrity, Hard Work, Excellence, Transparency): the
   site uses the general wording in `content/dummy.ts` instead
 - "across commercial, residential and industrial sectors" on the projects band (the site says "by sector")
+
+## Clients & Project Partners (home page)
+- [ ] **Logos:** BNP, Venture Engineering (Pvt) Ltd, Banu Mukhtar, Mecatech and Gold Roof Private Limited are shown as "Clients & Project Partners". The logo images were cropped from the design mockup, so they are low resolution. Please confirm each is a client or partner and send the original logo files
