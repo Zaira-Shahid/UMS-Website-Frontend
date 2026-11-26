@@ -3,7 +3,7 @@
 Corporate website for UMS, an MEP contractor for complex buildings (HVAC, fire fighting, electrical and ELV, plumbing,
 integrated MEP, pools and fountains) with offices in Islamabad and Lahore.
 
-- **Design source of truth:** `PROJECT_SPEC.md`, with the approved mockups in `docs/reference/mockups/` (01 to 18).
+- **Design source of truth:** `PROJECT_SPEC.md`, with the approved mockups in `docs/reference/mockups/` (01 to 20; mockup 21, the project detail page, is described in `PROJECT_SPEC.md` 14.6).
   Section 12 applies throughout: match the mockups, keep it simple, neat and clean.
 - **Content rule:** nothing about the company is shown as fact until the owner has confirmed it.
   `CONTENT_TO_VERIFY.md` is the checklist of what the client still has to supply or approve.
@@ -71,11 +71,14 @@ docs/reference/mockups/   the approved design mockups
 
 - **Contact details and social links:** `content/site.ts`. Every value starts empty and appears on the site only when
   filled: office address, phone, email, hours and map link (`contact.offices`), company phone and emails, WhatsApp
-  (shows the green header button and footer icon), and the six social profile URLs. The footer, Contact page, About
+  (the green header button is always shown and links to `/contact` until a number is set; the footer icon appears once set), and the six social profile URLs. The footer, Contact page, About
   office cards and the chatbot all read from this file.
-- **Projects:** `content/dummy.ts` (`confirmedProjects`). Only confirmed facts: name, and `sector` and `city` when
-  confirmed. A project with a confirmed sector gets a sector tab on `/projects` and the homepage. Project images:
-  `featuredImages` in `content/home.ts`.
+- **Projects:** real projects are in `content/dummy.ts` (`confirmedProjects`): only confirmed facts (name, and `sector` and
+  `city` when confirmed). `content/projects.ts` also holds 12 sample projects that make `/projects` look like the
+  approved design. They are labelled "Illustrative", their detail pages are `noindex` and not in the sitemap, and search,
+  chat and structured data list real projects only. Set `showIllustrativeProjects = false` to hide all samples. Real
+  projects with no confirmed sector appear under "More Projects". Photos for the real projects: `featuredImages` in
+  `content/home.ts`; sample photos: `public/images/projects/illustrative/`.
 - **Clients:** `content/clients.ts`. An entry shows only with `verified: true` and a logo file in `public/images/clients/`.
   With no verified clients the whole homepage section is hidden.
 - **Team page:** `content/team.ts`. Set `showTeamPage = true` and add people (name, role, photo). Until then the page

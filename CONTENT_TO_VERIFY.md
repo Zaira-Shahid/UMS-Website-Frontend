@@ -43,6 +43,8 @@ CGGC Head Office at Eighteen, Jazz Destiny.
       page looks like the approved design. They are labelled "Illustrative", are not UMS work, and are kept out of the sitemap,
       search and chat. Set `showIllustrativeProjects = false` in `content/projects.ts` to hide all of them, or replace them
       with real projects (name, sector, services, photo) as they are confirmed.
+- [ ] Project detail pages show "Project details will be published soon." for real projects. Send the overview, scope (services),
+      sector, city and photos for each real project to publish its Overview, Services Delivered and gallery
 - [ ] The sample photos were cropped from the approved mockup and are small (about 300px wide); real photos will be sharper
 - [ ] Projects page banner photo (`public/images/projects/projects-banner.jpg`): stock photo by Declan Sun (Unsplash). Replace it
       with a UMS project photo
