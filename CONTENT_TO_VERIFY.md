@@ -68,7 +68,7 @@ The Services and circle photos are crops of the approved mockups (about 460 px w
 - [ ] Confirm the brand colours: blue `#1BA6E8` (used for accents and large headings; buttons and small text use a deeper
   `#0A78B5` so they pass accessibility contrast) and the navy values sampled from the mockups
 
-## 6b. Wording to approve
+## 8. Wording to approve
 
 - [ ] Homepage: services slider lines (`content/home.ts`), FAQ answers, "How We Deliver" lines, the Credentials &
   Milestones lines (`components/home/Credentials.tsx`, general wording; replace with real credentials when available)
@@ -81,7 +81,7 @@ The Services and circle photos are crops of the approved mockups (about 460 px w
 - [ ] **Privacy policy** (`content/legal.ts`): neutral template; needs a legal review
 - [ ] Careers: add real openings in `content/careers.ts` (none are shown)
 
-## 7. Facts from the mockups that are NOT on the site
+## 9. Facts from the mockups that are NOT on the site
 
 These appear in the design mockups but are unverified, so they are not used until you confirm them:
 
