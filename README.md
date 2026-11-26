@@ -83,6 +83,11 @@ docs/reference/mockups/   the approved design mockups
   The overlays are pre-cut transparent PNGs in `public/images/hero/masks/` (`<service>.png` for the desktop artwork and
   `<service>-mobile.png` for the mobile artwork), cut by colour from the two hero images. If the hero artwork is replaced, the
   masks must be cut again from the new artwork.
+- **Living hero building:** `components/home/HeroFx.tsx` adds light flowing through each system (HVAC 8s, plumbing 6s, fire 6s,
+  electrical 4s, MEP 5s), pulsing purple junction nodes, fountain droplets, faint rooftop glints and a slow float. Positions
+  are percentages in `content/hero-fx.ts` (separate sets for the desktop and mobile artwork); the shapes reuse the masks in
+  `public/images/hero/masks/`. Effects start after the page has loaded, pause off-screen and in hidden tabs, and are off with
+  reduced motion. If the hero artwork changes, re-cut the masks and re-detect the node positions.
 - **Services slider:** `components/home/ServicesSlider.tsx` advances every 4 seconds (`SLIDE_MS`), pauses on hover, focus and
   swiping, resumes 3 seconds later, and never autoplays with reduced motion. Slider pictures: `sliderArt` in `content/home.ts`.
 - **Clients:** `content/clients.ts`. An entry shows only with `verified: true` and a logo file in `public/images/clients/`.
