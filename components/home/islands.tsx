@@ -14,3 +14,5 @@ export const ServicesTickerIsland = dynamic(() => whenReady().then(() => import(
 export const FeaturedProjectsIsland = dynamic(() => whenReady().then(() => import("./FeaturedProjects")).then((m) => m.FeaturedProjects));
 
 export const FaqAccordionIsland = dynamic(() => whenReady().then(() => import("@/components/ui/FaqAccordion")).then((m) => m.FaqAccordion));
+
+export const ClientsCentreIsland = dynamic(() => whenReady().then(() => import("./ClientsCentre")).then((m) => m.ClientsCentre));

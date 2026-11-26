@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { verifiedClients } from "@/content/clients";
+import { ClientsCentreIsland } from "./islands";
 
 /**
  * H5 Clients & Project Partners (mockup 05). A looping row of white logo cards that pauses on hover or focus. Renders
@@ -19,7 +20,7 @@ export function Clients() {
         </h2>
         <span aria-hidden className="mx-auto mt-3 block h-[3px] w-full max-w-[34rem] bg-cyan" />
       </div>
-      <div className="group/row mt-10 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+      <div id="clients-row" className="group/row mt-10 overflow-x-auto [&::-webkit-scrollbar]:hidden">
         <ul
           className={cn(
             "flex w-max py-3 pl-5",
@@ -30,13 +31,14 @@ export function Clients() {
             <li
               key={`${c.name}-${i}`}
               aria-hidden={i >= verifiedClients.length ? true : undefined}
-              className="flex h-36 w-64 mr-5 shrink-0 items-center justify-center rounded-card border-2 border-transparent bg-white p-6 shadow-card transition-colors hover:border-cyan sm:w-72"
+              className="flex h-36 w-64 mr-5 shrink-0 items-center justify-center rounded-card border-2 border-transparent bg-white p-6 shadow-card transition-[border-color,scale] duration-300 hover:border-cyan data-[center=true]:scale-[1.05] data-[center=true]:border-cyan motion-reduce:transition-none sm:w-72"
             >
               <Image src={c.logo} alt={c.name} width={220} height={90} className="h-auto max-h-full w-auto max-w-full object-contain" />
             </li>
           ))}
         </ul>
       </div>
+      {loop && <ClientsCentreIsland rowId="clients-row" />}
     </section>
   );
 }
