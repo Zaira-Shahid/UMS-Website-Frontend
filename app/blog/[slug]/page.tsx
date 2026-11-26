@@ -5,6 +5,7 @@ import { ArrowRight } from "@/components/ui/lucide";
 import { InsightRow } from "@/components/insights/InsightRow";
 import { ReadingProgress } from "@/components/insights/ReadingProgress";
 import { CenterTitle } from "@/components/ui/CenterTitle";
+import { blogImage } from "@/lib/blog-image";
 import { PageBanner } from "@/components/ui/PageBanner";
 import { SideToc } from "@/components/ui/SideToc";
 import { insightAuthor, insightCategories, insights } from "@/content/insights";
@@ -77,6 +78,7 @@ export default async function InsightPage({ params }: { params: Promise<Params> 
         intro={a.excerpt}
         crumbs={[{ label: "Home", href: "/" }, { label: "Blog", href: "/blog" }, { label: a.title }]}
         titleId="article-title"
+        image={blogImage(a)}
       >
         <p className="text-sm font-semibold text-white/90">
           {category?.name ? `${category.name} · ` : ""}
