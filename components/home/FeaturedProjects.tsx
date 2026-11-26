@@ -31,12 +31,19 @@ export function FeaturedProjects() {
   const firstSector = useRef(true);
   // The card backgrounds move slowly (Ken Burns and a crossfade); they pause while the section is off-screen.
   useEffect(() => {
-    setArmed(true);
     const el = sectionRef.current;
     if (!el || !("IntersectionObserver" in window)) {
       setEntered(true);
       return;
     }
+    // This section comes alive just before it is reached. If it is already on screen, show it as it is instead of hiding it
+    // and sliding it in.
+    const top = el.getBoundingClientRect().top;
+    if (top < window.innerHeight) {
+      seen.current = true;
+      setEntered(true);
+    }
+    setArmed(true);
     const io = new IntersectionObserver(
       ([e]) => {
         setInView(e.isIntersecting);

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { FaqAccordion } from "@/components/ui/FaqAccordion";
+import { FaqAccordionIsland } from "@/components/home/islands";
 import { LogoMark } from "@/components/layout/Logo";
 import { homeFaqs } from "@/content/home";
 
@@ -27,7 +27,7 @@ export function HomeFaq() {
           />
         </div>
 
-        <FaqAccordion faqs={homeFaqs} className="lg:pt-2" />
+        <FaqAccordionIsland faqs={homeFaqs} className="lg:pt-2" />
       </div>
     </section>
   );

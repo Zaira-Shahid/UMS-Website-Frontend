@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { Clients } from "@/components/home/Clients";
 import { Credentials } from "@/components/home/Credentials";
-import { FeaturedProjects } from "@/components/home/FeaturedProjects";
 import { Hero } from "@/components/home/Hero";
 import { HomeFaq } from "@/components/home/HomeFaq";
 import { HowWeDeliver } from "@/components/home/HowWeDeliver";
-import { ServicesTicker } from "@/components/home/ServicesTicker";
+import { FeaturedProjectsIsland, ServicesTickerIsland } from "@/components/home/islands";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { homeFaqs } from "@/content/home";
 import { site } from "@/content/site";
@@ -50,9 +49,9 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <ServicesTicker />
+      <ServicesTickerIsland />
       <HowWeDeliver />
-      <FeaturedProjects />
+      <FeaturedProjectsIsland />
       <Clients />
       <Credentials />
       <HomeFaq />

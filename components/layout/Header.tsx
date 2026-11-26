@@ -8,14 +8,17 @@ import { ChevronDown, FileText, Menu, Search } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { WhatsappIcon } from "@/components/ui/SocialIcons";
 import { mainNav, quoteHrefForPath } from "@/content/navigation";
+import { whenReady } from "@/lib/hydration-gate";
 import { contact } from "@/content/site";
 import { cn } from "@/lib/utils";
 import { Logo } from "./Logo";
 import { AboutPanel, ServicesPanel } from "./MegaMenu";
-import { MobileNav } from "./MobileNav";
 
 /** Lazy: the palette and its Fuse index load only when first opened. */
 const SearchPalette = dynamic(() => import("@/components/search/SearchPalette"), { ssr: false });
+
+/** The full-screen menu is only needed once it has been opened, so its code is loaded on demand (and fetched in advance when the page is idle). */
+const MobileNav = dynamic(() => import("./MobileNav").then((m) => m.MobileNav), { ssr: false });
 
 /** WhatsApp button. Until a number is set in content/site.ts it links to /contact, so no number is ever invented. */
 const whatsappHref = contact.whatsapp ? `https://wa.me/${contact.whatsapp.replace(/\D/g, "")}` : "/contact";
@@ -43,12 +46,18 @@ export function Header() {
   const pathname = usePathname();
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileMounted, setMobileMounted] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchMounted, setSearchMounted] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const hoverTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const focusFirst = useRef(false);
   const navRef = useRef<HTMLElement>(null);
+
+  // Fetch the full-screen menu's code in advance (first scroll or tap, or a few seconds after load), so the first tap is instant.
+  useEffect(() => {
+    whenReady().then(() => import("./MobileNav"));
+  }, []);
 
   // A new page starts with every menu closed.
   useEffect(() => {
@@ -252,7 +261,10 @@ export function Header() {
             <button
               ref={menuButtonRef}
               type="button"
-              onClick={() => setMobileOpen(true)}
+              onClick={() => {
+                setMobileMounted(true);
+                setMobileOpen(true);
+              }}
               aria-label="Open menu"
               aria-expanded={mobileOpen}
               aria-controls="mobile-menu"
@@ -264,15 +276,17 @@ export function Header() {
         </div>
       </header>
 
-      <MobileNav
-        open={mobileOpen}
-        onClose={closeMobile}
-        returnFocusRef={menuButtonRef}
-        onSearch={() => {
-          closeMobile();
-          openSearch();
-        }}
-      />
+      {mobileMounted && (
+        <MobileNav
+          open={mobileOpen}
+          onClose={closeMobile}
+          returnFocusRef={menuButtonRef}
+          onSearch={() => {
+            closeMobile();
+            openSearch();
+          }}
+        />
+      )}
       {searchMounted && <SearchPalette open={searchOpen} onClose={closeSearch} />}
     </>
   );
