@@ -1,5 +1,5 @@
-import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import Image from "@/components/ui/StaticImage";
+import { ArrowRight } from "@/components/ui/lucide";
 import { Button } from "@/components/ui/Button";
 
 const circles = ["/images/projects/circles/circle-1.jpg", "/images/projects/circles/circle-2.jpg", "/images/projects/circles/circle-3.jpg"];

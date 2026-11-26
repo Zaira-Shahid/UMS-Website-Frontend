@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "@/components/ui/StaticImage";
 import { FaqAccordionIsland } from "@/components/home/islands";
 import { LogoMark } from "@/components/layout/Logo";
 import { homeFaqs } from "@/content/home";

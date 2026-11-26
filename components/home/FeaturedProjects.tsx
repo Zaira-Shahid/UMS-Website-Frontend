@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
-import { MapPin } from "lucide-react";
+import Image from "@/components/ui/StaticImage";
+import { MapPin } from "@/components/ui/lucide";
 import { useEffect, useId, useLayoutEffect, useRef, useState, type KeyboardEvent } from "react";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { SlantedButton, SlantedTab } from "@/components/ui/Slanted";

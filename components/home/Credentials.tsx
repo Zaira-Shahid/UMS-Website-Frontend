@@ -1,5 +1,5 @@
-import Image from "next/image";
-import { CalendarDays, HardHat, IdCard } from "lucide-react";
+import Image from "@/components/ui/StaticImage";
+import { CalendarDays, HardHat, IdCard } from "@/components/ui/lucide";
 import { Button } from "@/components/ui/Button";
 
 /** General wording only: no certificate numbers, bodies or dates are claimed (see CONTENT_TO_VERIFY.md). */

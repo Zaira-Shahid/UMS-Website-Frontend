@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown, MessageCircle, Send, X } from "lucide-react";
+import { ChevronDown, MessageCircle, Send, X } from "@/components/ui/lucide";
 import { Fragment, useCallback, useEffect, useRef, useState, type FormEvent, type KeyboardEvent, type ReactNode } from "react";
 import { LogoMark } from "@/components/layout/Logo";
 import { cn } from "@/lib/utils";

@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import { ClipboardCheck, Compass, HardHat, Briefcase, ShieldPlus, Users, type LucideIcon } from "lucide-react";
-import Image from "next/image";
+import { ClipboardCheck, Compass, HardHat, Briefcase, ShieldPlus, Users, type LucideIcon } from "@/components/ui/lucide";
+import Image from "@/components/ui/StaticImage";
 import { PageBanner } from "@/components/ui/PageBanner";
 import { CenterTitle } from "@/components/ui/CenterTitle";
 import { controlFunctions, people, showTeamPage } from "@/content/team";

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import Image from "@/components/ui/StaticImage";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight } from "@/components/ui/lucide";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { SectorPills } from "@/components/projects/SectorPills";
 import { Button } from "@/components/ui/Button";

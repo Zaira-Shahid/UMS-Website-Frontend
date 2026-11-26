@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Defer } from "@/components/ui/Defer";
 import { Clients } from "@/components/home/Clients";
 import { Credentials } from "@/components/home/Credentials";
 import { Hero } from "@/components/home/Hero";
@@ -50,10 +51,16 @@ export default function Home() {
     <>
       <Hero />
       <ServicesTickerIsland />
-      <HowWeDeliver />
+      <Defer>
+        <HowWeDeliver />
+      </Defer>
       <FeaturedProjectsIsland />
-      <Clients />
-      <Credentials />
+      <Defer>
+        <Clients />
+      </Defer>
+      <Defer>
+        <Credentials />
+      </Defer>
       <HomeFaq />
       <JsonLd data={[organizationLd, websiteLd, faqLd]} />
     </>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, type ReactNode } from "react";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2 } from "@/components/ui/lucide";
 
 /** Confirmation panel with the reference number. Takes focus so screen readers announce it. */
 export function SubmissionSuccess({

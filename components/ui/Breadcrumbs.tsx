@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight } from "@/components/ui/lucide";
 import { cn } from "@/lib/utils";
 
 export interface Crumb {

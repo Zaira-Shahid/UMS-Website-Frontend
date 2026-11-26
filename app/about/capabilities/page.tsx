@@ -1,4 +1,4 @@
-import { ClipboardCheck, FileSearch, HardHat, Layers, type LucideIcon } from "lucide-react";
+import { ClipboardCheck, FileSearch, HardHat, Layers, type LucideIcon } from "@/components/ui/lucide";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { CenterTitle } from "@/components/ui/CenterTitle";
 import { PageBanner } from "@/components/ui/PageBanner";

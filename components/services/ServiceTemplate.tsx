@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Target } from "lucide-react";
+import { ArrowRight, Target } from "@/components/ui/lucide";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { CtaBar } from "@/components/ui/CtaBar";
 import { FaqAccordion } from "@/components/ui/FaqAccordion";

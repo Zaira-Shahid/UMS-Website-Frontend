@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ChevronDown, FileText, Menu, Search } from "lucide-react";
+import { ChevronDown, FileText, Menu, Search } from "@/components/ui/lucide";
 import { Button } from "@/components/ui/Button";
 import { WhatsappIcon } from "@/components/ui/SocialIcons";
 import { mainNav, quoteHrefForPath } from "@/content/navigation";

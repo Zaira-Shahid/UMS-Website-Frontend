@@ -1,5 +1,5 @@
 import { useId, type ComponentProps, type ReactNode, type Ref } from "react";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle } from "@/components/ui/lucide";
 import { cn } from "@/lib/utils";
 
 const control =

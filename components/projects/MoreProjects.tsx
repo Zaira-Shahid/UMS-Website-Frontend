@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
+import Image from "@/components/ui/StaticImage";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "@/components/ui/lucide";
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import type { BrowserProject } from "./ProjectsBrowser";

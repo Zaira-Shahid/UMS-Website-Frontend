@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import Image from "next/image";
+import Image from "@/components/ui/StaticImage";
 import { verifiedClients } from "@/content/clients";
 import { ClientsCentreIsland } from "./islands";
 

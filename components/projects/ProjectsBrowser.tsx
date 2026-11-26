@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "@/components/ui/lucide";
 import { projectSectors } from "@/content/projects";
 import { MoreProjects } from "./MoreProjects";
 import { ProjectCard } from "./ProjectCard";

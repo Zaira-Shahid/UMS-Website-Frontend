@@ -1,6 +1,6 @@
 import { getImageProps } from "next/image";
 import Link from "next/link";
-import { ArrowRight, CircleCheck } from "lucide-react";
+import { ArrowRight, CircleCheck } from "@/components/ui/lucide";
 import { Button } from "@/components/ui/Button";
 import { quoteHref } from "@/content/navigation";
 import { HeroStage } from "./HeroStage";

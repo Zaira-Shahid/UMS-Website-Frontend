@@ -1,6 +1,6 @@
-import Image from "next/image";
+import Image from "@/components/ui/StaticImage";
 import Link from "next/link";
-import { ArrowRight, MapPin } from "lucide-react";
+import { ArrowRight, MapPin } from "@/components/ui/lucide";
 import type { BrowserProject } from "./ProjectsBrowser";
 
 /** Project card (mockup 19): the project's picture, its name, where it is, the client, and "More Details". */

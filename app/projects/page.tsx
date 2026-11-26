@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import Image from "@/components/ui/StaticImage";
 import { Suspense } from "react";
 import { ProjectsBrowser, ProjectsView, type BrowserProject } from "@/components/projects/ProjectsBrowser";
 import { ProjectBand } from "@/components/ui/ProjectBand";

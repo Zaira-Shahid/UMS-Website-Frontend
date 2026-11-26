@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "@/components/ui/StaticImage";
 import { Button } from "@/components/ui/Button";
 import { quoteHref } from "@/content/navigation";
 

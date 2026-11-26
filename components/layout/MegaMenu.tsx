@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import type { ComponentType, KeyboardEvent } from "react";
-import { ArrowUpRight, Building2, LayoutGrid, ShieldCheck, Target, Wrench } from "lucide-react";
+import { ArrowUpRight, Building2, LayoutGrid, ShieldCheck, Target, Wrench } from "@/components/ui/lucide";
 import { ServiceIcon, serviceColor } from "@/components/ui/ServiceIcon";
 import { services } from "@/content/services";
 import { cn } from "@/lib/utils";

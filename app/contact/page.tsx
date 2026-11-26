@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ArrowRight, Mail, MapPin, MessageCircle, Phone, type LucideIcon } from "lucide-react";
+import { ArrowRight, Mail, MapPin, MessageCircle, Phone, type LucideIcon } from "@/components/ui/lucide";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { ServicesIntro } from "@/components/services/ServicesIntro";
 import { Button } from "@/components/ui/Button";

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "@/components/ui/lucide";
 import { useCallback, useEffect, useRef, useState, type ImgHTMLAttributes, type ReactNode } from "react";
 import { ServiceChip } from "@/components/ui/ServiceChip";
 import { serviceColor } from "@/components/ui/ServiceIcon";

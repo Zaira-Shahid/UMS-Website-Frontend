@@ -1,4 +1,4 @@
-import { Award, Handshake, HardHat, Layers, Ruler, ShieldCheck, type LucideIcon } from "lucide-react";
+import { Award, Handshake, HardHat, Layers, Ruler, ShieldCheck, type LucideIcon } from "@/components/ui/lucide";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { CenterTitle } from "@/components/ui/CenterTitle";
 import { PageBanner } from "@/components/ui/PageBanner";

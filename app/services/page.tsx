@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import Image from "@/components/ui/StaticImage";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "@/components/ui/lucide";
 import { ServicesIntro } from "@/components/services/ServicesIntro";
 import { CtaBar } from "@/components/ui/CtaBar";
 import { ServicePhoto } from "@/components/services/ServicePhoto";

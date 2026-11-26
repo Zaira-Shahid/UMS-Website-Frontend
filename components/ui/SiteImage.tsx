@@ -1,4 +1,5 @@
-import Image, { type ImageProps } from "next/image";
+import Image from "@/components/ui/StaticImage";
+import type { ImageProps } from "next/image";
 import { NAVY_BLUR } from "@/content/images";
 import type { ImageAsset } from "@/types";
 

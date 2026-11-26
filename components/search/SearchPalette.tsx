@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
-import { ArrowRight, Search, X } from "lucide-react";
+import { ArrowRight, Search, X } from "@/components/ui/lucide";
 import { SiteImage } from "@/components/ui/SiteImage";
 import {
   searchGroups,

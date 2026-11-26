@@ -1,4 +1,4 @@
-import { ArrowRight, MapPin } from "lucide-react";
+import { ArrowRight, MapPin } from "@/components/ui/lucide";
 import Link from "next/link";
 import type { OfficeConfig } from "@/content/site";
 

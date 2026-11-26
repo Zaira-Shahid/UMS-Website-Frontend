@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { Check } from "@/components/ui/lucide";
 import type { QualitySection } from "@/content/quality";
 
 /** One stage: a card with its title, a general summary and a ticked checklist. */

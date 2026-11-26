@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { Check } from "@/components/ui/lucide";
 import { RFQ_STEPS } from "@/lib/forms/rfq";
 import { cn } from "@/lib/utils";
 

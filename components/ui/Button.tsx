@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ComponentProps, ReactNode } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "@/components/ui/lucide";
 import { cn } from "@/lib/utils";
 
 /**

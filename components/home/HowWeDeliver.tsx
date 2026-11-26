@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "@/components/ui/StaticImage";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { deliverySteps } from "@/content/home";
 

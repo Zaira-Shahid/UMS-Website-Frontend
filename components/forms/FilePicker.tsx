@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { FileText, X } from "lucide-react";
+import { FileText, X } from "@/components/ui/lucide";
 import { formatBytes, validateUpload, type UploadRules } from "@/lib/forms/schemas";
 import type { FieldAria } from "./fields";
 

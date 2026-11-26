@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "@/components/ui/lucide";
 import { InsightRow } from "@/components/insights/InsightRow";
 import { ReadingProgress } from "@/components/insights/ReadingProgress";
 import { CenterTitle } from "@/components/ui/CenterTitle";

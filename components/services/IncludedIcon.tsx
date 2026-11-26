@@ -1,7 +1,7 @@
 import {
   Bell, Cable, ClipboardCheck, Droplets, Fan, Filter, Flame, Gauge, HardHat, Layers, Lightbulb, Package, Ruler, Settings,
   ShieldCheck, Snowflake, Waves, Wind, Wrench, Zap, type LucideIcon,
-} from "lucide-react";
+} from "@/components/ui/lucide";
 import type { IncludedIconKey } from "@/content/service-pages";
 
 const icons: Record<IncludedIconKey, LucideIcon> = {

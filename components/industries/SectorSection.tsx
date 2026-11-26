@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "@/components/ui/lucide";
 import { Button } from "@/components/ui/Button";
 import { ServiceIcon, serviceColor } from "@/components/ui/ServiceIcon";
 import { quoteHref } from "@/content/navigation";

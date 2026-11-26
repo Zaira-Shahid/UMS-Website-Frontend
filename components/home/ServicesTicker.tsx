@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
+import Image from "@/components/ui/StaticImage";
 import Link from "next/link";
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "@/components/ui/lucide";
 import { useCallback, useEffect, useRef, type FocusEvent as ReactFocusEvent, type KeyboardEvent, type PointerEvent as ReactPointerEvent } from "react";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { sliderLine, sliderOrder, sliderTitle } from "@/content/home";

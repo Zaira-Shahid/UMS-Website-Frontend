@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "@/components/ui/StaticImage";
 import Link from "next/link";
 import { site } from "@/content/site";
 import { cn } from "@/lib/utils";

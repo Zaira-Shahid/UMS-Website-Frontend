@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type RefObject } from "react";
-import { ArrowUpRight, ChevronDown, Search, X } from "lucide-react";
+import { ArrowUpRight, ChevronDown, Search, X } from "@/components/ui/lucide";
 import { Button } from "@/components/ui/Button";
 import { mainNav, quoteHrefForPath } from "@/content/navigation";
 import { services } from "@/content/services";

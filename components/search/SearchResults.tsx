@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
-import { Search } from "lucide-react";
+import { Search } from "@/components/ui/lucide";
 import { SiteImage } from "@/components/ui/SiteImage";
 import { searchGroups, searchIndex, searchItems } from "@/lib/search-index";
 

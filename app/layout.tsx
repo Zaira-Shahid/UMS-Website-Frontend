@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Barlow_Semi_Condensed, Inter } from "next/font/google";
 import { ChatLoader } from "@/components/chat/ChatLoader";
+import { Defer } from "@/components/ui/Defer";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { site } from "@/content/site";
@@ -49,7 +50,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main" className="min-h-svh">
           {children}
         </main>
-        <Footer />
+        <Defer>
+          <Footer />
+        </Defer>
         <ChatLoader />
       </body>
     </html>
