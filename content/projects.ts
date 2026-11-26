@@ -60,7 +60,7 @@ export const projects: Project[] = [
   { slug: "philippine-embassy", name: "Philippine Embassy", sector: I, city: "Islamabad", area: "Diplomatic Enclave", client: "Philippine Embassy", consultant: "SEM Engineers", civilContractor: "Gold Roof", image: img("philippine-embassy", 270, 156) },
   { slug: "turkish-embassy-staff-lodges", name: "Turkish Embassy Staff Lodges", sector: I, city: "Islamabad", area: "Diplomatic Enclave", client: "Ministry of Foreign Affairs", consultant: "Gürmen Mühendislik Ltd. Şti.", civilContractor: "Siyah Kalem", mepContractor: "Cozmuler", image: img("turkish-embassy-staff-lodges", 270, 150) },
   { slug: "jordan-ambassador-residence", name: "Jordan Ambassador Residence", sector: I, city: "Islamabad", area: "Diplomatic Enclave", client: "Jordan Embassy", consultant: "Design Advisor", civilContractor: "Gold Roof", image: img("jordan-ambassador-residence", 278, 188) },
-  { slug: "lecole-school-lahore", name: "Lecole School Khayaban-e-Khair ud Din", sector: I, city: "Lahore", client: "Lecole School", consultant: "Suhail Ahmed Associates", civilContractor: "EMC", image: img("lecole-school-lahore", 310, 152) },
+  { slug: "lecole-school-lahore", name: "Lecole School", sector: I, city: "Lahore", client: "Lecole School", consultant: "Suhail Ahmed Associates", civilContractor: "EMC", image: img("lecole-school-lahore", 310, 152) },
   { slug: "fauji-foundation-nursing-college", name: "Fauji Foundation Nursing College", sector: I, client: "Pro Health", consultant: "Global Hi-Tech", image: img("fauji-foundation-nursing-college", 271, 147) },
 
   // The name does not say what kind of building these are: listed under "More Projects"
@@ -68,6 +68,6 @@ export const projects: Project[] = [
   { slug: "bee-3-development", name: "BEE 3 Development", client: "Arctec Design Consultant", consultant: "Sohail Associate", image: img("bee-3-development", 270, 284) },
   { slug: "see-2-development", name: "SEE 2 Development", client: "Arctec Design Consultant", consultant: "Sohail Associate", image: img("see-2-development", 270, 284) },
   { slug: "trust-one-diplomatic-enclave", name: "Trust One Diplomatic Enclave", client: "Trust One Diplomatic Enclave", consultant: "Sohail Associate", image: img("trust-one-diplomatic-enclave", 270, 150) },
-  { slug: "grand-hyat-towers", name: "Grand Hyat Towers", city: "Islamabad", area: "One Constitution Avenue", client: "BNP (Pvt.) Ltd", civilContractor: "S. Mehboob & Company", image: img("grand-hyat-towers-islamabad", 1121, 544) },
+  { slug: "grand-hyatt-towers", name: "Grand Hyatt Towers", city: "Islamabad", area: "One Constitution Avenue", client: "BNP (Pvt.) Ltd", civilContractor: "S. Mehboob & Company", image: img("grand-hyat-towers-islamabad", 1121, 544) },
   { slug: "jazz-destiny", name: "Jazz Destiny", city: "Islamabad", client: "Mobilink Jazz", consultant: "SRDW Design Works", image: img("jazz-destiny", 272, 335) },
 ];

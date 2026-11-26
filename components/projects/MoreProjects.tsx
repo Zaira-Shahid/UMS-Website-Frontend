@@ -22,9 +22,9 @@ export function MoreProjects({ projects }: { projects: BrowserProject[] }) {
       <span aria-hidden className="accent-bar mt-2 block" />
       <p className="mt-3 text-base text-muted md:text-lg">Further work across our sectors.</p>
 
-      <ul className="mt-6 grid gap-3 md:grid-cols-2 md:gap-4">
+      <ul className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
         {shown.map((p) => (
-          <li key={p.slug}>
+          <li key={p.slug} className="min-w-0">
             <Link
               href={`/projects/${p.slug}`}
               className="group flex items-center gap-4 rounded-xl border border-line bg-white p-3 transition duration-200 hover:border-blue hover:shadow-card focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue motion-reduce:transition-none"
