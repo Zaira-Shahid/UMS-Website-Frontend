@@ -5,8 +5,8 @@ import { services } from "@/content/services";
 import { disciplineColor } from "@/lib/discipline";
 import type { ImageAsset } from "@/types";
 
-export type SearchGroup = "Services" | "Projects" | "Insights" | "Pages";
-export const searchGroups: SearchGroup[] = ["Services", "Projects", "Insights", "Pages"];
+export type SearchGroup = "Services" | "Projects" | "Blog" | "Pages";
+export const searchGroups: SearchGroup[] = ["Services", "Projects", "Blog", "Pages"];
 
 export interface SearchItem {
   id: string;
@@ -51,10 +51,10 @@ export const searchItems: SearchItem[] = [
   })),
   ...insights.map<SearchItem>((i) => ({
     id: `i-${i.slug}`,
-    group: "Insights",
+    group: "Blog",
     title: i.title,
     description: i.excerpt,
-    href: `/insights/${i.slug}`,
+    href: `/blog/${i.slug}`,
     color: i.services[0] ? disciplineColor[i.services[0]] : undefined,
   })),
   ...pages,

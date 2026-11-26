@@ -6,6 +6,13 @@ import type { NextConfig } from "next";
  */
 const nextConfig: NextConfig = {
   distDir: process.env.NEXT_DIST_DIR || ".next",
+  // The blog used to live at /insights.
+  async redirects() {
+    return [
+      { source: "/insights", destination: "/blog", permanent: true },
+      { source: "/insights/:path*", destination: "/blog/:path*", permanent: true },
+    ];
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     // TODO: replace with approved UMS photography; remove Unsplash once done.

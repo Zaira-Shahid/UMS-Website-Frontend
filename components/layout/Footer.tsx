@@ -31,7 +31,7 @@ const explore = [
   { label: "About UMS", href: "/about" },
   { label: "Projects", href: "/projects" },
   { label: "Industries", href: "/industries" },
-  { label: "Insights", href: "/insights" },
+  { label: "Blog", href: "/blog" },
   { label: "Careers", href: "/careers" },
 ];
 

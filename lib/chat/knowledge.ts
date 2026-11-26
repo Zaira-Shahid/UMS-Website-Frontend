@@ -32,7 +32,7 @@ export const routes: ChatLink[] = [
   { label: "Contact", href: "/contact" },
   { label: "About UMS", href: "/about" },
   { label: "Quality, safety & delivery", href: "/quality-safety-delivery" },
-  { label: "Insights", href: "/insights" },
+  { label: "Blog", href: "/blog" },
   { label: "Careers", href: "/careers" },
 ];
 

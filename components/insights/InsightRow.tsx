@@ -9,7 +9,7 @@ export function InsightRow({ insight: a }: { insight: Insight; index?: number })
   return (
     <li>
       <Link
-        href={`/insights/${a.slug}`}
+        href={`/blog/${a.slug}`}
         className="group flex h-full flex-col rounded-card border border-blue/70 bg-white p-5 shadow-card transition duration-200 hover:-translate-y-1 hover:border-blue motion-reduce:transition-none motion-reduce:hover:translate-y-0 md:p-6"
       >
         <span className="text-sm font-semibold text-blue-700">

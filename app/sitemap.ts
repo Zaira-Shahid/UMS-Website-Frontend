@@ -17,7 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/services",
     "/industries",
     "/projects",
-    "/insights",
+    "/blog",
     "/careers",
     "/contact",
     "/request-a-quote",
@@ -27,8 +27,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...fixed,
     ...services.map((s) => `/services/${s.slug}`),
     ...projects.map((p) => `/projects/${p.slug}`),
-    ...insightCategories.map((c) => `/insights/category/${c.slug}`),
-    ...insights.map((i) => `/insights/${i.slug}`),
+    ...insightCategories.map((c) => `/blog/category/${c.slug}`),
+    ...insights.map((i) => `/blog/${i.slug}`),
   ];
   return paths.map((path) => ({
     url: absoluteUrl(path),

@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 /** Category pills for the Insights pages. `current` is a category slug, or "all". */
 export function CategoryNav({ current }: { current: string }) {
-  const items = [{ slug: "all", name: "All", href: "/insights" }, ...insightCategories.map((c) => ({ slug: c.slug, name: c.name, href: `/insights/category/${c.slug}` }))];
+  const items = [{ slug: "all", name: "All", href: "/blog" }, ...insightCategories.map((c) => ({ slug: c.slug, name: c.name, href: `/blog/category/${c.slug}` }))];
   return (
     <nav aria-label="Insight categories" className="wrap py-4">
       <ul className="flex flex-wrap justify-center gap-2">

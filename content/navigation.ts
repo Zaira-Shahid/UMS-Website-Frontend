@@ -37,8 +37,7 @@ export const mainNav: NavItem[] = [
   },
   { label: "Industries", href: "/industries" },
   { label: "Projects", href: "/projects" },
-  { label: "Insights", href: "/insights" },
-  { label: "Careers", href: "/careers" },
+  { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ];
 

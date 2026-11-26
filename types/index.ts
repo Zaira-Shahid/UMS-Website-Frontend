@@ -110,7 +110,7 @@ export interface Project {
   image: { src: string; width: number; height: number };
 }
 
-export type InsightCategory = "safety-compliance" | "mep-systems" | "maintenance-operations";
+export type InsightCategory = "company" | "our-work" | "safety-compliance" | "mep-systems" | "maintenance-operations";
 
 export interface InsightSection {
   heading: string;

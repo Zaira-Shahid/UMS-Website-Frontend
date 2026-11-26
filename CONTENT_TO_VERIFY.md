@@ -43,9 +43,18 @@ Jazz Destiny) are listed under "More Projects".
 - [ ] **Please check the sectors** and tell the developer which to change (for example Grand Hyat Towers, Jazz Destiny, Trust One)
 - [ ] **UMS's role and scope on each project** (the profile does not say which services UMS delivered): send them and each
       project page can show its scope, dates and values
-- [ ] **Wording to confirm from the profile:** "Capital Builder" / "Contr. Venture Enginring" on Mall of Sargodha (shown as client
-      "Capital Builder" and contractor "Venture Engineering"); "Khybabn-e Khair ud Din" (shown as "Khayaban-e-Khair ud Din");
-      "Fuji" / "Fauji Foundation" (shown as "Fauji Foundation"); "Grand Hyat Towers" (kept as written)
+- [ ] **Wording to confirm:** "Capital Builder" / "Contr. Venture Enginring" on Mall of Sargodha (shown as client "Capital Builder"
+      and contractor "Venture Engineering"); "Fuji" / "Fauji Foundation" (shown as "Fauji Foundation"); Lecole School (the profile
+      says "Khybabn-e Khair ud Din, Lahore" but the company website says "Johar Town, Lahore", so only "Lecole School, Lahore" is
+      shown); "Grand Hyatt Towers" (the profile has "Hyat", the company website has "Hyatt")
+- [ ] **Status:** the old company website (2019) lists Buch International Hospital, Pakistan Cricket Board House, Islamabad High
+      Court, Rehman Medical Institute Extension (Peshawar), PAFSOM Arena Hotel and SAARC Tower as "in hand", and the others as
+      "completed". That may be out of date, so no status is shown. Please say which projects are completed today
+- [ ] **Projects on the company website but not in the profile:** Pepsico Snacks Green Field (Multan), United Nations High
+      Commissioner for Refugees (Peshawar), World Bank IFC Building (Islamabad), PAFSOM Arena Hotel (Islamabad), Rehman Medical
+      Institute Extension (Peshawar) and SAARC Tower (Islamabad). They are not on the site; send photos and details to add them
+- [ ] **Phone number:** the profile's contact page says 03005360233 and www.ums.pk, while the company website says (0333) 1811113
+      and umss.pk. The site uses (0333) 1811113 and umss.pk. Please confirm which phone number is right
 - [ ] **Where some projects are:** the profile gives no city for SEE 3 / BEE 3 / SEE 2 Development, Gulberg Mall and Signature
       Living, Trust One, the Fauji Foundation buildings, the Garden Residencia or the Children's Heart Hospital
 - [ ] **Better pictures:** the profile's pictures are small (about 270 to 330 px wide, and many are artist's renderings), so they look
