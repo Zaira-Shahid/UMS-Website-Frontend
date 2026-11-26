@@ -1,27 +1,46 @@
-import Link from "next/link";
 import { cn } from "@/lib/utils";
 import type { ServiceSlug } from "@/types";
 import { ServiceIcon, serviceColor } from "./ServiceIcon";
 
 /**
- * Service chip for navy backgrounds (hero bottom): an outlined rounded rectangle with the service's coloured icon
- * and its label. A link to the service page.
+ * Service chip for navy backgrounds (hero bottom): a compact outlined pill with the service's coloured icon and its label.
+ * It is a toggle button, not a link: pressing it highlights that system in the hero building. The active chip gets a fill
+ * of its service colour at about 20% and a brighter border.
  */
-export function ServiceChip({ slug, label, className }: { slug: ServiceSlug; label: string; className?: string }) {
+export function ServiceChip({
+  slug,
+  label,
+  pressed,
+  onToggle,
+  onPreload,
+  className,
+}: {
+  slug: ServiceSlug;
+  label: string;
+  pressed: boolean;
+  onToggle: () => void;
+  onPreload?: () => void;
+  className?: string;
+}) {
   const color = serviceColor(slug);
   return (
-    <Link
-      href={`/services/${slug}`}
+    <button
+      type="button"
+      aria-pressed={pressed}
+      onClick={onToggle}
+      onPointerEnter={onPreload}
+      onFocus={onPreload}
       className={cn(
-        "group flex items-center h-11 gap-2 rounded-xl border border-white/70 bg-white/[0.04] px-2.5 text-white whitespace-nowrap transition-colors hover:bg-white/10 focus-visible:bg-white/10",
+        "group inline-flex h-[38px] items-center gap-2 whitespace-nowrap rounded-xl border px-[14px] py-2 max-sm:gap-1.5 max-sm:px-2.5 text-white transition-colors duration-200 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan motion-reduce:transition-none",
+        pressed ? "border-2" : "border-white/70 bg-white/[0.04]",
         className,
       )}
-      style={{ ["--chip" as string]: color }}
+      style={pressed ? { borderColor: color, backgroundColor: `color-mix(in srgb, ${color} 22%, transparent)` } : undefined}
     >
-      <span className="flex size-7 shrink-0 items-center justify-center rounded-md border-[1.5px] transition-colors group-hover:bg-white/10" style={{ borderColor: color, color }}>
-        <ServiceIcon slug={slug} className="size-4" />
+      <span className="flex size-6 shrink-0 items-center justify-center rounded-md border-[1.5px]" style={{ borderColor: color, color }}>
+        <ServiceIcon slug={slug} className="size-3.5" />
       </span>
-      <span className="text-[0.9375rem] font-semibold">{label}</span>
-    </Link>
+      <span className="text-sm font-semibold">{label}</span>
+    </button>
   );
 }
