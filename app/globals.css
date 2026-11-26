@@ -459,6 +459,84 @@ label[for],
   }
 }
 
+/* Featured Projects entrance: the cards slide in from the sides, then the title, city, bar and button follow one after another
+   (--d is each part's delay). Nothing is hidden until the page is hydrated (data-feat-armed), so it is safe without scripts.
+   Only transform and opacity change. It replays when a tab is chosen. With reduced motion everything is simply shown. */
+.feat-rv {
+  transition:
+    opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0s),
+    transform 0.85s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0s);
+}
+[data-feat-armed="true"]:not([data-feat-in="true"]) .feat-rv {
+  opacity: 0;
+  transition: none;
+}
+[data-feat-armed="true"]:not([data-feat-in="true"]) .feat-rv--left {
+  transform: translateX(-70px);
+}
+[data-feat-armed="true"]:not([data-feat-in="true"]) .feat-rv--right {
+  transform: translateX(70px);
+}
+[data-feat-armed="true"]:not([data-feat-in="true"]) .feat-rv--up {
+  transform: translateY(18px);
+}
+.feat-rv--bar {
+  transform-origin: left center;
+}
+[data-feat-armed="true"]:not([data-feat-in="true"]) .feat-rv--bar {
+  transform: scaleX(0);
+}
+/* The map pin drops in and settles once the city line is on screen. */
+@keyframes feat-pin {
+  0% {
+    transform: translateY(-10px) scale(0.6);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(2px) scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+[data-feat-armed="true"]:not([data-feat-in="true"]) .feat-pin {
+  opacity: 0;
+}
+[data-feat-armed="true"][data-feat-in="true"] .feat-pin {
+  animation: feat-pin 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0s) both;
+}
+/* Hover (devices that hover): a soft light sweeps across the card. */
+.feat-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 38%, var(--shine, rgb(255 255 255 / 0.16)) 50%, transparent 62%);
+  transform: translateX(-130%);
+}
+@media (hover: hover) {
+  .feat-shine:hover::after {
+    transform: translateX(130%);
+    transition: transform 0.9s ease-out;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .feat-rv {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .feat-pin {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+  .feat-shine::after {
+    display: none;
+  }
+}
+
 /* Featured Projects card photos: a slow Ken Burns zoom and pan (14s, alternating) and a crossfade between the two photos of a
    card. Only transform and opacity animate. Paused off-screen; with reduced motion the first photo stays still. */
 @keyframes feat-kb {
