@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import { MapPin } from "lucide-react";
-import { useId, useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { SlantedButton, SlantedTab } from "@/components/ui/Slanted";
-import { featuredImages, featuredSectors } from "@/content/home";
+import { featuredGallery, featuredSectors } from "@/content/home";
 import { projects } from "@/content/projects";
 import { cn } from "@/lib/utils";
 
@@ -17,8 +17,18 @@ export function FeaturedProjects() {
   const [sector, setSector] = useState(0);
   const id = useId();
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [inView, setInView] = useState(true);
+  // The card backgrounds move slowly (Ken Burns and a crossfade); they pause while the section is off-screen.
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el || !("IntersectionObserver" in window)) return;
+    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold: 0.05 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
   const industry = featuredSectors[sector].industry;
-  const shown = projects.filter((p) => p.sector === industry && featuredImages[p.slug]).slice(0, 2);
+  const shown = projects.filter((p) => p.sector === industry && featuredGallery[p.slug]).slice(0, 2);
 
   const onKeyDown = (e: KeyboardEvent) => {
     const n = featuredSectors.length;
@@ -34,7 +44,7 @@ export function FeaturedProjects() {
   };
 
   return (
-    <section aria-labelledby="featured-title" className="relative overflow-hidden bg-[#f2f7fb] py-10 lg:py-14">
+    <section ref={sectionRef} data-feat-paused={!inView} aria-labelledby="featured-title" className="relative overflow-hidden bg-[#f2f7fb] py-10 lg:py-14">
       <Image
         src="/images/sections/wireframe-building-projects.png"
         alt=""
@@ -97,7 +107,7 @@ export function FeaturedProjects() {
 
 function ProjectCard({ index, slug, name, city }: { index: number; slug: string; name: string; city?: string }) {
   const big = index === 0;
-  const img = featuredImages[slug];
+  const photos = featuredGallery[slug];
   return (
     <article
       className={cn(
@@ -107,17 +117,25 @@ function ProjectCard({ index, slug, name, city }: { index: number; slug: string;
           : "min-h-[20rem] bg-gradient-to-br from-white to-sky-50 text-navy lg:-ml-[157px] lg:h-[26rem] lg:[clip-path:polygon(150px_0,100%_0,100%_100%,0_100%)]",
       )}
     >
-      <Image
-        src={img.src}
-        alt=""
-        width={img.width}
-        height={img.height}
-        sizes="(min-width: 1024px) 50vw, 100vw"
+      {/* Background photos: a slow Ken Burns zoom and pan on each, crossfading with the next. */}
+      <div
+        aria-hidden
         className={cn(
-          "absolute inset-y-0 right-0 -z-10 h-full object-cover",
-          big ? "w-[44%] [mask-image:linear-gradient(to_right,transparent,black_30%)]" : "w-[42%] [mask-image:linear-gradient(to_right,transparent,black_25%)]",
+          "absolute inset-y-0 right-0 -z-10 h-full overflow-hidden",
+          big ? "w-[44%] [mask-image:linear-gradient(to_right,transparent,transparent_6%,black_36%)]" : "w-[42%] [mask-image:linear-gradient(to_right,transparent,transparent_16%,black_52%)]",
         )}
-      />
+      >
+        {photos.map((img, i) => (
+          <Image
+            key={img.src}
+            src={img.src}
+            alt=""
+            fill
+            sizes="(min-width: 1024px) 26vw, 60vw"
+            className={cn("object-cover", photos.length > 1 && "feat-photo", i === 0 ? "feat-photo--a" : "feat-photo--b opacity-0")}
+          />
+        ))}
+      </div>
       <div className={cn("flex h-full flex-col justify-center p-6", big ? "max-w-[66%] lg:max-w-[78%] lg:pl-[4.5rem]" : "max-w-[62%] lg:max-w-[72%] lg:pl-[10.5rem] lg:pr-4")}>
         <h3 className={cn("font-extrabold leading-[1.05]", big ? "text-[clamp(1.75rem,1rem+2vw,3rem)] text-white" : "text-[clamp(1.5rem,0.9rem+1.3vw,2.25rem)] text-navy")}>{name}</h3>
         {city && (

@@ -459,6 +459,61 @@ label[for],
   }
 }
 
+/* Featured Projects card photos: a slow Ken Burns zoom and pan (14s, alternating) and a crossfade between the two photos of a
+   card. Only transform and opacity animate. Paused off-screen; with reduced motion the first photo stays still. */
+@keyframes feat-kb {
+  from {
+    transform: scale(1) translate(0, 0);
+  }
+  to {
+    transform: scale(1.08) translate(-1.5%, -1%);
+  }
+}
+@keyframes feat-kb-rev {
+  from {
+    transform: scale(1.08) translate(1.5%, 1%);
+  }
+  to {
+    transform: scale(1) translate(0, 0);
+  }
+}
+@keyframes feat-xfade {
+  0%,
+  40% {
+    opacity: 1;
+  }
+  50%,
+  90% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.feat-photo {
+  will-change: transform, opacity;
+}
+.feat-photo--a {
+  animation:
+    feat-kb 14s ease-in-out infinite alternate,
+    feat-xfade 14s linear infinite;
+}
+.feat-photo--b {
+  animation:
+    feat-kb-rev 14s ease-in-out infinite alternate,
+    feat-xfade 14s linear infinite;
+  animation-delay: 0s, -7s;
+}
+[data-feat-paused="true"] .feat-photo {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .feat-photo--a,
+  .feat-photo--b {
+    animation: none;
+  }
+}
+
 /* Services ticker (ServicesTicker): three copies of the list slide left by one copy's width, so the loop is seamless. */
 @keyframes ticker-move {
   to {

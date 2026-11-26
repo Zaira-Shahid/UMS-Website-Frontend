@@ -38,7 +38,10 @@ CGGC Head Office at Eighteen, Jazz Destiny.
 
 - [ ] Confirm Buch International Hospital (Multan) and Lady Reading Hospital (Peshawar) are Healthcare
 - [ ] For the other four: sector and city, UMS's role, and approved photographs
-- [ ] Replace the two "Illustrative imagery" hospital pictures with real, high-resolution project photos
+- [ ] **Real project photos wanted:** the Featured Projects cards and the Projects pages show sharp architectural stock photos labelled
+      "Illustrative imagery" (cut from the stock photos credited in `content/images.ts`). Send two or three high-resolution photos
+      (at least 1200 px wide, with permission to publish) of each real project, starting with Buch International Hospital and Lady
+      Reading Hospital, and they will replace the stock photos and crossfade on the cards
 - [ ] **Sample projects:** the Projects page also shows 12 sample projects (Specialist Hospital, Medical Centre, and so on) so the
       page looks like the approved design. They are labelled "Illustrative", are not UMS work, and are kept out of the sitemap,
       search and chat. Set `showIllustrativeProjects = false` in `content/projects.ts` to hide all of them, or replace them

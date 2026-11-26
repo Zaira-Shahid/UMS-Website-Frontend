@@ -48,11 +48,26 @@ export const featuredSectors: { label: string; industry: IndustrySlug }[] = [
   { label: "Institutional", industry: "education-institutional" },
 ];
 
-/** Featured Projects imagery. These are illustrative images from the design pack, not UMS project photos. */
-export const featuredImages: Record<string, { src: string; width: number; height: number }> = {
-  "buch-international-hospital": { src: "/images/projects/illustrative-hospital-1.png", width: 325, height: 492 },
-  "lady-reading-hospital": { src: "/images/projects/illustrative-hospital-2.png", width: 253, height: 145 },
+/**
+ * Featured Projects imagery: sharp architectural stock photos (not UMS project photos), cut from larger originals so that no
+ * picture is shown larger than it is. Each card crossfades between its photos. They are always labelled "Illustrative imagery".
+ * Replace them with real project photos when supplied (see CONTENT_TO_VERIFY.md).
+ */
+export const featuredGallery: Record<string, { src: string; width: number; height: number }[]> = {
+  "buch-international-hospital": [
+    { src: "/images/projects/featured/buch-1.jpg", width: 640, height: 892 },
+    { src: "/images/projects/featured/buch-2.jpg", width: 640, height: 892 },
+  ],
+  "lady-reading-hospital": [
+    { src: "/images/projects/featured/lady-1.jpg", width: 480, height: 871 },
+    { src: "/images/projects/featured/lady-2.jpg", width: 480, height: 871 },
+  ],
 };
+
+/** The first photo of each project: used wherever a single picture is needed (the Projects pages). */
+export const featuredImages: Record<string, { src: string; width: number; height: number }> = Object.fromEntries(
+  Object.entries(featuredGallery).map(([slug, list]) => [slug, list[0]]),
+);
 
 /** Homepage FAQ (mockup 07). The answers describe how the site works and make no claims about UMS. */
 export const homeFaqs = [
