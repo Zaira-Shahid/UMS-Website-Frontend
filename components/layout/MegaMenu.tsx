@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import type { ComponentType, KeyboardEvent } from "react";
-import { ArrowUpRight, Building2, ShieldCheck, Target, Wrench } from "lucide-react";
+import { ArrowUpRight, Building2, LayoutGrid, ShieldCheck, Target, Wrench } from "lucide-react";
 import { ServiceIcon, serviceColor } from "@/components/ui/ServiceIcon";
 import { services } from "@/content/services";
 import { cn } from "@/lib/utils";
@@ -54,41 +54,55 @@ export function ServiceRow({ slug, onNavigate, className }: { slug: string; onNa
   );
 }
 
+/** The first row of the Services menu: one link to the page that shows all six disciplines. Used by the desktop panel and the mobile menu. */
+export function AllServicesRow({ onNavigate, className }: { onNavigate: () => void; className?: string }) {
+  return (
+    <Link href="/services" onClick={onNavigate} className={cn(rowClass, className)}>
+      <span className="flex size-14 shrink-0 items-center justify-center rounded-xl bg-[#e4f2fb] text-blue-700 transition-colors group-hover:bg-blue group-hover:text-white">
+        <LayoutGrid aria-hidden className="size-7" />
+      </span>
+      <span className="min-w-0">
+        <span className="block truncate font-semibold text-navy">All Services</span>
+        <span className="mt-0.5 block truncate text-sm text-muted">View all six disciplines</span>
+      </span>
+    </Link>
+  );
+}
+
 /** The shared white card the dropdowns sit in. */
 const card =
   "rounded-2xl bg-white p-5 text-navy shadow-[0_28px_60px_-24px_rgb(6_20_31/0.45)] ring-1 ring-navy/10";
 
-function PanelHead({ eyebrow, title, href, linkLabel, onNavigate }: { eyebrow: string; title: string; href: string; linkLabel: string; onNavigate: () => void }) {
+function PanelHead({ eyebrow, title, href, linkLabel, onNavigate }: { eyebrow: string; title: string; href?: string; linkLabel?: string; onNavigate: () => void }) {
   return (
     <div className="px-2.5">
       <p className="mono-label text-[0.6875rem] text-muted">{eyebrow}</p>
       <div className="mt-2 flex items-baseline justify-between gap-4">
         <h2 className="font-heading text-[1.75rem] font-bold leading-none text-navy">{title}</h2>
-        <Link
-          href={href}
-          onClick={onNavigate}
-          className="inline-flex items-center gap-1 text-sm font-semibold text-blue-700 transition-colors hover:text-navy focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue"
-        >
-          {linkLabel}
-          <ArrowUpRight aria-hidden className="size-4" />
-        </Link>
+        {href && (
+          <Link
+            href={href}
+            onClick={onNavigate}
+            className="inline-flex items-center gap-1 text-sm font-semibold text-blue-700 transition-colors hover:text-navy focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue"
+          >
+            {linkLabel}
+            <ArrowUpRight aria-hidden className="size-4" />
+          </Link>
+        )}
       </div>
     </div>
   );
 }
 
-/** Services dropdown: eyebrow, heading with overview link, then the six services as a vertical list. */
+/** Services dropdown: eyebrow, heading, then "All Services" and the six services as a vertical list. */
 export function ServicesPanel({ onNavigate }: { onNavigate: () => void }) {
   return (
     <div onKeyDown={onPanelKeyDown} className={cn(card, "w-[600px]")}>
-      <PanelHead
-        eyebrow="HVAC · Fire · Electrical · Plumbing · MEP · Pools"
-        title="Services"
-        href="/services"
-        linkLabel="Services overview"
-        onNavigate={onNavigate}
-      />
+      <PanelHead eyebrow="HVAC · Fire · Electrical · Plumbing · MEP · Pools" title="Services" onNavigate={onNavigate} />
       <ul className={cn("mt-4 max-h-[calc(100svh-15rem)] space-y-0.5 overflow-y-auto pr-1", scrollbar)}>
+        <li>
+          <AllServicesRow onNavigate={onNavigate} />
+        </li>
         {services.map((s) => (
           <li key={s.slug}>
             <ServiceRow slug={s.slug} onNavigate={onNavigate} />

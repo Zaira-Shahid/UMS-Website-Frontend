@@ -9,7 +9,7 @@ import { mainNav, quoteHrefForPath } from "@/content/navigation";
 import { services } from "@/content/services";
 import { cn } from "@/lib/utils";
 import { Logo } from "./Logo";
-import { ServiceRow } from "./MegaMenu";
+import { AllServicesRow, ServiceRow } from "./MegaMenu";
 
 const FOCUSABLE =
   'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
@@ -126,16 +126,17 @@ export function MobileNav({
                           </button>
                         </div>
                         <div id={`mobile-sub-${item.label}`} hidden={!isOpen} className="pb-4">
-                          <Link
-                            href={item.href}
-                            onClick={onClose}
-                            className="mb-1 inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-blue-700"
-                          >
-                            {item.label === "Services" ? "Services overview" : "About overview"}
-                            <ArrowUpRight aria-hidden className="size-4" />
-                          </Link>
+                          {item.label !== "Services" && (
+                            <Link href={item.href} onClick={onClose} className="mb-1 inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-blue-700">
+                              About overview
+                              <ArrowUpRight aria-hidden className="size-4" />
+                            </Link>
+                          )}
                           {item.label === "Services" ? (
                             <ul className="space-y-0.5">
+                              <li>
+                                <AllServicesRow onNavigate={onClose} />
+                              </li>
                               {services.map((s) => (
                                 <li key={s.slug}>
                                   <ServiceRow slug={s.slug} onNavigate={onClose} />
