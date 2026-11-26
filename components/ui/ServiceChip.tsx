@@ -13,15 +13,15 @@ export function ServiceChip({ slug, label, className }: { slug: ServiceSlug; lab
     <Link
       href={`/services/${slug}`}
       className={cn(
-        "group flex items-center gap-3 rounded-xl border border-white/70 bg-white/[0.04] px-4 py-3 text-white whitespace-nowrap transition-colors hover:bg-white/10 focus-visible:bg-white/10",
+        "group flex items-center h-11 gap-2 rounded-xl border border-white/70 bg-white/[0.04] px-2.5 text-white whitespace-nowrap transition-colors hover:bg-white/10 focus-visible:bg-white/10",
         className,
       )}
       style={{ ["--chip" as string]: color }}
     >
-      <span className="flex size-10 shrink-0 items-center justify-center rounded-lg border-2 transition-colors group-hover:bg-white/10" style={{ borderColor: color, color }}>
-        <ServiceIcon slug={slug} className="size-5" />
+      <span className="flex size-7 shrink-0 items-center justify-center rounded-md border-[1.5px] transition-colors group-hover:bg-white/10" style={{ borderColor: color, color }}>
+        <ServiceIcon slug={slug} className="size-4" />
       </span>
-      <span className="text-[1.0625rem] font-semibold">{label}</span>
+      <span className="text-[0.9375rem] font-semibold">{label}</span>
     </Link>
   );
 }

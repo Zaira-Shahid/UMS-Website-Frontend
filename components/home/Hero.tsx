@@ -62,10 +62,10 @@ export function Hero() {
         </div>
 
         {/* Service chips (desktop and tablet). Mobile gets the "Our Services" grid below instead. */}
-        <ul aria-label="Services" className="mt-8 hidden grid-cols-3 gap-3 pb-10 md:grid lg:mt-4 lg:flex lg:justify-between lg:gap-3">
+        <ul aria-label="Services" className="mt-8 hidden grid-cols-3 gap-3 pb-10 md:grid lg:mt-4 xl:flex xl:justify-between">
           {chipOrder.map((slug) => (
-            <li key={slug} className="lg:flex-1 lg:last:flex-none">
-              <ServiceChip slug={slug} label={serviceLabel[slug]} className="h-full" />
+            <li key={slug}>
+              <ServiceChip slug={slug} label={serviceLabel[slug]} />
             </li>
           ))}
         </ul>
