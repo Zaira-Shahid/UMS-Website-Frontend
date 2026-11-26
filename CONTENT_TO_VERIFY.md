@@ -3,6 +3,9 @@
 The site is built and live. Nothing below is shown as fact until you confirm it. Tick each item as it is done and send the
 details to the developer, or edit the named file yourself. (Last updated: final QA, v1.0.0.)
 
+> **Top item: WhatsApp number.** The header WhatsApp button is shown, but with no number set it links to the Contact page.
+> Add `contact.whatsapp` in `content/site.ts` (international format, e.g. +92…) and it opens WhatsApp chat instead.
+
 ## 1. Company contact details (`content/site.ts`, the `contact` object)
 
 All of these are empty today and appear on the site only once filled.

@@ -17,18 +17,17 @@ import { MobileNav } from "./MobileNav";
 /** Lazy: the palette and its Fuse index load only when first opened. */
 const SearchPalette = dynamic(() => import("@/components/search/SearchPalette"), { ssr: false });
 
-/** The WhatsApp button exists only once a number is configured in content/site.ts. */
-const whatsappHref = contact.whatsapp ? `https://wa.me/${contact.whatsapp.replace(/\D/g, "")}` : "";
+/** WhatsApp button. Until a number is set in content/site.ts it links to /contact, so no number is ever invented. */
+const whatsappHref = contact.whatsapp ? `https://wa.me/${contact.whatsapp.replace(/\D/g, "")}` : "/contact";
 
 function WhatsappButton({ className }: { className?: string }) {
-  if (!whatsappHref) return null;
+  const external = whatsappHref.startsWith("https://");
   return (
     <a
       href={whatsappHref}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Chat on WhatsApp (opens in a new tab)"
-      className={cn("flex size-11 shrink-0 items-center justify-center rounded-full bg-[#dff6e7] text-[#128c4a] transition-colors hover:bg-[#c9f0d7]", className)}
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      aria-label="Chat on WhatsApp"
+      className={cn("flex size-11 shrink-0 items-center justify-center rounded-full bg-[#128c4a] text-white transition-colors hover:bg-[#0e7a40]", className)}
     >
       <WhatsappIcon className="size-6" />
     </a>
@@ -215,11 +214,11 @@ export function Header() {
             >
               <Search className="size-5" aria-hidden />
             </button>
+            <WhatsappButton />
             <Button href={quoteLink} variant="navy" className="rounded-full pl-4 pr-5 xl:px-4 min-[1400px]:pl-4 min-[1400px]:pr-5">
               <FileText aria-hidden className="size-5 text-blue" />
               Request a Quote
             </Button>
-            <WhatsappButton />
           </div>
 
           {/* Mobile and tablet actions */}
