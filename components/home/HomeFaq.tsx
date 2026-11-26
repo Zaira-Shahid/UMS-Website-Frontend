@@ -12,8 +12,7 @@ export function HomeFaq() {
     <section aria-labelledby="faq-title" className="relative overflow-hidden bg-[#f2f7fb]">
       <div className="wrap grid gap-8 py-12 lg:grid-cols-[0.62fr_1.38fr] lg:gap-14 lg:py-16">
         <div className="flex flex-col">
-          <LogoMark className="h-12 w-auto self-start lg:h-14" />
-          <p className="mt-1 font-heading text-[0.6875rem] font-bold uppercase tracking-wide text-navy lg:text-xs">Ultimate Mechanical Solutions</p>
+          <LogoMark className="h-14 self-start lg:h-16" />
           <span aria-hidden className="accent-bar mt-8 lg:mt-12" />
           <h2 id="faq-title" className="mt-4 text-[clamp(2rem,1rem+3vw,3.5rem)] font-extrabold max-w-[8em] leading-[1.1] text-navy">
             Frequently Asked Questions

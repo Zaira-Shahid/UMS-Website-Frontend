@@ -265,8 +265,8 @@ export default function ChatWidget() {
           className="fixed inset-x-0 bottom-0 z-[55] flex h-[85svh] flex-col overflow-hidden rounded-t-2xl bg-white text-navy shadow-[0_-12px_40px_-12px_rgb(3_33_57/0.45)] md:inset-x-auto md:bottom-24 md:right-5 md:h-[560px] md:max-h-[calc(100svh-7rem)] md:w-[380px] md:rounded-2xl md:shadow-[0_24px_60px_-16px_rgb(3_33_57/0.5)]"
         >
           <header className="flex items-center gap-3 bg-navy-950 px-4 py-3 text-white">
-            <span className="flex h-9 items-center rounded-lg bg-white px-2">
-              <LogoMark className="h-6 w-auto" />
+            <span className="flex h-10 items-center rounded-lg bg-white px-2">
+              <LogoMark className="h-7" />
             </span>
             <p className="flex-1 font-heading text-base font-bold">UMS Assistant</p>
             <button type="button" onClick={minimise} aria-label="Minimise chat" className="flex size-9 items-center justify-center rounded-full transition-colors hover:bg-white/15">

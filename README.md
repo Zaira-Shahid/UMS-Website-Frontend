@@ -90,7 +90,9 @@ docs/reference/mockups/   the approved design mockups
   **Industries:** `content/industries.ts`. **Insights:** `content/insights.ts` and `content/articles.ts`.
   **Careers:** `content/careers.ts`. **Privacy policy:** `content/legal.ts`.
 - **Homepage text:** `content/home.ts` (slider lines, delivery steps, FAQ).
-- **Logo:** rebuilt as SVG in `components/layout/Logo.tsx`; replace with the official artwork when supplied.
+- **Logo:** the official PNG from https://umss.pk at `public/brand/ums-logo-official.png`, used through `components/layout/Logo.tsx`
+  (header, footer, chat, FAQ, Services intro), `app/icon.png` / `app/favicon.ico` (cut from its gear) and `app/opengraph-image.tsx`.
+  Never redraw it; to change it, replace the file.
 
 ## The assistant (`/api/chat`)
 

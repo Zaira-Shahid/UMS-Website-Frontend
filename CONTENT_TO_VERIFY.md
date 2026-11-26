@@ -76,7 +76,8 @@ The Services and circle photos are crops of the approved mockups (about 460 px w
   `wireframe-building-projects.png` has a small artefact at its bottom-left.
 - [ ] Artwork missing for Plumbing, Electrical & ELV, Integrated MEP and Pools & Fountains in the homepage services slider
   (a large icon tile is shown instead)
-- [ ] **Official logo SVG** (the site uses a rebuild: `components/layout/Logo.tsx`)
+- [ ] **Official logo (vector):** the site uses the official PNG that is on https://umss.pk (`img/logo.png`, 668 x 203, now at
+      `public/brand/ums-logo-official.png`). Send the original SVG or a larger PNG if one exists, so it stays sharp on large screens
 - [ ] Confirm the brand colours: blue `#1BA6E8` (used for accents and large headings; buttons and small text use a deeper
   `#0A78B5` so they pass accessibility contrast) and the navy values sampled from the mockups
 
