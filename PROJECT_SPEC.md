@@ -311,3 +311,53 @@ Section 12. Keep the site's normal header and footer (the mockups show a simplif
 
 Git: commit + push per piece to main, no AI attribution. Tag final-phase-F3b when Section 13 is done. Report with
 comparison screenshots and STOP before F4. Order: finish F3, then Section 13, then F4.
+
+
+---
+
+## 14. Navigation click + Projects page (mockups 19, 20)
+
+New mockups: docs/reference/mockups/19-projects-page.jpg (desktop) and 20-projects-mobile.jpg (mobile).
+
+### 14.1 "Services" nav click
+- Clicking the "Services" label navigates to /services (mockup 10 page). Hovering still opens the dropdown. The chevron is
+  a separate button that toggles the dropdown for keyboard and touch users. Same for "About" → /about.
+- Mobile menu: tapping "Services" opens /services; the chevron expands the accordion.
+
+### 14.2 /projects (mockup 19, desktop)
+- Banner: "Our Projects" + "Explore our work by sector." over a wide building photo with a navy gradient on the left.
+  Use projects-banner.jpg if it's sharp; otherwise the best larger building photo we have, with the same overlay.
+- Filter pills: All Projects (navy, active) / Healthcare / Commercial & Retail / Residential / Institutional (white with
+  border). Small italic "Illustrative projects" note below.
+- "All Projects" shows each category as its own section, one after another: Healthcare Projects, Commercial & Retail
+  Projects, Residential Projects, Institutional Projects, each with a blue accent bar and 3 cards in a row. Clicking a
+  pill filters to that category (?sector=…, back button works).
+- Card: photo, title, one-line description, 3 service chips with coloured icons (HVAC, Fire, Plumbing, Electrical), and
+  "More Details →". White, thin border, rounded, soft shadow, hover lift.
+
+### 14.3 Mobile (mockup 20)
+- Banner image fills the background behind the title (combined), with a dark overlay.
+- Pills scroll horizontally in one row.
+- Categories stack one after another; cards are full-width, one per row.
+
+### 14.4 Content (honesty rules)
+- content/projects.ts fields: slug, name, sector, description, services[], image, illustrative: boolean.
+- Add the 12 sample projects from the mockup with illustrative: true, matching photos and services as shown.
+- Real projects go first in their category (Buch International Hospital and Lady Reading Hospital in Healthcare, with an
+  existing photo and the "Illustrative imagery" label).
+- Every illustrative card shows a small "Illustrative" badge on the photo.
+- `showIllustrativeProjects = true` in content/projects.ts; false hides all sample cards. Note this in CONTENT_TO_VERIFY.md.
+
+### 14.5 "More Projects" section (after the categories)
+- Heading "More Projects" with the blue bar and the line "Further work across our sectors."
+- Compact layout, different from the big cards: a 2-column list (1 column on mobile) of rows with a small square
+  thumbnail, name, sector tag, service chips and an arrow link. Show 4 rows, then a "Load more projects" button that
+  reveals 4 more without a reload; hide the button when nothing is left.
+- For now it lists the real projects without a confirmed sector (Elanza Mall, Pakistan Cricket Board House, CGGC Head
+  Office at Eighteen, Jazz Destiny) with a neutral building icon instead of a photo and no sector tag.
+
+### 14.6 "More Details" → /projects/[slug]
+- Same style: banner with the project photo and name, sector + service chips, an overview paragraph, a "Services
+  delivered" list with icons, a gallery only if images exist, the "Illustrative" note for sample projects, and the navy
+  "Discuss a similar project" CTA bar → /request-a-quote?service=<first service>.
+- Real projects show only confirmed fields.
