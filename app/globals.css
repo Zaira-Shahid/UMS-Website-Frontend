@@ -514,10 +514,15 @@ label[for],
   }
 }
 
-/* Services ticker (ServicesTicker): three copies of the list slide left by one copy's width, so the loop is seamless. */
+/* Services ticker (ServicesTicker): the copies of the list slide left by one copy's width, so the loop is seamless. */
 @keyframes ticker-move {
   to {
-    transform: translateX(-33.3333%);
+    transform: translateX(var(--ticker-shift, -50%));
+  }
+}
+@media (min-width: 1700px) {
+  .ticker-track {
+    --ticker-shift: -33.3333%;
   }
 }
 .ticker-track {

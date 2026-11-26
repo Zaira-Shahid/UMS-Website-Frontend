@@ -71,11 +71,11 @@ export function HeroStage({
     const mount = () => !cancelled && setFxReady(true);
     const start = () => {
       if (cancelled) return;
-      // A short pause after the load event, then the browser's next idle moment.
+      // The picture is shown first and stays still for a few seconds; then, at the browser's next idle moment, it comes alive.
       setTimeout(() => {
         if ("requestIdleCallback" in window) window.requestIdleCallback(mount, { timeout: 2500 });
         else mount();
-      }, 1500);
+      }, 4000);
     };
     if (document.readyState === "complete") start();
     else window.addEventListener("load", start, { once: true });

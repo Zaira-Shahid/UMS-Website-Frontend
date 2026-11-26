@@ -14,7 +14,7 @@ import type { ServiceSlug } from "@/types";
 const LOOP_S = 40;
 /** After the visitor stops touching or dragging, the ticker waits this long before it moves again. */
 const RESUME_MS = 3000;
-/** The list is repeated three times so the loop never runs out, even on very wide screens. */
+/** The list is shown twice (a third copy appears only on screens 1700px and wider), so the loop never runs out. */
 const COPIES = [0, 1, 2];
 
 /** One service as one card: the picture on top and, inside the same card, the title, the line and "Explore Service". */
@@ -124,7 +124,8 @@ export function ServicesTicker() {
     const b = box.current;
     if (!b || !manual.current) return;
     const w = loopWidth();
-    if (b.scrollLeft >= 2 * w) b.scrollLeft -= w;
+    // The copies are identical, so jumping by one copy's width is invisible and keeps the row endless by hand.
+    if (b.scrollLeft >= w) b.scrollLeft -= w;
     else if (b.scrollLeft <= 0) b.scrollLeft += w;
     clearTimeout(idleTimer.current);
     idleTimer.current = setTimeout(() => manual.current && rebase(), RESUME_MS);
@@ -164,7 +165,7 @@ export function ServicesTicker() {
               aria-label={c === 0 ? "Services" : undefined}
               aria-hidden={c === 0 ? undefined : true}
               inert={c !== 0}
-              className={cn("flex gap-5 py-3 pl-0 pr-5", c !== 0 && "ticker-dup")}
+              className={cn("flex gap-5 py-3 pl-0 pr-5", c !== 0 && "ticker-dup", c === 2 && "hidden min-[1700px]:flex")}
             >
               {sliderOrder.map((slug) => (
                 <li key={slug}>
