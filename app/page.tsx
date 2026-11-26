@@ -5,7 +5,7 @@ import { FeaturedProjects } from "@/components/home/FeaturedProjects";
 import { Hero } from "@/components/home/Hero";
 import { HomeFaq } from "@/components/home/HomeFaq";
 import { HowWeDeliver } from "@/components/home/HowWeDeliver";
-import { ServicesSlider } from "@/components/home/ServicesSlider";
+import { ServicesTicker } from "@/components/home/ServicesTicker";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { homeFaqs } from "@/content/home";
 import { site } from "@/content/site";
@@ -50,7 +50,7 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <ServicesSlider />
+      <ServicesTicker />
       <HowWeDeliver />
       <FeaturedProjects />
       <Clients />

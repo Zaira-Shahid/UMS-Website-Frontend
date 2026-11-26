@@ -78,7 +78,7 @@ The Services and circle photos are crops of the approved mockups (about 460 px w
   (a large icon tile is shown instead)
 - [ ] **Hero artwork:** the "click a chip to highlight a system" overlays were cut from the current hero images by colour. If you
       supply new or higher-resolution hero artwork, tell the developer so the overlays can be cut again
-- [ ] **Services slider pictures:** only HVAC and Fire Fighting have an illustration; the other four show their icon in the same
+- [ ] **Services ticker pictures:** only HVAC and Fire Fighting have an illustration; the other four show their icon in the same
       picture frame until artwork is supplied
 - [ ] **Official logo (vector):** the site uses the official PNG that is on https://umss.pk (`img/logo.png`, 668 x 203, now at
       `public/brand/ums-logo-official.png`). Send the original SVG or a larger PNG if one exists, so it stays sharp on large screens

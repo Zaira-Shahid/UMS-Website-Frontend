@@ -459,19 +459,34 @@ label[for],
   }
 }
 
-/* Services slider: the progress bar fills over the slide time (set inline); its end moves the slider on. */
-@keyframes slider-fill {
-  from {
-    width: 0;
-  }
+/* Services ticker (ServicesTicker): three copies of the list slide left by one copy's width, so the loop is seamless. */
+@keyframes ticker-move {
   to {
-    width: 100%;
+    transform: translateX(-33.3333%);
   }
 }
-.slider-progress {
-  animation-name: slider-fill;
-  animation-timing-function: linear;
-  animation-fill-mode: forwards;
+.ticker-track {
+  animation: ticker-move var(--ticker-dur, 40s) linear infinite;
+  will-change: transform;
+}
+.ticker[data-paused="true"] .ticker-track,
+.ticker:focus-within .ticker-track {
+  animation-play-state: paused;
+}
+@media (hover: hover) {
+  .ticker:hover .ticker-track {
+    animation-play-state: paused;
+  }
+}
+/* Reduced motion: no ticker. The cards are an ordinary row that can be scrolled by hand, shown once. */
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none;
+  }
+  .ticker-dup,
+  .ticker-ctl {
+    display: none;
+  }
 }
 
 /* Clients row: the list is duplicated, so moving it by half its width loops seamlessly */

@@ -88,8 +88,10 @@ docs/reference/mockups/   the approved design mockups
   are percentages in `content/hero-fx.ts` (separate sets for the desktop and mobile artwork); the shapes reuse the masks in
   `public/images/hero/masks/`. Effects start after the page has loaded, pause off-screen and in hidden tabs, and are off with
   reduced motion. If the hero artwork changes, re-cut the masks and re-detect the node positions.
-- **Services slider:** `components/home/ServicesSlider.tsx` advances every 4 seconds (`SLIDE_MS`), pauses on hover, focus and
-  swiping, resumes 3 seconds later, and never autoplays with reduced motion. Slider pictures: `sliderArt` in `content/home.ts`.
+- **Services ticker:** `components/home/ServicesTicker.tsx` is a continuous loop of the six service cards (about 40 seconds a loop,
+  `LOOP_S`). It pauses on hover, keyboard focus, off-screen and with the pause button; a touch drag takes over and the loop resumes
+  3 seconds later; with reduced motion it is a plain scrollable row. Card text and pictures: `sliderTitle`, `sliderLine` and
+  `sliderArt` in `content/home.ts`.
 - **Clients:** `content/clients.ts`. An entry shows only with `verified: true` and a logo file in `public/images/clients/`.
   With no verified clients the whole homepage section is hidden.
 - **Team page:** `content/team.ts`. Set `showTeamPage = true` and add people (name, role, photo). Until then the page
