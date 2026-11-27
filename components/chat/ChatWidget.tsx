@@ -160,6 +160,16 @@ export default function ChatWidget() {
     };
   }, [open, pathname]);
 
+  // Esc must close the panel even when focus has dropped to the page (a quick-reply chip disappears after it is pressed).
+  useEffect(() => {
+    if (!open) return;
+    const onDocKey = (e: globalThis.KeyboardEvent) => {
+      if (e.key === "Escape" && !panel.current?.contains(document.activeElement)) minimise();
+    };
+    document.addEventListener("keydown", onDocKey);
+    return () => document.removeEventListener("keydown", onDocKey);
+  }, [open, minimise]);
+
   // Close the panel when the visitor moves to another page.
   useEffect(() => {
     setOpen(false);
