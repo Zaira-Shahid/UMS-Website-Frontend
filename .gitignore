@@ -41,3 +41,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# client material that must never be committed (the repo is public)
+/*.pdf
+/*.zip
+/UMS_SERVICE_PHOTOS/
+/logo (1).png
+s.ss*.jpeg
