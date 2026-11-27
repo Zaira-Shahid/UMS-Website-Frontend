@@ -52,11 +52,11 @@ export function Header() {
                   <span aria-hidden className="pointer-events-none absolute inset-x-0 -bottom-1 hidden h-1 rounded-full bg-blue group-data-[active=true]:block" />
                 );
                 return (
-                  <li key={item.label} className="group relative" data-nav-item data-match={match} {...(hasMenu ? { "data-menu": item.label } : {})}>
+                  <li key={item.label} suppressHydrationWarning className="group relative" data-nav-item data-match={match} {...(hasMenu ? { "data-menu": item.label } : {})}>
                     {hasMenu ? (
                       // The label is a link to the section page; the chevron is a separate button that toggles the dropdown.
                       <div className="flex items-center gap-0.5">
-                        <Link href={item.href} data-nav-link className={itemClass}>
+                        <Link href={item.href} data-nav-link suppressHydrationWarning className={itemClass}>
                           {item.label}
                           {underline}
                         </Link>
@@ -72,7 +72,7 @@ export function Header() {
                         </button>
                       </div>
                     ) : (
-                      <Link href={item.href} data-nav-link className={itemClass}>
+                      <Link href={item.href} data-nav-link suppressHydrationWarning className={itemClass}>
                         {item.label}
                         {underline}
                       </Link>
@@ -102,7 +102,7 @@ export function Header() {
               <Search className="size-5" aria-hidden />
             </button>
             <WhatsappButton />
-            <Button href={quoteHref()} data-quote-link variant="navy" className="rounded-full pl-4 pr-5 xl:px-4 min-[1400px]:pl-4 min-[1400px]:pr-5">
+            <Button href={quoteHref()} data-quote-link suppressHydrationWarning variant="navy" className="rounded-full pl-4 pr-5 xl:px-4 min-[1400px]:pl-4 min-[1400px]:pr-5">
               <FileText aria-hidden className="size-5 text-blue" />
               Request a Quote
             </Button>
@@ -110,7 +110,7 @@ export function Header() {
 
           {/* Mobile and tablet actions */}
           <div className="flex items-center gap-1.5 min-[420px]:gap-2 xl:hidden">
-            <Button href={quoteHref()} data-quote-link variant="navy" size="sm" className="rounded-full pl-3 pr-3.5 max-[419px]:text-[0.8125rem] min-[420px]:pr-4">
+            <Button href={quoteHref()} data-quote-link suppressHydrationWarning variant="navy" size="sm" className="rounded-full pl-3 pr-3.5 max-[419px]:text-[0.8125rem] min-[420px]:pr-4">
               <FileText aria-hidden className="size-4 text-blue max-[399px]:hidden" />
               Get a Quote
             </Button>
