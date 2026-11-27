@@ -248,12 +248,12 @@ label[for],
   }
 }
 
-/* Hero text: it fades up once on load, part by part (--d is each part's delay). The headline starts at 1% opacity so it is
-   never hidden from the browser's first paint. A soft ping on the badge's dot, a faint blueprint grid that fades out toward
+/* Hero text: it fades up once on load, part by part (--d is each part's delay). Every part starts at 1% opacity, never 0, so none of
+   it is hidden from the browser's first paint (and the headline and picture can be the largest paint without waiting for anything). A soft ping on the badge's dot, a faint blueprint grid that fades out toward
    the right, and the rotating word with its self-drawing underline. With reduced motion none of it moves. */
 @keyframes hero-in {
   from {
-    opacity: 0;
+    opacity: 0.01;
     transform: translateY(14px);
   }
 }
