@@ -5,23 +5,54 @@ Six disciplines, one coordinated delivery: Integrated MEP, HVAC, Fire Fighting, 
 
 **Live site:** https://ums-website-frontend.vercel.app/ · deployed on Vercel from `main` · latest release `v1.3.2`
 
+![UMS home page: hero with the living building and service chips](docs/screenshots/home-hero.webp)
+
 ---
 
 ## Contents
 
-1. [Rules of the project](#rules-of-the-project)
-2. [What's on the site](#whats-on-the-site)
-3. [Tech stack](#tech-stack)
-4. [Quick start](#quick-start)
-5. [Environment variables](#environment-variables)
-6. [Project structure](#project-structure)
-7. [Updating content](#updating-content)
-8. [How the Home page stays fast](#how-the-home-page-stays-fast)
-9. [The AI assistant](#the-ai-assistant)
-10. [Forms](#forms)
-11. [Quality checklist before a release](#quality-checklist-before-a-release)
-12. [Git workflow and releases](#git-workflow-and-releases)
-13. [Troubleshooting](#troubleshooting)
+1. [Screenshots](#screenshots)
+2. [Rules of the project](#rules-of-the-project)
+3. [What's on the site](#whats-on-the-site)
+4. [Tech stack](#tech-stack)
+5. [Quick start](#quick-start)
+6. [Environment variables](#environment-variables)
+7. [Project structure](#project-structure)
+8. [Updating content](#updating-content)
+9. [How the Home page stays fast](#how-the-home-page-stays-fast)
+10. [The AI assistant](#the-ai-assistant)
+11. [Forms](#forms)
+12. [Quality checklist before a release](#quality-checklist-before-a-release)
+13. [Git workflow and releases](#git-workflow-and-releases)
+14. [Troubleshooting](#troubleshooting)
+
+---
+
+## Screenshots
+
+Taken from a production build at 1440 px (desktop) and 390 px (phone). They are in `docs/screenshots/`.
+
+### Home
+
+| Our Services ticker | How We Deliver |
+| --- | --- |
+| ![Our Services heading and the six-service ticker](docs/screenshots/home-services.webp) | ![How We Deliver, five steps](docs/screenshots/home-delivery.webp) |
+
+![Featured Projects with slanted sector tabs and cards](docs/screenshots/home-projects.webp)
+
+### Inner pages
+
+| Services | Service detail (HVAC) |
+| --- | --- |
+| ![Services overview](docs/screenshots/services.webp) | ![HVAC service page](docs/screenshots/service-detail.webp) |
+
+| Projects | Blog |
+| --- | --- |
+| ![Projects page with sector filters](docs/screenshots/projects.webp) | ![Blog index](docs/screenshots/blog.webp) |
+
+| Request a Quote | Phone (390 px) |
+| --- | --- |
+| ![Request a quote form](docs/screenshots/quote.webp) | <img src="docs/screenshots/mobile-home.webp" alt="Home page on a phone" width="260"> |
 
 ---
 
