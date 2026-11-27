@@ -133,3 +133,10 @@ tagged `final-phase-F1` to `final-phase-F6`; the release is `v1.0.0`.
 - **Stale pages or odd `ENOENT` errors under `.next`:** stop the dev server, delete `.next` and start again.
 - **Builds fail at random while a dev server runs:** they share `.next`. Build into `.next-test` as shown above.
 - **Never run two dev servers in the same folder**, and check that port 3000 is free first.
+
+## Performance notes (Home page)
+
+- The header, its dropdown panels and the footer are server-rendered. `HeaderBehavior` (a client component that renders nothing until search or the mobile menu opens) wires the dropdowns, search and mobile menu; `lib/nav-active.ts` is a tiny inline script that marks the current page before first paint.
+- Interactive sections hydrate through `components/ui/Defer.tsx`: when they are about to scroll into view, or on the first click, tap or key press (never on a timer). The chat assistant loads on the first scroll, tap, mouse move or key press.
+- Every hero part starts at 1% opacity, never 0. Only the heading font (Barlow Semi Condensed) is preloaded; Inter loads from the CSS. `package.json` `browserslist` targets modern browsers so Next ships no polyfills for them.
+- Measure with a production build on a spare port (`NEXT_DIST_DIR=.next-test`), plus PageSpeed Insights on the live site.

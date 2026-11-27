@@ -13,14 +13,20 @@ const barlow = Barlow_Semi_Condensed({
   subsets: ["latin"],
   weight: ["600", "700"],
   display: "swap",
+  preload: true,
 });
 
-/** Body and UI. */
+/**
+ * Body and UI. Not preloaded: only the heading font is (it paints the headline), so the first paint's bandwidth goes to the
+ * hero picture and the page. Inter is requested as soon as the CSS is read, shows in a metric-matched fallback until then
+ * (next/font adjusts the fallback's size), and swaps without moving anything.
+ */
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {
