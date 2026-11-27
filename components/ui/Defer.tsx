@@ -1,5 +1,6 @@
 "use client";
 
+import { whenPressed } from "@/lib/hydration-gate";
 import { Suspense, use, useEffect, useRef, useState, type ReactNode } from "react";
 
 type Latch = { promise: Promise<void>; open: () => void };
@@ -19,7 +20,7 @@ function Gate({ latch, children }: { latch?: Latch; children: ReactNode }) {
 /**
  * Wraps a section that needs no interaction (or that has its own small island) so React does not hydrate it during the first
  * paint. The server sends its full HTML, so it looks and reads the same before and after. It hydrates when it is about to scroll
- * into view (300px ahead); a tap or key press inside it also brings it to life straight away (React replays the event).
+ * into view (300px ahead); any click, tap or key press on the page opens it too (a link press starts a page change, which cannot finish while a section is held back).
  */
 export function Defer({ children }: { children: ReactNode }) {
   const box = useRef<HTMLDivElement>(null);
@@ -28,6 +29,7 @@ export function Defer({ children }: { children: ReactNode }) {
   useEffect(() => {
     const el = box.current;
     if (!latch || !el) return;
+    whenPressed().then(latch.open);
     if (!("IntersectionObserver" in window)) return latch.open();
     const io = new IntersectionObserver(
       (entries) => {

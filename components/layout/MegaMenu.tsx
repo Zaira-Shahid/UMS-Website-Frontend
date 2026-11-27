@@ -1,7 +1,5 @@
-"use client";
-
 import Link from "next/link";
-import type { ComponentType, KeyboardEvent } from "react";
+import type { ComponentType } from "react";
 import { ArrowUpRight, Building2, LayoutGrid, ShieldCheck, Target, Wrench } from "@/components/ui/lucide";
 import { ServiceIcon, serviceColor } from "@/components/ui/ServiceIcon";
 import { services } from "@/content/services";
@@ -17,24 +15,11 @@ const aboutIcons: Record<string, ComponentType<{ className?: string }>> = {
 
 const scrollbar = "[scrollbar-width:thin] [scrollbar-color:#c3d0da_transparent]";
 
-/** Arrow keys, Home and End move focus between the links inside a panel. */
-export function onPanelKeyDown(e: KeyboardEvent<HTMLElement>) {
-  const keys = ["ArrowDown", "ArrowUp", "Home", "End"];
-  if (!keys.includes(e.key)) return;
-  const links = Array.from(e.currentTarget.querySelectorAll<HTMLAnchorElement>("a[href]"));
-  if (links.length === 0) return;
-  e.preventDefault();
-  const i = links.indexOf(document.activeElement as HTMLAnchorElement);
-  const next =
-    e.key === "Home" ? 0 : e.key === "End" ? links.length - 1 : e.key === "ArrowDown" ? (i + 1) % links.length : (i - 1 + links.length) % links.length;
-  links[next].focus();
-}
-
 const rowClass =
   "group flex items-center gap-4 rounded-xl p-2.5 transition-colors hover:bg-offwhite focus-visible:bg-offwhite focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-blue";
 
 /** One service: its coloured icon in a rounded light tile, the name and a one-line description. Used by the desktop panel and the mobile menu. */
-export function ServiceRow({ slug, onNavigate, className }: { slug: string; onNavigate: () => void; className?: string }) {
+export function ServiceRow({ slug, onNavigate, className }: { slug: string; onNavigate?: () => void; className?: string }) {
   const s = services.find((x) => x.slug === slug);
   if (!s) return null;
   const color = serviceColor(s.slug);
@@ -55,7 +40,7 @@ export function ServiceRow({ slug, onNavigate, className }: { slug: string; onNa
 }
 
 /** The first row of the Services menu: one link to the page that shows all six disciplines. Used by the desktop panel and the mobile menu. */
-export function AllServicesRow({ onNavigate, className }: { onNavigate: () => void; className?: string }) {
+export function AllServicesRow({ onNavigate, className }: { onNavigate?: () => void; className?: string }) {
   return (
     <Link href="/services" onClick={onNavigate} className={cn(rowClass, className)}>
       <span className="flex size-14 shrink-0 items-center justify-center rounded-xl bg-[#e4f2fb] text-blue-700 transition-colors group-hover:bg-blue group-hover:text-white">
@@ -69,11 +54,13 @@ export function AllServicesRow({ onNavigate, className }: { onNavigate: () => vo
   );
 }
 
+/** The dropdown panels are plain server markup: the header's small client island (HeaderBehavior) opens, closes and keyboard-drives them. */
+
 /** The shared white card the dropdowns sit in. */
 const card =
   "rounded-2xl bg-white p-5 text-navy shadow-[0_28px_60px_-24px_rgb(6_20_31/0.45)] ring-1 ring-navy/10";
 
-function PanelHead({ eyebrow, title, href, linkLabel, onNavigate }: { eyebrow: string; title: string; href?: string; linkLabel?: string; onNavigate: () => void }) {
+function PanelHead({ eyebrow, title, href, linkLabel, onNavigate }: { eyebrow: string; title: string; href?: string; linkLabel?: string; onNavigate?: () => void }) {
   return (
     <div className="px-2.5">
       <p className="mono-label text-[0.6875rem] text-muted">{eyebrow}</p>
@@ -95,9 +82,9 @@ function PanelHead({ eyebrow, title, href, linkLabel, onNavigate }: { eyebrow: s
 }
 
 /** Services dropdown: eyebrow, heading, then "All Services" and the six services as a vertical list. */
-export function ServicesPanel({ onNavigate }: { onNavigate: () => void }) {
+export function ServicesPanel({ onNavigate }: { onNavigate?: () => void }) {
   return (
-    <div onKeyDown={onPanelKeyDown} className={cn(card, "w-[600px]")}>
+    <div className={cn(card, "w-[600px]")}>
       <PanelHead eyebrow="HVAC · Fire · Electrical · Plumbing · MEP · Pools" title="Services" onNavigate={onNavigate} />
       <ul className={cn("mt-4 max-h-[calc(100svh-15rem)] space-y-0.5 overflow-y-auto pr-1", scrollbar)}>
         <li>
@@ -114,10 +101,10 @@ export function ServicesPanel({ onNavigate }: { onNavigate: () => void }) {
 }
 
 /** About dropdown in the same light style, with an icon in place of the thumbnail. */
-export function AboutPanel({ links, onNavigate }: { links: NavLink[]; onNavigate: () => void }) {
+export function AboutPanel({ links, onNavigate }: { links: NavLink[]; onNavigate?: () => void }) {
   const rows = links.filter((l) => l.href !== "/about");
   return (
-    <div onKeyDown={onPanelKeyDown} className={cn(card, "w-[420px]")}>
+    <div className={cn(card, "w-[420px]")}>
       <PanelHead eyebrow="Company" title="About UMS" href="/about" linkLabel="About overview" onNavigate={onNavigate} />
       <ul className="mt-4 space-y-0.5">
         {rows.map((l) => {
