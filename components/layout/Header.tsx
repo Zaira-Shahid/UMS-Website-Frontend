@@ -8,7 +8,7 @@ import { ChevronDown, FileText, Menu, Search } from "@/components/ui/lucide";
 import { Button } from "@/components/ui/Button";
 import { WhatsappIcon } from "@/components/ui/SocialIcons";
 import { mainNav, quoteHrefForPath } from "@/content/navigation";
-import { whenReady } from "@/lib/hydration-gate";
+import { whenInteracted } from "@/lib/hydration-gate";
 import { contact } from "@/content/site";
 import { cn } from "@/lib/utils";
 import { Logo } from "./Logo";
@@ -56,7 +56,7 @@ export function Header() {
 
   // Fetch the full-screen menu's code in advance (first scroll or tap, or a few seconds after load), so the first tap is instant.
   useEffect(() => {
-    whenReady().then(() => import("./MobileNav"));
+    whenInteracted().then(() => import("./MobileNav"));
   }, []);
 
   // A new page starts with every menu closed.

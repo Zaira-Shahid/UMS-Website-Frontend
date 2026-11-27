@@ -1,23 +1,52 @@
 "use client";
 
-import { Suspense, use, type ReactNode } from "react";
-import { whenReady } from "@/lib/hydration-gate";
+import { Suspense, use, useEffect, useRef, useState, type ReactNode } from "react";
 
-function Gate({ children }: { children: ReactNode }) {
-  // In the browser this holds back hydration of the section until the visitor is about to reach it (see lib/hydration-gate.ts).
-  // The server never waits, so the section's full HTML is always on the page; React simply leaves it as plain HTML until then.
-  if (typeof window !== "undefined") use(whenReady());
+type Latch = { promise: Promise<void>; open: () => void };
+
+function makeLatch(): Latch {
+  let open!: () => void;
+  const promise = new Promise<void>((r) => (open = r));
+  return { promise, open };
+}
+
+function Gate({ latch, children }: { latch?: Latch; children: ReactNode }) {
+  // While the latch is closed, React leaves this section as the plain HTML the server sent; opening it hydrates the section.
+  if (latch) use(latch.promise);
   return <>{children}</>;
 }
 
 /**
- * Wraps a section that needs no interaction (or that has its own small island) so React does not spend the first seconds of the
- * page hydrating it. It looks and reads the same before and after; a tap or scroll inside it brings it to life straight away.
+ * Wraps a section that needs no interaction (or that has its own small island) so React does not hydrate it during the first
+ * paint. The server sends its full HTML, so it looks and reads the same before and after. It hydrates when it is about to scroll
+ * into view (300px ahead); a tap or key press inside it also brings it to life straight away (React replays the event).
  */
 export function Defer({ children }: { children: ReactNode }) {
+  const box = useRef<HTMLDivElement>(null);
+  const [latch] = useState<Latch | undefined>(() => (typeof window === "undefined" ? undefined : makeLatch()));
+
+  useEffect(() => {
+    const el = box.current;
+    if (!latch || !el) return;
+    if (!("IntersectionObserver" in window)) return latch.open();
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          latch.open();
+          io.disconnect();
+        }
+      },
+      { rootMargin: "300px 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [latch]);
+
   return (
-    <Suspense fallback={null}>
-      <Gate>{children}</Gate>
-    </Suspense>
+    <div ref={box}>
+      <Suspense fallback={null}>
+        <Gate latch={latch}>{children}</Gate>
+      </Suspense>
+    </div>
   );
 }
